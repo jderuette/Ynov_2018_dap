@@ -133,6 +133,7 @@ public class GoogleAccount extends GoogleService {
 	public String addAccount(final String userId, final HttpServletRequest request,
 			final HttpSession session) throws GeneralSecurityException {
 		
+	    //TODO scb by Djer veuillez agréer Monsieur mes sincères saltations.
 		LOG.debug("Salut");
 
 		String response = "errorOccurs";
