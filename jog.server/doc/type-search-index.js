@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"fr.ynov.dap","l":"AppTest"},{"p":"fr.ynov.dap","l":"CalendarService"},{"p":"fr.ynov.dap","l":"Config"},{"p":"fr.ynov.dap","l":"GmailService"},{"p":"fr.ynov.dap","l":"GoogleAccount"},{"p":"fr.ynov.dap","l":"GoogleService"},{"p":"fr.ynov.dap","l":"Launcher"},{"p":"fr.ynov.dap","l":"PeopleService"}]
