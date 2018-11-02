@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- TODO fr by Djer Il y a un ordre "attendu" pour un pom.xml. Cf mémo Maven. -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.ynov.dap</groupId>
+  <artifactId>for.server</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>for.server</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <pmdVersion>6.4.0</pmdVersion>
+    <checkstyleVersion>6.18</checkstyleVersion>
+  </properties>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+         <archive>
+           <manifest>
+             <addClasspath>true</addClasspath>
+             <classpathPrefix>lib/</classpathPrefix>
+             <mainClass>fr.ynov.dap.dap.App</mainClass>
+           </manifest>
+         </archive>
+       </configuration>
+      </plugin>
+      
+      <plugin>
+       <artifactId>maven-dependency-plugin</artifactId>
+       <executions>
+         <execution>
+           <phase>install</phase>
+           <goals>
+             <goal>copy-dependencies</goal>
+           </goals>
+           <configuration>
+             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+           </configuration>
+         </execution>
+       </executions>
+     </plugin>
+     
+     <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-pmd-plugin</artifactId>
+       <executions>
+         <execution>
+           <goals>
+             <goal>check</goal>
+             <goal>cpd-check</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+     
+     
+     <plugin>
+       <artifactId>maven-assembly-plugin</artifactId>
+       <version>3.1.0</version>
+       <configuration>
+         <descriptorRefs>
+           <descriptorRef>jar-with-dependencies</descriptorRef>
+         </descriptorRefs>
+         <archive>
+           <manifest>
+             <mainClass>fr.ynov.dap.dap.App</mainClass>
+           </manifest>
+         </archive>
+       </configuration>
+     </plugin>
+     
+    </plugins>
+    
+    <pluginManagement>
+     <plugins>
+       <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-pmd-plugin</artifactId>
+         <version>3.10.0</version>
+         <dependencies>
+           <dependency>
+             <groupId>net.sourceforge.pmd</groupId>
+             <artifactId>pmd-core</artifactId>
+             <version>${pmdVersion}</version>
+           </dependency>
+           <dependency>
+             <groupId>net.sourceforge.pmd</groupId>
+             <artifactId>pmd-java</artifactId>
+             <version>${pmdVersion}</version>
+           </dependency>
+           <dependency>
+             <groupId>net.sourceforge.pmd</groupId>
+             <artifactId>pmd-javascript</artifactId>
+             <version>${pmdVersion}</version>
+           </dependency>
+           <dependency>
+             <groupId>net.sourceforge.pmd</groupId>
+             <artifactId>pmd-jsp</artifactId>
+             <version>${pmdVersion}</version>
+           </dependency>
+         </dependencies>
+       </plugin>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.0</version>
+        <dependencies>
+        <dependency>
+        <groupId>com.puppycrawl.tools</groupId>
+        <artifactId>checkstyle</artifactId>
+        <version>${checkstyleVersion}</version>
+        </dependency>
+        </dependencies>
+        </plugin>
+       <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+     </plugins>
+   </pluginManagement>
+    
+</build>
+  
+    <dependencies>
+	<dependency>
+	   <groupId>org.springframework.boot</groupId>
+	   <artifactId>spring-boot-starter-web</artifactId>
+	   <version>2.0.5.RELEASE</version>
+	</dependency>
+	<dependency>
+	   <groupId>com.google.api-client</groupId>
+	   <artifactId>google-api-client</artifactId>
+	   <version>1.25.0</version>
+   </dependency>
+	<dependency>
+	   <groupId>com.google.oauth-client</groupId>
+	   <artifactId>google-oauth-client-jetty</artifactId>
+	   <version>1.23.0</version>
+   </dependency>
+   <dependency>
+   <groupId>org.apache.logging.log4j</groupId>
+   <artifactId>log4j-api</artifactId>
+   <version>2.9.1</version>
+ </dependency>
+ <dependency>
+   <groupId>org.apache.logging.log4j</groupId>
+   <artifactId>log4j-core</artifactId>
+   <version>2.9.1</version>
+ </dependency>
+	<dependency>
+     <groupId>com.google.apis</groupId>
+     <artifactId>google-api-services-gmail</artifactId>
+     <version>v1-rev83-1.23.0</version>
+   </dependency>
+	<dependency>
+	   <groupId>com.google.apis</groupId>
+	   <artifactId>google-api-services-calendar</artifactId>
+	   <version>v3-rev350-1.25.0</version>
+	</dependency>
+    <dependency>
+	   <groupId>junit</groupId>
+	   <artifactId>junit</artifactId>
+	   <version>3.8.1</version>
+	   <scope>test</scope>
+	</dependency>
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-people</artifactId>
+      <version>v1-rev358-1.25.0</version>
+    </dependency>
+</dependencies>
+
+
+    <reporting>
+	<plugins>
+	   <plugin>
+	       <groupId>org.springframework.boot</groupId>
+	       <artifactId>spring-boot-maven-plugin</artifactId>
+	   </plugin>
+	   <plugin>
+	       <artifactId>maven-pmd-plugin</artifactId>
+	       <version>3.10.0</version>
+	       <configuration>
+	           <linkXref>true</linkXref>
+	           <targetJdk>1.8</targetJdk>
+	           <skipEmptyReport>false</skipEmptyReport>
+	           <minimumTokens>75</minimumTokens>
+	           <rulesets>
+	           <!-- TODO for by Djer Il n'y a pas de ficheir ici ! -->
+	               <ruleset>/pmd/dap_pmd.xml</ruleset>
+	           </rulesets>
+	       </configuration>
+	   </plugin>
+	   <plugin>
+	       <groupId>org.apache.maven.plugins</groupId>
+	       <artifactId>maven-project-info-reports-plugin</artifactId>
+	       <version>2.9</version>
+	   </plugin>
+	   <plugin>
+	       <groupId>org.apache.maven.plugins</groupId>
+	       <artifactId>maven-checkstyle-plugin</artifactId>
+	       <version>3.0.0</version>
+	       <configuration>
+	       <!-- TODO for by Djer Il n'y a pas de fichier ici ! -->
+	           <configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
+	       </configuration>
+	       <reportSets>
+	           <reportSet>
+	               <reports>
+	                   <report>checkstyle</report>
+	               </reports>
+	           </reportSet>
+	       </reportSets>
+	   </plugin>
+	   <plugin>
+	       <groupId>org.codehaus.mojo</groupId>
+	       <artifactId>findbugs-maven-plugin</artifactId>
+	       <version>3.0.5</version>
+	   </plugin>
+	</plugins>
+</reporting>
+  
+</project>
