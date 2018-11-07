@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.ynov.dap</groupId>
-    <artifactId>dap</artifactId>
+    <artifactId>bim.server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>dap</name>
+    <name>bim.server</name>
     <url>http://maven.apache.org</url>
 
     <properties>
