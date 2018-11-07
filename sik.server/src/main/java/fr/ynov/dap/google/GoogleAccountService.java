@@ -136,7 +136,7 @@ public class GoogleAccountService extends GoogleAPIService {
                 authorizationUrl.setRedirectUri(redirectUri);
 
                 addAccountResult.setIsSuccess(true);
-                addAccountResult.setRedirectUrl("redirect:" + authorizationUrl.build());
+                addAccountResult.setRedirectUrl(authorizationUrl.build());
 
                 return addAccountResult;
 

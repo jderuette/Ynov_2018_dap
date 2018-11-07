@@ -1,10 +1,12 @@
 package fr.ynov.dap.web;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,15 +92,17 @@ public class AccountController extends BaseController {
      * @param userId  the user to store Data
      * @param request the HTTP request
      * @param session the HTTP session
+     * @param response the Http Response
      * @return the view to Display (on Error)
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws UserNotFoundException Exception
      * @throws AddAccountFailedException Exception
+     * @throws IOException Exception
      */
     @RequestMapping("/account/google/add/{gAccountName}/{userId}")
     public String addGoogleAccount(@PathVariable final String gAccountName, @PathVariable final String userId,
-            final HttpServletRequest request, final HttpSession session)
-            throws GeneralSecurityException, UserNotFoundException, AddAccountFailedException {
+            final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
+            throws GeneralSecurityException, UserNotFoundException, AddAccountFailedException, IOException {
 
         AppUser userAccount = appUserRepository.findByUserKey(userId);
 
@@ -116,6 +120,12 @@ public class AccountController extends BaseController {
 
                 session.setAttribute(Constants.SESSION_USER_ID, userId);
                 session.setAttribute(Constants.SESSION_ACCOUNT_NAME, gAccountName);
+
+                String url = accountRes.getRedirectUrl();
+
+                response.sendRedirect(url);
+
+                return "";
 
             } else {
 
