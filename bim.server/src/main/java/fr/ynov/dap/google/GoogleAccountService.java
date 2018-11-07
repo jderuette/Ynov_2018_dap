@@ -92,7 +92,7 @@ public class GoogleAccountService extends CommonGoogleService {
 
             if (LOGGER.isDebugEnabled() && null != credential && null != credential.getAccessToken()) {
 
-                LOGGER.debug("New user credential stored with userId : " + accountName + "partial AccessToken : "
+                LOGGER.debug("New user credential stored with accountName : " + accountName + "partial AccessToken : "
                         + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
 
             }
