@@ -36,12 +36,6 @@ public class HttpService {
     private static final String BASE_URL = "http://" + DOMAIN + ":" + PORT;
 
     /**
-     * Default user agent.
-     */
-    //TODO sik by Djer Ce n'est pas bien de mentir à un serveur ! HttpConnextion n'est PAS de Mozilla !
-    private static final String USER_AGENT = "Mozilla/5.0";
-
-    /**
      * Logger instance.
      */
     private Logger logger = LogManager.getLogger(getClassName());
@@ -126,7 +120,6 @@ public class HttpService {
 
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod(method);
-        connection.setRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestProperty("Accept", "application/json");
 
         return connection;

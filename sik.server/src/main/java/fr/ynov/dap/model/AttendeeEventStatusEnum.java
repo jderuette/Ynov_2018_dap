@@ -32,6 +32,13 @@ public enum AttendeeEventStatusEnum {
     NEEDS_ACTION(4),
 
     /**
+     * Owner status.
+     * Not provided by Google Api.
+     * Returned when the event own by the user
+     */
+    OWNER(5),
+
+    /**
      * Unknown status.
      */
     UNKNOWN(99);

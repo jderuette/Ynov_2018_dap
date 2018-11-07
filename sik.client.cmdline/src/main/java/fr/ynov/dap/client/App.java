@@ -1,20 +1,16 @@
 package fr.ynov.dap.client;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.ynov.dap.client.dto.in.LoginResponseInDto;
 import fr.ynov.dap.client.dto.in.NextEventInDto;
 import fr.ynov.dap.client.dto.in.NumberContactInDto;
 import fr.ynov.dap.client.dto.in.UnreadMailInDto;
 import fr.ynov.dap.client.exception.ServerSideException;
 import fr.ynov.dap.client.model.AttendeeEventStatusEnum;
-import fr.ynov.dap.client.model.LoginStatusEnum;
 import fr.ynov.dap.client.service.AccountService;
 import fr.ynov.dap.client.service.CalendarService;
 import fr.ynov.dap.client.service.ContactService;
@@ -36,7 +32,7 @@ public final class App {
     /**
      * Logger instance.
      */
-    static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Default method called on launched.
@@ -64,7 +60,15 @@ public final class App {
                 showUserInformations(userId);
                 break;
             case "add":
-                addUserAccount(userId);
+                if (args.length >= 2) {
+                    String accountName = args[2];
+                    addGoogleAccount(accountName, userId);
+                } else {
+                    showError();
+                }
+                break;
+            case "create":
+                createNewAccount(userId);
                 break;
             default:
                 showError();
@@ -103,52 +107,56 @@ public final class App {
                 + "- To view user's information : java -jar ksb-client.jar [view] <userId>\n"
                 + "\tor java -jar ksb-client.jar <userId>";
 
-        writeErrorLine(errorMsg);
+        writeErrorLine(errorMsg, null);
+
+    }
+
+    /**
+     * Create a new user from userKey parameter.
+     * @param userKey User's key
+     */
+    private static void createNewAccount(final String userKey) {
+
+        AccountService accSrv = new AccountService();
+
+        try {
+
+            accSrv.createAccount(userKey);
+
+            writeLine("You have created a new account !");
+
+        } catch (IOException e) {
+
+            writeErrorLine("An error occurred : %s", e, e.getMessage());
+
+        } catch (ServerSideException e) {
+
+            writeErrorLine("An error occurred : %s", e, e.getMessage());
+
+        }
 
     }
 
     /**
      * Use AccountService to log new user.
      * @param userId User id of user.
+     * @param accountName User account name.
+     * @throws URISyntaxException Exception
      * @throws ServerSideException Exception returned by server
      * @throws IOException Exception
      */
-    private static void addUserAccount(final String userId) {
+    private static void addGoogleAccount(final String accountName, final String userId) {
 
         AccountService accSrv = new AccountService();
 
         try {
 
-            LoginResponseInDto inDto = accSrv.addAccount(userId);
-            LoginStatusEnum currentStatus = LoginStatusEnum.getStatusFromInt(inDto.getStatus());
-
-            if (currentStatus == LoginStatusEnum.ERROR) {
-
-                writeErrorLine("An error occurred during your connection. Please try again later.");
-
-                return;
-
-            }
-
-            if (currentStatus == LoginStatusEnum.ALREADY_ADDED) {
-
-                writeLine("Your account has already been added.");
-
-            } else {
-
-                writeLine("You will be redirect to your web browser. Please log in.");
-
-                URI redirectUrl = new URI(inDto.getUrl());
-
-                Desktop.getDesktop().browse(redirectUrl);
-
-            }
+            accSrv.addGoogleAccount(accountName, userId);
 
         } catch (URISyntaxException e) {
 
-            //TODO sik by Djer Comme tu Log dans writeErrrorLine, la pile de l'excpetion est "perdue".
-            // Surcharge avec une méthode acceptant une exception ?
-            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e.getMessage());
+            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e,
+                    e.getMessage());
 
         } catch (IOException e) {
 
@@ -156,7 +164,7 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
                     e.getMessage());
 
         }
@@ -183,7 +191,7 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
                     e.getMessage());
 
         }
@@ -232,7 +240,8 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : ", e.getMessage());
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : ", e,
+                    e.getMessage());
 
         }
 
@@ -258,7 +267,7 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", null,
                     e.getMessage());
 
         }
@@ -278,10 +287,15 @@ public final class App {
      * Write error message on console / terminal. Write on log also.
      * @param msg Message to write
      * @param args Arguments for formats
+     * @param exception Exception that occurred
      */
-    private static void writeErrorLine(final String msg, final Object... args) {
+    private static void writeErrorLine(final String msg, final Exception exception, final Object... args) {
 
-        LOGGER.error(msg);
+        if (exception == null) {
+            LOGGER.error(msg);
+        } else {
+            LOGGER.error(msg, exception);
+        }
 
         System.err.format(msg, args);
 
@@ -293,7 +307,7 @@ public final class App {
      */
     private static void writeDefaultError(final String error) {
 
-        writeErrorLine("An error occurred. Please try again later : %s", error);
+        writeErrorLine("An error occurred. Please try again later : %s", null, error);
 
     }
 

@@ -6,7 +6,6 @@ import java.security.GeneralSecurityException;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
@@ -17,30 +16,12 @@ import com.google.api.services.oauth2.model.Userinfoplus;
  *
  */
 @Service
-public class AccountService extends GoogleAPIService {
+public class AccountService extends GoogleAPIService<Oauth2> {
 
-    /**
-     * Create new OAuth service for user.
-     * @param userId Current user
-     * @return OAuth service
-     * @throws IOException Exception
-     * @throws GeneralSecurityException Thrown when a security exception occurred.
-     */
-    public Oauth2 getService(final String userId) throws GeneralSecurityException, IOException {
-
-        Credential cdt = getCredential(userId);
-
-        if (cdt != null) {
-
-            final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            final String appName = getConfig().getApplicationName();
-
-            return new Oauth2.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
-
-        }
-
-        return null;
-
+    @Override
+    protected final Oauth2 getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
+            final String appName) {
+        return new Oauth2.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
     }
 
     /**

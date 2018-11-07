@@ -21,7 +21,6 @@ public abstract class BaseController {
     /**
      * Logger instance.
      */
-  //TODO sik by Djer il serait bien en "static final", même s'il dépend du "className" des enfants.
     private Logger logger = LogManager.getLogger(getClassName());
 
     /**
@@ -50,9 +49,6 @@ public abstract class BaseController {
 
         ExceptionOutDto response = new ExceptionOutDto(ex.getLocalizedMessage());
 
-        //TODO sik by Djer le "LocalizedMessage" est une "fausse bonne idée", à la limite si tu dois
-        // l'afficher à l'utilisateur (et encore)
-        //Dans tous les cas, passe la cause en deuxième paramètre du "error" pour avoir la pile dans la LOG.
         getLogger().error(ex.getLocalizedMessage());
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

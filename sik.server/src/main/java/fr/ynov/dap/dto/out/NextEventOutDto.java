@@ -39,14 +39,13 @@ public class NextEventOutDto {
     /**
      * Default constructors.
      * @param evnt Next event returned by Google's Calendar API
-     * @param userEmail Current user Id
      */
-    public NextEventOutDto(final CalendarEvent evnt, final String userEmail) {
+    public NextEventOutDto(final CalendarEvent evnt) {
         this.setSummary(evnt.getSubject());
         this.setStartingDate(evnt.getStartDate());
         this.setEndingDate(evnt.getEndDate());
         this.setStatus(evnt.getStatus().getValue());
-        this.setUserStatus(evnt.getStatusForAttendee(userEmail).getValue());
+        this.setUserStatus(evnt.getCurrentUserStatus().getValue());
     }
 
     /**

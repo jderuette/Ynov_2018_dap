@@ -20,11 +20,26 @@ public class CalendarEvent {
     private Event event;
 
     /**
+     * Google account email.
+     */
+    private String googleUserEmail;
+
+    /**
+     * Current user status.
+     */
+    private AttendeeEventStatusEnum currentUserStatus;
+
+    /**
      * Default constructor.
      * @param evnt Current Event from Google API
+     * @param userEmail Current user email
      */
-    public CalendarEvent(final Event evnt) {
+    public CalendarEvent(final Event evnt, final String userEmail) {
         this.event = evnt;
+        this.googleUserEmail = userEmail;
+        if (googleUserEmail != null) {
+            this.setCurrentUserStatus(getStatusForAttendee(googleUserEmail));
+        }
     }
 
     /**
@@ -68,17 +83,26 @@ public class CalendarEvent {
 
     /**
      * Return status for a particular attendee of current event.
-     * @param userEmail Current user email
+     * @param userMail user email
      * @return User's status for the current event
      */
-    public AttendeeEventStatusEnum getStatusForAttendee(final String userEmail) {
+    public AttendeeEventStatusEnum getStatusForAttendee(final String userMail) {
 
-        //TODO sik by Djer Bonne aproche ! Mais tu as oublié le cas "organisateur".
         if (event == null) {
             return AttendeeEventStatusEnum.UNKNOWN;
         }
 
-        Optional<EventAttendee> attendee = event.getAttendees().stream().filter(a -> a.getEmail().equals(userEmail))
+        if (event.getCreator() != null) {
+            if (event.getCreator().getEmail().equals(userMail)) {
+                return AttendeeEventStatusEnum.OWNER;
+            }
+        }
+
+        if (event.getAttendees() == null) {
+            return AttendeeEventStatusEnum.UNKNOWN;
+        }
+
+        Optional<EventAttendee> attendee = event.getAttendees().stream().filter(a -> a.getEmail().equals(userMail))
                 .findFirst();
 
         if (attendee.isPresent()) {
@@ -98,6 +122,20 @@ public class CalendarEvent {
 
         return AttendeeEventStatusEnum.UNKNOWN;
 
+    }
+
+    /**
+     * @return the currentUserStatus
+     */
+    public AttendeeEventStatusEnum getCurrentUserStatus() {
+        return currentUserStatus;
+    }
+
+    /**
+     * @param val the currentUserStatus to set
+     */
+    public void setCurrentUserStatus(final AttendeeEventStatusEnum val) {
+        this.currentUserStatus = val;
     }
 
 }

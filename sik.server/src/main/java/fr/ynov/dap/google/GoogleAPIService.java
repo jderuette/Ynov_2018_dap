@@ -13,8 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -32,15 +30,15 @@ import fr.ynov.dap.exception.NoConfigurationException;
 
 /**
  * Default service to manage API.
+ * @param <T> Type of service we use.
  * @author Kévin Sibué
  *
  */
-public abstract class GoogleAPIService {
+public abstract class GoogleAPIService<T> {
 
     /**
      * Logger instance.
      */
-    //TODO sik by Djer il serait bien en "static final", même s'il dépend du "className" des enfants.
     private Logger logger = LogManager.getLogger(getClassName());
 
     /**
@@ -57,16 +55,23 @@ public abstract class GoogleAPIService {
     /**
      * Store all scopes needed.
      */
-    //TODO sik by Djer Il pourrai rester static final, mais il faudra utiliser un "static initializer".
-    // les "static initializer" sont a éviter, mais pas banni pour autant.
-    //Tu peux jetter un oeil ici : https://stackoverflow.com/questions/335311/static-initializer-in-java
-    private List<String> allScopes;
+    private static final List<String> ALL_SCOPES;
 
     /**
-     * Default constructor.
+     * Init service.
+     * Add every scopes needed add to scopes list.
+     * Add this time the following scopes are added :
+     * - Gmail Label
+     * - Calendar ReadOnly
+     * - Contact ReadOnly
+     * - UserInfo Email
      */
-    public GoogleAPIService() {
-        this.init();
+    static {
+        ALL_SCOPES = new ArrayList<String>();
+        ALL_SCOPES.add(GmailScopes.GMAIL_LABELS);
+        ALL_SCOPES.add(CalendarScopes.CALENDAR_READONLY);
+        ALL_SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+        ALL_SCOPES.add(Oauth2Scopes.USERINFO_EMAIL);
     }
 
     /**
@@ -102,32 +107,15 @@ public abstract class GoogleAPIService {
     }
 
     /**
-     * Init service.
-     * Add every scopes needed add to scopes list.
-     * Add this time the following scopes are added :
-     * - Gmail Label
-     * - Calendar ReadOnly
-     * - Contact ReadOnly
-     * - UserInfo Email
-     */
-    public void init() {
-        allScopes = new ArrayList<String>();
-        allScopes.add(GmailScopes.GMAIL_LABELS);
-        allScopes.add(CalendarScopes.CALENDAR_READONLY);
-        allScopes.add(PeopleServiceScopes.CONTACTS_READONLY);
-        allScopes.add(Oauth2Scopes.USERINFO_EMAIL);
-    }
-
-    /**
      * Retrieve credential for userId.
      * If an error occurred (e.g. Bad credential, IO error) return null.
-     * @param userId of user
+     * @param gAccountName of user
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws NoConfigurationException Thrown when no configuration found
      * @return User's credential
      */
-    protected Credential getCredential(final String userId)
+    protected Credential getCredential(final String gAccountName)
             throws IOException, GeneralSecurityException, NoConfigurationException {
 
         if (getConfig() == null) {
@@ -138,8 +126,7 @@ public abstract class GoogleAPIService {
 
         GoogleAuthorizationCodeFlow flow = getFlows();
 
-        //TODO sik by Djer Inutile en mode "Web", un simple flow.loadCrednetial(userId) est mieux.
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
+        return flow.loadCredential(gAccountName);
 
     }
 
@@ -170,8 +157,33 @@ public abstract class GoogleAPIService {
         FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
                 new File(getConfig().getDatastoreDirectory() + File.separator + tokenFile));
 
-        return new GoogleAuthorizationCodeFlow.Builder(httpTransport, getJsonFactory(), clientSecrets, allScopes)
+        return new GoogleAuthorizationCodeFlow.Builder(httpTransport, getJsonFactory(), clientSecrets, ALL_SCOPES)
                 .setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
+
+    }
+
+    /**
+     * Return service.
+     * @param userId User id
+     * @return Service
+     * @throws GeneralSecurityException Exception
+     * @throws IOException Exception
+     * @throws NoConfigurationException Exception
+     */
+    public T getService(final String userId) throws NoConfigurationException, IOException, GeneralSecurityException {
+
+        Credential cdt = getCredential(userId);
+
+        if (cdt != null) {
+
+            final String appName = getConfig().getApplicationName();
+            final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+            return getGoogleClient(httpTransport, cdt, appName);
+
+        }
+
+        return null;
 
     }
 
@@ -180,5 +192,14 @@ public abstract class GoogleAPIService {
      * @return Class name
      */
     protected abstract String getClassName();
+
+    /**
+     * Return GoogleClient instance.
+     * @param httpTransport HttpTransport instance
+     * @param cdt Credential instance
+     * @param appName Application Name
+     * @return Instance of GoogleClient
+     */
+    protected abstract T getGoogleClient(NetHttpTransport httpTransport, Credential cdt, String appName);
 
 }

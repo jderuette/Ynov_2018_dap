@@ -7,37 +7,57 @@ import fr.ynov.dap.utils.StrUtils;
  * @author Kévin Sibué
  *
  */
-//TODO sik by Djer Dans la doc tu indique que c'est configurable, mais pas vraiment, il faudrait recompiler/builder.
-// Pour que ca soit parémètrable par un "admin system" il faut que tu lui laisse la possibilité de le modifier.
-// soit via paramètre de ligne de commande (pas idéal sur un "serveur")
-// Tu peux uasis jetter un oeil du coté de "spring properties" : https://www.baeldung.com/properties-with-spring
 public class Config {
-    //TODO sik by Djer En general on évite les "chaine magique". On préfère créer des constantes pour "documenter".
+
+    /**
+     * Default config for oAuth2Callback.
+     */
+    private static final String OAUTH_2_CALLBACK_URL = "/oAuth2Callback";
+
+    /**
+     * Default config for credentialsFolder.
+     */
+    private static final String CREDENTIALS_FOLDER = "dap";
+
+    /**
+     * Default config for client secret dir.
+     */
+    private static final String CLIENT_SECRET_DIR = "/web_credentials.json";
+
+    /**
+     * Default config for application name.
+     */
+    private static final String APPLICATION_NAME = "HoC DaP";
+
+    /**
+     * Default config for datastore directory.
+     */
+    private static final String DATASTORE_DIRECTORY = System.getProperty("user.home");
 
     /**
      * Store OAuth2 callback url.
      */
-    private String oAuth2CallbackUrl = "/oAuth2Callback";
+    private String oAuth2CallbackUrl = OAUTH_2_CALLBACK_URL;
 
     /**
      * Store credentials folder.
      */
-    private String credentialsFolder = "dap";
+    private String credentialsFolder = CREDENTIALS_FOLDER;
 
     /**
      * Store filename of credentials.
      */
-    private String clientSecretDir = "/web_credentials.json";
+    private String clientSecretDir = CLIENT_SECRET_DIR;
 
     /**
      * Store application name.
      */
-    private String applicationName = "HoC DaP";
+    private String applicationName = APPLICATION_NAME;
 
     /**
      * Store datastore directory path.
      */
-    private String datastoreDirectory = System.getProperty("user.home");
+    private String datastoreDirectory = DATASTORE_DIRECTORY;
 
     /**
      * Default constructor.
