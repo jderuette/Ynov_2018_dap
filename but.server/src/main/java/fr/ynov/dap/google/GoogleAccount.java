@@ -32,9 +32,7 @@ public class GoogleAccount extends GoogleService {
     /**
      * Logger for the class.
      */
-    //TODO but by Djer Logger generalement en static (pas la peine d'en avoir un par instance)
-    // final (pseudo-référence non modifiable)
-    private Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     /**
      * Index of first char for sensible data.
@@ -58,7 +56,7 @@ public class GoogleAccount extends GoogleService {
             final HttpSession session) throws ServletException {
         final String decodedCode = extracCode(request);
 
-        final String redirectUri = buildRedirectUri(request, getConfig().getoAuth2CallbackUrl());
+        final String redirectUri = buildRedirectUri(request, getConfig().getOAuth2CallbackUrl());
 
         final String userId = getUserid(session);
         try {
@@ -71,9 +69,9 @@ public class GoogleAccount extends GoogleService {
             }
             if (credential.getRefreshToken() != null) {
                 logger.info("Refresh token is not null");
-            } else {
+              } else {
                 logger.info("Refresh token is null!");
-            }
+              }
 
             if (logger.isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
@@ -87,7 +85,6 @@ public class GoogleAccount extends GoogleService {
             throw new ServletException("Error while trying to conenct Google Account");
         }
 
-        //TODO but by Djer Es-tu sure d'avoir un mapping sur / ?
         return "redirect:/";
     }
 
@@ -173,7 +170,7 @@ public class GoogleAccount extends GoogleService {
             } else {
                 // redirect to the authorization flow
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-                authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfig().getoAuth2CallbackUrl()));
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfig().getOAuth2CallbackUrl()));
                 // store userId in session for CallBack Access
                 session.setAttribute("userId", userId);
                 response = "redirect:" + authorizationUrl.build();

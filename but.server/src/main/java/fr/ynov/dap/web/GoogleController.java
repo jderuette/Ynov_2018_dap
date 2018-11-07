@@ -34,7 +34,8 @@ public class GoogleController {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<String> exceptionHandler(final Exception e) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body("{\"code\": 400, \"message\": \"" + e.getMessage() + "\"}");
     }
 }

@@ -23,9 +23,7 @@ public class GooglePeopleService extends GoogleService {
     /**
      * Logger for the class.
      */
-    //TODO but by Djer Logger generalement en static (pas la peine d'en avoir un par instance)
-    // final (pseudo-référence non modifiable)
-    private Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     /**
      * Connect to Google People Service.
@@ -35,7 +33,7 @@ public class GooglePeopleService extends GoogleService {
      * @throws GeneralSecurityException Google security exception
      */
     public PeopleService getService(final String userId) throws IOException, GeneralSecurityException {
-        this.logger.info("Generate service People for user '" + userId + "'");
+        logger.info("Generate service People for user '" + userId + "'");
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Credential cred = getCredentials(userId);
         PeopleService service = new PeopleService.Builder(httpTransport, this.getJsonFactory(), cred)
@@ -52,16 +50,14 @@ public class GooglePeopleService extends GoogleService {
      * @throws IOException error server response google
      */
     public int countContacts(final String userId) throws IOException, GeneralSecurityException {
-        this.logger.info("Get number of contacts for user '" + userId + "'");
-        //TODO but by Djer Evite se genre de log sans contexte !
-        this.logger.info(this.getConfig().getCredentialsFilePath());
+        logger.info("Get number of contacts for user '" + userId + "'");
+        int membersCount = 0;
         PeopleService service = this.getService(userId);
         ContactGroup allContacts = service.contactGroups().get("contactGroups/all").execute();
 
         if (allContacts.getMemberCount() != null) {
-            //TODO but by Djer Evite de multiple return dans une même méthode
-            return allContacts.getMemberCount();
+            membersCount = allContacts.getMemberCount();
         }
-        return 0;
+        return membersCount;
     }
 }

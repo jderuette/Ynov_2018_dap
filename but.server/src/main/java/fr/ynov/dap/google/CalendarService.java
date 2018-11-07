@@ -25,9 +25,7 @@ public class CalendarService extends GoogleService {
     /**
      * Logger for the class.
      */
-    //TODO but by Djer Logger generalement en static (pas la peine d'en avoir un par instance)
-    // final (pseudo-référence non modifiable)
-    private Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     /**
      * Connect to Google Calendar Service.
@@ -37,7 +35,7 @@ public class CalendarService extends GoogleService {
      * @throws GeneralSecurityException Google security exception
      */
     public Calendar getService(final String userId) throws IOException, GeneralSecurityException {
-        this.logger.info("Generate service Calendar for user '" + userId + "'");
+        logger.info("Generate service Calendar for user '" + userId + "'");
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Calendar service = new Calendar.Builder(httpTransport, this.getJsonFactory(), getCredentials(userId))
                 .setApplicationName(this.getConfig().getApplicationName()).build();

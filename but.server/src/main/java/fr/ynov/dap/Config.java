@@ -103,7 +103,7 @@ public class Config {
     /**
      * @return the oAuth2 callback url
      */
-    public String getoAuth2CallbackUrl() {
+    public String getOAuth2CallbackUrl() {
         return "/oAuth2Callback";
     }
 

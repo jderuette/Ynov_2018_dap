@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * Manage Google Service.
  * @author thibault
@@ -41,15 +40,23 @@ public abstract class GoogleService {
     /**
      * Json Factory for Google Service.
      */
-    //TODO but by Djer Pourrai être final (pas la peine d'en avoir un par instance, même si on est dans un Singleton)
-    private final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /**
      * Logger for the class.
      */
-    //TODO but by Djer Logger generalement en static (pas la peine d'en avoir un par instance)
-    // final (pseudo-référence non modifiable)
     private Logger logger = LogManager.getLogger();
+
+    /**
+     * List of scopes google.
+     */
+    private static List<String> scopes = Arrays.asList(
+            GmailScopes.GMAIL_LABELS,
+            GmailScopes.GMAIL_READONLY,
+            CalendarScopes.CALENDAR_READONLY,
+            PeopleServiceScopes.CONTACTS_READONLY,
+            PeopleServiceScopes.PLUS_LOGIN
+        );
 
     /**
      * Creates an authorized Credential object.
@@ -58,25 +65,11 @@ public abstract class GoogleService {
      * @throws IOException If the credentials.json file cannot be found.
      * @throws GeneralSecurityException Security on Google API
      */
-    protected Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
+    protected Credential getCredentials(final String userKey)
+            throws IOException, GeneralSecurityException {
         this.logger.info("Generate credentials Google API for user '" + userKey + "'");
         GoogleAuthorizationCodeFlow flow = this.getFlow();
-        Credential cre = flow.loadCredential(userKey);
-        if (cre == null) {
-            //TODO but by Djer Est-ce que les credential t'auraient embeter ne mode Web par hasard ?
-            // Je me permet quand même de te préciser que cette log n'est pas très contextualisée
-            logger.error("ERRRREEEEEEEEEEEEUUUUUUUUUUUUUUURRRRRRRRR");
-            throw new IOException("JACU");
-        } else {
-            logger.info(cre.getExpiresInSeconds());
-            logger.info(cre.getAccessToken());
-            logger.info(cre.getRefreshToken());
-            //TODO but by Djer Attention refreshToken() demande un nouveau token ! (si le token actuel est expiré)
-            // Enleve cette log une fois que tu as vue ce que tu voulais voir !
-            logger.info(cre.refreshToken());
-            logger.info(cre.getRefreshToken());
-        }
-        return cre;
+        return flow.loadCredential(userKey);
     }
 
     /**
@@ -85,21 +78,22 @@ public abstract class GoogleService {
      * @throws IOException If the credentials.json file cannot be found.
      * @throws GeneralSecurityException Security on Google API
      */
-    protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+    protected GoogleAuthorizationCodeFlow getFlow()
+            throws IOException, GeneralSecurityException {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         this.logger.info("Generate new flow with scopes for Google API.");
 
         // Load client secrets.
         FileInputStream in = new FileInputStream(this.config.getCredentialsFilePath());
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
-                new InputStreamReader(in, Charset.forName("UTF-8")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets
+                .load(JSON_FACTORY, new InputStreamReader(in, Charset.forName("UTF-8")));
 
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory,
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY,
                 clientSecrets, getScopes())
-                        .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(this.config.getTokenDirPath())))
+                        .setDataStoreFactory(
+                                new FileDataStoreFactory(new java.io.File(this.config.getTokenDirPath())))
                         .setAccessType("offline").build();
-
         return flow;
     }
 
@@ -114,7 +108,7 @@ public abstract class GoogleService {
      * @return the jsonFactory
      */
     protected JsonFactory getJsonFactory() {
-        return jsonFactory;
+        return JSON_FACTORY;
     }
 
     /**
@@ -122,13 +116,7 @@ public abstract class GoogleService {
      * @return array of scopes
      */
     private List<String> getScopes() {
-        //TODO but by Djer Créer une nouvelle Liste à chaque "get" n'est pas top
-        List<String> scopes = new ArrayList<String>();
-        scopes.add(GmailScopes.GMAIL_LABELS);
-        scopes.add(GmailScopes.GMAIL_READONLY);
-        scopes.add(CalendarScopes.CALENDAR_READONLY);
-        scopes.add(PeopleServiceScopes.CONTACTS_READONLY);
-        scopes.add(PeopleServiceScopes.PLUS_LOGIN);
+
         return scopes;
     }
 }
