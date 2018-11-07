@@ -29,6 +29,6 @@ public class ContactController {
      */
     @RequestMapping(value = "/{userId}")
     public ContactModel getNumberOfContacts(@PathVariable final String userId) throws Exception {
-        return contactService.getPeople(userId);
+        return contactService.getContactsFromGoogle(userId);
     }
 }

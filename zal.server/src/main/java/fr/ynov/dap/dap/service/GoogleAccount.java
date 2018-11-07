@@ -29,14 +29,12 @@ import com.google.api.client.http.GenericUrl;
  */
 @Service
 public class GoogleAccount extends GoogleService {
-    //TODO zal by Djer Afficher quelques caractere serait utile (du 3ème au 10ème ?)
-	private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
-	private static final int SENSIBLE_DATA_LAST_CHAR = 0;
+	private static final int SENSIBLE_DATA_FIRST_CHAR = 2;
+	private static final int SENSIBLE_DATA_LAST_CHAR = 9;
 	/**
 	 * logger for log.
 	 */
-	//TODO zal by Djer Devrait être static FINAL (et en majuscule du coup).
-	private static Logger logger = LogManager.getLogger(GoogleAccount.class);
+	private static final Logger LOGGER = LogManager.getLogger(GoogleAccount.class);
 	/**
      * Handle the Google response.
      * @param request The HTTP Request
@@ -46,10 +44,8 @@ public class GoogleAccount extends GoogleService {
      * @throws ServletException When Google account could not be connected to DaP.
 	 * @throws GeneralSecurityException
      */
-    @RequestMapping("/oAuth2Callback")
-    //TODO zal by Djer un RequestMapping sur un Service ? Devrait être transféré dans le controller !
-    public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
-            final HttpSession session) throws ServletException, GeneralSecurityException {
+    public String oAuthCallback(String code, HttpServletRequest request,
+            HttpSession session) throws ServletException, GeneralSecurityException {
         final String decodedCode = extracCode(request);
 
         final String redirectUri = buildRedirectUri(request, getCfg().getoAuth2CallbackUrl());
@@ -61,19 +57,19 @@ public class GoogleAccount extends GoogleService {
 
             final Credential credential = flow.createAndStoreCredential(response, userId);
             if (null == credential || null == credential.getAccessToken()) {
-                logger.warn("Trying to store a NULL AccessToken for user : " + userId);
+                LOGGER.warn("Trying to store a NULL AccessToken for user : " + userId);
             }
 
-            if (logger.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
-                	logger.debug("New user credential stored with userId : " + userId + "partial AccessToken : "
+                	LOGGER.debug("New user credential stored with userId : " + userId + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
                                     SENSIBLE_DATA_LAST_CHAR));
                 }
             }
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
-        	logger.error("Exception while trying to store user Credential", e);
+        	LOGGER.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
 
@@ -94,7 +90,7 @@ public class GoogleAccount extends GoogleService {
         }
 
         if (null == userId) {
-        	logger.error("userId in Session is NULL in Callback");
+        	LOGGER.error("userId in Session is NULL in Callback");
             throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
         }
         return userId;
@@ -119,7 +115,7 @@ public class GoogleAccount extends GoogleService {
         }
 
         if (null != responseUrl.getError()) {
-        	logger.error("Error when trying to add Google acocunt : " + responseUrl.getError());
+        	LOGGER.error("Error when trying to add Google acocunt : " + responseUrl.getError());
             throw new ServletException("Error when trying to add Google acocunt");
         }
         return decodeCode;
@@ -169,7 +165,7 @@ public class GoogleAccount extends GoogleService {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
-            logger.error("Error while loading credential (or Google Flow)", e);
+            LOGGER.error("Error while loading credential (or Google Flow)", e);
         }
         return response;
     }

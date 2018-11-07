@@ -30,25 +30,19 @@ public class CalendarService extends GoogleService {
 	 * @return CalendarModel
 	 * @throws Exception *Exception*
 	 */
-    //TODO zal by Djer Nom de méthode pas très claire
-    public CalendarModel resultCalendar(final String userId) throws Exception {
-    	//FIXME zal by Djer tu as une Config injecté dans le parent, pourquoi l'écraser ici ?
-        Config cfg = new Config();
+    public CalendarModel getCalendarEvents(final String userId) throws Exception {
         // Build a new authorized API client service.
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Calendar service = new Calendar.Builder(
-        		httpTransport, cfg.getJsonFactory(),
-        		getCredentials(httpTransport,
-        				cfg.getCredentialsFilePath(),
-        				userId))
-                .setApplicationName(cfg.getApplicationName())
+        		httpTransport, getCfg().getJsonFactory(),
+        		getCredentials(httpTransport, userId))
+                .setApplicationName(getCfg().getApplicationName())
                 .build();
 
         // List the next 10 events from the primary calendar.
         DateTime now = new DateTime(System.currentTimeMillis());
         Events events = service.events().list("primary")
-                //TODO zal by Djer Comme tu n'es intéressé que par un, tu peux changer le "maxResult"
-                .setMaxResults(10)
+                .setMaxResults(1)
                 .setTimeMin(now)
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
@@ -56,9 +50,7 @@ public class CalendarService extends GoogleService {
         List<Event> items = events.getItems();
         CalendarModel calendar;
         if (items.isEmpty()) {
-            //TODO zal by Djer Evite les multiples return dans une méthode.
-            // Tu pourria renvoyer une instance de ton modele "vide" ? Ou avec un attribut spécial "no Data" ?
-            return null;
+            calendar = new CalendarModel("no Data");
         } else {
             System.out.println("Upcoming events");
             Event event = items.get(0);
@@ -67,7 +59,7 @@ public class CalendarService extends GoogleService {
             		new Date(event.getStart().getDateTime().getValue()),
             		new Date(event.getEnd().getDateTime().getValue()),
             		event.getStatus());
-            return calendar;
         }
+        return calendar;
     }
 }

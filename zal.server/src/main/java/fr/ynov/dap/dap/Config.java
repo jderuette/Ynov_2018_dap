@@ -14,13 +14,13 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
  */
 //TODO zal by Djer Prinicpe "Zero Conf" à revoir, ici c'est du "no Conf" (à minima il faudrait les setter)
 public class Config {
-    //TODO zal by Djer On évite les "chaine magique", on préfère les mettre en constantes
+	
+	private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
   
     /** The application name. */
-    private String applicationName = "Gmail API Java Quickstart";
+    private String applicationName = APPLICATION_NAME ;
    
     /** The json factory. */
-    //TODO zal by Djer Evite de mélanger de la conf "admin system" et "developpeur"
     private JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
    
     /** The token directory path. */
@@ -30,7 +30,6 @@ public class Config {
     private final String credentialFilePath = "/credentials.json";
     
     /** The scopes. */
-  //TODO zal by Djer Evite de mélanger de la conf "admin system" et "developpeur"
     private final List<String> scopes = new ArrayList<String>();
 
     

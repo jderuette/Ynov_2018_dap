@@ -1,7 +1,5 @@
 package fr.ynov.dap.dap.service;
 
-import java.io.IOException;
-
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -22,7 +20,7 @@ public class ContactService extends GoogleService {
 	public PeopleService getPeopleGoogleService(final String userId) throws Exception{
 		 final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	     PeopleService service = new PeopleService.Builder(httpTransport, getCfg().getJsonFactory(),
-	    		 getCredentials(httpTransport, getCfg().getCredentialsFilePath(), userId))
+	    		 getCredentials(httpTransport, userId))
 	             .setApplicationName(getCfg().getApplicationName())
 	             .build();
 	             return service;
@@ -33,8 +31,7 @@ public class ContactService extends GoogleService {
 	 * @return ContactModel
 	 * @throws Exception *Exception*
 	 */
-	//TODO zal by Djer Nom de méthode pas très claire.
-	public ContactModel getPeople(final String userId) throws Exception {
+	public ContactModel getContactsFromGoogle(final String userId) throws Exception {
 		PeopleService service = getPeopleGoogleService(userId);
 		ListConnectionsResponse response = service.people().connections()
 	             .list("people/me")

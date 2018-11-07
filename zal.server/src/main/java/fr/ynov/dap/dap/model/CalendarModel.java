@@ -106,4 +106,9 @@ public class CalendarModel {
 		this.dateOfStart = dateOfStart;
 		this.choice = choice;
 	}
+	
+	public CalendarModel(String noData) {
+		// TODO Auto-generated method stub
+		this.subject = noData;
+	}
 }

@@ -47,7 +47,7 @@ public class GmailService extends GoogleService {
 		try {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 			service = new Gmail.Builder(httpTransport, getCfg().getJsonFactory(),
-		        		getCredentials(httpTransport, getCfg().getCredentialsFilePath(), userId))
+		        		getCredentials(httpTransport, userId))
 		                .setApplicationName(getCfg().getApplicationName())
 		                .build();
 		} catch (GeneralSecurityException | IOException e) {
@@ -62,8 +62,7 @@ public class GmailService extends GoogleService {
      * @throws IOException
      * @throws GeneralSecurityException
      */
-    //TODO zal by Djer "getMail" qui renvoie un Label ?? La Javadoc n'éclaire pas beaucoups non plus.
-   public final Label getMail(final String userId) {
+   public final Label getLabel(final String userId) {
     	Gmail service;
     	Label label = null;
 		try {
@@ -81,9 +80,7 @@ public class GmailService extends GoogleService {
     * @return string
     */
     public final MailModel getMailInboxTotal(final String userId) {
-        //TODO zal by Djer Ce commentaire semble innaproprié
-        // Build a new authorized API client service.
-        Label label = getMail(userId);
+        Label label = getLabel(userId);
         return new MailModel(label.getMessagesTotal(), null, label.getName());
     }
     /**
@@ -92,7 +89,7 @@ public class GmailService extends GoogleService {
      * @return string
      */
     public final MailModel getMailInBoxUnread(final String userId) {
-    	Label label = getMail(userId);
+    	Label label = getLabel(userId);
     	return new MailModel(label.getMessagesTotal(), label.getMessagesUnread(), label.getName());
     }
 

@@ -27,6 +27,6 @@ public class CalendarController {
 	 */
 	@RequestMapping(value= "/next/{userId}")
 	public CalendarModel getMailInboxUnread(@PathVariable final String userId) throws Exception {
-		return calendarService.resultCalendar(userId);
+		return calendarService.getCalendarEvents(userId);
 	}
 }

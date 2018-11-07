@@ -24,13 +24,11 @@ import fr.ynov.dap.dap.Config;
  * Google Service.
  * @author loic
  */
-@Controller
 public class GoogleService {
 	/**
 	 * logger for log
 	 */
-  //TODO zal by Djer Devrait être static FINAL (et en majuscule du coup).
-    private static Logger logger = LogManager.getLogger(GoogleService.class);
+    private static final Logger LOGGER = LogManager.getLogger(GoogleService.class);
     /**
      * config variable.
      */
@@ -45,55 +43,24 @@ public class GoogleService {
 	 * getter config.
 	 * @return cfg
 	 */
-	//TODO zal by Djer Pouruqoi public ? Protected devrait suffir il me semble.
-	public Config getCfg() {
+	protected Config getCfg() {
 		return cfg;
 	}
-    /**
-     * setter config.
-     * @param scfg *cfg*
-     */
-	//TODO zal by Djer Elle est injecté, tu veux vraiment la liasser modifiable ? (y compris APRES l'initialisation du flow ?)
-	public void setCfg(final Config scfg) {
-		this.cfg = scfg;
-	}
-    /**
-     * setter flow.
-     * @param sflow *flow*
-     */
-	//TODO zal by Djer Pourquoi laisser modifier le flow de l'extérieur ? C'est très risqué ! 
-	public void setFlow(final GoogleAuthorizationCodeFlow sflow) {
-		this.flow = sflow;
-	}
+
 	/**
 	 * get credential for services.
 	 * @param httpTransport *http transport*
 	 * @param path *path of credentials file*
 	 * @param userId *id of user*
 	 * @return Credential
+	 * @throws GeneralSecurityException 
 	 * @throws IOException *IOException*
 	 */
 	protected Credential getCredentials(
-        final NetHttpTransport httpTransport,
-			final String path, final String userId) {
-        // Load client secrets.
-        InputStream in = Config.class.getResourceAsStream(path);
-        GoogleClientSecrets clientSecrets;
+        final NetHttpTransport httpTransport, final String userId) throws IOException, GeneralSecurityException {
         Credential authorize = null;
-        //TODO zal by Djer Code en grosse partie deja dans "getFLow()".
-		try {
-			clientSecrets = GoogleClientSecrets.load(cfg.getJsonFactory(), new InputStreamReader(in));
-			this.flow = new GoogleAuthorizationCodeFlow.Builder(
-	                httpTransport, cfg.getJsonFactory(), clientSecrets, cfg.getScopes())
-	                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTokenDirectoryPath())))
-	                .setAccessType("offline")
-	                .build();
-			//TODO zal by Djer en mode Web AuthorizationCodeInstalledApp n'est pas top. Utilise flow.loadCredential(userId) à la place
-			authorize = new AuthorizationCodeInstalledApp(
-					flow, new LocalServerReceiver()).authorize(userId);
-		} catch (IOException e) {
-			logger.error("Error while get credentials", e);
-		}
+		authorize = new AuthorizationCodeInstalledApp(
+	    getFlow(), new LocalServerReceiver()).authorize(userId);
         return authorize;
     }
 	/**
