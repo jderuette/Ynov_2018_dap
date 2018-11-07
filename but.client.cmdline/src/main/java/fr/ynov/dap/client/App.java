@@ -1,9 +1,5 @@
 package fr.ynov.dap.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -14,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Hello world.
+ * Core of app.
  *
  */
 public class App {
@@ -27,30 +23,6 @@ public class App {
      * Logger for the class.
      */
     private Logger logger = LogManager.getLogger();
-
-    /**
-     * Main launcher of client.
-     * @param args args of command line
-     */
-    public static void main(final String[] args) {
-        App myApp = new App();
-
-        String command = null;
-        String[] finalArgs = args;
-
-        if (args.length > 0) {
-            List<String> listArgs = new ArrayList<String>(Arrays.asList(args));
-            String commandTemp = listArgs.get(listArgs.size() - 1);
-            if (!commandTemp.startsWith("-")) {
-                listArgs.remove(command);
-                command = commandTemp;
-            }
-            finalArgs = listArgs.toArray(new String[0]);
-        }
-
-        //TODO but by Djer Pourquoi créer une instance, de cette même classe, pour au final apeler une méthode static ?
-        myApp.run(finalArgs, command);
-    }
 
     /**
      * Function main of client.
@@ -75,10 +47,7 @@ public class App {
             }
             runCommand(command, line);
         } catch (ParseException exp) {
-            //TODO but by Djer Evite de mettre le message de l'exeption dans "ton" message.
-            // Utilise le deuxième argument du logger.
-            // LE logger affihera le message ET la pile.
-            logger.error("Unexpected exception:" + exp.getMessage());
+            logger.error("Unexpected exception:", exp);
         }
     }
 
