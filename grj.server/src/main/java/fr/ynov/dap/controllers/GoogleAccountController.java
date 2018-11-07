@@ -51,7 +51,7 @@ public class GoogleAccountController extends GoogleHelper {
             } else {
                 // redirect to the authorization flow
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-                authorizationUrl.setRedirectUri(googleAccountService.buildRedirectUri(request, GoogleAccountService.OAUTH_CALLBACK_URL));
+                authorizationUrl.setRedirectUri(googleAccountService.buildRedirectUri(request, OAUTH_CALLBACK_URL));
                 // store userKey in session for CallBack Access
                 session.setAttribute("userKey", userKey);
                 response = "redirect:" + authorizationUrl.build();
