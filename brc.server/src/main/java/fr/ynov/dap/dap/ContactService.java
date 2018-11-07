@@ -21,8 +21,7 @@ import fr.ynov.dap.dap.models.ContactResponse;
 public class ContactService extends GoogleService{
 	
 	/** The logger. */
-    //TODO brc by Djer Si pas de modifier, sera celui de la classe, ton Logger est donc public !!!!
-	static Logger logger = LogManager.getLogger(ContactService.class);
+	private final static Logger logger = LogManager.getLogger(ContactService.class);
 	
 	/**
 	 * Result contact.
@@ -35,8 +34,8 @@ public class ContactService extends GoogleService{
 	public ContactResponse resultContact(String userId) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, cfg.getJSON_FACTORY(), getCredentials(HTTP_TRANSPORT, cfg.CREDENTIALS_FILE_PATH(), userId))
-                .setApplicationName(cfg.getAPPLICATION_NAME())
+        PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), userId))
+                .setApplicationName(cfg.getApplicationName())
                 .build();
 
         // Request 10 connections.

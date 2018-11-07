@@ -24,10 +24,7 @@ public class CalendarService extends GoogleService {
 		super();
 	}
 	
-	//FIXME brc by Djer Ce logger n'est pas censé être modifié, un final serait mieux
-	//TODO brc by Djer le LogManager.getLogger de Log4J peu être appelé sans paramètre, il va automatique utilisé le nom, qualifié, de la classe.
-	// Tu peux laisser le paramètre pour clarifier, car les autres "LogManager" n'ont en général pas cette fonctionnalité.
-	private static Logger logger = LogManager.getLogger(CalendarService.class);
+	private final static Logger logger = LogManager.getLogger(CalendarService.class);
 	
     /**
      * Result calendar.
@@ -37,13 +34,11 @@ public class CalendarService extends GoogleService {
      * @throws Exception the exception
      */
     public CalendarResponse resultCalendar(final String userId) throws Exception {
-		//TODO brc by Djer Eclipse te dit que ce n'est pas utilisé ... A supprimer ? Bug ?
-        CalendarResponse appointment = null;
     	
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, cfg.getJSON_FACTORY(), getCredentials(HTTP_TRANSPORT, cfg.CREDENTIALS_FILE_PATH(),userId))
-                .setApplicationName(cfg.getAPPLICATION_NAME())
+        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(),userId))
+                .setApplicationName(cfg.getApplicationName())
                 .build();
 
         // List the next 10 events from the primary calendar.
@@ -56,21 +51,22 @@ public class CalendarService extends GoogleService {
                 .execute();
         List<Event> items = events.getItems();
         if (items.isEmpty()) {
-            //TODO brc by Djer Contectualise tes logs, un "for user : + userId" est très utile
-            logger.info("No upcoming events found.");
-            return new CalendarResponse("No upcoming events found.");
+            logger.info("No upcoming events found. for user : " + userId);
+            return new CalendarResponse("No upcoming events found. for user : " + userId);
         } else {
-            //TODO brc by Djer Bien de logger, mais tu devrait en profiter pour mettre des info sur l'event.
-            // Et du coups logger, après le traitement
             logger.info("Upcoming events");
             
             Date start = new Date(items.get(0).getStart().getDateTime().getValue());
             Date end =  new Date(items.get(0).getEnd().getDateTime().getValue());
 	        String summary = items.get(0).getSummary();
 	        String status = items.get(0).getStatus();
-
-	        return new CalendarResponse(summary,start,end,status);
-            
+	        
+	        logger.info("start : " + start);
+	        logger.info("end : " + end);
+	        logger.info("summary : " + summary);
+	        logger.info("status : " + status);
+	        
+	        return new CalendarResponse(summary,start,end,status);   
         }
     }
 }

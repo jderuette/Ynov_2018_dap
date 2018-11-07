@@ -33,9 +33,6 @@ public class GoogleService {
 	/** The flow. */
 	protected GoogleAuthorizationCodeFlow flow;
 	
-	/** The logger. */
-	private static Logger logger = LogManager.getLogger(GoogleService.class);
-	
 	/**
 	 * Gets the credentials.
 	 *
@@ -49,12 +46,12 @@ public class GoogleService {
     // Load client secrets.
 		
     InputStream in = Config.class.getResourceAsStream(path);
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(cfg.getJSON_FACTORY(), new InputStreamReader(in));
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(cfg.getJsonFactory(), new InputStreamReader(in));
 
     // Build flow and trigger user authorization request.
     flow = new GoogleAuthorizationCodeFlow.Builder(
-         HTTP_TRANSPORT, cfg.getJSON_FACTORY(), clientSecrets, cfg.getSCOPES())
-         .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTOKENS_DIRECTORY_PATH())))
+         HTTP_TRANSPORT, cfg.getJsonFactory(), clientSecrets, cfg.getScopes())
+         .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTokensDirectoryPath())))
          .setAccessType("offline")
          .build();
     return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
@@ -70,15 +67,13 @@ public class GoogleService {
 	protected GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
 		
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String path = cfg.CREDENTIALS_FILE_PATH();
+        final String path = cfg.getCredentialsFilePath();
         InputStream in = Config.class.getResourceAsStream(path);
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(cfg.getJSON_FACTORY(), new InputStreamReader(in));
-        //TODO brc by Djer Mais ... ? qu'est-ce qui n'est pas claire dans "secret" !!!?? C'est secret ne le met PAS (en entier) dans les logs !!!!
-        logger.info("secret : " + clientSecrets);
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(cfg.getJsonFactory(), new InputStreamReader(in));
 
         return new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, cfg.getJSON_FACTORY(), clientSecrets, cfg.getSCOPES())
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTOKENS_DIRECTORY_PATH())))
+                HTTP_TRANSPORT, cfg.getJsonFactory(), clientSecrets, cfg.getScopes())
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTokensDirectoryPath())))
                 .setAccessType("offline")
                 .build();
 	}

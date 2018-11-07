@@ -30,8 +30,6 @@ public class Launcher {
      */
     public static void main(String[] args) throws Exception {
     	SpringApplication.run(Launcher.class, args);
-    	//TODO brc by Djer le TODO ci-dessous ne semble plus vrai, à supprimer ! 
-		// TODO Auto-generated method stub
 	} 
 
 }

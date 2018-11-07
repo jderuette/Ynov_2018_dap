@@ -14,6 +14,65 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.0.5.RELEASE</version>
+  </parent>
+  <dependencies>
+  <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-web</artifactId>
+   </dependency>
+   <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+   </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.google.api-client</groupId>
+        <artifactId>google-api-client</artifactId>
+        <version>1.23.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client-jetty</artifactId>
+        <version>1.23.0</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-gmail</artifactId>
+        <version>v1-rev72-1.23.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-calendar</artifactId>
+        <version>v3-rev305-1.23.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-people</artifactId>
+        <version>v1-rev277-1.23.0</version>
+    </dependency>
+    <dependency>
+       <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-api</artifactId>
+         <version>2.9.1</version>
+       </dependency>
+       <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+        <version>2.9.1</version>
+     </dependency>
+  </dependencies>
+  
   <build>
    <plugins>
      <plugin>
@@ -24,7 +83,7 @@
             <dependency>
                 <groupId>com.puppycrawl.tools</groupId>
                 <artifactId>checkstyle</artifactId>
-                <version>3.0.0</version>
+                <version>6.18</version>
             </dependency>
         </dependencies>
      </plugin>
@@ -36,23 +95,22 @@
            <dependency>
              <groupId>net.sourceforge.pmd</groupId>
              <artifactId>pmd-core</artifactId>
-             <!-- TODO brc by Djer la version "3.10.0" de maven-pmd-plugin n'existe pas ! cf doc "mémo PMD"-->
-             <version>3.10.0</version>
+             <version>6.4.0</version>
            </dependency>
            <dependency>
              <groupId>net.sourceforge.pmd</groupId>
              <artifactId>pmd-java</artifactId>
-             <version>3.10.0</version>
+             <version>6.4.0</version>
            </dependency>
            <dependency>
              <groupId>net.sourceforge.pmd</groupId>
              <artifactId>pmd-javascript</artifactId>
-             <version>3.10.0</version>
+             <version>6.4.0</version>
            </dependency>
            <dependency>
              <groupId>net.sourceforge.pmd</groupId>
              <artifactId>pmd-jsp</artifactId>
-             <version>3.10.0</version>
+             <version>6.4.0</version>
            </dependency>
          </dependencies>
        </plugin>
@@ -99,64 +157,7 @@
           </plugin>
    </plugins>
  </build>
- <parent>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-parent</artifactId>
-      <version>2.0.5.RELEASE</version>
-  </parent>
-  <dependencies>
-  <dependency>
-       <groupId>org.springframework.boot</groupId>
-       <artifactId>spring-boot-starter-web</artifactId>
-   </dependency>
-   <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-   </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-	    <groupId>com.google.api-client</groupId>
-	    <artifactId>google-api-client</artifactId>
-	    <version>1.23.0</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.google.oauth-client</groupId>
-	    <artifactId>google-oauth-client-jetty</artifactId>
-	    <version>1.23.0</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>com.google.apis</groupId>
-	    <artifactId>google-api-services-gmail</artifactId>
-	    <version>v1-rev72-1.23.0</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.google.apis</groupId>
-	    <artifactId>google-api-services-calendar</artifactId>
-	    <version>v3-rev305-1.23.0</version>
-	</dependency>
-    <dependency>
-        <groupId>com.google.apis</groupId>
-        <artifactId>google-api-services-people</artifactId>
-        <version>v1-rev277-1.23.0</version>
-    </dependency>
-    <dependency>
-       <groupId>org.apache.logging.log4j</groupId>
-         <artifactId>log4j-api</artifactId>
-         <version>2.9.1</version>
-       </dependency>
-       <dependency>
-         <groupId>org.apache.logging.log4j</groupId>
-         <artifactId>log4j-core</artifactId>
-        <version>2.9.1</version>
-     </dependency>
-
-  </dependencies>
+ 
   
   <reporting>
         <plugins>

@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 public class GmailService extends GoogleService{
 	
 	/** The logger. */
-    //TODO brc by Djer final ? public ?
-	static Logger logger = LogManager.getLogger(GmailService.class);	
+	private final static Logger logger = LogManager.getLogger(GmailService.class);	
 	
     /**
      * Result mail inbox.
@@ -33,15 +32,14 @@ public class GmailService extends GoogleService{
     public GmailResponse resultMailInbox(String userId) throws Exception, IOException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, cfg.getJSON_FACTORY(), getCredentials(HTTP_TRANSPORT, cfg.CREDENTIALS_FILE_PATH(), userId))
-                .setApplicationName(cfg.getAPPLICATION_NAME())
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), userId))
+                .setApplicationName(cfg.getApplicationName())
                 .build();
         // Print the labels in the user's account.
         String user = "me";
         
         Label label = service.users().labels().get(user, "INBOX").execute();
-        //TODO brc by Djer Pourquoi journaliser le UserHome ici ??
-        logger.info("userhome : " + System.getProperty("user.home"));
+      
         logger.info("Nb messages : " + label.getMessagesTotal());
         logger.info("Nb messages unread : " + label.getMessagesUnread());
         

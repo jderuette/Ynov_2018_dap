@@ -18,47 +18,49 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
  * @author clement.brossette
  */
 
-//TODO brc by Djer Le principe "ZeroConf" ne remplace les bonnes pratiques Java sur le nomage des attributs/constantes ! 
 public class Config {
 	
 	/** The application name. */
-    //TODO brc by Djer : si en majuscule = CONSTANTE et devrait static final ! 
-	private String APPLICATION_NAME = "Gmail API Java Quickstart";
+	private String applicationName;
 	
 	/** The json factory. */
-	//TODO brc by Djer Pas top de mélanger de la conf "developpeur" et de la conf "admin systeme"
-	private JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+	private JsonFactory jsonFactory;
     
     /** The tokens directory path. */
-    private String TOKENS_DIRECTORY_PATH = "tokens";
+    private String tokensDirectoryPath;
     
     /** The credentials file path. */
-    private final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private String credentialsFilePath;
     
     /** The scopes. */
-    //TODO brc by Djer Pas top de mélanger de la conf "developpeur" et de la conf "admin systeme"
-    private final List<String> SCOPES = new ArrayList<String>();
-    
-    /** The credentials file path calendar. */
-    //TODO brc by Djer ne semble plus utilisé, supprime le, c'est confusant
-    private final String CREDENTIALS_FILE_PATH_CALENDAR = "/credentials_calandar.json";
+    private List<String> scopes;
     
     /**
      * Instantiates a new config.
      */
     public Config(){
-    	SCOPES.add(CalendarScopes.CALENDAR_READONLY);
-    	SCOPES.add(GmailScopes.GMAIL_LABELS);
-    	SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+    	this.applicationName = "Gmail API Java Quickstart";
+    	this.jsonFactory = JacksonFactory.getDefaultInstance();
+    	this.tokensDirectoryPath  = "tokens";
+    	this.credentialsFilePath  = "/credentials.json";
+    	this.scopes  = new ArrayList<String>();
+    	scopes.add(CalendarScopes.CALENDAR_READONLY);
+    	scopes.add(GmailScopes.GMAIL_LABELS);
+    	scopes.add(PeopleServiceScopes.CONTACTS_READONLY);
     }
     
-    /**
+
+	/**
      * Gets the application name.
      *
      * @return the application name
      */
-    public final String getAPPLICATION_NAME() {
-		return APPLICATION_NAME;
+    public final String getApplicationName() {
+		return applicationName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
 	}
 
 	/**
@@ -66,44 +68,51 @@ public class Config {
 	 *
 	 * @return the json factory
 	 */
-	public final JsonFactory getJSON_FACTORY() {
-		return JSON_FACTORY;
+	public final JsonFactory getJsonFactory() {
+		return jsonFactory;
 	}
-
+	
+	public void setJsonFactory(JsonFactory jsonFactory) {
+		this.jsonFactory = jsonFactory;
+	}
+	
 	/**
 	 * Gets the tokens directory path.
 	 *
 	 * @return the tokens directory path
 	 */
-	public final String getTOKENS_DIRECTORY_PATH() {
-		return TOKENS_DIRECTORY_PATH;
+	public final String getTokensDirectoryPath() {
+		return tokensDirectoryPath;
 	}
 
+	public void setTokensDirectoryPath(String tokensDirectoryPath) {
+		this.tokensDirectoryPath = tokensDirectoryPath;
+	}
+	
 	/**
 	 * Credentials file path.
 	 *
 	 * @return the string
 	 */
-	public final String CREDENTIALS_FILE_PATH() {
-		return CREDENTIALS_FILE_PATH;
+	public final String getCredentialsFilePath() {
+		return credentialsFilePath;
 	}
 
+	public void setCredentialsFilePath(String credentialsFilePath) {
+		this.credentialsFilePath = credentialsFilePath;
+	}
+	
 	/**
 	 * Gets the scopes.
 	 *
 	 * @return the scopes
 	 */
-	public final List<String> getSCOPES() {
-		return SCOPES;
+	public final List<String> getScopes() {
+		return scopes;
 	}
 
-	/**
-	 * Gets the credentials file path calendar.
-	 *
-	 * @return the credentials file path calendar
-	 */
-	public final String getCREDENTIALS_FILE_PATH_CALENDAR() {
-		return CREDENTIALS_FILE_PATH_CALENDAR;
+	public void setScopes(List<String> scopes) {
+		this.scopes = scopes;
 	}
 
 	/**

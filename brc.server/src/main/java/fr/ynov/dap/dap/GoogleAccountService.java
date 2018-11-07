@@ -32,8 +32,7 @@ public class GoogleAccountService extends GoogleService{
 	private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 	
 	/** The logger. */
-	//TODO brc by Djer Final ?
-	private static Logger logger = LogManager.getLogger(GoogleAccountService.class);
+	private final static Logger logger = LogManager.getLogger(GoogleAccountService.class);
 
 	/**
 	 * Handle the Google response.
@@ -57,19 +56,11 @@ public class GoogleAccountService extends GoogleService{
 			try {
 				flow = getFlow();
 			} catch (GeneralSecurityException e) {
-				// TODO Auto-generated catch block
-			    //TODO brc by Djer "e.printStackTrace()" affiche la trace dans la CONSOLE, pas très utile.
-			    // Envoie la plutot dans les logs en Warning/Error !
-				e.printStackTrace();
+				logger.error(e);
 			}
-			//TODO brc by Djer Pas de "séparateur" dans les Logs, il existe des outils pour lire les logs si besoin de "présentation"
-			logger.info("----------");
-			//TODO brc by Djer contextualise tes logs ! ("for user : " + userId)
-			logger.info("decodedCode : " + decodedCode);
-			logger.info("redirectUri : " + redirectUri);
-			//TODO brc by Djer Par defaut (si pas de "toString() dans la classe) va afficher la pseudo adresse mémoire de l'instance
-			// Jen e suis pas certains que cela soit très pertinent. Eventuellement en "debug" et encore.
-			logger.info("flow : " + flow);
+			logger.info("decodedCode : " + decodedCode + "for user : " + userId);
+			logger.info("redirectUri : " + redirectUri + "for user : " + userId);
+
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
             
             final Credential credential = flow.createAndStoreCredential(response, userId);
@@ -167,9 +158,7 @@ public class GoogleAccountService extends GoogleService{
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
         try {
-            flow = getFlow();
-            //TODO brc by Djer Pseudo adresse mémoire vraiment utile ?
-            logger.info("flow : " + flow);
+            flow = getFlow();  
             credential = flow.loadCredential(userId);
 
             if (credential != null && credential.getAccessToken() != null) {
