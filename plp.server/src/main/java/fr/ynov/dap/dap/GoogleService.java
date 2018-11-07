@@ -62,7 +62,7 @@ class GoogleService {
         GoogleClientSecrets clientSecrets;
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            InputStream in = Launcher.class.getResourceAsStream(config.getCredentialFolder);
+            InputStream in = Launcher.class.getResourceAsStream(config.getCredentialFolder());
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         } catch (Exception e) {
             log.error("Error when trying to get Flow : " + e.toString());
@@ -70,7 +70,7 @@ class GoogleService {
         }
 
         return new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getClientSecretFile)))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getClientSecretFile())))
                 .setAccessType("offline").build();
     }
 

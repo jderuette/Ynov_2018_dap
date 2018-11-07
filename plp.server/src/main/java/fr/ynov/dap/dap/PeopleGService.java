@@ -44,7 +44,7 @@ public class PeopleGService extends GoogleService {
             throw e;
         }
         return new PeopleService.Builder(httpTransport, getJsonFactory(), getCredentials(userId))
-                .setApplicationName(getConfig().getApplicationName).build();
+                .setApplicationName(getConfig().getApplicationName()).build();
     }
 
     /**
