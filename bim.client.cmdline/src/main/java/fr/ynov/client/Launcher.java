@@ -37,6 +37,8 @@ public class Launcher {
             case "addUser":
                 controller.addUser(user);
                 break;
+            case "addAccount":
+                controller.addAccount(user, account);
             default:
                 printHelp();
 
@@ -51,6 +53,7 @@ public class Launcher {
     public static void printHelp() {
         System.out.println("deux parametres sont nécessaires.\n"
                 + "Parametre 1 : Action (getNbUnreadMail | getNextEvent | getNbContact | addUser)\n"
-                + "Parametre 2 : Utilisateur\n" + "Parametre 3 (optionnel) : compte google (par défaut 'me')");
+                + "Parametre 2 : Utilisateur applicatif\n" + "Parametre 3 (addAccount) : nom du compte à ajouté"
+                + "Parametre 3 (optionnel, tous les autres) : compte google (par défaut \"me\"");
     }
 }

@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.ynov.dap</groupId>
-    <artifactId>bim.server</artifactId>
+    <artifactId>dap</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>bim.server</name>
+    <name>dap</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -32,6 +32,14 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -41,7 +49,6 @@
             <artifactId>google-api-client</artifactId>
             <version>1.23.0</version>
         </dependency>
-        <!-- TODO bim by Djer Jetty n'est normalement plus utile si tu es passé en mode "Web" pour les credential Google -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -52,13 +59,24 @@
             <artifactId>google-api-services-gmail</artifactId>
             <version>v1-rev83-1.23.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>1.23.0</version>
         </dependency>
-        <!-- TODO bim by Djer attention au "doublons" de dépendances !  -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
