@@ -11,9 +11,12 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,10 +88,7 @@ public abstract class GoogleService {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
-        InputStream in = GoogleService.class.getResourceAsStream(
-              env.getProperty("credentials_folder") + "/" + env.getProperty("credentials_file"));
-
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new FileInputStream(env.getProperty("credentials_folder") + "/" + env.getProperty("credentials_file")), Charset.forName("UTF-8")));
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
