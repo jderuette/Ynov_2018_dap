@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
+/**
+ * GmailController
+ */
 @RestController
 public class GmailController {
 
@@ -24,7 +25,7 @@ public class GmailController {
      * @throws GeneralSecurityException Exception
      * @throws IOException              Exception
      */
-    @RequestMapping(value = "/gmail/{userKey}", produces = "application/json", method = GET)
+    @RequestMapping(value = "/gmail/{userKey}")
     public final Map<String, String> getNumberUnreadEmails(@PathVariable final String userKey) throws GeneralSecurityException, IOException {
 
         Map<String, String> response = new HashMap<>();

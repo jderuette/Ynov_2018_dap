@@ -2,6 +2,10 @@ package fr.ynov.dap.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * MainController
+ * Use for basics routes
+ */
 @RestController
 public class MainController {
 

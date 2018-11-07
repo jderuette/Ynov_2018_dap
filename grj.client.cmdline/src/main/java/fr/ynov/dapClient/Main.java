@@ -1,7 +1,6 @@
-package fr.ynov.dap_client;
-//TODO grj by Djer Pas de underscore dans un nom de package ! 
+package fr.ynov.dapClient;
 
-import fr.ynov.dap_client.services.*;
+import fr.ynov.dapClient.services.*;
 
 
 import java.io.IOException;
@@ -9,6 +8,10 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String... args) throws IOException {
+
+        GmailService    gmailService    = new GmailService();
+        CalendarService calendarService = new CalendarService();
+        PeopleService   peopleService   = new PeopleService();
 
         if (args.length > 1) {
             String command = args[0];
@@ -19,13 +22,13 @@ public class Main {
                     GoogleAccountService.addAnAccount(userKey);
                     break;
                 case "gmail":
-                    System.out.println(GmailService.retrieveNumberEmailUnread(userKey));
+                    System.out.println(gmailService.retrieveNumberEmailUnread(userKey));
                     break;
                 case "event":
-                    System.out.println(CalendarService.getNextEvent(userKey));
+                    System.out.println(calendarService.getNextEvent(userKey));
                     break;
                 case "people":
-                    System.out.println(PeopleService.getNumberContacts(userKey));
+                    System.out.println(peopleService.getNumberContacts(userKey));
                     break;
                 default:
                     System.out.println("Command does not exists");

@@ -13,10 +13,7 @@ import javax.servlet.http.*;
 @Service
 public class GoogleAccountService extends GoogleHelper {
 
-    //TODO grj by Djer Si en majuscule devrait static FINAL (et c'est une bonne chose que le LOG soit static final)
-    //TODO grj by Djer La catéroy n'est pas top (manque le prefix du package)
-    private static Logger LOG = LogManager.getLogger("GoogleAuth");
-    public static final String OAUTH_CALLBACK_URL = "/oAuth2Callback";
+    private static final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
     /**
      * retrieve the User ID in Session.
@@ -51,7 +48,7 @@ public class GoogleAccountService extends GoogleHelper {
             buf.append('?').append(request.getQueryString());
         }
         final AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
-        final String decodeCode = responseUrl.getCode();
+        final String                       decodeCode  = responseUrl.getCode();
 
         if (decodeCode == null) {
             throw new MissingServletRequestParameterException("code", "String");

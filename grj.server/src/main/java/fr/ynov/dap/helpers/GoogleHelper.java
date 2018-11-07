@@ -1,8 +1,6 @@
 package fr.ynov.dap.helpers;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -13,23 +11,27 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.*;
 import com.google.api.services.people.v1.*;
 import fr.ynov.dap.*;
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
+/**
+ * GoogleHelper
+ */
+@Component
 public class GoogleHelper {
 
-    //FIXME grj by Djer "New", du coups plus d'injection de possible, et plsu de configuration de possible non plus.
-    // C'est domage d'avoir une classe "Configuration" qui ne se configure pas .....
-    private Configuration    configuration = new Configuration();
-    private JsonFactory      JSON_FACTORY;
-    private List<String>     SCOPES;
-    private NetHttpTransport HTTP_TRANSPORT;
+    @Autowired
+    private Configuration configuration;
 
-    //TODO grj by Djer Le LogManager.getLogger() de Log4J peut être utilisé SANS paramètre (il prendra par defaut le nom, qualifié, de la classe)
-    private org.apache.logging.log4j.Logger LOG = LogManager.getLogger("GoogleHelper");
+    private              JsonFactory      JSON_FACTORY;
+    private              List<String>     SCOPES;
+    private              NetHttpTransport HTTP_TRANSPORT;
+    private static final Logger           LOG = LogManager.getLogger(GoogleHelper.class);
 
     public GoogleHelper() {
         JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -37,8 +39,7 @@ public class GoogleHelper {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         } catch (GeneralSecurityException | IOException e) {
-            //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when trying to get HTTP Transport", e);
         }
     }
 
@@ -52,7 +53,7 @@ public class GoogleHelper {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         return new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new File(configuration.getClientSecretFile())))
+                .setDataStoreFactory(new FileDataStoreFactory(new File(configuration.getClientSecretDir())))
                 .setAccessType("offline")
                 .build();
     }
@@ -68,8 +69,7 @@ public class GoogleHelper {
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = getFlow();
-        //TODO grj by Djer En mode "Web" il ne faut plus utiliser le "AuthorizationCodeInstalledApp", renvoie simplement flow.loadCredentials(userKey)
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
+        return flow.loadCredential(userKey);
     }
 
     /**

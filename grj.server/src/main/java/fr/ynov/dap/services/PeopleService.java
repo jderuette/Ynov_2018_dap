@@ -1,17 +1,21 @@
 package fr.ynov.dap.services;
 
 import fr.ynov.dap.helpers.GoogleHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
+/**
+ * PeopleService
+ */
 @Service
 public class PeopleService {
 
-    //TODO grj by Djer IOC ! 
-    private GoogleHelper googleHelper = new GoogleHelper();
+    @Autowired
+    private GoogleHelper googleHelper;
 
     /**
      * Return the number of contacts

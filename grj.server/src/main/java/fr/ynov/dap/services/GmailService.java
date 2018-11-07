@@ -2,6 +2,7 @@ package fr.ynov.dap.services;
 
 import com.google.api.services.gmail.model.Label;
 import fr.ynov.dap.helpers.GoogleHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,8 +11,8 @@ import java.security.GeneralSecurityException;
 @Service
 public class GmailService {
 
-    //TODO grj by Djer IOC ! 
-    private GoogleHelper googleHelper = new GoogleHelper();
+    @Autowired
+    private GoogleHelper googleHelper;
 
     /**
      * Return number of email unread in String

@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Map;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
+/**
+ * Calendar Controller
+ */
 @RestController
-//TODO grj by Djer JavaDoc ?
 public class CalendarController {
 
     @Autowired
@@ -25,8 +25,7 @@ public class CalendarController {
      * @throws GeneralSecurityException Exception
      * @throws IOException              Exception
      */
-    //TODO grj by Djer "produces" et "method" ont déja ces valeurs par defaut dans un @RestController
-    @RequestMapping(value = "/event/{userKey}", produces = "application/json", method = GET)
+    @RequestMapping(value = "/event/{userKey}")
     public final Map<String, String> getNextEvent(@PathVariable final String userKey) throws GeneralSecurityException, IOException {
         return calendarService.getNextEvent(userKey);
     }

@@ -1,4 +1,4 @@
-package fr.ynov.dap_client.services;
+package fr.ynov.dapClient.services;
 
 import org.apache.logging.log4j.*;
 import org.json.JSONObject;
@@ -6,27 +6,26 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.*;
 
-public class PeopleService {
+public class GmailService {
 
     private static final String DAP_API_URL = "http://localhost:8080";
 
-  //TODO grj by Djer Cateogry = nom, qualifié, de la classe
-    private static final Logger LOG = LogManager.getLogger("People Service");
+    private static final Logger LOG = LogManager.getLogger(GmailService.class);
 
     /**
-     * Return number of contacts
+     * Return the number of unread mail
      *
-     * @param userKey user key to log
-     * @return Number of contacts in String
+     * @param userKey userKey to log
+     * @return String
      * @throws IOException Exception
      */
-    public static String getNumberContacts(String userKey) throws IOException {
+    public String retrieveNumberEmailUnread(String userKey) throws IOException {
+
         URL url = null;
         try {
-            url = new URL(DAP_API_URL + "/people/" + userKey);
+            url = new URL(DAP_API_URL + "/gmail/" + userKey);
         } catch (MalformedURLException e) {
-          //TODO grj by Djer Message + contexte
-           LOG.error(e);
+            LOG.error("Error when created url", e);
         }
 
         HttpURLConnection con = null;
@@ -34,15 +33,13 @@ public class PeopleService {
             assert url != null;
             con = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when opening connection", e);
         }
         try {
             assert con != null;
             con.setRequestMethod("GET");
         } catch (ProtocolException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when set request method to GET", e);
         }
 
         BufferedReader in = null;
@@ -50,8 +47,7 @@ public class PeopleService {
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
         } catch (IOException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when input stream", e);
         }
         String        inputLine;
         StringBuilder content = new StringBuilder();
@@ -61,15 +57,10 @@ public class PeopleService {
         }
         in.close();
 
+        JSONObject obj         = new JSONObject(content.toString());
+        String     emailUnread = obj.get("email_unread").toString();
 
-        JSONObject obj = new JSONObject(content.toString());
-
-        if (obj.isNull("number_contact")) {
-            return "You don't have any contact...";
-        } else {
-            String numberContacts = obj.get("number_contact").toString();
-
-            return "You have " + numberContacts + " contacts.";
-        }
+        return "You have " + emailUnread + " email unread";
     }
 }
+

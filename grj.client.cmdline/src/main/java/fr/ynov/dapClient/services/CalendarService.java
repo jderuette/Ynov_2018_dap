@@ -1,4 +1,4 @@
-package fr.ynov.dap_client.services;
+package fr.ynov.dapClient.services;
 
 import org.apache.logging.log4j.*;
 import org.json.JSONObject;
@@ -11,9 +11,7 @@ public class CalendarService {
 
     private static final String DAP_API_URL = "http://localhost:8080";
 
-    //TODO grj by Djer Evite les "espace" dans la catégory. Un bon nom de catégorie est le nom, qualifié, de la classe.
-    // On utilise donc en général CalendarService.class
-    private static final Logger LOG = LogManager.getLogger("Calendar Service");
+    private static final Logger LOG = LogManager.getLogger(CalendarService.class);
 
     /**
      * Return the next event
@@ -22,13 +20,12 @@ public class CalendarService {
      * @return The next event in String
      * @throws IOException Exception
      */
-    public static String getNextEvent(String userKey) throws IOException {
+    public String getNextEvent(String userKey) throws IOException {
         URL url = null;
         try {
             url = new URL(DAP_API_URL + "/event/" + userKey);
         } catch (MalformedURLException e) {
-          //TODO grj by Djer Un message (en plus de la cause) serait utile, ne serait-ce que pour contextualiser
-            LOG.error(e);
+            LOG.error("Error when trying to create Google Api next event url", e);
         }
 
         HttpURLConnection con = null;
@@ -36,15 +33,13 @@ public class CalendarService {
             assert url != null;
             con = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when trying to open connection", e);
         }
         try {
             assert con != null;
             con.setRequestMethod("GET");
         } catch (ProtocolException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when trying to set request method to GET", e);
         }
 
         BufferedReader in = null;
@@ -52,8 +47,7 @@ public class CalendarService {
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
         } catch (IOException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when trying to get input stream", e);
         }
         String        inputLine;
         StringBuilder content = new StringBuilder();

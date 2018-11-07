@@ -13,15 +13,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+/**
+ * GoogleAccountController
+ */
 @Controller
 public class GoogleAccountController extends GoogleHelper {
 
     @Autowired
     private GoogleAccountService googleAccountService;
 
-    //TODO grj by Djer Si en majuscule devrait static FINAL (et c'est une bonne chose que le LOG soit static final)
-    //TODO grj by Djer La catéroy n'est pas top (manque le prefix du package)
-    private static       Logger  LOG                      = LogManager.getLogger("GoogleAccountController");
+    private static final Logger  LOG                      = LogManager.getLogger(GoogleAccountController.class);
     private static final Integer SENSIBLE_DATA_FIRST_CHAR = 3;
     private static final Integer SENSIBLE_DATA_LAST_CHAR  = 8;
     private static final String  OAUTH_CALLBACK_URL       = "/oAuth2Callback";

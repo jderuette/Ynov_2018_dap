@@ -3,19 +3,21 @@ package fr.ynov.dap.services;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.*;
 import fr.ynov.dap.helpers.GoogleHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
+/**
+ * CalendarService
+ */
 @Service
 public class CalendarService {
 
-    //TODO grj by Djer Tu pourrai injecter ton Helper (en annotant ton helper avec "@Service" ou "@commponnent"
-    // Cela t'éviterai dans créer un instance pour service (Gmail, Contact, ....)
-    private GoogleHelper googleHelper = new GoogleHelper();
-
+    @Autowired
+    private GoogleHelper googleHelper;
 
     /**
      * Return HashMap with the next event
@@ -43,7 +45,6 @@ public class CalendarService {
             nextEventResponse.put("name", nextEvent.getSummary());
             nextEventResponse.put("start_date", nextEvent.getStart().getDate().toString());
             nextEventResponse.put("end_date", nextEvent.getEnd().getDate().toString());
-            //TODO grj by Djer Atention status de l'évènnement, PAS de l'utilisateur
             nextEventResponse.put("status", nextEvent.getStatus());
         } else {
             nextEventResponse.put("message", "No upcoming events found.");

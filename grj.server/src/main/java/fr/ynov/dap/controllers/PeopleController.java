@@ -10,6 +10,10 @@ import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+
+/**
+ * PeopleController
+ */
 @RestController
 public class PeopleController {
 

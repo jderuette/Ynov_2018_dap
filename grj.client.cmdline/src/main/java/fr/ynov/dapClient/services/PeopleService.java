@@ -1,4 +1,4 @@
-package fr.ynov.dap_client.services;
+package fr.ynov.dapClient.services;
 
 import org.apache.logging.log4j.*;
 import org.json.JSONObject;
@@ -6,30 +6,25 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.*;
 
-public class GmailService {
+public class PeopleService {
 
     private static final String DAP_API_URL = "http://localhost:8080";
 
-    //TODO grj by Djer Cateogry = nom, qualifié, de la classe
-    private static final Logger LOG = LogManager.getLogger("Gmail Service");
+    private static final Logger LOG = LogManager.getLogger(PeopleService.class);
 
     /**
-     * Return the number of unread mail
+     * Return number of contacts
      *
-     * @param userKey userKey to log
-     * @return String
+     * @param userKey user key to log
+     * @return Number of contacts in String
      * @throws IOException Exception
      */
-    //TODO grj by Djer Pourquoi du static ? 
-    public static String retrieveNumberEmailUnread(String userKey) throws IOException {
-
-        //TODO grj by Djer une grosse partie de ce code peut être mutualiser.
+    public String getNumberContacts(String userKey) throws IOException {
         URL url = null;
         try {
-            url = new URL(DAP_API_URL + "/gmail/" + userKey);
-          //TODO grj by Djer Message + contexte
+            url = new URL(DAP_API_URL + "/people/" + userKey);
         } catch (MalformedURLException e) {
-            LOG.error(e);
+            LOG.error("Error when created url", e);
         }
 
         HttpURLConnection con = null;
@@ -37,15 +32,13 @@ public class GmailService {
             assert url != null;
             con = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when opening connection", e);
         }
         try {
             assert con != null;
             con.setRequestMethod("GET");
         } catch (ProtocolException e) {
-          //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when set request method to GET", e);
         }
 
         BufferedReader in = null;
@@ -53,8 +46,7 @@ public class GmailService {
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
         } catch (IOException e) {
-            //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when input stream", e);
         }
         String        inputLine;
         StringBuilder content = new StringBuilder();
@@ -65,11 +57,14 @@ public class GmailService {
         in.close();
 
 
-        JSONObject obj         = new JSONObject(content.toString());
-        String     emailUnread = obj.get("email_unread").toString();
+        JSONObject obj = new JSONObject(content.toString());
 
+        if (obj.isNull("number_contact")) {
+            return "You don't have any contact...";
+        } else {
+            String numberContacts = obj.get("number_contact").toString();
 
-        return "You have " + emailUnread + " email unread";
+            return "You have " + numberContacts + " contacts.";
+        }
     }
 }
-

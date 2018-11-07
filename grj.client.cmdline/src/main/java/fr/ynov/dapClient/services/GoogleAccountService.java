@@ -1,4 +1,4 @@
-package fr.ynov.dap_client.services;
+package fr.ynov.dapClient.services;
 
 import java.awt.*;
 import java.io.*;
