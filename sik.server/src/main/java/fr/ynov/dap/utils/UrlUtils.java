@@ -9,7 +9,14 @@ import com.google.api.client.http.GenericUrl;
  * @author Kévin Sibué
  *
  */
-public class UrlUtils {
+public final class UrlUtils {
+
+    /**
+     * Default constructor.
+     */
+    private UrlUtils() {
+
+    }
 
     /**
      * Build a current host (and port) absolute URL.

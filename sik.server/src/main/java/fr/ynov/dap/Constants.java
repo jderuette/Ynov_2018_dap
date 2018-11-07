@@ -5,7 +5,14 @@ package fr.ynov.dap;
  * @author Kévin Sibué
  *
  */
-public class Constants {
+public final class Constants {
+
+    /**
+     * Default constructor.
+     */
+    private Constants() {
+
+    }
 
     /**
      * Represent user id on session attributes.
