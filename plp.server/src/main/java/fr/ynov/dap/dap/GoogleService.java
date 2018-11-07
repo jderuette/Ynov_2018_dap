@@ -31,9 +31,7 @@ class GoogleService {
     /**
      * Instantiate Logger.
      */
-    //TODO plp by Djer Devrait être static final.
-    //TODO plp by Djer SI tu souhaite préciser la category, utilise le nom, qualifié, de la classe. Ou laisse Log4J le faire (ne met pas de paramètres)
-    private Logger log = LogManager.getLogger("GoogleService");
+    private static final Logger log = LogManager.getLogger();
     /**
      * Instance of json factory.
      */
@@ -83,8 +81,8 @@ class GoogleService {
      * @throws GeneralSecurityException : throw exception
      */
     protected Credential getCredentials(final String userId) throws IOException, GeneralSecurityException {
-        //TODO plp by Djer "AuthorizationCodeInstalledApp" pose pobleme en mode "Web", utilise flow.loadCredentials(userId)
-        return new AuthorizationCodeInstalledApp(getFlow(), new LocalServerReceiver()).authorize(userId);
+        GoogleAuthorizationCodeFlow flow = getFlow();
+        return flow.loadCredential(userId);
     }
 
     /**

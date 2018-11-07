@@ -37,10 +37,8 @@ public class CalendarService extends GoogleService {
         NetHttpTransport httpTransport;
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            //TODO plp by Djer Catch uniquement ce dont tu as besoin. Quite à faire un "multi-catch"
-        } catch (Exception e) {
-            //TODO plp by Djer Utilise le deuxième argument pour indiquer la cause (l'exception) et laisse Log4J gèrer
-            log.error("Error when trying to get Service : " + e.toString());
+        } catch (IOException | GeneralSecurityException e) {
+            log.error("Error when trying to get Service for user : " + userId ,e);
             throw e;
         }
 
@@ -65,22 +63,20 @@ public class CalendarService extends GoogleService {
         Event itemFirst = firstEvent.getItems().get(0);
         Map<String, String> response = new HashMap<>();
         if (itemFirst.isEmpty()) {
-            response.put("Subject", "No incomming event");
-            //TODO plp by Djer Evite les multiple return dans une même méthode.
-            return response;
+            response.put("subject", "No incomming event");
+        } else {
+            response.put("accessRole", itemFirst.getStatus());
+            response.put("subject", itemFirst.getSummary());
+            if (itemFirst.getStart().getDate() == null) {
+                response.put("start", itemFirst.getStart().getDateTime().toString());
+                response.put("finish", itemFirst.getEnd().getDateTime().toString());
+            }
+            else {
+                response.put("start", itemFirst.getStart().getDate().toString());
+                response.put("finish", itemFirst.getEnd().getDate().toString());
+            }
         }
-        response.put("accessRole", itemFirst.getStatus());
-        //TODO plp by Djer Il y a un S majuscule en cas de "no Event", risqué.
-        response.put("subject", itemFirst.getSummary());
-        try {
-            //TODO plp by Djer tu pourrais faire un test "if null == itemFirst.getStart().getDateTime()" plutot qu'un try catch "hasardeux"
-            response.put("start", itemFirst.getStart().getDateTime().toString());
-            response.put("finish", itemFirst.getEnd().getDateTime().toString());
-          //TODO plp by Djer Catch uniquement ce dont tu as besoin. Quite à faire un "multi-catch"
-        } catch (Exception e) {
-            response.put("start", itemFirst.getStart().getDate().toString());
-            response.put("finish", itemFirst.getEnd().getDate().toString());
-        }
+
         return response;
     }
 }

@@ -21,9 +21,7 @@ public class PeopleGService extends GoogleService {
     /**
      * instantiate Logger.
      */
-    //TODO plp by Djer Devrait être static final.
-    //TODO plp by Djer SI tu souhaite préciser la category, utilise le nom, qualifié, de la classe. Ou laisse Log4J le faire (ne met pas de paramètres)
-    private Logger log = LogManager.getLogger("PeopleService");
+    private static final Logger log = LogManager.getLogger();
 
     /**
      * Get service.
@@ -38,9 +36,7 @@ public class PeopleGService extends GoogleService {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         } catch (Exception e) {
-          //TODO plp by Djer Utilise le deuxième argument pour indiquer la cause (l'exception) et laisse Log4J gèrer
-            //tODO plp by Djer Contextualise ton message ("for user : " + userId).
-            log.error("Error when trying to get Service : " + e.toString());
+            log.error("Error when trying to get Service for user : " + userId ,e);
             throw e;
         }
         return new PeopleService.Builder(httpTransport, getJsonFactory(), getCredentials(userId))

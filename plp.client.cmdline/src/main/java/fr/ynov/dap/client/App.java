@@ -2,33 +2,18 @@ package fr.ynov.dap.client;
 
 import org.json.JSONObject;
 
-//TODO plp by Djer Evite les "*" Normalement ton IDE devrait effectuer automatiquement chaque import.
-import java.awt.*;
 import java.io.BufferedReader;
-//TODO plp by Djer Configure les "save actions" de ton IDE. cf Mémo Eclipse (il doit y avoir une fonctionnalité simillaire sur Idea)
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-//TODO plp by Djer Les imports "static" gène souvent la lisibilitée.
-import static java.awt.Desktop.getDesktop;
 
 /**
  * @author Pierre Plessy
  */
 public class App {
-    /**
-     * User agent
-     */
-    //TODO plp by Djer Ce n'est pas beau de mentir à un serveur. HttpConnection n'est PAS de Mozila.
-    private static final String USER_AGENT = "Mozilla/5.0";
-
     /**
      *
      * @param args : args given by user
@@ -39,35 +24,35 @@ public class App {
             System.out.println("Need argument: ");
         }
 
+        String path = args[0];
+        String userKey = args[1];
+
         List<String> outputs = new ArrayList<String>();
-        //TODO plp by Djer Tu pourrais extraire arg[0] et [1] danas des variables pour la clareté.
 
         switch (args.length) {
         case 1:
-            sendGet(args[0], "/email/unread");
-            sendGet(args[0], "/calendar/nextEvent");
-            sendGet(args[0], "/people/total");
+            sendGet(path, "/email/unread");
+            sendGet(path, "/calendar/nextEvent");
+            sendGet(path, "/people/total");
             break;
         case 2:
-            if (args[0].equals("nextEvent")) {
-                sendGet(args[1], "/calendar/" + args[0]);
+            if (path.equals("nextEvent")) {
+                sendGet("/calendar/" + path, userKey);
                 return;
             }
 
-            if (args[0].equals("unread")) {
-                sendGet(args[1], "/email/" + args[0]);
+            if (path.equals("unread")) {
+                sendGet("/email/" + path, userKey);
                 return;
             }
 
-            if (args[0].equals("total")) {
-                sendGet(args[1], "/contact/" + args[0]);
+            if (path.equals("total")) {
+                sendGet("/contact/" + path, userKey);
                 return;
             }
 
-            if (args[0].equals("add")) {
-                //TODO plp by Djer Tu devrait surcharger la méthode. Ou passer "null" serait plus claire.
-                // En général les paramètre "optionnelles" vont à la fin.
-                sendGet("", "/account/add/" + args[1]);
+            if (path.equals("add")) {
+                sendGet("/account/add/" + userKey, null);
                 return;
             }
 
@@ -88,19 +73,18 @@ public class App {
 
     /**
      * Send request to the server
-     * @param userKey : user of app
      * @param path : path to server
+     * @param userKey : user of app
      * @throws Exception : throw exception
      */
-    private static void sendGet(String userKey, String path) throws Exception {
+    private static void sendGet(String path, String userKey) throws Exception {
         String params = "";
-        if (!userKey.equals("")) {
+        if (!userKey.equals(null)) {
             params = "?userKey=" + userKey;
         }
         URL url = new URL("http://localhost:8080" + path + params);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
 
         int responseCode = con.getResponseCode();
         //        System.out.println("GET Response Code :: " + responseCode);
@@ -115,14 +99,6 @@ public class App {
         if (redirect) {
             String newUrl = con.getHeaderField("Location");
 
-            //TODO plp by Djer Ton IDE te dit que ca n'est pas utilisé. A supprimer ? bug ?
-            String cookies = con.getHeaderField("Set-Cookie");
-
-            // open the new connnection again
-            //            con = (HttpURLConnection) new URL(newUrl).openConnection();
-            //            con.setRequestProperty("Cookie", cookies);
-            //            con.addRequestProperty("User-Agent", USER_AGENT);
-            //            con.addRequestProperty("Referer", "google.com");
             getDesktop().browse(new URI(newUrl));
 
             System.out.println("Redirect to URL : " + newUrl);
@@ -143,8 +119,7 @@ public class App {
             JSONObject res = new JSONObject(response.toString());
             displayJson(res);
         } else {
-            //TODO plp by Djer Contextualise ton message
-            System.out.println("GET request not worked");
+            System.out.println("Server response with " + responseCode);
         }
     }
 
