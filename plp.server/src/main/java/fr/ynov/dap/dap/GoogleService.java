@@ -39,14 +39,14 @@ class GoogleService {
     /**
      * List of authorization who the app needed.
      */
-    private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR_READONLY, GmailScopes.GMAIL_LABELS,
-            PeopleServiceScopes.CONTACTS_READONLY);
+    private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR_READONLY,
+            GmailScopes.GMAIL_LABELS, PeopleServiceScopes.CONTACTS_READONLY);
 
     /**
      * Get the config in Launcher.
      */
     @Autowired
-    private Config config;
+    private Config config = new Config();
 
     /**
      * Get flow in which an end-user authorize the application to access data.
@@ -55,7 +55,7 @@ class GoogleService {
      * @throws IOException              : throw exception
      * @throws GeneralSecurityException : throw exception
      */
-    protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+    public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
         NetHttpTransport httpTransport;
         GoogleClientSecrets clientSecrets;
         try {

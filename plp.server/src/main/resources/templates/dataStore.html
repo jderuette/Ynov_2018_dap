@@ -1,0 +1,10 @@
+<table xmlns:th="http://www.thymeleaf.org">
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr th:each="data : ${dataMap}">
+        <td th:text="${data.key}"></td>
+        <td th:text="${data.value}"></td>
+    </tr>
+</table>

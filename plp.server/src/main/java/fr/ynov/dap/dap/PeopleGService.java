@@ -52,8 +52,8 @@ public class PeopleGService extends GoogleService {
      * @throws GeneralSecurityException : throws exception
      */
     public final Map<String, Integer> getNbContacts(final String userId) throws IOException, GeneralSecurityException {
-        ListConnectionsResponse connectionsResponse = getService(userId).people().connections().list("people/me")
-                .setPersonFields("names,emailAddresses").execute();
+        ListConnectionsResponse connectionsResponse = getService(userId).people()
+                .connections().list("people/me").setPersonFields("names,emailAddresses").execute();
         Map<String, Integer> response = new HashMap<>();
         response.put("Total connection", connectionsResponse.getTotalPeople());
         return response;

@@ -1,0 +1,10 @@
+<table xmlns:th="http://www.thymeleaf.org">
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getName()}"></td>
+    </tr>
+</table>
