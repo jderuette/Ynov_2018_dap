@@ -9,27 +9,14 @@ import com.ynov.dap.models.CalendarModel;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 /**
- * SERVICE FOR CALENDAR.
+ * Service for calendar.
  * @author POL
  */
 @Service
-//TODO bap by Djer Déja sur le parent, pas très utile de le dupliquer ici (créé un "getEnv" en protected)
-@PropertySource("classpath:config.properties")
 public class CalendarService extends GoogleService {
-    /** The log. */
-    private Logger log = LoggerFactory.getLogger(CalendarService.class);
-
-    /** The env. */
-    @Autowired
-    private Environment env;
 
     /**
      * Instantiates a new calendar service.
@@ -60,14 +47,12 @@ public class CalendarService extends GoogleService {
         List<Event> items = events.getItems();
 
         if (items.isEmpty() || items.get(0) == null) {
-            //TODO bap by Djer contextualise tes messages ("for user : " + userId)
-            //TODO bap by Djer pas nécéssaire de mettre "CALENDAR",si ta classe est bien nomée, on retrouve l'info dans la category
-            log.info("CALENDAR : No upcoming events found.");
+            getLogger().error("No upcoming events found for user : " + userId);
             return null;
         } else {
-            System.out.println("Upcoming events");
-          //TODO bap by Djer contextualise tes messages ("for user : " + userId)
-            log.info("CALENDAR : Next upcoming events.");
+        	System.out.println(items.isEmpty());
+        	System.out.println(items.get(0));
+        	getLogger().error("Next upcoming events for user : " + userId);
 
             Event nextEvent = items.get(0);
             CalendarModel calendar = new CalendarModel(
@@ -76,5 +61,10 @@ public class CalendarService extends GoogleService {
 
             return calendar;
         }
+    }
+
+    @Override
+    public String getClassName() {
+        return CalendarService.class.getName();
     }
 }

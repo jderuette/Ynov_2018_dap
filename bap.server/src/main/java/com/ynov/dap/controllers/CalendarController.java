@@ -13,11 +13,11 @@ import com.ynov.dap.models.CalendarModel;
 import com.ynov.dap.google.CalendarService;
 
 /**
- * CONTROLLER FOR THE CALENDAR.
+ * Controller for calendar
  * @author POL
  */
 @RestController
-public class CalendarController {
+public class CalendarController extends BaseController {
 
     /** The calendar service. */
     @Autowired
@@ -39,9 +39,13 @@ public class CalendarController {
         try {
             return new ResponseEntity<CalendarModel>(calendarService.resultCalendar(gUser), HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            //FIXME bap by Djer "e.printStackTrace();" affiche dans la console. Utilise un Logger ! 
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         }
         return new ResponseEntity<CalendarModel>(new CalendarModel("", "", "", ""), HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public String getClassName() {
+        return CalendarController.class.getName();
     }
 }

@@ -1,43 +1,40 @@
 package com.ynov.dap.models;
 
 /**
- * MODEL CONTACT.
+ * Model contact.
  * @author POL
  */
 public class ContactModel {
 
-    /** The amount. */
-    //TODO Bap by Djer "amount" se traduit par "montant", je sait que les relations ont de la valeur mais quand même !
-    private Integer amount;
 
-
-    /**
-     * Gets the amount.
-     *
-     * @return the amount
-     */
-    public Integer getAmount() {
-        return amount;
-    }
-
+    /** The nb contacts. */
+    private Integer nbContacts;
 
     /**
-     * Sets the amount.
+     * Gets the nb contacts.
      *
-     * @param inAmount the new amount
+     * @return the nb contacts
      */
-    public void setAmount(final Integer inAmount) {
-       this.amount = inAmount;
+    public Integer getNbContacts() {
+        return nbContacts;
     }
 
+    /**
+     * Sets the nb contacts.
+     *
+     * @param inNbContacts the new nb contacts
+     */
+    public void setNbContacts(final Integer inNbContacts) {
+       this.nbContacts = inNbContacts;
+    }
 
     /**
      * Instantiates a new contact model.
      *
-     * @param inAmount the in amount
+     * @param inNbContacts the in nb contacts
      */
-    public ContactModel(final Integer inAmount) {
-       this.setAmount(inAmount);
+    public ContactModel(final Integer inNbContacts) {
+       this.setNbContacts(inNbContacts);
     }
 
 }

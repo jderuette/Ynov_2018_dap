@@ -6,16 +6,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
+import com.google.api.client.http.GenericUrl;
 import com.ynov.dap.google.GoogleAccountService;
 
 /**
  * The Class AccountController.
  */
 @Controller
-public class AccountController {
+public class AccountController extends BaseController {
 
     /** The google account service. */
     @Autowired
@@ -34,7 +38,11 @@ public class AccountController {
     public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
             final HttpSession session) throws ServletException {
 
-        return googleAccountService.oAuthCallback(code, request, session);
+        final String decodedCode = extracCode(request);
+        final String redirectUri = buildRedirectUri(request, env.getProperty("oAuth2CallbackUrl"));
+        final String userId = getUserid(session);
+
+        return googleAccountService.oAuthCallback(code, decodedCode, redirectUri, userId);
     }
 
     /**
@@ -48,8 +56,72 @@ public class AccountController {
     @RequestMapping("/account/add/{userId}")
     public String addAccount(@PathVariable final String userId, final HttpServletRequest request,
             final HttpSession session) {
+    	final String redirectUri = buildRedirectUri(request, env.getProperty("oAuth2CallbackUrl"));
 
-        return googleAccountService.addAccount(userId, request, session);
+        return googleAccountService.addAccount(userId, redirectUri, session);
+    }
+
+    @Override
+    public String getClassName() {
+        return AccountController.class.getName();
+    }
+
+    /**
+     * Extract OAuth2 Google code (from URL) and decode it.
+     * @param request the HTTP request to extract OAuth2 code
+     * @return the decoded code
+     * @throws ServletException if the code cannot be decoded
+     */
+    private String extracCode(final HttpServletRequest request) throws ServletException {
+        final StringBuffer buf = request.getRequestURL();
+        if (null != request.getQueryString()) {
+            buf.append('?').append(request.getQueryString());
+        }
+        final AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
+        final String decodeCode = responseUrl.getCode();
+
+        if (decodeCode == null) {
+            throw new MissingServletRequestParameterException("code", "String");
+        }
+
+        if (null != responseUrl.getError()) {
+        	getLogger().error("Error when trying to add Google acocunt : " + responseUrl.getError());
+            throw new ServletException("Error when trying to add Google acocunt");
+        }
+
+        return decodeCode;
+    }
+    
+    /**
+     * Build a current host (and port) absolute URL.
+     * @param req         The current HTTP request to extract schema, host, port
+     *                    informations
+     * @param destination the "path" to the resource
+     * @return an absolute URI
+     */
+    private String buildRedirectUri(final HttpServletRequest req, final String destination) {
+        final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
+        url.setRawPath(destination);
+        return url.build();
+    }
+    
+    /**
+     * retrieve the User ID in Session.
+     * @param session the HTTP Session
+     * @return the current User Id in Session
+     * @throws ServletException if no User Id in session
+     */
+    private String getUserid(final HttpSession session) throws ServletException {
+        String userId = null;
+        if (null != session && null != session.getAttribute("userId")) {
+            userId = (String) session.getAttribute("userId");
+        }
+
+        if (null == userId) {
+        	getLogger().error("userId in Session is NULL in Callback");
+            throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
+        }
+        return userId;
     }
 
 }

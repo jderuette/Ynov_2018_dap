@@ -1,8 +1,6 @@
 package com.ynov.dap.google;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -20,24 +18,36 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-
 
 /**
  * The Class GoogleService.
  */
-@Service
-//TODO bap by Djer Bien vue !! :-) Il aurait été parfait que tu m'explique dans la doc "technique" comment l'utiliser !
-// Plus d'info sur spring Properties ici : https://www.baeldung.com/properties-with-spring (tu as du "No conf" pour le moment)
 @PropertySource("classpath:config.properties")
-public class GoogleService {
+public abstract class GoogleService {
+
+    protected abstract String getClassName();
+
+    private Logger logger = LogManager.getLogger(getClassName());
+
+   /*
+   private Config config;
+
+   public Config getConfig() {
+	   return config;
+   }
+   */
+    protected Logger getLogger() {
+        return logger;
+    }
 
     /** The env. */
     @Autowired
-    private Environment env;
+    protected Environment env;
 
     /** The Constant JSON_FACTORY. */
     protected static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -64,8 +74,7 @@ public class GoogleService {
      */
     protected Credential getCredentials(final String userId) throws IOException, GeneralSecurityException {
         GoogleAuthorizationCodeFlow flow = getFlow();
-        //TODO bap by Djer en mode "web" le AuthorizationCodeInstalledApp fonctionen mal. Utilise directement flow.loadCredential(userId)
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
+        return flow.loadCredential(userId);
     }
 
     /**
@@ -85,8 +94,9 @@ public class GoogleService {
 
         return new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientSecrets, ALL_SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(env.getProperty("credentials_folder"))))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(env.getProperty("credentials_tokens"))))
                 .setAccessType("offline")
                 .build();
     }
+
 }

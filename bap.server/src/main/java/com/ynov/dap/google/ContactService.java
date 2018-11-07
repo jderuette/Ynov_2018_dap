@@ -4,11 +4,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -19,23 +14,11 @@ import com.google.api.services.people.v1.model.Person;
 import com.ynov.dap.models.ContactModel;
 
 /**
- * SERVICE FOR CONTACT.
+ * Service for contact.
  * @author POL
  */
 @Service
-@PropertySource("classpath:config.properties")
-//TODO bap by Djer Déja sur le parent,
 public class ContactService extends GoogleService {
-
-    /** The log. */
-    //TODO bap by Djer Pourquoi le LogggerFactory (de SL4J) plutot que le LogManager de Log4J ?
-    private Logger log = LoggerFactory.getLogger(CalendarService.class);
-
-
-    /** The env. */
-    @Autowired
-    private Environment env;
-
 
     /**
      * Instantiates a new contact service.
@@ -71,10 +54,13 @@ public class ContactService extends GoogleService {
 
             return contact;
         } else {
-            //TODO bap by Djer Contextualise le message ("for user : " + user)
-            log.info("CONTACT : No contacts found.");
+            getLogger().error("No contacts found for user : " + user);
         }
-        //TODO bap by Djer retourner ton model avec "0" comme nombre de contacts ?
-        return null;
+        return new ContactModel(0);
+    }
+
+    @Override
+    public String getClassName() {
+        return ContactService.class.getName();
     }
 }

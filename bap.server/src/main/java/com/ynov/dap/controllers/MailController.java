@@ -18,7 +18,7 @@ import com.ynov.dap.models.MailModel;
  * The Class MailController.
  */
 @RestController
-public class MailController {
+public class MailController extends BaseController {
 
 
     /** The mail service. */
@@ -26,23 +26,28 @@ public class MailController {
     private MailService mailService;
 
     /**
-     * Gets the foos with header.
+     * Gets the nb unread.
      *
      * @param gUser the g user
-     * @return the foos with header
+     * @return the nb unread
      */
     @RequestMapping(value = "/email/{gUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    //TODO bap by Djer Cohérent avec le nomage dans le controller.
-    public ResponseEntity<MailModel> getFoosWithHeader(@PathVariable final String gUser) {
+    public ResponseEntity<MailModel> getNbUnread(@PathVariable final String gUser) {
         try {
             return new ResponseEntity<MailModel>(mailService.getNbUnreadEmails(gUser), HttpStatus.ACCEPTED);
         } catch (IOException e) {
-          //FIXME bap by Djer "e.printStackTrace();" affiche dans la console. Utilise un Logger !
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         } catch (Exception e) {
-          //FIXME bap by Djer "e.printStackTrace();" affiche dans la console. Utilise un Logger !
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         }
         return new ResponseEntity<MailModel>(new MailModel(0), HttpStatus.BAD_REQUEST);
+    }
+
+    /* (non-Javadoc)
+     * @see com.ynov.dap.controllers.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return MailController.class.getName();
     }
 }

@@ -18,20 +18,19 @@ import com.ynov.dap.models.ContactModel;
  * The Class ContactController.
  */
 @RestController
-public class ContactController {
+public class ContactController extends BaseController {
     /** The contact service. */
     @Autowired
     private ContactService contactService;
 
     /**
-     * Gets the foos with header.
+     * Gets the nb contacts.
      *
      * @param gUser the g user
-     * @return the foos with header
+     * @return the nb contacts
      */
     @RequestMapping(value = "/contact/{gUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    //TODO bap by Djer Drole de nom de methode, heureusement que la Javadoc ne clarifie rien du tout, il y aurait eut une incohérence !
-    public ResponseEntity<ContactModel> getFoosWithHeader(@PathVariable final String gUser) {
+    public ResponseEntity<ContactModel> getNbContacts(@PathVariable final String gUser) {
         if (gUser == null || gUser.length() <= 0) {
             return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
         }
@@ -39,12 +38,18 @@ public class ContactController {
         try {
             return new ResponseEntity<ContactModel>(contactService.getNbContacts(gUser), HttpStatus.ACCEPTED);
         } catch (IOException e) {
-          //FIXME bap by Djer "e.printStackTrace();" affiche dans la console. Utilise un Logger !
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         } catch (Exception e) {
-          //FIXME bap by Djer "e.printStackTrace();" affiche dans la console. Utilise un Logger !
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         }
         return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
+    }
+
+    /* (non-Javadoc)
+     * @see com.ynov.dap.controllers.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return ContactController.class.getName();
     }
 }

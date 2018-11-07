@@ -1,7 +1,7 @@
 package com.ynov.dap.models;
 
 /**
- * MODEL CALENDAR.
+ * Model mail.
  * @author POL
  */
 public class MailModel {
