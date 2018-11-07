@@ -28,8 +28,7 @@ public class CalendarController {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    //TODO roa by Djer évite les majuscule dans les chemin d'URL, le support n'est pas garanti !
-    @RequestMapping("/Calendar/event")
+    @RequestMapping("/calendar/event")
     public String getNextEvent(final @RequestParam("userKey") String user)
             throws IOException, GeneralSecurityException {
         return calendar.getNextEvent(user);

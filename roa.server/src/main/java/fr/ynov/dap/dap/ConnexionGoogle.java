@@ -31,16 +31,7 @@ public class ConnexionGoogle {
      * Récupération de l'objet config par autowire.
      */
     @Autowired
-    private Config config;
-    /**
-     * Getter pour la récupération de l'objet config dans les classes en héritant.
-     * @return Config return l'objet config.
-     */
-    //TODO roa by Djer Un modifier protected serait suffisant.
-    // Pas très utile, car chaque service réupère la conf via injection (ce qui est très bien).
-    public Config getConfiguration() {
-        return this.config;
-    }
+    protected Config config;
     /**
      * Creates an authorized Credential object.
      * @param httpTransport The network HTTP Transport.
@@ -64,10 +55,9 @@ public class ConnexionGoogle {
         scope.add(CalendarScopes.CALENDAR_READONLY);
         scope.add(GmailScopes.GMAIL_LABELS);
         //chargement des credentials
-        //TODO roa by Djer tu peux utiliser cette Class là, pour éviter une dépendance peux utile vers GoogleCalendar
-        InputStream in = GoogleCalendar.class.getResourceAsStream(config.getCredentialFilePath());
+        InputStream in = ConnexionGoogle.class.getResourceAsStream(config.getCredentialFilePath());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in));
-        //FIXME roa by Djer Charger une fichier externe au jar ?
+        //TODO roa by Djer Charger une fichier externe au jar ?
         //interogation de l'API google et récupération des credentials et secrets
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory,
                 clientSecrets, scope)

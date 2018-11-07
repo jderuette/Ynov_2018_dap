@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,14 +53,9 @@ public class GoogleGmail {
         List<Label> labels = listResponse.getLabels();
         List<String> listeLabel = new ArrayList<String>();
         if (labels.isEmpty()) {
-            //TODO roa by Djer SYSOUT !!!!!
-            System.out.println("No labels found.");
+          LogManager.getLogger().warn("No labels found.");
         } else {
-            //TODO roa by Djer SYSOUT !!!!!
-            System.out.println("Labels:");
             for (Label label : labels) {
-                //TODO roa by Djer SYSOUT !!!!!
-                System.out.printf("- %s\n", label.getName());
                 listeLabel.add(label.getName());
             }
         }
@@ -85,8 +81,7 @@ public class GoogleGmail {
         Integer nbMessage = 0;
         Label llabel = service.users().labels().get(user, "UNREAD").execute();
         nbMessage = llabel.getMessagesUnread();
-        //TODO roa by Djer SYSOUT !!!!!
-        System.out.println(nbMessage);
+        LogManager.getLogger().info("utilisateur " + user + ": " + nbMessage);
         return nbMessage;
     }
 }

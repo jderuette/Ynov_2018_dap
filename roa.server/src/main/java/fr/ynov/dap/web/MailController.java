@@ -29,8 +29,7 @@ public class MailController {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-  //TODO roa by Djer évite les majuscule dans les chemin d'URL, le support n'est pas garanti !
-    @RequestMapping("/Gmail/listLabel")
+    @RequestMapping("/gmail/listlabel")
     public List<String> getListLabel(final @RequestParam("userKey") String user)
             throws IOException, GeneralSecurityException {
         return gMail.getListLabel(user);
@@ -42,8 +41,7 @@ public class MailController {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-  //TODO roa by Djer évite les majuscule dans les chemin d'URL, le support n'est pas garanti !
-    @RequestMapping("/Gmail/nbMailNonLu")
+    @RequestMapping("/gmail/nbmailnonlu")
     public Integer getNbMailNonLu(final @RequestParam("userKey") String user)
             throws IOException, GeneralSecurityException {
         return gMail.getNbMailNonLu(user);

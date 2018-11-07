@@ -27,14 +27,4 @@ public class App {
     private static Config getConf() {
         return new Config();
     }
-
-    //TODO roa by Djer Ton ConnexionGoogle est un @Service, il est donc déja disponible pour de l'autowire.
-    /**
-     * Récupère la connexion google pour l'autowire.
-     * @return Connexion Google
-     */
-    @Bean
-    private static ConnexionGoogle getGoogle() {
-        return new ConnexionGoogle();
-    }
 }
