@@ -14,7 +14,6 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
@@ -88,7 +87,10 @@ public abstract class GoogleService {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(new FileInputStream(env.getProperty("credentials_folder") + "/" + env.getProperty("credentials_file")), Charset.forName("UTF-8")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+        		new InputStreamReader(new FileInputStream(
+        				env.getProperty("credentials_folder")
+        				+ "/" + env.getProperty("credentials_file")), Charset.forName("UTF-8")));
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 

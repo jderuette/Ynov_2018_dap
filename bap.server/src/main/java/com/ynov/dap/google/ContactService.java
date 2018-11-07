@@ -44,6 +44,7 @@ public class ContactService extends GoogleService {
         //TODO bap by Djer Attention par defaut limiter à 100 resultats par page.
         ListConnectionsResponse response = service.people().connections()
                 .list("people/me")
+                .setPageSize(100)
                 .setPersonFields("names,emailAddresses")
                 .execute();
 
