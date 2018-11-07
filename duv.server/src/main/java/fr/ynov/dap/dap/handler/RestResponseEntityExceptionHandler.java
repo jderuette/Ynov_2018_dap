@@ -21,7 +21,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     /**
      * get the logger.
      */
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     /**
      * handle all exception and return a formatted body.
@@ -33,9 +33,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = { Exception.class })
     protected ResponseEntity<Object> handleException(final RuntimeException ex, final WebRequest request) {
 
-        // TODO duv by Djer Créé ton message "perso" et utilise le deuxième argument
-        // pour la cause (l'exception)
-        logger.error(ex.getMessage() + " \n" + request.getContextPath());
+        logger.error("Un erreur est survenue suite a l'appel de l'url : " + request.getContextPath(), ex);
         return new ResponseEntity<Object>("StackTrace: " + ex.getMessage(), new HttpHeaders(),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }

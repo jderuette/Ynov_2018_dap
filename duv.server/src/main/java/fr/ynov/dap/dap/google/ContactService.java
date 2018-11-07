@@ -3,13 +3,10 @@ package fr.ynov.dap.dap.google;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
-
-import fr.ynov.dap.dap.Config;
 
 /**
  *
@@ -19,24 +16,10 @@ import fr.ynov.dap.dap.Config;
 @Service
 public class ContactService extends BaseService {
 
-    /**
-     * link with config.
-     */
-    @Autowired
-    // TODO duv by Djer Tu pourrais utiliser la config du parent (en ajoutant un
-    // getter protected)
-    private Config config;
+    @Override
+    protected final String getClassName() {
 
-    /**
-     *
-     * @param userId user key
-     * @return Gmail service.
-     * @throws IOException              throw by the getCRedential from baseService
-     * @throws GeneralSecurityException throw by the getCRedential from baseService
-     */
-    private PeopleService getService(final String userId) throws GeneralSecurityException, IOException {
-        return new PeopleService.Builder(GoogleNetHttpTransport.newTrustedTransport(), JACKSON_FACTORY,
-                getCredential(userId)).setApplicationName(config.getApplicationName()).build();
+        return ContactService.class.getName();
     }
 
     /**
@@ -53,9 +36,15 @@ public class ContactService extends BaseService {
                 .getTotalPeople();
     }
 
-    @Override
-    protected final String getClassName() {
-
-        return ContactService.class.getName();
+    /**
+     *
+     * @param userId user key
+     * @return Gmail service.
+     * @throws IOException              throw by the getCRedential from baseService
+     * @throws GeneralSecurityException throw by the getCRedential from baseService
+     */
+    private PeopleService getService(final String userId) throws GeneralSecurityException, IOException {
+        return new PeopleService.Builder(GoogleNetHttpTransport.newTrustedTransport(), JACKSON_FACTORY,
+                getCredential(userId)).setApplicationName(getConfig().getApplicationName()).build();
     }
 }

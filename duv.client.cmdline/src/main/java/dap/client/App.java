@@ -90,10 +90,9 @@ public final class App {
     private static void commandCalendar(final String[] args) {
         if (args[1].equalsIgnoreCase(HELP)) {
             callHelp("calendar", "userId [nbEvent]");
-            //TODO duv by Djer Evite les multiple retur dans la même méthode
-            return;
+        } else {
+            launchCalendar(args);
         }
-        launchCalendar(args);
     }
 
     /**
@@ -104,9 +103,9 @@ public final class App {
     private static void commandContact(final String[] args) {
         if (args[1].equalsIgnoreCase(HELP)) {
             callHelp("contact", "userId");
-            return;
+        } else {
+            launchContact(args);
         }
-        launchContact(args);
     }
 
     /**
@@ -117,9 +116,9 @@ public final class App {
     private static void commandEmail(final String[] args) {
         if (args[1].equalsIgnoreCase(HELP)) {
             callHelp("email", "userId");
-            return;
+        } else {
+            launchEmail(args);
         }
-        launchEmail(args);
     }
 
     /**
@@ -130,9 +129,10 @@ public final class App {
     private static void commandAdd(final String[] args) {
         if (args[1].equalsIgnoreCase(HELP)) {
             callHelp("add", "userId");
-            return;
+
+        } else {
+            launchAdd(args);
         }
-        launchAdd(args);
     }
 
     /**
@@ -146,20 +146,18 @@ public final class App {
         if (args.length > 2) {
             try {
                 nbEventToDisplay = Integer.valueOf(args[2]);
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 callError(2);
             }
         }
         List<EventResponse> eventResponses = null;
         try {
             eventResponses = new CalendarService().getNextEvent(args[1], nbEventToDisplay);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println("erreur lors de la recuperation des evenement");
-            //TODO duv by Djer Evite de mettre le message de l'exception daans TON message.
-            // Utilise le deuxième paramètre pour indiquer la "cause".
-            LOGGER.error("erreur launchCalendar : " + e.getMessage());
+            LOGGER.error("erreur launchCalendar : ", e);
         }
-        for (EventResponse eventResponse : eventResponses) {
+        for (final EventResponse eventResponse : eventResponses) {
             System.out.println(eventResponse);
         }
 
@@ -174,9 +172,9 @@ public final class App {
 
         try {
             System.out.println(new ContactService().getNbrContact(args[1]));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println("erreur lors de l'appel des contacts");
-            LOGGER.error("erreur launchContact : " + e.getMessage());
+            LOGGER.error("erreur launchContact : ", e);
         }
 
     }
@@ -190,11 +188,10 @@ public final class App {
 
         try {
             System.out.println(new GmailService().getNbrEmailUnread(args[1]));
-        } catch (IOException e) {
-            LOGGER.error("erreur launchEmail : " + e.getMessage());
+        } catch (final IOException e) {
+            LOGGER.error("erreur launchEmail : ", e);
             System.err.println("Erreur lors de la recuperation des emails");
         }
-
     }
 
     /**
@@ -205,16 +202,17 @@ public final class App {
     private static void launchAdd(final String[] args) {
 
         try {
-            AccountResponse accountResponse = new AccountService().connexionGoogleAccount(args[1]);
+            final AccountResponse accountResponse = new AccountService().connexionGoogleAccount(args[1]);
             if (accountResponse.getRedirection() != null) {
-                //TODO duv by Djer n'essaye pas de traiter la redirection.
-                //Coté Server utiliser un "controller" et laisse la navigauteur géré. Le navigauteur
+                // TODO duv by Djer n'essaye pas de traiter la redirection.
+                // Coté Server utiliser un "controller" et laisse la navigauteur géré. Le
+                // navigauteur
                 // conservera le cookie !
-                URI uri = new URI(accountResponse.getRedirection());
+                final URI uri = new URI(accountResponse.getRedirection());
                 Desktop.getDesktop().browse(uri);
             }
         } catch (IOException | URISyntaxException e) {
-            LOGGER.error("erreur LauchAdd : " + e.getMessage());
+            LOGGER.error("erreur LauchAdd : ", e);
             System.err.println("Erreur lors de la connection");
         }
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,8 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -35,15 +33,64 @@ import fr.ynov.dap.dap.Config;
 public abstract class BaseService {
 
     /**
+     * return the default instance a jackson factory.
+     */
+    protected static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    /**
+     * list of the scope needed.
+     */
+    private static List<String> scopes = Arrays.asList(GmailScopes.GMAIL_LABELS, CalendarScopes.CALENDAR_READONLY,
+            PeopleServiceScopes.CONTACTS_READONLY, Oauth2Scopes.USERINFO_EMAIL);
+
+    /**
+     * stock the defaultUser.
+     */
+    private static String defaultUser = "VicTEST@gmail.com";
+
+    /**
+     * @return the defaultUser
+     */
+    protected static String getDefaultUser() {
+        return defaultUser;
+    }
+
+    /**
      * Initialize the logger.
      */
-    private Logger logger = LogManager.getLogger(getClassName());
+    private final Logger logger = LogManager.getLogger(getClassName());
 
     /**
      * link config.
      */
     @Autowired
     private Config config;
+
+    /**
+     * get the current class name.
+     *
+     * @return ClassName
+     */
+    protected abstract String getClassName();
+
+    /**
+     * @return the config
+     */
+    protected Config getConfig() {
+        return config;
+    }
+
+    /**
+     * get the credential from the userId.
+     *
+     * @param userId user Key
+     * @return the credential of the userId
+     * @throws IOException              throw by getFLow
+     * @throws GeneralSecurityException throw by getFLow
+     */
+    protected Credential getCredential(final String userId) throws IOException, GeneralSecurityException {
+        return getFlow().loadCredential(userId);
+    }
 
     /**
      * store and obtain a credential for accessing protected resources.
@@ -57,32 +104,17 @@ public abstract class BaseService {
         final String clientSecretFile = config.getClientSecretFile();
         final String tokenFile = config.getCredentialsFolder();
 
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream(clientSecretFile);
-        // TODO duv by Djer Chargement d'un fichier Externe au Jar ?
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JACKSON_FACTORY, new InputStreamReader(is));
+        final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        final InputStream is = classloader.getResourceAsStream(clientSecretFile);
 
-        String pathname = config.getDataStoreDirectory() + File.separator + tokenFile;
+        final GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JACKSON_FACTORY, new InputStreamReader(is));
 
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(pathname));
+        final String pathname = config.getDataStoreDirectory() + File.separator + tokenFile;
+
+        final FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(pathname));
 
         return new GoogleAuthorizationCodeFlow.Builder(GoogleNetHttpTransport.newTrustedTransport(), JACKSON_FACTORY,
-                clientSecrets, scopes()).setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
-    }
-
-    /**
-     * get the credential from the userId.
-     *
-     * @param userId user Key
-     * @return the credential of the userId
-     * @throws IOException              throw by getFLow
-     * @throws GeneralSecurityException throw by getFLow
-     */
-    protected Credential getCredential(final String userId) throws IOException, GeneralSecurityException {
-        // TODO duv by Djer AuthorizationCodeInstalledApp Ne fonctionne pas bien en mode
-        // "web". utiliser getFLow().loadCredential(userId)
-        return new AuthorizationCodeInstalledApp(getFlow(), new LocalServerReceiver()).authorize(userId);
-
+                clientSecrets, scopes).setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
     }
 
     /**
@@ -90,47 +122,6 @@ public abstract class BaseService {
      */
     protected Logger getLogger() {
         return logger;
-    }
-
-    /**
-     * return the default instance a jackson factory.
-     */
-    protected static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
-
-    /**
-     * get the current class name.
-     *
-     * @return ClassName
-     */
-    protected abstract String getClassName();
-
-    /**
-     * stock the defaultUser.
-     */
-    // TODO duv by DJer Evite de laisser trainer ton adresse email !
-    private static String defaultUser = "Vic_aaaaaa_@_aaa_com";
-
-    /**
-     * @return the defaultUser
-     */
-    protected static String getDefaultUser() {
-        return defaultUser;
-    }
-
-    /**
-     * list Scopes required for all the service.
-     *
-     * @return list a scope
-     */
-    private List<String> scopes() {
-        // TODO duv by Djer Reconstruire une Liste à chaque appel n'est pas très
-        // efficace.
-        List<String> scopes = new ArrayList<>();
-        scopes.add(GmailScopes.GMAIL_LABELS);
-        scopes.add(CalendarScopes.CALENDAR_READONLY);
-        scopes.add(PeopleServiceScopes.CONTACTS_READONLY);
-        scopes.add(Oauth2Scopes.USERINFO_EMAIL);
-        return scopes;
     }
 
 }

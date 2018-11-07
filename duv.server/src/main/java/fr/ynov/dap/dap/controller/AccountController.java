@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ynov.dap.dap.google.GoogleAccount;
+import fr.ynov.dap.dap.google.GoogleAccountService;
 import fr.ynov.dap.dap.model.AccountResponse;
 
 /**
@@ -30,7 +30,7 @@ public class AccountController extends BaseController {
      * link googleAccount service.
      */
     @Autowired
-    private GoogleAccount googleAccount;
+    private GoogleAccountService googleAccount;
 
     /**
      * Add a Google account (user will be prompt to connect and accept required

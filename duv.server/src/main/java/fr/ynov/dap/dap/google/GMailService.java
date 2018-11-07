@@ -3,14 +3,11 @@ package fr.ynov.dap.dap.google;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
-
-import fr.ynov.dap.dap.Config;
 
 /**
  * @author David_tepoche
@@ -18,13 +15,11 @@ import fr.ynov.dap.dap.Config;
  */
 @Service
 public class GMailService extends BaseService {
-    /**
-     * link config.
-     */
-    @Autowired
-    // TODO duv by Djer Tu pourrais utiliser la config du parent (en ajoutant un
-    // getter protected)
-    private Config config;
+
+    @Override
+    protected final String getClassName() {
+        return GMailService.class.getName();
+    }
 
     /**
      *
@@ -35,12 +30,7 @@ public class GMailService extends BaseService {
      */
     private Gmail getService(final String user) throws GeneralSecurityException, IOException {
         return new Gmail.Builder(GoogleNetHttpTransport.newTrustedTransport(), JACKSON_FACTORY, getCredential(user))
-                .setApplicationName(config.getApplicationName()).build();
-    }
-
-    @Override
-    protected final String getClassName() {
-        return GMailService.class.getName();
+                .setApplicationName(getConfig().getApplicationName()).build();
     }
 
     /**
@@ -53,8 +43,8 @@ public class GMailService extends BaseService {
      */
     public Integer nbrEmailUnread(final String user) throws GeneralSecurityException, IOException {
 
-        Gmail gmail = getService(user);
-        Label label = gmail.users().labels().get("me", "INBOX").execute();
+        final Gmail gmail = getService(user);
+        final Label label = gmail.users().labels().get("me", "INBOX").execute();
 
         return label.getMessagesUnread();
 

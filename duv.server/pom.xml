@@ -4,7 +4,7 @@
 
     <groupId>fr.ynov.dap</groupId>
     <artifactId>dap</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1</version>
     <packaging>jar</packaging>
 
     <name>dap</name>

@@ -50,19 +50,17 @@ public class CalendarController {
      * @throws IOException              throws by userInfoSErvice or calendarService
      * @throws NumberFormatException    if the nbrEvent cannot be cast as an integer
      */
-    // TODO duv by Djer Tu devrais liasser "userId" en ParamRequest, tes URLs seront
-    // plus facile à utiliser
     @GetMapping("/getNextEvent/{nbrEnvent}/{userId}")
     public @ResponseBody List<CalendarEvent> getNextEvent(@PathVariable(value = "nbrEnvent") final String nbrEvent,
             @PathVariable("userId") final String userId)
             throws NumberFormatException, IOException, GeneralSecurityException {
 
-        List<Event> lastEvents = calendarService.getLastEvent(Integer.valueOf(nbrEvent), userId);
+        final List<Event> lastEvents = calendarService.getLastEvent(Integer.valueOf(nbrEvent), userId);
 
-        String userEmail = userInfoService.getEmail(userId);
+        final String userEmail = userInfoService.getEmail(userId);
 
-        List<CalendarEvent> calendarEvents = new ArrayList<>();
-        for (Event event : lastEvents) {
+        final List<CalendarEvent> calendarEvents = new ArrayList<>();
+        for (final Event event : lastEvents) {
             calendarEvents.add(new CalendarEvent(event, userEmail));
         }
         return calendarEvents;
