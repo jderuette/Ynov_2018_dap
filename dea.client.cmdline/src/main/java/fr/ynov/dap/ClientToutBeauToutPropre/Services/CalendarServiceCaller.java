@@ -34,7 +34,6 @@ public class CalendarServiceCaller extends ServerCaller
         String endingDate = new Date(json.getAsJsonObject("end").getAsJsonObject("date").get("value").getAsLong())
             .toString();
 
-        //TODO dea by Djer Attention status de l'Event, pas de celui de l'utilisateur qui effectue l'appel !
         String status = json.get("status").getAsString();
 
         res = String.format(

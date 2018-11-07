@@ -1,7 +1,6 @@
 /**
- * 
+ * package "google"
  */
-//TODO dea by Djer JavaDoc du package ?
 /**
  * @author antod
  *

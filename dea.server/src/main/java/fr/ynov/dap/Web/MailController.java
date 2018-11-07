@@ -4,20 +4,29 @@ package fr.ynov.dap.Web;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.model.Label;
-import fr.ynov.dap.Config;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
+import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.google.GMailService;
 
-
+/**
+ * Controlleur des mails 
+ * @author antod
+ *
+ */
 @RestController
-//TODO dea by Djer JavaDoc de la classe ?
 public class MailController
 {
+  @Autowired
+  private AppUserRepository appUserRepository;
+
+  @Autowired
+  private GMailService gMailService;
 
   /**
    * Appel le service gmail pour renvoyer le nombre d'emails non lu.
@@ -27,16 +36,27 @@ public class MailController
    * @throws IOException
    * @throws GeneralSecurityException
    */
-  @RequestMapping("/gmail/getNbUnreadEmail/{user}")
-  public Integer getNbUnreadEmail(@RequestParam("userKey") final String userKey, @PathVariable String user,
-      Config config) throws IOException, GeneralSecurityException
+  @RequestMapping("/gmail/getNbUnreadEmail")
+  public Integer getNbUnreadEmail(@RequestParam String userKey) throws IOException, GeneralSecurityException
   {
-    Gmail gmail = GMailService.getService(userKey, config);
-    
-  //TODO dea by Djer une bonne partie de ce code devrait etre dans le service !
-    Label label = gmail.users().labels().get(user, "INBOX").execute();
+    Integer unreadMessages = -1;
+    AppUser myUser = appUserRepository.findByName(userKey);
 
-    return label.getMessagesUnread();
+    if (null != myUser)
+    {
+      unreadMessages = 0;
+      List<GoogleAccount> allAccounts = myUser.getAccounts();
+
+      // On boucle sur tous les comptes
+      for (int i = 0; i < allAccounts.size(); i++)
+      {
+        Integer accMessagesUnread = gMailService.getNbUnreadEmail(allAccounts.get(i).getUserName());
+        
+        unreadMessages += accMessagesUnread;
+      }
+    }
+
+    return unreadMessages;
   }
 
 }

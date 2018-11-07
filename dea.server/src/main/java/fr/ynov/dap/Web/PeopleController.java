@@ -12,8 +12,13 @@ import fr.ynov.dap.Config;
 import fr.ynov.dap.google.PeopleService;
 
 
+/**
+ * Controller de la partie People (nb de contacts)
+ * 
+ * @author antod
+ *
+ */
 @RestController
-//TODO dea by Djer JavaDoc de la classe ?
 public class PeopleController
 {
 
@@ -23,7 +28,6 @@ public class PeopleController
    * 
    * @param userKey
    * @param user
-   * @param config
    * @return
    * @throws IOException
    * @throws GeneralSecurityException
@@ -32,10 +36,9 @@ public class PeopleController
   public Integer getNbContacts(@RequestParam("userKey") final String userKey, @PathVariable String user, Config config)
       throws IOException, GeneralSecurityException
   {
-    //TODO dea by Djer une bonne partie de ce code devrait etre dans le service (dans une methode "getNbContacts(....)") !
-    com.google.api.services.people.v1.PeopleService people = PeopleService.getService(userKey, config);
-    return people.people().connections().list("people/" + user).setPersonFields("names").execute().getTotalPeople();
+    PeopleService peopleService = new PeopleService();
+
+    return peopleService.getNbContacts(userKey);
   }
 
-  
 }

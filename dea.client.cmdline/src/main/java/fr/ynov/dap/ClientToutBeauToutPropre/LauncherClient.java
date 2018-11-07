@@ -24,22 +24,24 @@ public class LauncherClient
    */
   public static void main(String... args)
   {
+    String loggerInfo = "";
+    
     if (args.length >= 3 || (args.length == 2 && args[1].equals("addUser")))
     {
       String user = args[0];
-      logger.info("User = '" + user + "'");
+      loggerInfo = "User = '" + user + "'";
 
       String service = args[1];
-      logger.info("Service = '" + service + "'");
+      loggerInfo += "\nService = '" + service + "'";
 
       String method = "";
       if (args.length >= 3)
       {
         method = args[2];
-        logger.info("Method = '" + method + "'");
+        loggerInfo += "\nMethod = '" + method + "'";
       }
       
-      //TODO dea by Djer tu pourrais faire une seul log avec les 3 paramètres, ca serait surement plus lisible.
+      logger.info(loggerInfo);
 
       // Si on veut utiliser le service gmail
       if (service.equals("gmail"))

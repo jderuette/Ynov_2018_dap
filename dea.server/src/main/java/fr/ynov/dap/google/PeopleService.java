@@ -7,14 +7,16 @@ import java.security.GeneralSecurityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import fr.ynov.dap.Config;
 
 
+/**
+ * Service pour la gestion des contacts
+ * 
+ * @author antod
+ *
+ */
 @Service
-//TODO dea by Djer JavaDoc de la classe ?
-public class PeopleService extends Services
+public class PeopleService extends GoogleServices
 {
   /**
    * Constructeur du service PeopleService
@@ -22,15 +24,15 @@ public class PeopleService extends Services
    * @throws GeneralSecurityException
    * @throws IOException
    */
-  PeopleService() throws GeneralSecurityException, IOException
+  public PeopleService() throws GeneralSecurityException, IOException
   {
     super();
-    // TODO Auto-generated constructor stub
   }
 
-  //TODO deab by Djer JSON_FACTORY deja présent dans la calsse parente
-  private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-  private static Logger logger = LogManager.getLogger();
+  /**
+   * Logger pour afficher des infos
+   */
+  private final Logger LOGGER = LogManager.getLogger();
 
   /**
    * Appel du service des contacts
@@ -40,18 +42,17 @@ public class PeopleService extends Services
    * @return
    * @throws IOException
    */
-  //TODO dea by Djer ne passe pas Config dans chaque méthode, injecte la dans la classe (idéalement dans le parent)
-  //TODO dea by Djer Pourquoi en "static" ?
-  public static com.google.api.services.people.v1.PeopleService getService(String userId, Config config)
-      throws IOException
+  public Integer getNbContacts(String userId) throws IOException
   {
-    logger.info("Début du getService People");
+    LOGGER.info("Début du getService People pour l'utilisateur " + userId);
 
     com.google.api.services.people.v1.PeopleService people = new com.google.api.services.people.v1.PeopleService.Builder(
         HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userId)).setApplicationName(config.getApplicationName()).build();
+    Integer nbContacts = people.people().connections().list("people/" + userId).setPersonFields("names").execute()
+        .getTotalPeople();
 
-    logger.info("Fin du getService People");
+    LOGGER.info("Fin du getService People pour l'utilisateur " + userId);
 
-    return people;
+    return nbContacts;
   }
 }
