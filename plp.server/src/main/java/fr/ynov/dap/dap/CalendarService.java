@@ -45,7 +45,7 @@ public class CalendarService extends GoogleService {
         }
 
         return new Calendar.Builder(httpTransport, getJsonFactory(), getCredentials(userId))
-                .setApplicationName(getConfig().applicationName).build();
+                .setApplicationName(getConfig().getApplicationName).build();
     }
 
     /**

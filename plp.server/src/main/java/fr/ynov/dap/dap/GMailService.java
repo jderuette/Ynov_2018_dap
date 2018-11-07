@@ -44,7 +44,7 @@ public class GMailService extends GoogleService {
         }
 
         return new Gmail.Builder(httpTransport, getJsonFactory(), getCredentials(userId))
-                .setApplicationName(getConfig().applicationName).build();
+                .setApplicationName(getConfig().getApplicationName).build();
     }
 
     /**
