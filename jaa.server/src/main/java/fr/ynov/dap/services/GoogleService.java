@@ -93,7 +93,7 @@ public abstract class GoogleService {
         try {
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         } catch (IOException e1) {
-        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxiÃ¨me parametre l'exception.
+        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxième parametre l'exception.
             logger.info("failed to get client secrets");
         }
         //TODO jaa by Djer si pas de conf "interne" charger la conf "externe" au jar.
@@ -104,12 +104,12 @@ public abstract class GoogleService {
         try {
             flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets, scopes)
-            		//TODO jaa by Djer si dossier "token" Ã  l'extÃ©rieur du Jar ? 
+            		//TODO jaa by Djer si dossier "token" à l'extérieur du Jar ? 
                     .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getCredentialFolder())))
                     .setAccessType("offline")
                     .build();
         } catch (IOException e) {
-        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxiÃ¨me parametre l'exception.
+        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxième parametre l'exception.
             logger.info("failed to getFlow");
         }
         return flow;

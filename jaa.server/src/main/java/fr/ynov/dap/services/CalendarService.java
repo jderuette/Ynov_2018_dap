@@ -1,9 +1,11 @@
 package fr.ynov.dap.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -11,6 +13,9 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
 
 /**
  * @author adrij
@@ -24,11 +29,16 @@ public final class CalendarService extends GoogleService {
     private static Logger log = LogManager.getLogger();
 
     /**
+     * AppUserRepository.
+     */
+    @Autowired
+    private AppUserRepository repository;
+
+    /**
      * @param userKey user key for authentication.
      * @return Calendar.
      * @throws Exception exception
      */
-    //TODO jaa by Djer ne pas lever "Exception", il faut "corriger" getCredentials(...) puis lever les exception spécifiques. 
     public Calendar getService(final String userKey) throws Exception {
         log.info("getCalendarService called with userKey=" + userKey);
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -44,7 +54,7 @@ public final class CalendarService extends GoogleService {
      * @return near event from now
      * @throws Exception exception
      */
-    public List<Event> getNextEvent(final String userKey) throws Exception {
+    public Event getNextEvent(final String userKey) throws Exception {
         final Integer maxResults = 1;
         DateTime now = new DateTime(System.currentTimeMillis());
         log.info("getNextEvent called. userKey=" + userKey + "; with maxResults="
@@ -57,7 +67,40 @@ public final class CalendarService extends GoogleService {
                 .execute();
         List<Event> items = events.getItems();
         log.info("found event(s)=" + events.toString());
-        return items;
+        if (items.isEmpty()) {
+            return null;
+        }
+
+        return items.get(0);
     }
 
+    /**
+     * Get next event for all GoogleAccount of a UserApp.
+     * @param userKey userKey.
+     * @return next Event.
+     * @throws Exception exception.
+     */
+    public Event getNextEventForAllAccount(final String userKey) throws Exception {
+        AppUser appUser = repository.findByUserKey(userKey);
+        List<String> names = appUser.getGoogleAccountNames();
+        List<Event> events = new ArrayList<Event>();
+
+        for (String name : names) {
+            events.add(getNextEvent(name));
+        }
+
+        if (events.isEmpty()) {
+            return null;
+        }
+
+        Event nextEvent = events.get(0);
+
+        for (Event event : events) {
+            if (nextEvent.getStart().getDateTime().getValue() > event.getStart().getDateTime().getValue()) {
+                nextEvent = event;
+            }
+        }
+
+        return nextEvent;
+    }
 }

@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="DataStore">Data store</title>
+
+</head>
+<body>
+	<h1>Datastore</h1>
+	<div>
+
+		<table>
+			<tr>
+				<th th:text="#{datastore.user}">Utilisateur</th>
+				<th th:text="#{datastore.accessToken}">accessToken</th>
+				<th th:text="#{datastore.refreshToken}">refreshToken</th>
+				<th th:text="#{datastore.expirationTimeMilliseconds}">expirationTimeMilliseconds</th>
+			</tr>
+			<tr th:each="map : ${map}">
+				<td th:text="${map.key}">...</td>
+				<td th:text="${map.value.accessToken}">...</td>
+				<td th:text="${map.value.refreshToken}">...</td>
+				<td th:text="${#dates.format(map.value.expirationTimeMilliseconds, 'dd-MMM-yyyy mm:ss')}">...</td>
+			</tr>
+		</table>
+
+	</div>
+</body>
+</html>

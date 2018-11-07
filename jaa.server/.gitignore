@@ -1,1 +1,8 @@
 /target/
+
+#logs
+/logs/*
+
+#credentials
+/tokens/*
+/src/main/resources/credentials.json
