@@ -19,8 +19,6 @@ public class AppUserController {
         newUser.setName(userKey);
         repository.save(newUser);
 
-//        Iterable<AppUser> foo =  repository.findAll();
-
         model.addAttribute("users", repository.findAll());
 
         return "users";

@@ -21,7 +21,7 @@ public class PeopleGService extends GoogleService {
     /**
      * instantiate Logger.
      */
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(PeopleGService.class);
 
     /**
      * Get service.

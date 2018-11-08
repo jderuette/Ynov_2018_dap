@@ -24,7 +24,7 @@ public class GoogleAccountController {
     /**
      * instantiate Logger.
      */
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(GoogleAccountController.class);
 
     @Autowired
     public GoogleAccountController(GoogleAccountService googleAccountService) {
@@ -47,10 +47,21 @@ public class GoogleAccountController {
         return googleAccountService.oAuthCallback(code, request, session);
     }
 
-    @RequestMapping("/account/add/{userId}")
-    public final String addAccount(@PathVariable final String userId, final HttpServletRequest request,
+    /**
+     * Add a Google account (user will be prompt to connect and accept required
+     * access).
+     *
+     * @param accountName  the user to store Data
+     * @param userKey  the user to store Data
+     * @param request the HTTP request
+     * @param session the HTTP session
+     * @return the view to Display (on Error)
+     * @throws GeneralSecurityException throw exception.
+     */
+    @RequestMapping("/add/account/{accountName}")
+    public final String addAccount(@PathVariable final String accountName, @RequestParam("userKey") final String userKey, final HttpServletRequest request,
                                    final HttpSession session) throws GeneralSecurityException {
-        return googleAccountService.addAccount(userId, request, session);
+        return googleAccountService.addAccount(accountName, userKey, request, session);
     }
 
 }

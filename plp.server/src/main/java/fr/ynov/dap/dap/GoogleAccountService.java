@@ -6,8 +6,13 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.GenericUrl;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.repositories.AppUserRepository;
+import fr.ynov.dap.dap.repositories.GoogleAccountRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -37,8 +42,17 @@ public class GoogleAccountService extends GoogleService {
     /**
      * instantiate Logger.
      */
-    private static final Logger log = LogManager.getLogger();
-
+    private static final Logger log = LogManager.getLogger(GoogleAccountService.class);
+    /**
+     * instantiate appUserRepository
+     */
+    @Autowired
+    AppUserRepository userRepository;
+    /**
+     * instantiate googleAccountRepository
+     */
+    @Autowired
+    GoogleAccountRepository googleRepository;
     /**
      * Handle the Google response.
      *
@@ -56,7 +70,11 @@ public class GoogleAccountService extends GoogleService {
 
         final String redirectUri = buildRedirectUri(request, getConfig().getoAuth2CallbackUrl());
 
+        final String userKey = getUserKey(session);
         final String accountName = getAccountName(session);
+
+        AppUser user = userRepository.findByName(userKey);
+
         try {
             final GoogleAuthorizationCodeFlow flow = super.getFlow();
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
@@ -73,10 +91,17 @@ public class GoogleAccountService extends GoogleService {
                             SENSIBLE_DATA_LAST_CHAR));
                 }
             }
+
+            GoogleAccount googleAccount = new GoogleAccount();
+            googleAccount.setOwner(user);
+            googleAccount.setName(accountName);
+            googleRepository.save(googleAccount);
+            user.addGoogleAccount(googleAccount);
+            userRepository.save(user);
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
             log.error("Exception while trying to store user Credential", e);
-            throw new ServletException("Error while trying to conenct Google Account");
+            throw new ServletException("Error while trying to connect Google Account");
         }
 
         return "redirect:/";
@@ -97,7 +122,7 @@ public class GoogleAccountService extends GoogleService {
 
         if (null == userKey) {
             log.error("userId in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add Google acocunt : userKey is NULL is User Session");
+            throw new ServletException("Error when trying to add Google account : userKey is NULL is User Session");
         }
         return userKey;
     }

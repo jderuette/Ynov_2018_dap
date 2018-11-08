@@ -11,13 +11,17 @@ import java.security.GeneralSecurityException;
 
 @Controller
 public class Welcome {
+    private final GMailService gMailService;
+
     @Autowired
-    private GMailService gMailService;
+    public Welcome(GMailService gMailService) {
+        this.gMailService = gMailService;
+    }
 
     @RequestMapping("/")
-    public String Welcome(ModelMap model) throws IOException, GeneralSecurityException {
-        String user = "pierre.plessy52@gmail.com";
-        model.addAttribute("nbEmails", gMailService.getNbUnreadEmails(user).get("Unread"));
-        return "Welcome";
+    public String WelcomeUser(ModelMap model) throws IOException, GeneralSecurityException {
+//        String user = "pierre.plessy52@gmail.com";
+//        model.addAttribute("nbEmails", gMailService.getNbUnreadEmails("foo").get("Unread").toString());
+        return "welcome";
     }
 }

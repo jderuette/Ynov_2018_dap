@@ -4,8 +4,10 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
+import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class GMailService extends GoogleService {
     /**
      * Instantiate logger.
      */
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(GMailService.class);
 
     /**
      * get service.

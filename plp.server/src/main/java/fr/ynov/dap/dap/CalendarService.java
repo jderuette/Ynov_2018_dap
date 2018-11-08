@@ -23,7 +23,7 @@ public class CalendarService extends GoogleService {
     /**
      * Instantiate Logger.
      */
-    private Logger log = LogManager.getLogger("GMailService");
+    private static final Logger log = LogManager.getLogger(CalendarService.class);
 
     /**
      * Get flow in which an end-user authorize the application to access data.

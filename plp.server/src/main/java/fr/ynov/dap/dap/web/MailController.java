@@ -1,6 +1,9 @@
 package fr.ynov.dap.dap.web;
 
 import fr.ynov.dap.dap.GMailService;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +27,11 @@ public class MailController {
      */
     @Autowired
     private GMailService gMailService;
+    /**
+     * instantiate userRepository
+     */
+    @Autowired
+    AppUserRepository userRepository;
 
     /**
      * get the number of unread mail.
@@ -33,6 +44,16 @@ public class MailController {
     @RequestMapping("/unread")
     public final Map<String, Integer> getUnread(@RequestParam("userKey") final String userId)
             throws IOException, GeneralSecurityException {
-        return gMailService.getNbUnreadEmails(userId);
+        AppUser user = userRepository.findByName(userId);
+        Iterator<GoogleAccount> listIteratorGoogle = user.getGoogleAccount().listIterator();
+        int nbEmailUnread = 0;
+
+        while(listIteratorGoogle.hasNext()) {
+            GoogleAccount current = listIteratorGoogle.next();
+            nbEmailUnread += gMailService.getNbUnreadEmails(current.getName()).get("Unread");
+        }
+        Map<String, Integer> response = new HashMap<>();
+        response.put("unread", nbEmailUnread);
+        return response;
     }
 }

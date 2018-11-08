@@ -1,8 +1,6 @@
 package fr.ynov.dap.dap;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -17,9 +15,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ class GoogleService {
     /**
      * Instantiate Logger.
      */
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(GoogleService.class);
     /**
      * Instance of json factory.
      */
@@ -61,9 +61,10 @@ class GoogleService {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             InputStream in = Launcher.class.getResourceAsStream(config.getCredentialFolder());
-            clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        } catch (Exception e) {
-            log.error("Error when trying to get Flow : " + e.toString());
+//            InputStream in = new FileInputStream(config.getCredentialFolder());
+            clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in, Charset.forName("UTF-8")));
+        } catch (IOException | GeneralSecurityException e) {
+            log.error("Error when trying to get Flow", e);
             throw e;
         }
 
