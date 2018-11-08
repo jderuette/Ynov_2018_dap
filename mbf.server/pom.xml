@@ -30,7 +30,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fr.ynov.dap.Launcher</mainClass>
+                            <mainClass>fr.ynov.dap.fr.ynov.dap.client.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

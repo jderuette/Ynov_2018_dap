@@ -9,9 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-    <!-- TODO mbf by Djer tu precise ici compiler "1.8", puis "7" dans la configuration du plugin plus bas .... -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>7</maven.compiler.source>
+        <maven.compiler.target>7</maven.compiler.target>
         <java.version>1.8</java.version>
     </properties>
 
@@ -26,7 +25,6 @@
             <artifactId>okhttp</artifactId>
             <version>2.7.5</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -39,7 +37,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fr.ynov.dap_client.Launcher</mainClass>
+                            <mainClass>fr.ynov.dap.client.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
