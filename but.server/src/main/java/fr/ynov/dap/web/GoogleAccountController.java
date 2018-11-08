@@ -80,6 +80,7 @@ public class GoogleAccountController extends HandlerErrorController {
             gAccount.setOwner(user);
             gAccount.setAccountName(accountName);
             user.addGoogleAccount(gAccount);
+            repositoryUser.save(user);
         }
 
         return "redirect:/";
