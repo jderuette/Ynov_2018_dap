@@ -26,11 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-public class GoogleAccount extends GoogleService {
+public class AccountService extends GoogleService {
   private static final Logger LOGGER = (Logger) LogManager
       .getLogger(GoogleService.class);
 
-  public GoogleAccount() throws InstantiationException, IllegalAccessException {
+  public AccountService() throws InstantiationException, IllegalAccessException {
     super();
   }
   /**
