@@ -1,5 +1,5 @@
 
-package fr.ynov.dap.Web;
+package fr.ynov.dap.web;
 
 
 import java.io.IOException;
