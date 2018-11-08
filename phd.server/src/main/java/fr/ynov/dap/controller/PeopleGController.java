@@ -25,15 +25,15 @@ public class PeopleGController {
 
     /**.
      * This function return the number of contact unread with string param userId according to the annotated route
-     * @param userId .
+     * @param userKey .
      * @return .
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
     @RequestMapping("/getPeople")
-    public String getNbContact(@RequestParam("userId") final String userId)
+    public String getNbContact(@RequestParam("userKey") final String userKey)
             throws IOException, GeneralSecurityException {
-        return "Nb contact : " + peopleService.nbContact(userId);
+        return "Nb contact : " + peopleService.nbContact(userKey);
     }
 
 }

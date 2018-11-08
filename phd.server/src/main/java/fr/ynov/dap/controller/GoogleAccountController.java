@@ -102,10 +102,11 @@ public class GoogleAccountController extends GoogleService {
             }
         } catch (IOException e) {
             logger.severe(e.getMessage());
-            throw new ServletException("Error while trying to conenct Google Account");
+            throw new ServletException("Erreur lors de la connection au compte Google, le compte est déjà liée.");
         }
 
-        return "Vous êtes bien connecté(e)";
+        return "Vous êtes bien connecté(e). Le compte " + accountName + " est bien liée avec l'utilisateur : "
+                + userKey;
     }
 
     /**

@@ -9,7 +9,8 @@ public class Config {
     /**.
      * CREDENTIALS_FILE_PATH  is a variable containing the file path of the credentials
      */
-    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "dap" + System.getProperty("file.separator") + "credentials.json";
     /**.
      * TOKENS_DIRECTORY_PATH  is a variable containing the directory path of the tokens
      */

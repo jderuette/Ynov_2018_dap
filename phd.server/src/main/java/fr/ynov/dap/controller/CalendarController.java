@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.services.calendar.model.Event;
+
 import fr.ynov.dap.service.CalendarService;
 
 /**
@@ -24,15 +26,29 @@ public class CalendarController {
     private CalendarService calendarService;
 
     /**
-     * @param userId .
+     * @param userKey .
      * @return .
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
     @RequestMapping("/getEventUncomming")
-    public Map<String, Object> getEvent(@RequestParam("userId") final String userId)
+    public Map<String, Object> getEvent(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
-        return calendarService.getNextEvent(userId);
+        return calendarService.getNextEventFormatMap(userKey);
+
+    }
+
+    /**
+     *
+     * @param userKey .
+     * @return .
+     * @throws GeneralSecurityException .
+     * @throws IOException .
+     */
+    @RequestMapping("/getEventUncommingForAll")
+    public Event getEventForAll(@RequestParam("userKey") final String userKey)
+            throws GeneralSecurityException, IOException {
+        return calendarService.getNextEventForAll(userKey);
 
     }
 

@@ -3,10 +3,12 @@ package fr.ynov.dap.service;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -16,6 +18,10 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
+import fr.ynov.dap.data.GoogleAccountData;
+
 /**.
  * This class extends GoogleService and provides calendar service features
  * @author Dom
@@ -23,6 +29,13 @@ import com.google.api.services.calendar.model.Events;
  */
 @Service
 public class CalendarService extends GoogleService {
+
+    /**
+     * @param userRepository .
+     */
+    @Autowired
+    private AppUserRepository userRepository;
+
     /**.
      * Return the service of calendar according userId param
      * @param userId .
@@ -46,7 +59,7 @@ public class CalendarService extends GoogleService {
      * @throws GeneralSecurityException .
      */
     @SuppressWarnings("deprecation")
-    public Map<String, Object> getNextEvent(final String userId) throws IOException, GeneralSecurityException {
+    public Map<String, Object> getNextEventFormatMap(final String userId) throws IOException, GeneralSecurityException {
         DateTime now = new DateTime(System.currentTimeMillis());
         Events events = getService(userId).events().list("primary").setMaxResults(1).setTimeMin(now)
                 .setOrderBy("startTime").setSingleEvents(true).execute();
@@ -67,6 +80,59 @@ public class CalendarService extends GoogleService {
             }
         }
         return mHashMap;
+    }
+
+    /**
+     *
+     * @param userKey .
+     * @return .
+     * @throws IOException .
+     * @throws GeneralSecurityException .
+     */
+    public Event getNextEventForAll(final String userKey) throws IOException, GeneralSecurityException {
+
+        AppUser user = userRepository.findByName(userKey);
+        List<GoogleAccountData> accounts = user.getGoogleAccounts();
+        List<Event> listEvent = new ArrayList<>();
+        Event event = null;
+        Event eventMostRecent = null;
+
+        for (GoogleAccountData accountData : accounts) {
+            event = getNextEvent(accountData.getAccountName());
+            listEvent.add(event);
+        }
+        long dateMillisecondsMostRecent = listEvent.get(0).getStart().getDateTime().getValue();
+        long dateMilliseconds;
+
+        if (listEvent != null) {
+            for (int i = 0; i < listEvent.size(); i++) {
+                dateMilliseconds = listEvent.get(i).getStart().getDateTime().getValue();
+                if (dateMillisecondsMostRecent > dateMilliseconds) {
+                    eventMostRecent = listEvent.get(i);
+                }
+            }
+        }
+
+        return eventMostRecent;
+    }
+
+    /**
+     *
+     * @param accountName .
+     * @return .
+     * @throws IOException .
+     * @throws GeneralSecurityException .
+     */
+    public Event getNextEvent(final String accountName) throws IOException, GeneralSecurityException {
+        DateTime now = new DateTime(System.currentTimeMillis());
+        Events events = getService(accountName).events().list("primary").setMaxResults(1).setTimeMin(now)
+                .setOrderBy("startTime").setSingleEvents(true).execute();
+        List<Event> items = events.getItems();
+        Event event = null;
+        if (items != null) {
+            event = items.get(0);
+        }
+        return event;
     }
 
 }

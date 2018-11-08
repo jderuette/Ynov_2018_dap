@@ -27,17 +27,35 @@ public class GMailController {
 
     /**.
      * This function return the number of email unread with string param userId according to the annotated route
-     * @param userId .
+     * @param userKey .
      * @return .
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
     @RequestMapping("/getEmailUnread")
-    public Map<String, Integer> getEmailUnread(@RequestParam("userId") final String userId)
+    public Map<String, Integer> getEmailUnread(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
 
-        int nbMessageUnread = gmailService.nbMessageUnread(userId);
+        int nbMessageUnread = gmailService.nbMessageUnread(userKey);
 
         return Collections.singletonMap("nbMessageUnread", nbMessageUnread);
     }
+
+    /**
+     *
+     * @param userKey .
+     * @return .
+     * @throws GeneralSecurityException .
+     * @throws IOException .
+     */
+
+    @RequestMapping("/getAllEmailUnread")
+    public Map<String, Integer> getAllEmailUnread(@RequestParam("userKey") final String userKey)
+            throws GeneralSecurityException, IOException {
+
+        int nbMessageUnread = gmailService.nbMessageUnreadAll(userKey);
+        System.out.println(nbMessageUnread);
+        return Collections.singletonMap("nbMessageUnreadAll", nbMessageUnread);
+    }
+
 }

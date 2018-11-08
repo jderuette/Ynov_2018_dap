@@ -18,7 +18,15 @@ import fr.ynov.dap.client.service.RequestHttpService;
  * @author Dom
  *
  */
-public class Launcher {
+public final class Launcher {
+
+    /**.
+     * constructor
+     */
+    private Launcher() {
+
+    }
+
     /**.
      * requestHttpService is a variable containing the RequestHttpService;
      */
@@ -30,7 +38,7 @@ public class Launcher {
      * @throws IOException .
      * @throws URISyntaxException .
      */
-    void main(final String[] args) throws IOException, URISyntaxException {
+    public static void main(final String[] args) throws IOException, URISyntaxException {
         if (args[0].equals("view")) {
             if (args[1] != null) {
                 if (args[1].equals("email")) {

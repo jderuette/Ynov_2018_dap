@@ -29,7 +29,6 @@ public class CreateUserController extends GoogleService {
         AppUser appUser = new AppUser();
         appUser.setName(userId);
         appUserRepository.save(appUser);
-        System.out.println(appUser);
     }
 
 }
