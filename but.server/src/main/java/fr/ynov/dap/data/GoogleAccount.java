@@ -21,6 +21,11 @@ public class GoogleAccount {
     private Integer id;
 
     /**
+     * Google Account Name.
+     */
+    private String accountName;
+
+    /**
      * Owner of google account.
      */
     @ManyToOne
@@ -31,6 +36,20 @@ public class GoogleAccount {
      */
     public Integer getId() {
         return id;
+    }
+
+    /**
+     * @return the accountName
+     */
+    public String getAccountName() {
+        return accountName;
+    }
+
+    /**
+     * @param name the accountName to set
+     */
+    public void setAccountName(final String name) {
+        this.accountName = name;
     }
 
     /**

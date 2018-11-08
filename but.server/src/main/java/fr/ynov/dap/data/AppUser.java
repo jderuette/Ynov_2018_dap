@@ -40,7 +40,7 @@ public class AppUser {
      * Add a google account of this user.
      * @param account the GoogleAccount to add
      */
-    public void adGoogleAccount(final GoogleAccount account) {
+    public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);
     }

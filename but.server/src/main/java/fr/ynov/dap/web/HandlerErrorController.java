@@ -1,5 +1,6 @@
 package fr.ynov.dap.web;
 
+import org.apache.http.client.HttpResponseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,22 @@ public abstract class HandlerErrorController {
     }
 
     /**
+     * Handler for General HTTP Exception.
+     * @param e Exception
+     * @return response with body and status code of error
+     */
+    @ExceptionHandler(value = HttpResponseException.class)
+    public ResponseEntity<String> httpErrorHandler(final HttpResponseException e) {
+
+        return ResponseEntity
+                .status(e.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body("{\"code\": " + (e.getStatusCode() + 1) + ", \"message\": \""
+                    + e.getMessage().replaceAll("\"", "\\\\\"")
+                    + "\"}");
+    }
+
+    /**
      * Handler for Exception.
      * @param e Exception
      * @return response with body and status code of error
@@ -34,8 +51,8 @@ public abstract class HandlerErrorController {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<String> exceptionHandler(final Exception e) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body("{\"code\": 400, \"message\": \"" + e.getMessage() + "\"}");
+                .body("{\"code\": 500, \"message\": \"" + e.getMessage().replaceAll("\"", "\\\\\"") + "\"}");
     }
 }

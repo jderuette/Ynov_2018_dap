@@ -84,6 +84,11 @@
             <artifactId>google-api-services-people</artifactId>
             <version>v1-rev357-1.25.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
     </dependencies>
 
     <build>
