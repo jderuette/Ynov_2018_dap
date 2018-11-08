@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.google.CalendarService;
 
 /**
@@ -24,34 +23,36 @@ import fr.ynov.dap.google.CalendarService;
 public class CalendarController {
 
     /**
+     * Logger.
+     */
+    public static final Logger LOGGER = LogManager.getLogger();
+    /**
      * Gmail service.
      */
     @Autowired
     private CalendarService calendarService;
 
     /**
+     * Repository.
+     */
+    @Autowired
+    private AppUserRepository repository;
+
+    /**
      * get next event.
-     * @param user google user
+     * @param gUser google user
      * @param userKey applicative user
      * @return next event
      * @throws Exception  if user not found
      */
-    @RequestMapping("/event/next/{user}")
-    public final Event getNextEvent(@PathVariable final String user, @RequestParam("userKey") final String userKey)
+    @RequestMapping("/event/next/{gUser}")
+    public final Event getNextEvent(@PathVariable final String gUser, @RequestParam("userKey") final String userKey)
             throws Exception {
-        //TODO bim by Djer La majorité de ce code devrait être dans le service (calendarService.getNexEvent()).
-        //Le travail d'un controller est de traiter les "saisie" utilisateur et de répondre.
-        // pas de connaitre le fonctionne de Calendar (ou tout autre processus metier).
-        Logger logger = LogManager.getLogger();
-        logger.info("Récupération du prochain evenement du calendrier de l'utilisateur {}...", user);
-        Calendar service = calendarService.getService(userKey);
-        DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("primary").setOrderBy("startTime").setMaxResults(1).setTimeMin(now)
-                .setSingleEvents(true).execute();
-        if (events.getItems().size() == 0) {
-            return null;
-        }
-        return events.getItems().get(0);
+        LOGGER.info("Récupération du prochain evenement du calendrier de l'utilisateur {}...", gUser);
+
+        AppUser user = repository.findByName(userKey);
+
+        return calendarService.getNextEvent(user, gUser);
 
     }
 }

@@ -1,7 +1,5 @@
 package fr.ynov.dap;
 
-import org.apache.logging.log4j.LogManager;
-
 /**
  * Config file.
  * @author MBILLEMAZ
@@ -72,8 +70,6 @@ public class Config {
         this.credentialsFolder = CREDENTIALS_FOLDER;
         this.clientSecretDir = CLIENT_SECRET_DIR;
         this.rootFolder = ROOT_FOLDER;
-        //TODO bim by Djer Pourquoi une "error" ?
-        LogManager.getLogger().error(this.rootFolder);
     }
 
     /**

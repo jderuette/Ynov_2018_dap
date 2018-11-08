@@ -40,9 +40,7 @@ public class Controller {
     /**
      * log4j logger.
      */
-    //TODO bim by Djer Devrait être static (inutle que chaque instance ai le sien, elles auront 
-    // par default la même category) 
-    private final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * public constructor.
@@ -107,20 +105,31 @@ public class Controller {
     /**
      * Add user to google account.
      * @param userKey username
+     * @param accountName account name
      */
-    public final void addUser(final String userKey) {
+    public final void addAccount(final String userKey, final String accountName) {
         URI uri;
         try {
 
-            uri = new URI(SERVER_URL + "account/add/" + userKey);
-            logger.info("Ouverture du navigateur pour la création de l'utilisateur {}", userKey);
+            uri = new URI(SERVER_URL + "account/add/" + accountName + "?userKey=" + userKey);
+            LOGGER.info("Ouverture du navigateur pour la création du compte {} pour l'utilisateur {}", accountName,
+                    userKey);
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
-            //TODO bim by Djer une petite LOG error ? COntextualisée ?
-            // TODO Auto-generated catch block
-            //TODO bim by Djer Eviter "e.printStackTrace()" il affiche la pile dans la console. Utiliser un Logger à la place
-            e.printStackTrace();
+            LOGGER.error("Erreur lors de la création du compte " + accountName, e);
         }
+
+    }
+
+    /**
+     * Add user to google account.
+     * @param userKey username
+     */
+    public final void addUser(final String userKey) {
+        LOGGER.info("Création de l'utilisateur {}", userKey);
+
+        String result = getRequestResponse("user/add/" + userKey);
+        System.out.println("Utilisateur crée : " + result);
 
     }
 
@@ -131,9 +140,11 @@ public class Controller {
      */
     public final String getRequestResponse(final String url) {
         URL finaleUrl;
+
+        String result = "Erreur";
         try {
             finaleUrl = new URL(SERVER_URL + url);
-            logger.info("Consultation de l'api {}", finaleUrl);
+            LOGGER.info("Consultation de l'api {}", finaleUrl);
             HttpURLConnection connection = (HttpURLConnection) finaleUrl.openConnection();
 
             connection.setRequestMethod("GET");
@@ -145,20 +156,15 @@ public class Controller {
                 stream = connection.getInputStream();
             }
 
-            //TODO bim b ya Djer Evite les multiple return dans la même méthode ! 
-            return readInputStream(stream);
+            result = readInputStream(stream);
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            //TODO bim by Djer Contextualiser la log ("pour l'URL : " + url).
-            //TODO bim by Djer Utilise le deuxème paramètre pour indiquer la cause (l'exception).
-            logger.error("Erreur dans la formation de l'URL");
+            LOGGER.error("Erreur dans la formation de l'URL " + url, e);
         } catch (IOException e) {
-          //TODO bim by Djer Utilise le deuxème paramètre pour indiquer la cause (l'exception).
-            logger.error("Erreur, le compte google n'existe probablement pas");
-            e.printStackTrace();
+            LOGGER.error("Erreur, le compte google n'existe probablement pas", e);
         }
-        return "Erreur";
+
+        return result;
     }
 
     /**
