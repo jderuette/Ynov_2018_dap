@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Built-By: Mon_PC
+Class-Path: lib/jackson-databind-2.9.4.jar lib/jackson-annotations-2.9
+ .0.jar lib/jackson-core-2.9.4.jar
+Build-Jdk: 1.8.0_191
+Created-By: Maven Integration for Eclipse
+Main-Class: fr.ynov.dap.client.fr.ynov.client.App
+
