@@ -9,11 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
@@ -26,7 +23,7 @@ import com.google.api.client.http.GenericUrl;
  * @author thibault
  *
  */
-@Controller
+@Service
 public class GoogleAccount extends GoogleService {
 
     /**
@@ -48,11 +45,9 @@ public class GoogleAccount extends GoogleService {
      * @param request The HTTP Request
      * @param code    The (encoded) code use by Google (token, expirationDate,...)
      * @param session the HTTP Session
-     * @return the view to display
      * @throws ServletException When Google account could not be connected to DaP.
      */
-    @RequestMapping("/oAuth2Callback")
-    public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
+    public void oAuthCallback(final String code, final HttpServletRequest request,
             final HttpSession session) throws ServletException {
         final String decodedCode = extracCode(request);
 
@@ -84,8 +79,6 @@ public class GoogleAccount extends GoogleService {
             logger.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
-
-        return "redirect:/";
     }
 
     /**
@@ -155,8 +148,7 @@ public class GoogleAccount extends GoogleService {
      * @param session the HTTP session
      * @return the view to Display (on Error)
      */
-    @RequestMapping("/account/add/{userId}")
-    public String addAccount(@PathVariable final String userId, final HttpServletRequest request,
+    public String addAccount(final String userId, final HttpServletRequest request,
             final HttpSession session) {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
