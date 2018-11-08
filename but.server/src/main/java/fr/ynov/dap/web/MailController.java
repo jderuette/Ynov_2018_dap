@@ -14,7 +14,7 @@ import fr.ynov.dap.google.GMAILService;
  *
  */
 @RestController
-public class MailController extends GoogleController {
+public class MailController extends HandlerErrorController {
     /**
      * Mail Google service.
      */
