@@ -16,7 +16,7 @@ import fr.ynov.dap.google.AdminService;
  *
  */
 @Controller
-public class AdminController extends GoogleController {
+public class AdminController extends HandlerErrorController {
 
     /**
      * Admin google service.

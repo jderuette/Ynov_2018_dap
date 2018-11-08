@@ -15,7 +15,7 @@ import fr.ynov.dap.data.AppUserRepository;
  *
  */
 @RestController
-public class AppUserController extends GoogleController {
+public class AppUserController extends HandlerErrorController {
 
     /**
      * Repository of AppUser.

@@ -13,7 +13,7 @@ import fr.ynov.dap.google.GooglePeopleService;
  *
  */
 @RestController
-public class PeopleController extends GoogleController {
+public class PeopleController extends HandlerErrorController {
     /**
      * Calendar Google service.
      */

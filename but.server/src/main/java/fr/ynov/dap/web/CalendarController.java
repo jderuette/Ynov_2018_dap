@@ -18,7 +18,7 @@ import fr.ynov.dap.google.CalendarService;
  *
  */
 @RestController
-public class CalendarController extends GoogleController {
+public class CalendarController extends HandlerErrorController {
     /**
      * Calendar Google service.
      */

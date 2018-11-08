@@ -11,7 +11,7 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
  * @author thibault
  *
  */
-public class GoogleController {
+public abstract class HandlerErrorController {
     /**
      * Handler for Google Json Exception.
      * @param e Exception
