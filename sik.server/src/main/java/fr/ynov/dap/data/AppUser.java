@@ -37,6 +37,12 @@ public class AppUser {
     private List<GoogleAccount> googleAccounts;
 
     /**
+     * List of every microsoft account for this user.
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<MicrosoftAccount> microsoftAccounts;
+
+    /**
      * @return the id
      */
     public Integer getId() {
@@ -85,6 +91,29 @@ public class AppUser {
     public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.googleAccounts.add(account);
+    }
+
+    /**
+     * @return the MicrosoftAccount
+     */
+    public List<MicrosoftAccount> getMicrosoftAccounts() {
+        return microsoftAccounts;
+    }
+
+    /**
+     * @param val the Microsoft account to set
+     */
+    public void setMicrosoftAccounts(final List<MicrosoftAccount> val) {
+        this.microsoftAccounts = val;
+    }
+
+    /**
+     * Add new Microsoft account to current user.
+     * @param account Microsoft account to add
+     */
+    public void addMicrosoftAccount(final MicrosoftAccount account) {
+        account.setOwner(this);
+        this.microsoftAccounts.add(account);
     }
 
 }

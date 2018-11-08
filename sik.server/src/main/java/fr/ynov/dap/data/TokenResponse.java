@@ -2,6 +2,12 @@ package fr.ynov.dap.data;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,43 +16,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Kévin Sibué
  *
  */
+@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse {
 
     /**
+     * Unique.
+     */
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    /**
      * Token type.
      */
+    @Column
     @JsonProperty("token_type")
     private String tokenType;
 
     /**
      * Scope.
      */
+    @Column
     private String scope;
 
     /**
      * Expires in.
      */
+    @Column
     @JsonProperty("expires_in")
     private int expiresIn;
 
     /**
      * Access token.
      */
+    @Column
     @JsonProperty("access_token")
     private String accessToken;
 
     /**
      * Refresh token.
      */
+    @Column
     @JsonProperty("refresh_token")
     private String refreshToken;
 
     /**
      * Id token.
      */
+    @Column
     @JsonProperty("id_token")
     private String idToken;
+
+    /**
+     * Owner column.
+     */
+    @OneToOne
+    private MicrosoftAccount account;
 
     /**
      * Error.

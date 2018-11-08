@@ -3,7 +3,7 @@ package fr.ynov.dap.microsoft;
 import java.io.IOException;
 import java.util.UUID;
 
-import fr.ynov.dap.contract.OutlookService;
+import fr.ynov.dap.contract.OutlookApiService;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,20 +18,28 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * @author Kévin Sibué
  *
  */
-public class OutlookServiceBuilder {
+public final class OutlookServiceBuilder {
+
+    /**
+     * Default constructor.
+     */
+    private OutlookServiceBuilder() {
+
+    }
 
     /**
      * Todo.
      * @param accessToken Access token
      * @param userEmail User email
-     * @return
+     * @return .
      */
-    public static OutlookService getOutlookService(String accessToken, String userEmail) {
+    public static OutlookApiService getOutlookService(final String accessToken, final String userEmail) {
+
         // Create a request interceptor to add headers that belong on
         // every request
         Interceptor requestInterceptor = new Interceptor() {
             @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
+            public Response intercept(final Interceptor.Chain chain) throws IOException {
                 Request original = chain.request();
                 Builder builder = original.newBuilder().header("User-Agent", "java-tutorial")
                         .header("client-request-id", UUID.randomUUID().toString())
@@ -56,7 +64,8 @@ public class OutlookServiceBuilder {
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         // Generate the token service
-        return retrofit.create(OutlookService.class);
+        return retrofit.create(OutlookApiService.class);
+
     }
 
 }

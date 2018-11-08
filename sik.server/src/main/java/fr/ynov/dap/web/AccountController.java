@@ -24,6 +24,7 @@ import fr.ynov.dap.Constants;
 import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.IdToken;
+import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.data.TokenResponse;
 import fr.ynov.dap.dto.out.SessionOutDto;
 import fr.ynov.dap.exception.AddAccountFailedException;
@@ -189,9 +190,7 @@ public class AccountController extends BaseController {
         session.setAttribute("expected_state", state);
         session.setAttribute("expected_nonce", nonce);
 
-        String loginUrl = msAccountService.getLoginUrl(state, nonce);
-
-        return loginUrl;
+        return MicrosoftAccountService.getLoginUrl(state, nonce);
 
     }
 
@@ -202,29 +201,50 @@ public class AccountController extends BaseController {
      * @param state State
      * @param request Request
      * @return Html page
+     * @throws UserNotFoundException Exception.
      */
     @RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
-            @RequestParam("state") final UUID state, final HttpServletRequest request) {
+            @RequestParam("state") final UUID state, final HttpServletRequest request) throws UserNotFoundException {
 
         HttpSession session = request.getSession();
         UUID expectedState = (UUID) session.getAttribute("expected_state");
         UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
 
         if (state.equals(expectedState)) {
+
             IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
+
             if (idTokenObj != null) {
+
                 TokenResponse tokenResponse = MicrosoftAccountService.getTokenFromAuthCode(code,
                         idTokenObj.getTenantId());
+
+                AppUser currentUser = appUserRepository.findByUserKey("TODO");
+
+                if (currentUser == null) {
+                    throw new UserNotFoundException();
+                }
+
+                MicrosoftAccount msAccount = new MicrosoftAccount();
+                msAccount.setToken(tokenResponse);
+                msAccount.setTenantId(idTokenObj.getTenantId());
+
                 session.setAttribute("tokens", tokenResponse);
                 session.setAttribute("userConnected", true);
                 session.setAttribute("userName", idTokenObj.getName());
                 session.setAttribute("userTenantId", idTokenObj.getTenantId());
+
             } else {
+
                 session.setAttribute("error", "ID token failed validation.");
+
             }
+
         } else {
+
             session.setAttribute("error", "Unexpected state returned from authority.");
+
         }
 
         return "mail";

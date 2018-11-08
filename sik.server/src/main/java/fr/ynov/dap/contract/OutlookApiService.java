@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  * @author Kévin Sibué
  *
  */
-public interface OutlookService {
+public interface OutlookApiService {
 
     /**
      * Return current user.
