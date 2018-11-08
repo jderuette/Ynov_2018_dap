@@ -1,79 +1,87 @@
 package fr.ynov.dap.services;
 
-import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
-import com.google.api.client.http.GenericUrl;
+import com.google.api.client.auth.oauth2.*;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import fr.ynov.dap.helpers.GoogleHelper;
+import fr.ynov.dap.models.*;
+import fr.ynov.dap.repositories.*;
 import org.apache.logging.log4j.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import java.io.IOException;
 
 @Service
 public class GoogleAccountService extends GoogleHelper {
 
     private static final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
-    /**
-     * retrieve the User ID in Session.
-     *
-     * @param session the HTTP Session
-     * @return the current User Id in Session
-     * @throws ServletException if no User Id in session
-     */
-    public final String getUserKey(final HttpSession session) throws ServletException {
-        String userKey = null;
-        if (null != session && null != session.getAttribute("userKey")) {
-            userKey = (String) session.getAttribute("userKey");
-        }
+    @Autowired
+    private GoogleHelper googleHelper;
 
-        if (null == userKey) {
-            LOG.error("userKey in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add Google acocunt : userKey is NULL is User Session");
-        }
-        return userKey;
-    }
+    @Autowired
+    private UserRepository userRepository;
+
+    private static final String  OAUTH_CALLBACK_URL       = "/oAuth2Callback";
+    private static final Integer SENSIBLE_DATA_FIRST_CHAR = 3;
+    private static final Integer SENSIBLE_DATA_LAST_CHAR  = 8;
 
     /**
-     * Extract OAuth2 Google code (from URL) and decode it.
+     * Add a google account to a user
      *
-     * @param request the HTTP request to extract OAuth2 code
-     * @return the decoded code
-     * @throws ServletException if the code cannot be decoded
+     * @param request Http Request
+     * @param session Http Session
+     * @return Response
+     * @throws ServletException Exception
      */
-    public final String extractCode(final HttpServletRequest request) throws ServletException {
-        final StringBuffer buf = request.getRequestURL();
-        if (null != request.getQueryString()) {
-            buf.append('?').append(request.getQueryString());
-        }
-        final AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
-        final String                       decodeCode  = responseUrl.getCode();
+    public String addGoogleAccountToUser(final HttpServletRequest request, final HttpSession session) throws ServletException {
 
-        if (decodeCode == null) {
-            throw new MissingServletRequestParameterException("code", "String");
-        }
+        String       userName;
+        String       googleAccountName;
+        final String decodedCode = googleHelper.extractCode(request);
+        final String redirectUri = googleHelper.buildRedirectUri(request, OAUTH_CALLBACK_URL);
 
-        if (null != responseUrl.getError()) {
-            LOG.error("Error when trying to add Google account : " + responseUrl.getError());
-            throw new ServletException("Error when trying to add Google account");
-            // onError(request, resp, responseUrl);
+        if (session != null && session.getAttribute("userName") != null && session.getAttribute("googleAccount") != null) {
+            userName = (String) session.getAttribute("userName");
+            googleAccountName = (String) session.getAttribute("googleAccount");
+        } else {
+            LOG.error("GoogleAccount in Session is NULL in Callback");
+            throw new ServletException("Error when trying to add Google account : userKey is NULL is User Session");
         }
 
-        return decodeCode;
+        try {
+            final GoogleAuthorizationCodeFlow flow     = googleHelper.getFlow();
+            final TokenResponse               response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
+
+            User user = userRepository.findByName(userName);
+
+            GoogleAccount googleAccount = new GoogleAccount();
+            googleAccount.setName(googleAccountName);
+            user.addGoogleAccount(googleAccount);
+            userRepository.save(user);
+
+            final Credential credential = flow.createAndStoreCredential(response, googleAccountName);
+            if (null == credential || null == credential.getAccessToken()) {
+                LOG.warn("Trying to store a NULL AccessToken for user : " + googleAccountName);
+            }
+
+            if (LOG.isDebugEnabled() && (null != credential && null != credential.getAccessToken())) {
+                LOG.debug("New user credential stored with userId : " + googleAccountName + "partial AccessToken : "
+                        + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
+                        SENSIBLE_DATA_LAST_CHAR));
+            }
+
+        } catch (IOException e) {
+            LOG.error("Exception while trying to store user Credential", e);
+        }
+
+        LOG.info("Google account " + googleAccountName + " is successfully added to user " + userName);
+
+        return "redirect:/user-success";
+
     }
 
-    /**
-     * Build a current host (and port) absolute URL.
-     *
-     * @param req         The current HTTP request to extract schema, host, port
-     *                    information
-     * @param destination the "path" to the resource
-     * @return an absolute URI
-     */
-    public final String buildRedirectUri(final HttpServletRequest req, final String destination) {
-        final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
-        url.setRawPath(destination);
-        return url.build();
-    }
+
 }

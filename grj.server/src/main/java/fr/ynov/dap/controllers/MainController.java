@@ -15,7 +15,7 @@ public class MainController {
      * @return String
      */
     @RequestMapping("/")
-    public final String sayHello() {
+    public String sayHello() {
         return "My API rocks";
     }
 
@@ -25,8 +25,18 @@ public class MainController {
      * @return String
      */
     @RequestMapping("/user-success")
-    public final String saySuccess() {
+    public String saySuccess() {
         return "User successfully created";
+    }
+
+    /**
+     * Return success message for user created
+     *
+     * @return String
+     */
+    @RequestMapping("/user-does-not-exist")
+    public String sayUserDoesNotExist() {
+        return "User does not exist, please create a user";
     }
 
 }

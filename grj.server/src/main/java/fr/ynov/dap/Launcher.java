@@ -15,6 +15,7 @@ public class Launcher {
 
     /**
      * Return current API configuration.
+     *
      * @return Configuration
      */
     @Bean

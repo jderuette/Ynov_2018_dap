@@ -20,21 +20,16 @@ public class PeopleService {
     /**
      * Return the number of contacts
      *
-     * @param userKey userKey to log
+     * @param googleAccountName userKey to log
      * @return String number of contacts
      * @throws IOException              Exception
      * @throws GeneralSecurityException Exception
      */
-    public final Map<String, Integer> getNumberContact(String userKey) throws IOException, GeneralSecurityException {
+    public int getNumberContact(String googleAccountName) throws IOException, GeneralSecurityException {
 
-        Integer numberOfContact = googleHelper.getPeopleService(userKey).people().connections().list("people/me")
+        return googleHelper.getPeopleService(googleAccountName).people().connections().list("people/me")
                 .setPersonFields("names,emailAddresses").execute().getTotalPeople();
 
-        Map<String, Integer> response = new HashMap<>();
-
-        response.put("number_contact", numberOfContact);
-
-        return response;
     }
 
 }
