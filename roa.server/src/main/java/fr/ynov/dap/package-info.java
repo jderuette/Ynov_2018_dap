@@ -2,4 +2,4 @@
  * @author alex
  *
  */
-package fr.ynov.dap.dap;
+package fr.ynov.dap;

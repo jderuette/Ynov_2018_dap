@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap;
+package fr.ynov.dap.services;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -16,17 +16,15 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import fr.ynov.dap.Config;
+import fr.ynov.dap.web.ConnexionGoogle;
+
 /**
  * Service de gestion des évènements de calendrier avec l'API google.
  * @author alex
  */
 @Service
 public class GoogleCalendar {
-    /**
-     * Récupération de l'objet config par autowire.
-     */
-    @Autowired
-    private Config config;
     /**
      * Récupération de l'objet connexionGoogle par autowire.
      */
@@ -47,7 +45,7 @@ public class GoogleCalendar {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         Calendar service = new Calendar.Builder(httpTransport, jsonFactory,
-                connexionGoogle.getCredentials(httpTransport, user)).setApplicationName(config.getApplicationName())
+                connexionGoogle.getCredentials(httpTransport, user)).setApplicationName(Config.getApplicationName())
                         .build();
         // récupère le prochain évènement du calendrier
         DateTime now = new DateTime(System.currentTimeMillis());

@@ -1,9 +1,9 @@
-package fr.ynov.dap.dap;
+package fr.ynov.dap;
 /**
  * Classe de configuration.
  * @author alex
  */
-public class Config {
+public abstract class Config {
   /**
    * Chemin de récupération des credentials pour la connexion à google.
    */
@@ -25,28 +25,28 @@ public class Config {
    * Permet de récupérer le nom de l'application.
    * @return String
    */
-  public String getApplicationName() {
+  public static String getApplicationName() {
     return APPLICATIONNAME;
   }
   /**
    * Permet de récupérer le chemin des crédentials.
    * @return String
    */
-  public String getCredentialFilePath() {
+  public static String getCredentialFilePath() {
     return CREDENTIALSFILEPATH;
   }
   /**
    * Permet de récupérer le chemin des tokens.
    * @return String
    */
-  public String getClientSecretFile() {
+  public static String getClientSecretFile() {
     return TOKENSDIRECTIONPATH;
   }
   /**
    * Renvois l'url de callBack de oAuth2.
    * @return String
    */
-  public String getoAuth2CallbackUrl() {
+  public static String getoAuth2CallbackUrl() {
     return AUTH2CALLBACKURL;
   }
 }

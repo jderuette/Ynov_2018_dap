@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ynov.dap.dap.GoogleCalendar;
+import fr.ynov.dap.services.GoogleCalendar;
 
 /**
  * Controller pour la manipulation du calendrier google.
@@ -28,8 +28,8 @@ public class CalendarController {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
-    @RequestMapping("/calendar/event")
-    public String getNextEvent(final @RequestParam("userKey") String user)
+    @RequestMapping("/Calendar/event")
+    public final String getNextEvent(final @RequestParam("userKey") String user)
             throws IOException, GeneralSecurityException {
         return calendar.getNextEvent(user);
     }
