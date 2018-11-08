@@ -31,4 +31,21 @@ public interface TokenService {
             @Field("grant_type") String grantType, @Field("code") String code,
             @Field("redirect_uri") String redirectUrl);
 
+    /**
+     * Refresh token.
+     * @param tenantId TenantId
+     * @param clientId ClientId
+     * @param clientSecret ClientSecret
+     * @param grantType GrantType
+     * @param code Code
+     * @param redirectUrl Redirect Url
+     * @return Refreshed token
+     */
+    @FormUrlEncoded
+    @POST("/{tenantid}/oauth2/v2.0/token")
+    Call<TokenResponse> getAccessTokenFromRefreshToken(@Path("tenantid") String tenantId,
+            @Field("client_id") String clientId, @Field("client_secret") String clientSecret,
+            @Field("grant_type") String grantType, @Field("refresh_token") String code,
+            @Field("redirect_uri") String redirectUrl);
+
 }

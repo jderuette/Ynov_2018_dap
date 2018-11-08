@@ -3,6 +3,7 @@ package fr.ynov.dap.microsoft;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -191,6 +192,45 @@ public class MicrosoftAccountService {
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
             return error;
+        }
+    }
+
+    /**
+     * Chech if token need to be refresh and refresh it if neede.
+     * @param tokens Current token response
+     * @param tenantId Tenant Id
+     * @return New token
+     */
+    public static TokenResponse ensureTokens(final TokenResponse tokens, final String tenantId) {
+        // Are tokens still valid?
+        Calendar now = Calendar.getInstance();
+        if (now.getTime().before(tokens.getExpirationTime())) {
+            // Still valid, return them as-is
+            return tokens;
+        } else {
+            // Expired, refresh the tokens
+            // Create a logging interceptor to log request and responses
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+            // Create and configure the Retrofit object
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
+                    .addConverterFactory(JacksonConverterFactory.create()).build();
+
+            // Generate the token service
+            TokenService tokenService = retrofit.create(TokenService.class);
+
+            try {
+                return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
+                        "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
+            } catch (IOException e) {
+                TokenResponse error = new TokenResponse();
+                error.setError("IOException");
+                error.setErrorDescription(e.getMessage());
+                return error;
+            }
         }
     }
 

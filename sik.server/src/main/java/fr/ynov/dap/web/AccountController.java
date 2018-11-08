@@ -25,6 +25,7 @@ import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.IdToken;
 import fr.ynov.dap.data.TokenResponse;
+import fr.ynov.dap.dto.out.SessionOutDto;
 import fr.ynov.dap.exception.AddAccountFailedException;
 import fr.ynov.dap.exception.MissingSessionParameterException;
 import fr.ynov.dap.exception.UserNotFoundException;
@@ -227,6 +228,25 @@ public class AccountController extends BaseController {
         }
 
         return "mail";
+
+    }
+
+    /**
+     * Logout for Microsoft services.
+     * @param request Http request
+     * @param response Http response
+     * @return .
+     */
+    @RequestMapping("/microsoft/logout")
+    public SessionOutDto logout(final HttpServletRequest request, final HttpServletResponse response) {
+
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        SessionOutDto outDto = new SessionOutDto();
+        outDto.setLogged(false);
+
+        return outDto;
 
     }
 
