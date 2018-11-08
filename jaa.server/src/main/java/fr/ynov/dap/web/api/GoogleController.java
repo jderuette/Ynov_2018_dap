@@ -1,5 +1,8 @@
 package fr.ynov.dap.web.api;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +23,27 @@ public abstract class GoogleController {
     public ResponseEntity<String> unauthorizedError(final Exception ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
+
+    /**
+     * Handle server exception.
+     * @param ex exception
+     * @return IOException.
+     */
+    @ExceptionHandler(value = IOException.class)
+    public ResponseEntity<String> handleIOException(final Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
+    /**
+     * Handle server exception.
+     * @param ex exception
+     * @return GeneralSecurityException.
+     */
+    @ExceptionHandler(value = GeneralSecurityException.class)
+    public ResponseEntity<String> handleGeneralSecurityException(final Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
     /**
      * Handle server exception.
      * @param ex exception
