@@ -1,10 +1,12 @@
 package fr.ynov.dap.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
 
 /**
  * @author alex
@@ -13,6 +15,11 @@ import fr.ynov.dap.data.AppUser;
 @Controller
 public class AppUserController {
   /**
+   * accès au repository.
+   */
+  @Autowired
+  private AppUserRepository repository;
+  /**
    * @param userKey nom utilisateur
    * @return user
    */
@@ -20,6 +27,7 @@ public class AppUserController {
   public final String userkey(@PathVariable final String userKey) {
     AppUser user = new AppUser();
     user.setUserKey(userKey);
-    return "200";
+    repository.save(user);
+    return "userAdd";
   }
 }

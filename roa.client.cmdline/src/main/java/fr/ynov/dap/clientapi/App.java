@@ -38,8 +38,15 @@ public class App {
       return;
     }
     switch (args[0]) {
+    case "userAdd":
+      System.out.println(executeURL("http://localhost:8080/user/add/" + args[1]));
     case "add":
-      URL url = new URL("http://localhost:8080/account/add/" + args[1]);
+      if (args.length <= 2) {
+        System.out.println("pas assez d'argument");
+        break;
+      }
+      URL url = new URL("http://localhost:8080/account/add/" + args[1]
+        + "?userKey=" + args[2]);
       Desktop.getDesktop().browse(url.toURI());
       break;
     case "labels":
@@ -58,7 +65,6 @@ public class App {
       System.out.println("Mauvais paramètre");
       break;
     }
-    //TODO rao by Djer Il manque "nb Contacts"
   }
   /**
    * Execute l'URL passée en argument et écrit dans la console la réponse.

@@ -84,6 +84,7 @@ public class GoogleAccountController extends ConnexionGoogle {
             GoogleAccount account = new GoogleAccount();
             account.setAccountName(userId);
             repository.findByUserKey(userKey).adGoogleAccount(account);
+            repository.save(repository.findByUserKey(userKey));
         } catch (IOException e) {
             LogManager.getLogger().error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying " + "to connect Google Account");
