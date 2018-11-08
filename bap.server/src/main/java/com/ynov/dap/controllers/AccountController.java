@@ -39,26 +39,18 @@ public class AccountController extends BaseController {
             final HttpSession session) throws ServletException {
 
         final String decodedCode = extracCode(request);
-        final String redirectUri = buildRedirectUri(request, env.getProperty("oAuth2CallbackUrl"));
+        final String redirectUri = buildRedirectUri(request, config.getoAuth2CallbackUrl());
         final String userId = getUserid(session);
 
         return googleAccountService.oAuthCallback(code, decodedCode, redirectUri, userId);
     }
 
-    /**
-     * Adds the account.
-     *
-     * @param userId the user id
-     * @param request the request
-     * @param session the session
-     * @return the string
-     */
-    @RequestMapping("/account/add/{userId}")
-    public String addAccount(@PathVariable final String userId, final HttpServletRequest request,
+    @RequestMapping("/account/add/{accountName}")
+    public String addAccount(@PathVariable final String accountName, @RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
             final HttpSession session) {
-    	final String redirectUri = buildRedirectUri(request, env.getProperty("oAuth2CallbackUrl"));
+    	final String redirectUri = buildRedirectUri(request, config.getoAuth2CallbackUrl());
 
-        return googleAccountService.addAccount(userId, redirectUri, session);
+        return googleAccountService.addAccount(accountName, userKey, redirectUri, session);
     }
 
     @Override

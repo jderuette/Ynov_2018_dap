@@ -6,12 +6,16 @@ import java.security.GeneralSecurityException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.ynov.dap.data.AppUser;
+import com.ynov.dap.data.GoogleAccount;
+import com.ynov.dap.repository.AppUserRepository;
+import com.ynov.dap.repository.GoogleAccountRepository;
 
 /**
  * Service for account.
@@ -29,6 +33,12 @@ public class GoogleAccountService extends GoogleService {
      * LAST CHAR.
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 1;
+    
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    @Autowired
+    private GoogleAccountRepository googleAccountRepository;
 
 
     public String oAuthCallback(final String code, String decodedCode, String redirectUri, String userId) throws ServletException {
@@ -60,10 +70,20 @@ public class GoogleAccountService extends GoogleService {
         return "redirect:/";
     }
 
-    public String addAccount(@PathVariable final String userId, String redirectUri, HttpSession session) {
+    public String addAccount(final String userId, final String userKey, String redirectUri, HttpSession session) {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow = null;
         Credential credential = null;
+
+        AppUser user = appUserRepository.findByName(userKey);
+        System.out.println(user.getName());
+
+        GoogleAccount googleAccount = new GoogleAccount();
+        googleAccount.setOwner(user);
+        googleAccount.setName(userId);
+        user.addGoogleAccount(googleAccount);
+        googleAccountRepository.save(googleAccount);
+
         try {
             try {
                 flow = super.getFlow();

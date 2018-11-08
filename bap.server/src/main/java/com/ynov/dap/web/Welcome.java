@@ -1,6 +1,5 @@
 package com.ynov.dap.web;
 
-/*
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.util.store.DataStore;
+import com.ynov.dap.google.CredentialService;
 import com.ynov.dap.google.GoogleService;
 import com.ynov.dap.google.MailService;
 
@@ -23,7 +23,7 @@ public class Welcome {
     private MailService mailService;
 
     @Autowired
-    private GoogleService googleService;
+    private CredentialService credentialService;
 
     @RequestMapping("/{gUser}")
     public String returnWelcome(@PathVariable final String gUser, final ModelMap model) {
@@ -41,7 +41,7 @@ public class Welcome {
 	public String returnDataStore(final ModelMap model) {
 		try {
 			Map<String, Object> dataStore = new HashMap<String, Object>();
-			DataStore<StoredCredential> credentials = googleService.getFlow().getCredentialDataStore();
+			DataStore<StoredCredential> credentials = credentialService.getFlow().getCredentialDataStore();
 
 			for (String key : credentials.keySet()) {
 				Map<String, Object> userData = new HashMap<String, Object>();
@@ -63,4 +63,3 @@ public class Welcome {
 	}
 
 }
-*/

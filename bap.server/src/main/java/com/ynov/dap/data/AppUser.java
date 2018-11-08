@@ -1,5 +1,5 @@
 package com.ynov.dap.data;
-/*
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 
 @Entity
 public class AppUser {
@@ -18,7 +17,7 @@ public class AppUser {
 
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private List<GoogleAccount> googleAccounts;
 
 	public void addGoogleAccount(GoogleAccount account){
@@ -50,7 +49,4 @@ public class AppUser {
 		this.googleAccounts = googleAccounts;
 	}
 
-
-
 }
-*/

@@ -1,6 +1,5 @@
 package com.ynov.dap.data;
 
-/*
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +14,16 @@ public class GoogleAccount {
 
 	@ManyToOne
 	private AppUser owner;
+	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;
@@ -32,4 +41,3 @@ public class GoogleAccount {
 		this.owner = owner;
 	}
 }
-*/

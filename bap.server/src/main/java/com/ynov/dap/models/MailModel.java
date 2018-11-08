@@ -37,5 +37,8 @@ public class MailModel {
        this.setUnRead(inUnread);
     }
 
+	public MailModel() {
+	}
+
 
 }

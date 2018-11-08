@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+</head>
+<body>
+	<h1>DataStore</h1>
+	<div th:unless="${dataStore.isEmpty()}">
+		<div th:each="occurence : ${dataStore}" style="margin-bottom: 10px;">
+			<div><span th:text="#{datastore.user}"></span><span th:text="${occurence.key}"></span></div>
+			<div><span th:text="#{datastore.accessToken}"></span><span th:text="${occurence.value.accessToken}"></span></div>
+			<div><span th:text="#{datastore.refreshToken}"></span><span th:text="${occurence.value.refreshToken}"></span></div>
+			<div><span th:text="#{datastore.expirationTimeMilliseconds}"></span><span th:text="${occurence.value.expirationTimeMilliseconds}"></span></div>
+		</div>
+	</div>
+</body>
+</html>
