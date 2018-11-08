@@ -99,7 +99,10 @@ public final class CalendarService extends GoogleService {
         List<Event> events = new ArrayList<Event>();
 
         for (String name : names) {
-            events.add(getNextEvent(name));
+            Event event = getNextEvent(name);
+            if (event != null) {
+                events.add(event);
+            }
         }
 
         if (events.isEmpty()) {

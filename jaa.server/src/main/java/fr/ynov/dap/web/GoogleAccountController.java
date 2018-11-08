@@ -192,7 +192,7 @@ public class GoogleAccountController extends GoogleService {
             credential = flow.loadCredential(accountName);
 
             if (credential != null && credential.getAccessToken() != null) {
-                response = "AccountAlreadyAdded";
+                response = "AccountAlreadyAdded"; //TODO throw exception
             } else {
                 // redirect to the authorization flow
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
