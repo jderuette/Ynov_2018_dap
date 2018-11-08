@@ -48,7 +48,7 @@ public class AppUser {
      * Add a GoogleAccount to that UserApp.
      * @param account GoogleAccount to add.
      */
-    public void addGoogleAccount(final GoogleAccount account){
+    public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);
 
@@ -80,7 +80,7 @@ public class AppUser {
      * Get the a list of all AccountnName of googleAccount of this AppUser.
      * @return list of accountName
      */
-    public List<String> getGoogleAccountNames(){
+    public List<String> getGoogleAccountNames() {
         List<String> accountNames = new ArrayList<String>();
         List<GoogleAccount> accounts = getGoogleAccounts();
         for (GoogleAccount account : accounts) {

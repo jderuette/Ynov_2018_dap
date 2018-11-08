@@ -42,6 +42,19 @@ public final class ClientLauncher {
     private static final String ERROR_MESSAGE = "Error occurred: ";
 
     /**
+     * three arguments.
+     */
+    private static final Integer THREE_ARGUMENTS = 3;
+    /**
+     * four arguments.
+     */
+    private static final Integer FOUR_ARGUMENTS = 4;
+    /**
+     * fourth argument.
+     */
+    private static final Integer FOURTH_ARGUMENT = 3;
+
+    /**
      * prevent default constructor use.
      */
     private ClientLauncher() {
@@ -82,12 +95,12 @@ public final class ClientLauncher {
 
         if (action.equals("unread")) {
             String user = "me";
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 user = args[2];
             }
 
-            if (args.length == 4) {
-                address = args[3];
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[FOURTH_ARGUMENT];
             }
 
             displayNumberOfMails(userKey, user);
@@ -95,7 +108,7 @@ public final class ClientLauncher {
         }
 
         if (action.equals("contacts")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             displayContactNumber(userKey);
@@ -103,7 +116,7 @@ public final class ClientLauncher {
         }
 
         if (action.equals("add")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             addNewUser(userKey);
@@ -111,7 +124,7 @@ public final class ClientLauncher {
         }
 
         if (action.equals("event")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             displayNextEvent(userKey);

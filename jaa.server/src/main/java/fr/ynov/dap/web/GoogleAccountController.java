@@ -46,10 +46,18 @@ public class GoogleAccountController extends GoogleService {
      * Index of last char for sensible data.
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 10;
-    
-    private static final String UserKeyParamName = "userKey";
-    private static final String AccountNameParamName = "accountName";
-    
+    /**
+     * UserKey parameter constant.
+     */
+    private static final String USER_KEY_PARAM_NAME = "userKey";
+    /**
+     * Account name parameter constant.
+     */
+    private static final String ACCOUNT_NAME_PARAM_NAME = "accountName";
+
+    /**
+     * AppUser repository instantiate thanks to the injection of dependency.
+     */
     @Autowired
     private AppUserRepository repository;
 
@@ -69,8 +77,8 @@ public class GoogleAccountController extends GoogleService {
 
         final String redirectUri = buildRedirectUri(request, getConfig().getoAuth2CallbackUrl());
 
-        final String accountName = getSessionParam(session, AccountNameParamName);
-        final String userKey = getSessionParam(session, UserKeyParamName);
+        final String accountName = getSessionParam(session, ACCOUNT_NAME_PARAM_NAME);
+        final String userKey = getSessionParam(session, USER_KEY_PARAM_NAME);
         try {
             final GoogleAuthorizationCodeFlow flow = super.getFlow();
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
@@ -105,25 +113,6 @@ public class GoogleAccountController extends GoogleService {
     /**
      * retrieve the User ID in Session.
      * @param session the HTTP Session
-     * @return the current User Id in Session
-     * @throws ServletException if no User Id in session
-     */
-    private String getAccountName(final HttpSession session) throws ServletException {
-        String accountName = null;
-        if (null != session && null != session.getAttribute("accountName")) {
-            accountName = (String) session.getAttribute("accountName");
-        }
-
-        if (null == accountName) {
-            log.error("accountName in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add Google acocunt : accountName is NULL is User Session");
-        }
-        return accountName;
-    }
-    
-    /**
-     * retrieve the User ID in Session.
-     * @param session the HTTP Session
      * @param paramName name of the parameter to get
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
@@ -136,8 +125,8 @@ public class GoogleAccountController extends GoogleService {
 
         if (null == param) {
             log.error(paramName + " in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add Google account : " + paramName +
-                    " is NULL is User Session");
+            throw new ServletException("Error when trying to add Google account : " + paramName
+                    + " is NULL is User Session");
         }
         return param;
     }
@@ -185,6 +174,7 @@ public class GoogleAccountController extends GoogleService {
      * Add a Google account (user will be prompt to connect in the Web Browser and accept required
      * access).
      * @param accountName  the user to store Data
+     * @param userKey the userKey of the user
      * @param request the HTTP request
      * @param session the HTTP session
      * @return the view to Display (on Error)
@@ -208,8 +198,8 @@ public class GoogleAccountController extends GoogleService {
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
                 authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfig().getoAuth2CallbackUrl()));
                 // store accountName in session for CallBack Access
-                session.setAttribute(AccountNameParamName, accountName);
-                session.setAttribute(UserKeyParamName, userKey);
+                session.setAttribute(ACCOUNT_NAME_PARAM_NAME, accountName);
+                session.setAttribute(USER_KEY_PARAM_NAME, userKey);
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {

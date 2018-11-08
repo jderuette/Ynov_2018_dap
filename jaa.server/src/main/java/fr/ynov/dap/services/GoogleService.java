@@ -61,17 +61,27 @@ public abstract class GoogleService {
      * get credentials for children.
      * @param userKey user key for authentication
      * @return credentials
-     * @throws Exception exception
+     * @throws AuthorizationException exception
      */
-  //TODO jaa by Djer ne jamais lever une "Exception" toujours utiliser une sous classe (AuthorizationException ici serait parfait)
-    protected Credential getCredentials(final String userKey) throws Exception {
-        GoogleAuthorizationCodeFlow flow = getFlow();
-        Credential credential = flow.loadCredential(userKey);
-        if (credential == null) {
-            throw new AuthorizationException("Bad userKey");
-        }
 
-        return credential;
+    protected Credential getCredentials(final String userKey) throws AuthorizationException {
+        GoogleAuthorizationCodeFlow flow;
+        Credential credential;
+        try {
+            flow = getFlow();
+            credential = flow.loadCredential(userKey);
+            if (credential == null) {
+                throw new AuthorizationException("Bad userKey");
+            }
+
+            return credential;
+        } catch (GeneralSecurityException gse) {
+            logger.error(gse);
+            throw new AuthorizationException("can't get credentials. Error: " + gse.getMessage(), gse);
+        } catch (IOException ioe) {
+            logger.error(ioe);
+            throw new AuthorizationException("can't get credentials. Error: " + ioe.getMessage(), ioe);
+        }
     }
 
     /**
@@ -88,13 +98,13 @@ public abstract class GoogleService {
         scopes.add(PeopleServiceScopes.PLUS_LOGIN);
         logger.info("get flow - Scopes :" + scopes.toString());
 
+        //TODO Get credential outside of the jar
         InputStream in = GoogleService.class.getResourceAsStream(config.getCredentialsFilePath());
         GoogleClientSecrets clientSecrets = null;
         try {
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        } catch (IOException e1) {
-        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxième parametre l'exception.
-            logger.info("failed to get client secrets");
+        } catch (IOException ioe) {
+            logger.error("failed to get client secrets", ioe);
         }
         //TODO jaa by Djer si pas de conf "interne" charger la conf "externe" au jar.
 
@@ -104,13 +114,12 @@ public abstract class GoogleService {
         try {
             flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets, scopes)
-            		//TODO jaa by Djer si dossier "token" à l'extérieur du Jar ?
+                    //TODO jaa by Djer si dossier "token" à l'extérieur du Jar ?
                     .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getCredentialFolder())))
                     .setAccessType("offline")
                     .build();
-        } catch (IOException e) {
-        	//TODO jaa by Djer devrait etre un ERROR ? tu p devrait passer en deuxième parametre l'exception.
-            logger.info("failed to getFlow");
+        } catch (IOException ioe) {
+            logger.error("failed to getFlow", ioe);
         }
         return flow;
     }

@@ -20,15 +20,16 @@ import com.google.api.client.util.store.DataStore;
 public class GoogleAuthorizationFlowService extends GoogleService {
 
     /**
-     * 
+     * default constructor.
      */
     public GoogleAuthorizationFlowService() {
     }
-    
+
     /**
-     * get Google Authorization flow
-     * @throws IOException 
-     * @throws GeneralSecurityException 
+     * get Google Authorization flow.
+     * @throws IOException exception
+     * @throws GeneralSecurityException exception
+     * @return StoreCredential dictionary
      */
     public Map<String, StoredCredential> getStoreCredentialMap() throws GeneralSecurityException, IOException {
         GoogleAuthorizationCodeFlow flow = super.getFlow();

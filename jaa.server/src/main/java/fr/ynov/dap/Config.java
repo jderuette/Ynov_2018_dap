@@ -39,6 +39,9 @@ public class Config {
      * credential file path.
      */
     private String credentialsFilePath = CREDENTIALS_FILE_PATH;
+    /**
+     * default root directory.
+     */
     private String defaultRootDir = DEFAULT_ROOT_DIR;
 
     /**

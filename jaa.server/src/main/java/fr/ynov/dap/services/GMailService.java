@@ -25,6 +25,9 @@ public final class GMailService extends GoogleService {
      */
     private static Logger log = LogManager.getLogger();
 
+    /**
+     * AppUserRepository instantiate thanks to the injection of dependency.
+     */
     @Autowired
     private AppUserRepository repository;
 
@@ -69,6 +72,13 @@ public final class GMailService extends GoogleService {
         return numberOfUnreadEmail;
     }
 
+    /**
+     * get the number of unread emails for all account of an AppUser account.
+     * @param user user needed for the gmail Service.
+     * @param userKey userKey of the AppUser account.
+     * @return total number of unread mail for an AppUser.
+     * @throws Exception exception
+     */
     public Integer getUnreadEmailsNumberOfAllAccount(final String user, final String userKey) throws Exception {
         AppUser appUser = repository.findByUserKey(userKey);
         List<String> names = appUser.getGoogleAccountNames();

@@ -1,8 +1,8 @@
 package fr.ynov.dap.services;
-
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import com.google.api.services.calendar.model.Events;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
+import fr.ynov.dap.exceptions.ServiceException;
 
 /**
  * @author adrij
@@ -37,15 +38,28 @@ public final class CalendarService extends GoogleService {
     /**
      * @param userKey user key for authentication.
      * @return Calendar.
+     * @throws ServiceException exception
      * @throws Exception exception
      */
-    public Calendar getService(final String userKey) throws Exception {
+    public Calendar getService(final String userKey) throws ServiceException {
         log.info("getCalendarService called with userKey=" + userKey);
-        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, getCredentials(userKey))
-                .setApplicationName(getConfig().getApplicationName())
-                .build();
-        return service;
+        NetHttpTransport httpTransport;
+        try {
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, getCredentials(userKey))
+                    .setApplicationName(getConfig().getApplicationName())
+                    .build();
+            return service;
+        } catch (GeneralSecurityException e) {
+            log.error(e);
+            throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
+        } catch (IOException e) {
+            log.error(e);
+            throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error(e);
+            throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
+        }
     }
 
     /**

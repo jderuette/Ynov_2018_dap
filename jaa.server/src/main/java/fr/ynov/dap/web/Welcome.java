@@ -13,17 +13,26 @@ import fr.ynov.dap.services.GMailService;
  */
 @Controller
 public class Welcome {
+    /**
+     * instantiate the GMailService using the injection of dependency.
+     */
     @Autowired
     private GMailService service;
-    
+
     /**
-     * 
+     * default constructor.
      */
     public Welcome() {
     }
-    
+
+    /**
+     * root page.
+     * @param model model to send to the view.
+     * @return the name of the template to display.
+     * @throws Exception exception
+     */
     @RequestMapping("/")
-    public String welcome(ModelMap model) throws Exception {
+    public String welcome(final ModelMap model) throws Exception {
         Integer nbunreadEmails = service.getUnreadEmailsNumber("me", "adrien");
         model.addAttribute("nbEmails", nbunreadEmails);
         return "welcome";

@@ -17,17 +17,26 @@ import fr.ynov.dap.web.api.GoogleController;
 @Controller
 public class GoogleAutorisationFlowController extends GoogleController {
 
+    /**
+     * Instantiate GoogleAuthorizationFlow using injection of dependency.
+     */
     @Autowired
     private GoogleAuthorizationFlowService service;
-    
+
     /**
-     * 
+     * default constructor.
      */
     public GoogleAutorisationFlowController() {
     }
 
+    /**
+     * Data store page that display the content of the credentialDataStore file.
+     * @param model model to send to the view
+     * @return the name of the page template
+     * @throws Exception exception
+     */
     @RequestMapping("/datastore")
-    public String datastore(ModelMap model) throws Exception {
+    public String datastore(final ModelMap model) throws Exception {
         Map<String, StoredCredential> map = service.getStoreCredentialMap();
         model.addAttribute("map", map);
         return "datastore";
