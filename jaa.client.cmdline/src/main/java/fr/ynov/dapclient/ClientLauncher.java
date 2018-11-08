@@ -23,7 +23,6 @@ import com.google.gson.Gson;
  * Entry point of the client application.
  */
 public final class ClientLauncher {
-	//TODO jaa by Djer une classe de "service" aurait permis de mieu ranger.
     /**
      * Logger used for logs.
      */
@@ -118,8 +117,51 @@ public final class ClientLauncher {
             displayNextEvent(userKey);
             return;
         }
-        
-        //TODO jaa by Djer : que se apsse-t-il si action "non reconnue" ? 
+
+        System.out.println("Unkown parameter. Please, type \"help\" to open the help.");
+    }
+
+    /**
+     * get http response from the server api.
+     * @param url url to http get
+     * @return reponse
+     */
+    private static String getResponse(final String url) {
+        HttpURLConnection conn = null;
+        String response = null;
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                System.out.println("Erreur : " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            while ((response = br.readLine()) != null) {
+                response += response;
+            }
+
+            log.debug("Reponse=" + response);
+
+        } catch (MalformedURLException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        } catch (IOException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+        return response;
     }
 
     /**
@@ -129,40 +171,9 @@ public final class ClientLauncher {
      */
     private static void displayNumberOfMails(final String userKey, final String user) {
         log.debug("displayNumberofMails called. UserKey=" + userKey);
-        try {
-
-            URL url = new URL(address + "/email/nbUnread?userKey=" + userKey + "&user=" + user);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output;
-            System.out.println("Nombre de mails :");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-            log.debug("Output=" + output);
-
-        } catch (MalformedURLException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
-        } catch (IOException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-        }
+        String response = getResponse(address + "/email/nbUnread?userKey=" + userKey + "&user=" + user);
+        System.out.println("Nombre de mails :");
+        System.out.println(response);
     }
 
     /**
@@ -170,41 +181,10 @@ public final class ClientLauncher {
      * @param userKey useKey used for authentication
      */
     private static void displayContactNumber(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("displayContactNumber called. UserKey=" + userKey);
-        try {
-            URL url = new URL(address + "/people/number?userKey=" + userKey);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output;
-            System.out.println("Nombre de contacts :");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-            log.debug("Output=" + output);
-
-        } catch (MalformedURLException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
-        } catch (IOException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-        }
+        String response = getResponse(address + "/people/number?userKey=" + userKey);
+        System.out.println("Nombre de contacts :");
+        System.out.println(response);
     }
 
     /**
@@ -212,7 +192,6 @@ public final class ClientLauncher {
      * @param userKey userkey needed for authentication for other api call.
      */
     private static void addNewUser(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("addNewUser called. UserKey=" + userKey);
         try {
             URL url = new URL(address + "/account/add/" + userKey);
@@ -241,86 +220,54 @@ public final class ClientLauncher {
      * @param userKey useKey used for authentication
      */
     private static void displayNextEvent(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("displayNextEvent called. UserKey=" + userKey);
-        try {
-            URL url = new URL(address + "/calendar/event/next?userKey=" + userKey);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
+        String response = getResponse(address + "/calendar/event/next?userKey=" + userKey);
+        Gson gson = new Gson();
+        Event[] events = gson.fromJson(response, Event[].class);
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
+        if (events.length == 0) {
+            System.out.println("Pas de prochain événement.");
+            return;
+        }
+
+        Event event = events[0];
+
+        System.out.println("Sujet : " + event.getSummary() + "\n");
+
+        Timestamp tsStart = new Timestamp(event.getStart().getDateTime().getValue());
+        Date startDate = new Date(tsStart.getTime());
+        System.out.println("Date de début : " + startDate + "\n");
+
+        Timestamp tsEnd = new Timestamp(event.getEnd().getDateTime().getValue());
+        Date endDate = new Date(tsEnd.getTime());
+        System.out.println("Date de fin : " + endDate + "\n");
+
+        if (event.getAttendees() == null) {
+            System.out.println("Pas de status d'acceptation de l'event.\n"
+        + "Vous devez inviter d'autres personnes à l'événement.\n");
+            System.out.println("Vous êtes l'organisateur : oui");
+            return;
+        }
+
+        List<Attendee> attendees = event.getAttendees();
+        for (Attendee attendee : attendees) {
+            if (attendee.getSelf() != null && attendee.getSelf()) {
+                Map<String, String> responseStatusTranslationMap = new HashMap<String, String>();
+                responseStatusTranslationMap.put("accepted", "accepté");
+                responseStatusTranslationMap.put("declined", "refusé");
+                responseStatusTranslationMap.put("tentative", "peut-être");
+                responseStatusTranslationMap.put("needsAction", "Vous devez répondre.");
+
+                Map<Boolean, String> booleanTranslationMap = new HashMap<Boolean, String>();
+                booleanTranslationMap.put(true, "oui");
+                booleanTranslationMap.put(false, "non");
+
+                System.out.println("Événement : "
+                + responseStatusTranslationMap.getOrDefault(attendee.getResponseStatus(), "inconnu"));
+                System.out.println("Vous êtes l'organisateur : "
+                + booleanTranslationMap.getOrDefault(attendee.getOrganizer(), "non"));
+                break;
             }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String response = br.readLine();
-
-            conn.disconnect();
-            log.debug("Response=" + response);
-
-            Gson gson = new Gson();
-            Event[] events = gson.fromJson(response, Event[].class);
-
-            if (events.length == 0) {
-                System.out.println("Pas de prochain événement.");
-                return;
-            }
-
-            Event event = events[0];
-
-            System.out.println("Sujet : " + event.summary + "\n");
-
-            Timestamp tsStart = new Timestamp(event.start.dateTime.value);
-            Date startDate = new Date(tsStart.getTime());
-            System.out.println("Date de début : " + startDate + "\n");
-
-            Timestamp tsEnd = new Timestamp(event.end.dateTime.value);
-            Date endDate = new Date(tsEnd.getTime());
-            System.out.println("Date de fin : " + endDate + "\n");
-
-            if (event.attendees == null) {
-                System.out.println("Pas de status d'acceptation de l'event.\n"
-            + "Vous devez inviter d'autres personnes à l'événement.\n");
-                System.out.println("Vous êtes l'organisateur : oui");
-                return;
-            }
-
-            List<Attendee> attendees = event.attendees;
-            for (Attendee attendee : attendees) {
-                if (attendee.self != null && attendee.self) {
-                    Map<String, String> responseStatusTranslationMap = new HashMap<String, String>();
-                    responseStatusTranslationMap.put("accepted", "accepté");
-                    responseStatusTranslationMap.put("declined", "refusé");
-                    responseStatusTranslationMap.put("tentative", "peut-être");
-                    responseStatusTranslationMap.put("needsAction", "Vous devez répondre.");
-
-                    Map<Boolean, String> booleanTranslationMap = new HashMap<Boolean, String>();
-                    booleanTranslationMap.put(true, "oui");
-                    booleanTranslationMap.put(false, "non");
-
-                    System.out.println("Événement : "
-                    + responseStatusTranslationMap.getOrDefault(attendee.responseStatus, "inconnu"));
-                    System.out.println("Vous êtes l'organisateur : "
-                    + booleanTranslationMap.getOrDefault(attendee.organizer, "non"));
-                    break;
-                }
-            }
-
-
-        } catch (MalformedURLException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
-        } catch (IOException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
         }
     }
 

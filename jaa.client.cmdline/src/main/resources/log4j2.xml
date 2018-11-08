@@ -6,7 +6,7 @@
     	<!-- Basic Pattern -->
     	<Property name="LOG_PATTERN">%date{ISO8601} %-5level [%t] %c{4} - %m%n</Property>
     	<!-- For file logs -->
-		<!--  TODO jaa by Djer évite les emplacements relatifs : trop hasardeux -->
+		<!--  TODO jaa by Djer  Ã©vite les emplacements relatifs : trop hasardeux -->
     	<Property name="LOG_FILENAME">logs/client.log</Property>
     	<Property name="LOG_FILEPATTERN">logs/app-%d{MM-dd-yyyy}.log.gz</Property>
 	</Properties>
