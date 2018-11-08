@@ -50,7 +50,7 @@ public class CalendarService extends GoogleServices
    */
   public Event getUpcomingEvent(String userId) throws GeneralSecurityException, IOException
   {
-    logger.info("Début fonction getService.");
+    logger.info("Début fonction getUpcomingEvent pour l'utilisateur " + userId);
 
     Calendar calendar = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userId))
         .setApplicationName("").build();
@@ -68,7 +68,7 @@ public class CalendarService extends GoogleServices
       event = events.getItems().get(0);
     }
 
-    logger.info("Fin fonction getService.");
+    logger.info("Fin fonction getUpcomingEvent pour l'utilisateur " + userId);
     return event;
   }
 }

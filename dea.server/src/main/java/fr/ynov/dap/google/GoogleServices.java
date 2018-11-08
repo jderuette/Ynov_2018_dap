@@ -24,8 +24,10 @@ import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 import fr.ynov.dap.Config;
 
+
 /**
  * Classe parente des services google dap
+ * 
  * @author antod
  *
  */
@@ -98,8 +100,15 @@ public abstract class GoogleServices
    */
   public GoogleAuthorizationCodeFlow getFlow() throws IOException
   {
+    String folder = config.getCredentialFolder();
+
+    if (folder != null && !folder.substring(folder.length() - 1).equals(System.getProperty("file.separator")))
+    {
+      folder += System.getProperty("file.separator");
+    }
+
     // Load client secrets.
-    File in = new File(config.getCredentialFolder() + System.getProperty("file.separator") + "credentials.json");
+    File in = new File(config.getCredentialFolder() + "credentials.json");
 
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
         new InputStreamReader(new FileInputStream(in), Charset.forName("UTF-8")));

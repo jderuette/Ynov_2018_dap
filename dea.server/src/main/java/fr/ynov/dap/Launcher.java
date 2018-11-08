@@ -59,7 +59,7 @@ public class Launcher
     config.setApplicationName("Application de Anthony");
     config.setRacineFolder(System.getProperty("user.home") + System.getProperty("file.separator") + "eclipse-workspace"
         + System.getProperty("file.separator") + "data");
-    config.setCredentialFolder("\\");
+    config.setCredentialFolder("");
 
     return config;
   }

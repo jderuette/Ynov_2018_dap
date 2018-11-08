@@ -51,7 +51,7 @@ public class GMailService extends GoogleServices
     Gmail gmail = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userId))
         .setApplicationName(super.config.getApplicationName()).build();
     
-    Label label = gmail.users().labels().get(userId, "INBOX").execute();
+    Label label = gmail.users().labels().get("me", "INBOX").execute();
 
     LOGGER.info("Fin du getService pour l'utilisateur " + userId);
 

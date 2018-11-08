@@ -5,6 +5,8 @@ package fr.ynov.dap.Web;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,19 +16,32 @@ import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.google.GMailService;
 
+
 /**
- * Controlleur des mails 
+ * Controlleur des mails
+ * 
  * @author antod
  *
  */
 @RestController
 public class MailController
 {
+  /**
+   * Variable appUserRepository
+   */
   @Autowired
   private AppUserRepository appUserRepository;
 
+  /**
+   * Variable GmailService
+   */
   @Autowired
   private GMailService gMailService;
+
+  /**
+   * Variable pour logger
+   */
+  private final Logger LOGGER = LogManager.getLogger();
 
   /**
    * Appel le service gmail pour renvoyer le nombre d'emails non lu.
@@ -51,9 +66,13 @@ public class MailController
       for (int i = 0; i < allAccounts.size(); i++)
       {
         Integer accMessagesUnread = gMailService.getNbUnreadEmail(allAccounts.get(i).getUserName());
-        
+
         unreadMessages += accMessagesUnread;
       }
+    } else
+    {
+      LOGGER.warn("userKey '" + userKey + "' non trouvé dans getNbUnreadEmail");
+      unreadMessages = -1;
     }
 
     return unreadMessages;

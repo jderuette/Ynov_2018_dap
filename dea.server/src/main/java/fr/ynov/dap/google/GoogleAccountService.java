@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,9 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.GenericUrl;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
+import fr.ynov.dap.data.GoogleAccount;
 
 
 /**
@@ -54,10 +58,12 @@ public class GoogleAccountService extends GoogleServices
    * L'indice de fin de sélection pour les données sensibles
    */
   private final Integer SENSIBLE_DATA_LAST_CHAR = 10;
-  
-  
-//  AppUserRepository
-  
+
+  /**
+   * Variable appUserRepository
+   */
+  @Autowired
+  AppUserRepository appUserRepository;
 
   /**
    * Handle the Google response.
@@ -90,6 +96,17 @@ public class GoogleAccountService extends GoogleServices
       if (null == credential || null == credential.getAccessToken())
       {
         LOGGER.warn("Trying to store a NULL AccessToken for user : " + accountName);
+      } else
+      {
+        // Si on a pas de problèmes sur le credential alors on enregsitre le compte
+        // On récupère le AppUser
+        AppUser appUser = appUserRepository.findByName(userKey);
+        
+        GoogleAccount googleAccount = new GoogleAccount();
+        googleAccount.setUserName(accountName);
+                
+        appUser.addGoogleAccount(googleAccount);
+        appUserRepository.save(appUser);
       }
 
       if (LOGGER.isDebugEnabled())
