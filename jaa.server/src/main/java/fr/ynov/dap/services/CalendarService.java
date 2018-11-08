@@ -39,7 +39,6 @@ public final class CalendarService extends GoogleService {
      * @param userKey user key for authentication.
      * @return Calendar.
      * @throws ServiceException exception
-     * @throws Exception exception
      */
     public Calendar getService(final String userKey) throws ServiceException {
         log.info("getCalendarService called with userKey=" + userKey);
