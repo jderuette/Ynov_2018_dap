@@ -38,4 +38,14 @@ public final class MicrosoftScopes {
      * Mail Read Scope.
      */
     public static final String MAIL_READ = "Mail.Read";
+
+    /**
+     * Mail Read / Write Scope.
+     */
+    public static final String MAIL_READ_WRITE = "mail.readwrite";
+
+    /**
+     * Calendar Read scope.
+     */
+    public static final String CALENDARS_READ = "Calendars.Read";
 }
