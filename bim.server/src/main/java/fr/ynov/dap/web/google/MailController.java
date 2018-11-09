@@ -1,4 +1,4 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +39,7 @@ public class MailController {
      * @return number of unread messages
      * @throws Exception if user not found
      */
-    @RequestMapping("/email/nbUnread/{gUser}")
+    @RequestMapping("/email/google/nbUnread/{gUser}")
     public final Integer getNbUnreadEmails(@PathVariable final String gUser,
             @RequestParam("userKey") final String userKey) throws Exception {
         Logger logger = LogManager.getLogger();

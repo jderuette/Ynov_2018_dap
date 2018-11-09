@@ -12,7 +12,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.google.GoogleAccount;
 
 /**
  * Calendar service.

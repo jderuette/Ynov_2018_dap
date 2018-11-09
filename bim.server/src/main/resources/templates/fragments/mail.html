@@ -1,0 +1,30 @@
+
+<div th:fragment="mailBody">
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${'Error: ' + error}">Error: ${error}</div>
+
+	<table class="table">
+		<caption>Inbox</caption>
+		<thead>
+			<tr>
+				<th><span class="glyphicon glyphicon-envelope"></span></th>
+				<th>From</th>
+				<th>Subject</th>
+				<th>Received</th>
+				<th>Preview</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="message : ${messages}"
+				th:classappend="${message.isRead == true ? '' : 'info'}">
+
+				<td th:if="${message.isRead == false}"><span
+					class="glyphicon glyphicon-envelope"></span></td>
+				<td th:text="${message.from.emailAddress.name}">sender mail</td>
+				<td th:text="${message.subject}">mail subject</td>
+				<td th:text="${message.receivedDateTime}">date of reception</td>
+				<td th:text="${message.bodyPreview}">mail text</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

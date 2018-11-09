@@ -6,25 +6,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.util.store.DataStore;
-import com.google.api.services.gmail.Gmail;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.google.GmailService;
+import fr.ynov.dap.microsoft.OutlookService;
 
 /**
- * Hello world.
+ * root controller.
  * @author MBILLEMAZ
  *
  */
 @Controller
-public class Welcome {
+public class MicrosoftIndexController {
 
     /**
      * own gmail service.
@@ -32,18 +41,13 @@ public class Welcome {
     @Autowired
     private GmailService gmailService;
 
-    /**
-     * return helloWorld template.
-     * @param model model
-     * @return helloWorld template
-     * @throws Exception 
-     */
-    @RequestMapping("/")
-    public String welcome(final ModelMap model) throws Exception {
-        Gmail service = gmailService.getService("toto");
-        model.addAttribute("nbEmails", service.users().labels().get("toto", "INBOX").execute().getMessagesUnread());
-        return "welcome";
-    }
+    @Autowired
+    private OutlookService outlookService;
+
+    @Autowired
+    private AppUserRepository repository;
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * get users.
@@ -67,5 +71,23 @@ public class Welcome {
 
         model.addAttribute("list", map);
         return "dataStore";
+    }
+
+    @RequestMapping("/email/all/nbUnread")
+    @ResponseBody
+    public Integer getNbUnreadmails(@RequestParam("userKey") final String userKey) {
+        AppUser user = repository.findByName(userKey);
+
+        Integer nbUnread = -1;
+        try {
+            nbUnread = outlookService.getNbUnread(user);
+            nbUnread += gmailService.getNbUnreadMailForUser(user, "me");
+        } catch (IOException e) {
+            LOGGER.error("Impossible de récupérer les mails outlook de l'utilisateur " + userKey, e);
+        } catch (Exception e) {
+            LOGGER.error("Impossible de récupérer les mails gmail de l'utilisateur " + userKey, e);
+        }
+
+        return nbUnread;
     }
 }
