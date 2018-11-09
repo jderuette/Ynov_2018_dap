@@ -157,14 +157,8 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>3.8.1</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>hamcrest-core</artifactId>
-          <groupId>org.hamcrest</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.google.api-client</groupId>
@@ -193,19 +187,25 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.10.0</version>
+      <version>2.9.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.10.0</version>
+      <version>2.9.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-jcl</artifactId>
-      <version>2.10.0</version>
+      <version>2.9.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.46</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -250,7 +250,7 @@
     </plugins>
   </reporting>
   <properties>
-    <pmdVersion>6.4.0</pmdVersion>
+    <pmdVersion>6.9.0</pmdVersion>
     <java.version>1.8</java.version>
     <checkstyleVersion>6.18</checkstyleVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
