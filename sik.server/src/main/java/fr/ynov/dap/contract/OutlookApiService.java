@@ -1,6 +1,7 @@
 package fr.ynov.dap.contract;
 
 import fr.ynov.dap.data.Message;
+import fr.ynov.dap.data.OutlookFolder;
 import fr.ynov.dap.data.OutlookUser;
 import fr.ynov.dap.data.PagedResult;
 import retrofit2.Call;
@@ -21,6 +22,14 @@ public interface OutlookApiService {
      */
     @GET("/v1.0/me")
     Call<OutlookUser> getCurrentUser();
+
+    /**
+     * Get details for a specific folder.
+     * @param folderName Folder name
+     * @return Outlook folder.
+     */
+    @GET("/v1.0/me/mailFolders/{folderName}")
+    Call<OutlookFolder> getFolder(@Path("folderName") String folderName);
 
     /**
      * Get Message (paginated).

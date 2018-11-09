@@ -45,8 +45,8 @@ public class MicrosoftAccount {
     /**
      * List of every google account for this user.
      */
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
-    @JoinColumn(name = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "token_id")
     private TokenResponse token;
 
     /**

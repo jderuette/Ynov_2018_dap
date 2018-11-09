@@ -6,8 +6,7 @@ import java.security.GeneralSecurityException;
 import org.springframework.stereotype.Service;
 
 import fr.ynov.dap.contract.OutlookApiService;
-import fr.ynov.dap.data.Message;
-import fr.ynov.dap.data.PagedResult;
+import fr.ynov.dap.data.OutlookFolder;
 import fr.ynov.dap.data.TokenResponse;
 import fr.ynov.dap.exception.NoConfigurationException;
 
@@ -18,6 +17,11 @@ import fr.ynov.dap.exception.NoConfigurationException;
  */
 @Service
 public class OutlookService extends MicrosoftAPIService {
+
+    /**
+     * Default name for Inbox folder.
+     */
+    public static final String INBOX_FOLDER_NAME = "inbox";
 
     /**
      * Get number of unread email for a user.
@@ -34,17 +38,13 @@ public class OutlookService extends MicrosoftAPIService {
 
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
-        String folder = "inbox";
-        String sort = "receivedDateTime DESC";
-        String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-        Integer maxResults = 0;
+        OutlookFolder inboxFolder = outlookService.getFolder(INBOX_FOLDER_NAME).execute().body();
 
-        PagedResult<Message> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute()
-                .body();
+        if (inboxFolder == null) {
+            return 0;
+        }
 
-        Message[] val = messages.getValue();
-
-        return val.length;
+        return inboxFolder.getUnreadItemCount();
 
     }
 
