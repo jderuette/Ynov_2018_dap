@@ -1,13 +1,11 @@
 package fr.ynov.dap;
 
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
-
 import org.springframework.stereotype.Component;
-
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 /**
  * Contains all configuration needed to call the Google API.
  * @author Antoine
@@ -21,7 +19,7 @@ public class Config {
   private String applicationName;
   private String tokensDirectoryPath;
   private NetHttpTransport httpTransport;
-  private String oAuth2CallbackUrl;
+  private String openAuth2CallbackUrl;
 
   /**
    * Instantiate the NetHttpTransport specifically for Google.
@@ -34,7 +32,7 @@ public class Config {
     httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     applicationName = "HoC DaP";
     tokensDirectoryPath  = "tokens";
-    oAuth2CallbackUrl = "/oAuth2Callback";
+    openAuth2CallbackUrl = "/oAuth2Callback";
   }
 
   /**
@@ -42,15 +40,15 @@ public class Config {
    * @return relative url after domain name
    */
   public String getoAuth2CallbackUrl() {
-    return oAuth2CallbackUrl;
+    return openAuth2CallbackUrl;
   }
 
   /**
    * set the URL you want to redirect when authentication is done.
-   * @param oAuth2CallbackUrl url de redirection
+   * @param openAuth2CallbackUrl url de redirection
    */
-  public void setoAuth2CallbackUrl(String oAuth2CallbackUrl) {
-    this.oAuth2CallbackUrl = oAuth2CallbackUrl;
+  public void setoAuth2CallbackUrl(String openAuth2CallbackUrl) {
+    this.openAuth2CallbackUrl = openAuth2CallbackUrl;
   }
 
   /**

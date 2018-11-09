@@ -37,6 +37,12 @@ public abstract class GoogleService {
   public GoogleService() throws InstantiationException, IllegalAccessException {
     init();
   }
+  
+  /**
+   * Initialize the list of scopes used in the application.
+   * @throws InstantiationException nothing special
+   * @throws IllegalAccessException nothing special
+   */
   public void init() throws InstantiationException, IllegalAccessException {
     ArrayList<String> myscopes = new ArrayList<String>(
         Arrays.asList(GmailScopes.GMAIL_LABELS, GmailScopes.GMAIL_READONLY,

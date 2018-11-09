@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication
 @Component("config")
 public class Launcher {
-  private static String gmailUser;
 
   /**
    * Loads the configuration defined in Class Config
@@ -44,21 +43,6 @@ public class Launcher {
     SpringApplication.run(Launcher.class, args);
   }
 
-  /**
-   * gets the gmail user.
-   * @return the user's mail
-   */
-  private static String getGmailUser() {
-    return Launcher.gmailUser;
-  }
-
-  /**
-   * sets the gmail user.
-   * @param gmailUser the mail used to get authorizations
-   */
-  private static void setGmailUser(String gmailUser) {
-    Launcher.gmailUser = gmailUser;
-  }
   /*
   public static void showUserInfos()
       throws IOException, GeneralSecurityException {

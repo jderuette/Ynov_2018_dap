@@ -1,14 +1,12 @@
 package fr.ynov.dap.data;
 
+import fr.ynov.dap.data.GoogleAccount;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import fr.ynov.dap.data.GoogleAccount;
 
 @Entity
 public class AppUser {

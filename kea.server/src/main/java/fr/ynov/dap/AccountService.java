@@ -33,6 +33,7 @@ public class AccountService extends GoogleService {
   public AccountService() throws InstantiationException, IllegalAccessException {
     super();
   }
+  
   /**
      * This method is called when the user needs to be authenticated and stores the token.
      * @param code encoded code with google Datas
@@ -42,7 +43,7 @@ public class AccountService extends GoogleService {
      * @throws ServletException if server doesn't respond
      */
   @RequestMapping("/oAuth2Callback")
-  public String oAuthCallback(@RequestParam final String code,
+  public String openAuthCallback(@RequestParam final String code,
       final HttpServletRequest request, final HttpSession session)
       throws ServletException {
     final String decodedCode = extracCode(request);
@@ -52,8 +53,6 @@ public class AccountService extends GoogleService {
 
     final String userId = getUserid(session);
     try {
-      //TODO kea by Djer je t'ai supprimé la "re-création" 
-      //d'un flow (qui écrasait celui créé par le parent).
       GoogleAuthorizationCodeFlow flow = super.getFlow();
       final TokenResponse response = flow.newTokenRequest(decodedCode)
           .setRedirectUri(redirectUri).execute();
