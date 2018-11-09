@@ -99,6 +99,7 @@ public class TokenResponse {
     /**
      * Expiration Time.
      */
+    @JsonProperty("ext_expires_in")
     private Date expirationTime;
 
     /**

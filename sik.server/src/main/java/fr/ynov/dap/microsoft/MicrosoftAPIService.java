@@ -10,6 +10,7 @@ import fr.ynov.dap.contract.TokenService;
 import fr.ynov.dap.data.TokenResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -160,8 +161,9 @@ public class MicrosoftAPIService {
         TokenService tokenService = retrofit.create(TokenService.class);
 
         try {
-            return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
-                    authCode, getRedirectUrl()).execute().body();
+            Response<TokenResponse> resp = tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(),
+                    getAppPassword(), "authorization_code", authCode, getRedirectUrl()).execute();
+            return resp.body();
         } catch (IOException e) {
             TokenResponse error = new TokenResponse();
             error.setError("IOException");

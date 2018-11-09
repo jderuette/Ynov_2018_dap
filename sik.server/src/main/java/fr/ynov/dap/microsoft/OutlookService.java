@@ -36,7 +36,9 @@ public class OutlookService extends MicrosoftAPIService {
     public Integer getNbUnreadEmails(final String tenantId, final String email, final TokenResponse tokens)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
-        OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+        TokenResponse newTokens = MicrosoftAPIService.ensureTokens(tokens, tenantId);
+
+        OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(newTokens.getAccessToken(), email);
 
         OutlookFolder inboxFolder = outlookService.getFolder(INBOX_FOLDER_NAME).execute().body();
 
