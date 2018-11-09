@@ -43,14 +43,9 @@ public class GoogleAccountService extends GoogleService{
 	 * @return the view to display
 	 * @throws ServletException When Google account could not be connected to DaP.
 	 */
-    public String oAuthCallback(final String code, final HttpServletRequest request,
-    		final HttpSession session) throws ServletException {
+    public String oAuthCallback(final String decodedCode, final String redirectUri,
+    		final String userId) throws ServletException {
     	
-        final String decodedCode = extracCode(request);
-
-        final String redirectUri = buildRedirectUri(request, "/oAuth2Callback");
-
-        final String userId = getUserid(session);
         try {
             GoogleAuthorizationCodeFlow flow = null;
 			try {
@@ -88,7 +83,7 @@ public class GoogleAccountService extends GoogleService{
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
-    private String getUserid(final HttpSession session) throws ServletException {
+    public String getUserid(final HttpSession session) throws ServletException {
         String userId = null;
         if (null != session && null != session.getAttribute("userId")) {
             userId = (String) session.getAttribute("userId");
@@ -107,7 +102,7 @@ public class GoogleAccountService extends GoogleService{
      * @return the decoded code
      * @throws ServletException if the code cannot be decoded
      */
-    private String extracCode(final HttpServletRequest request) throws ServletException {
+    public String extracCode(final HttpServletRequest request) throws ServletException {
         final StringBuffer buf = request.getRequestURL();
         if (null != request.getQueryString()) {
             buf.append('?').append(request.getQueryString());
@@ -135,7 +130,7 @@ public class GoogleAccountService extends GoogleService{
      * @param destination the "path" to the resource
      * @return an absolute URI
      */
-    protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
+    public String buildRedirectUri(final HttpServletRequest req, final String destination) {
         final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
         return url.build();
@@ -152,14 +147,14 @@ public class GoogleAccountService extends GoogleService{
      * @throws GeneralSecurityException the general security exception
      */
     
-    public String addAccount(final String userId, final HttpServletRequest request,
+    public String addAccount(final String accountName, final HttpServletRequest request,
             final HttpSession session) throws GeneralSecurityException {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
         try {
             flow = getFlow();  
-            credential = flow.loadCredential(userId);
+            credential = flow.loadCredential(accountName);
 
             if (credential != null && credential.getAccessToken() != null) {
                 response = "AccountAlreadyAdded";
@@ -168,7 +163,7 @@ public class GoogleAccountService extends GoogleService{
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
                 authorizationUrl.setRedirectUri(buildRedirectUri(request, cfg.getoAuth2CallbackUrl()));
                 // store userId in session for CallBack Access
-                session.setAttribute("userId", userId);
+                session.setAttribute("userId", accountName);
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {

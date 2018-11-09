@@ -23,8 +23,6 @@ public class Config {
 	/** The application name. */
 	private String applicationName;
 	
-	/** The json factory. */
-	private JsonFactory jsonFactory;
     
     /** The tokens directory path. */
     private String tokensDirectoryPath;
@@ -32,21 +30,14 @@ public class Config {
     /** The credentials file path. */
     private String credentialsFilePath;
     
-    /** The scopes. */
-    private List<String> scopes;
     
     /**
      * Instantiates a new config.
      */
     public Config(){
     	this.applicationName = "Gmail API Java Quickstart";
-    	this.jsonFactory = JacksonFactory.getDefaultInstance();
     	this.tokensDirectoryPath  = "tokens";
     	this.credentialsFilePath  = "/credentials.json";
-    	this.scopes  = new ArrayList<String>();
-    	scopes.add(CalendarScopes.CALENDAR_READONLY);
-    	scopes.add(GmailScopes.GMAIL_LABELS);
-    	scopes.add(PeopleServiceScopes.CONTACTS_READONLY);
     }
     
 
@@ -61,19 +52,6 @@ public class Config {
 
 	public void setApplicationName(String applicationName) {
 		this.applicationName = applicationName;
-	}
-
-	/**
-	 * Gets the json factory.
-	 *
-	 * @return the json factory
-	 */
-	public final JsonFactory getJsonFactory() {
-		return jsonFactory;
-	}
-	
-	public void setJsonFactory(JsonFactory jsonFactory) {
-		this.jsonFactory = jsonFactory;
 	}
 	
 	/**
@@ -100,19 +78,6 @@ public class Config {
 
 	public void setCredentialsFilePath(String credentialsFilePath) {
 		this.credentialsFilePath = credentialsFilePath;
-	}
-	
-	/**
-	 * Gets the scopes.
-	 *
-	 * @return the scopes
-	 */
-	public final List<String> getScopes() {
-		return scopes;
-	}
-
-	public void setScopes(List<String> scopes) {
-		this.scopes = scopes;
 	}
 
 	/**

@@ -33,11 +33,11 @@ public class CalendarService extends GoogleService {
      * @return the calendar response
      * @throws Exception the exception
      */
-    public CalendarResponse resultCalendar(final String userId) throws Exception {
+    public CalendarResponse resultCalendar(final String accountName) throws Exception {
     	
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(),userId))
+        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, jsonFactory, getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(),accountName))
                 .setApplicationName(cfg.getApplicationName())
                 .build();
 
@@ -51,8 +51,8 @@ public class CalendarService extends GoogleService {
                 .execute();
         List<Event> items = events.getItems();
         if (items.isEmpty()) {
-            logger.info("No upcoming events found. for user : " + userId);
-            return new CalendarResponse("No upcoming events found. for user : " + userId);
+            logger.info("No upcoming events found. for user : " + accountName);
+            return new CalendarResponse("No upcoming events found. for user : " + accountName);
         } else {
             logger.info("Upcoming events");
             

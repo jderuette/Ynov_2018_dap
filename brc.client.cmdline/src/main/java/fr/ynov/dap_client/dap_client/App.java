@@ -1,5 +1,4 @@
 package fr.ynov.dap_client.dap_client;
-//TODO brc by Djer Pourquoi un nom de package aussi "moche" ?
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -25,19 +24,21 @@ public class App
      */
     public static void main( String[] args ) throws IOException, URISyntaxException
     {         
-        //TODO brc by Djer Extraire arg[0] dans "action" et args[1] dans "userKey" aurait clarifier le code
-		if(args[0].equals("add")) {
-            URI uri = new URI("http://localhost:8080/account/add/" + args[1]);
+    	String action = args[0];
+    	String userKey = args[1];
+    	
+		if(action.equals("add")) {
+            URI uri = new URI("http://localhost:8080/account/add/" + userKey);
 			Desktop.getDesktop().browse(uri);
 		}
 		else {
-			if(args[0].equals("gmail") || args[0].equals("contact") || args[0].equals("calendar"))
-				sendUrl(new URL("http://localhost:8080/"+args[0]+"?userId=" + args[1]));
+			if(action.equals("gmail") || action.equals("contact") || action.equals("calendar"))
+				sendUrl(new URL("http://localhost:8080/"+args[0]+"?userId=" + userKey));
 			
-			if(args[0].equals("view")) {
-				sendUrl(new URL("http://localhost:8080/calendar?userId=" + args[1]));
-				sendUrl(new URL("http://localhost:8080/contact?userId=" + args[1]));
-				sendUrl(new URL("http://localhost:8080/gmail?userId=" + args[1]));
+			if(action.equals("view")) {
+				sendUrl(new URL("http://localhost:8080/calendar?userId=" + userKey));
+				sendUrl(new URL("http://localhost:8080/contact?userId=" + userKey));
+				sendUrl(new URL("http://localhost:8080/gmail?userId=" + userKey));
 			}
 		}
     }

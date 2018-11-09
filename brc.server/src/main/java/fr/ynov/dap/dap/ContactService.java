@@ -34,7 +34,7 @@ public class ContactService extends GoogleService{
 	public ContactResponse resultContact(String userId) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), userId))
+        PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, jsonFactory, getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), userId))
                 .setApplicationName(cfg.getApplicationName())
                 .build();
 

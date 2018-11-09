@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<title th:text="#{credentials.title}">Credentials list</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+
+<title th:text="#{gmail.title}">Data Access Project Gmail</title>
+
+</head>
+<body>
+	<h1 th:text="La UserKey : ${userkey}"></h1>
+	<h3 th:text="Au total ${totalUnreadMails} mails non lue"></h3>
+	<div>
+		<table>
+		<tr>
+			<td><h2>AccountName</h2></td>
+			<td><h2>Nombre de mail non lue</h2></td>	
+		</tr>
+		<div th:each="response : ${gmailResponses}">
+			<tr #response.isEmpty()>
+				<td th:text="${response.key}"></td>
+				<td th:text="${response.value} mails non lue"></td>
+			</tr>
+		</div>
+	</table>
+	</div>
+</body>
+</html>

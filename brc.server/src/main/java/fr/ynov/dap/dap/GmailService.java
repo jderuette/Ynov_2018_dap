@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 
 /**
@@ -29,10 +30,10 @@ public class GmailService extends GoogleService{
      * @throws Exception the exception
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public GmailResponse resultMailInbox(String userId) throws Exception, IOException {
+	public GmailResponse resultMailInbox(String accountName) throws Exception, IOException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, cfg.getJsonFactory(), getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), userId))
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, getCredentials(HTTP_TRANSPORT, cfg.getCredentialsFilePath(), accountName))
                 .setApplicationName(cfg.getApplicationName())
                 .build();
         // Print the labels in the user's account.
