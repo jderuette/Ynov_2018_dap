@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.CalendarScopes;
@@ -14,11 +16,10 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
  *  Configuration class init all the constant to configure the app.
  * @author Florent
  */
-//TODO bof by Djer le principe "ZeroCOnf" ne remplace pas les tstadard JAVA ! 
-// ZeroConf a revoir
+
+
+@EnableJpaRepositories
 public class Config {
-    
-    //TODO bof by Djer si ne majuscule = Constante don STATIC FINAL
     private String APPLICATION_NAME = "Gmail API Java Quickstart";
     private JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private String TOKENS_DIRECTORY_PATH = "tokens";
@@ -49,7 +50,6 @@ public class Config {
      * 
      * @return value of applicationName
      */
-	//TODO bof By Djer Mal nomé, il faut différencier les constantes et les attributs
     public String getAPPLICATION_NAME() {
 		return APPLICATION_NAME;
 	}

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 
 import fr.ynov.dap.dap.model.ServerException;
 /**
@@ -27,6 +26,7 @@ public class ExceptionController {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ServerException> exceptionHandler(final HttpServletRequest request, final Exception e) {
+		
 		ResponseEntity<ServerException> response = new ResponseEntity<ServerException>(new ServerException(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		return response;
 	}

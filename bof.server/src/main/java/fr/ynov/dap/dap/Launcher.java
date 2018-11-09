@@ -28,7 +28,6 @@ public class Launcher {
 	 * Method who launch springBoot app
 	 */
 	public static void main(String[] args) throws Exception {
-	    //TODO bif By Djer LE TODO ci-desosus n'est plsu valide, a supprimer !
 		// TODO Auto-generated method stub
 		SpringApplication.run(Launcher.class, args);
 	}
