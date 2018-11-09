@@ -101,7 +101,7 @@ public class CalendarService extends GoogleService {
             event = getNextEvent(accountData.getAccountName());
             listEvent.add(event);
         }
-        long dateMillisecondsMostRecent = listEvent.get(0).getStart().getDateTime().getValue();
+        long dateMillisecondsMostRecent = System.currentTimeMillis();
         long dateMilliseconds;
 
         if (listEvent != null) {
