@@ -6,3 +6,4 @@
 #credentials
 /tokens/*
 /src/main/resources/credentials.json
+/src/main/resources/auth.properties
