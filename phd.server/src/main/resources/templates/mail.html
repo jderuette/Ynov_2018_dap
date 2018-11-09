@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+</head>
+<body>
+
+<th:if test="${error ne null}">
+  <span th:text="${error}"></span>
+</th:if>
+
+<p>WELCOME RIZ DINDE</p>
+
+<div>
+<p> AuthCode :  </p> <span th:text="${authCode}"></span>
+<p> IdToken :  </p> <span th:text="${idToken}"></span>
+<p> AccessToken :  </p> <span th:text="${accessToken}"></span>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
