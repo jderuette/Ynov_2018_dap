@@ -3,6 +3,8 @@ package fr.ynov.dap.microsoft;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.springframework.stereotype.Service;
+
 import fr.ynov.dap.contract.OutlookApiService;
 import fr.ynov.dap.data.Message;
 import fr.ynov.dap.data.PagedResult;
@@ -14,6 +16,7 @@ import fr.ynov.dap.exception.NoConfigurationException;
  * @author Kévin Sibué
  *
  */
+@Service
 public class OutlookService extends MicrosoftAPIService {
 
     /**

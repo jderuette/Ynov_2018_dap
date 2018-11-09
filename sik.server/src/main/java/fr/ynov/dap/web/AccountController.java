@@ -28,11 +28,14 @@ import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.data.TokenResponse;
 import fr.ynov.dap.dto.out.SessionOutDto;
 import fr.ynov.dap.exception.AddAccountFailedException;
+import fr.ynov.dap.exception.InvalidStateException;
+import fr.ynov.dap.exception.InvalidTokenException;
 import fr.ynov.dap.exception.MissingSessionParameterException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.GoogleAccountService;
 import fr.ynov.dap.microsoft.MicrosoftAccountService;
 import fr.ynov.dap.model.AddAccountResult;
+import fr.ynov.dap.utils.StrUtils;
 import fr.ynov.dap.utils.UrlUtils;
 
 /**
@@ -171,12 +174,14 @@ public class AccountController extends BaseController {
      * @param userId User id
      * @param request Http request
      * @param session Http session
+     * @param response Http response
      * @throws UserNotFoundException Exception
-     * @return Auth url
+     * @throws IOException Exception
      */
     @RequestMapping("/account/microsoft/add/{msAccountName}/{userId}")
-    public String addMicrosoftAccount(@PathVariable final String msAccountName, @PathVariable final String userId,
-            final HttpServletRequest request, final HttpSession session) throws UserNotFoundException {
+    public void addMicrosoftAccount(@PathVariable final String msAccountName, @PathVariable final String userId,
+            final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
+            throws UserNotFoundException, IOException {
 
         AppUser userAccount = appUserRepository.findByUserKey(userId);
 
@@ -187,10 +192,13 @@ public class AccountController extends BaseController {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();
 
-        session.setAttribute("expected_state", state);
-        session.setAttribute("expected_nonce", nonce);
+        session.setAttribute(Constants.SESSION_EXPECTED_STATE, state);
+        session.setAttribute(Constants.SESSION_EXPECTED_NONCE, nonce);
+        session.setAttribute(Constants.SESSION_USER_ID, userId);
 
-        return MicrosoftAccountService.getLoginUrl(state, nonce);
+        String redirectUrl = MicrosoftAccountService.getLoginUrl(state, nonce);
+
+        response.sendRedirect(redirectUrl);
 
     }
 
@@ -202,14 +210,24 @@ public class AccountController extends BaseController {
      * @param request Request
      * @return Html page
      * @throws UserNotFoundException Exception.
+     * @throws MissingSessionParameterException Exception.
+     * @throws InvalidTokenException Exception.
+     * @throws InvalidStateException Exception.
      */
     @RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
-            @RequestParam("state") final UUID state, final HttpServletRequest request) throws UserNotFoundException {
+            @RequestParam("state") final UUID state, final HttpServletRequest request) throws UserNotFoundException,
+            MissingSessionParameterException, InvalidTokenException, InvalidStateException {
 
         HttpSession session = request.getSession();
-        UUID expectedState = (UUID) session.getAttribute("expected_state");
-        UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
+
+        UUID expectedState = (UUID) session.getAttribute(Constants.SESSION_EXPECTED_STATE);
+        UUID expectedNonce = (UUID) session.getAttribute(Constants.SESSION_EXPECTED_NONCE);
+        String userId = (String) session.getAttribute(Constants.SESSION_USER_ID);
+
+        if (expectedNonce == null || expectedState == null || StrUtils.isNullOrEmpty(userId)) {
+            throw new MissingSessionParameterException();
+        }
 
         if (state.equals(expectedState)) {
 
@@ -220,7 +238,7 @@ public class AccountController extends BaseController {
                 TokenResponse tokenResponse = MicrosoftAccountService.getTokenFromAuthCode(code,
                         idTokenObj.getTenantId());
 
-                AppUser currentUser = appUserRepository.findByUserKey("TODO");
+                AppUser currentUser = appUserRepository.findByUserKey(userId);
 
                 if (currentUser == null) {
                     throw new UserNotFoundException();
@@ -229,25 +247,26 @@ public class AccountController extends BaseController {
                 MicrosoftAccount msAccount = new MicrosoftAccount();
                 msAccount.setToken(tokenResponse);
                 msAccount.setTenantId(idTokenObj.getTenantId());
+                msAccount.setToken(tokenResponse);
+                msAccount.setEmail(idTokenObj.getEmail());
 
-                session.setAttribute("tokens", tokenResponse);
-                session.setAttribute("userConnected", true);
-                session.setAttribute("userName", idTokenObj.getName());
-                session.setAttribute("userTenantId", idTokenObj.getTenantId());
+                currentUser.addMicrosoftAccount(msAccount);
+
+                appUserRepository.save(currentUser);
 
             } else {
 
-                session.setAttribute("error", "ID token failed validation.");
+                throw new InvalidTokenException();
 
             }
 
         } else {
 
-            session.setAttribute("error", "Unexpected state returned from authority.");
+            throw new InvalidStateException(state);
 
         }
 
-        return "mail";
+        return "Vous êtes connecté !";
 
     }
 

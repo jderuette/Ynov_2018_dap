@@ -1,9 +1,11 @@
 package fr.ynov.dap.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -43,7 +45,8 @@ public class MicrosoftAccount {
     /**
      * List of every google account for this user.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @JoinColumn(name = "id")
     private TokenResponse token;
 
     /**

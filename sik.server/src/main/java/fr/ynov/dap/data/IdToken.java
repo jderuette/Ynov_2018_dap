@@ -36,16 +36,19 @@ public class IdToken {
     /**
      * Nonce.
      */
+    @JsonProperty("nonce")
     private String nonce;
 
     /**
      * Name.
      */
+    @JsonProperty("name")
     private String name;
 
     /**
      * email.
      */
+    @JsonProperty("preferred_username")
     private String email;
 
     /**
@@ -192,6 +195,20 @@ public class IdToken {
             e.printStackTrace();
         }
         return newToken;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

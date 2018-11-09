@@ -43,6 +43,6 @@ public class EmailAddress {
      * @param val Address
      */
     public void setAddress(final String val) {
-        this.address = address;
+        this.address = val;
     }
 }

@@ -18,6 +18,7 @@ import fr.ynov.dap.dto.out.UnreadMailOutDto;
 import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.microsoft.MicrosoftAccountService;
+import fr.ynov.dap.microsoft.OutlookService;
 
 /**
  * Controller to manage every call to Microsoft Outlook API.
@@ -34,6 +35,13 @@ public class OutlookController extends BaseController {
      */
     @Autowired
     private MicrosoftAccountService microsoftAccountService;
+
+    /**
+     * Instance of Outlook service.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private OutlookService outlookService;
 
     /**
      * Instance of AppUserRepository.
@@ -77,7 +85,7 @@ public class OutlookController extends BaseController {
 
             if (tenantId != null && tokens != null && email != null) {
 
-                numberOfUnreadMails += microsoftAccountService.getNbUnreadEmails(tenantId, email, tokens);
+                numberOfUnreadMails += outlookService.getNbUnreadEmails(tenantId, email, tokens);
 
             }
 

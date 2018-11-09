@@ -2,14 +2,18 @@ package fr.ynov.dap.data;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import fr.ynov.dap.Constants;
 
 /**
  * Token response from Microsoft API.
@@ -50,28 +54,29 @@ public class TokenResponse {
     /**
      * Access token.
      */
-    @Column
+    @Column(length = Constants.DATABASE_TOKEN_SIZE)
     @JsonProperty("access_token")
     private String accessToken;
 
     /**
      * Refresh token.
      */
-    @Column
+    @Column(length = Constants.DATABASE_TOKEN_SIZE)
     @JsonProperty("refresh_token")
     private String refreshToken;
 
     /**
      * Id token.
      */
-    @Column
+    @Column(length = Constants.DATABASE_TOKEN_SIZE)
     @JsonProperty("id_token")
     private String idToken;
 
     /**
-     * Owner column.
+     * Microsoft Account column.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private MicrosoftAccount account;
 
     /**
@@ -220,6 +225,20 @@ public class TokenResponse {
      */
     public void setExpirationTime(final Date val) {
         this.expirationTime = val;
+    }
+
+    /**
+     * @return the account
+     */
+    public MicrosoftAccount getAccount() {
+        return account;
+    }
+
+    /**
+     * @param val the account to set
+     */
+    public void setAccount(final MicrosoftAccount val) {
+        this.account = val;
     }
 
 }
