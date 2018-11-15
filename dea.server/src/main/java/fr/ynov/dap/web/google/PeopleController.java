@@ -1,5 +1,5 @@
 
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google;
 
 
 import java.io.IOException;

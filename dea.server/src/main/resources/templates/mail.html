@@ -1,0 +1,16 @@
+
+<header th:include="base  :: header"></header>
+
+<div th:unless="${error == null}" th:text="${'Error: ' + error}"
+	class="alert alert-danger"></div>
+
+
+<pre>
+	<code>
+		<p th:text="${'Auth code: ' + session.authCode}"></p>
+		
+		<p th:text="${'ID token: ' + session.idToken}"></p>
+		
+		<p th:text="${'Access token: ' + session.accessToken}"></p>
+	</code>
+</pre>

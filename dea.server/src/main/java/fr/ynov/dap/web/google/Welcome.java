@@ -1,5 +1,5 @@
 
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google;
 
 
 import java.io.IOException;
@@ -16,23 +16,44 @@ import com.google.api.client.util.store.DataStore;
 import fr.ynov.dap.google.GMailService;
 
 
+/**
+ * Controlleur welcome
+ * @author antod
+ *
+ */
 @Controller
 public class Welcome
 { 
+  /**
+   * Service gmail global
+   */
   @Autowired
   GMailService gmail;
 
+  /**
+   * Page principal
+   * @param model
+   * @return
+   * @throws IOException
+   * @throws GeneralSecurityException
+   */
   @RequestMapping("/")
   public String welcome(ModelMap model) throws IOException, GeneralSecurityException
   {
 //  Integer nbUnreadEmails = MailController.getNbUnreadEmail("me", "toto", null);
-    Integer nbUnreadEmails = -8;
-
-    model.addAttribute("nbEmails", nbUnreadEmails);
+//    Integer nbUnreadEmails = -8;
+//
+//    model.addAttribute("nbEmails", nbUnreadEmails);
 
     return "welcome";
   }
 
+  /**
+   * Data Store de l'application
+   * @param model
+   * @return
+   * @throws IOException
+   */
   @RequestMapping("/GetDataStore")
   public String getDataStore(ModelMap model) throws IOException
   {
