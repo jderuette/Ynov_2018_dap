@@ -1,5 +1,7 @@
 package com.ynov.dap.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,15 +35,15 @@ public class CalendarController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalendarModel> getCalendar(@PathVariable final String gUser) {
         if (gUser == null || gUser.length() <= 0) {
-            return new ResponseEntity<CalendarModel>(new CalendarModel("", "", "", ""), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CalendarModel>(new CalendarModel("", new Date(), new Date(), ""), HttpStatus.BAD_REQUEST);
         }
 
         try {
-            return new ResponseEntity<CalendarModel>(calendarService.resultCalendar(gUser), HttpStatus.ACCEPTED);
+            return new ResponseEntity<CalendarModel>(calendarService.finalReturn(gUser), HttpStatus.ACCEPTED);
         } catch (Exception e) {
             getLogger().error(e.getMessage());
         }
-        return new ResponseEntity<CalendarModel>(new CalendarModel("", "", "", ""), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<CalendarModel>(new CalendarModel("", new Date(), new Date(), ""), HttpStatus.BAD_REQUEST);
     }
 
     @Override

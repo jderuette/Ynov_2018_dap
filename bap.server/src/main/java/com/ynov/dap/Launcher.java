@@ -19,7 +19,7 @@ public class Launcher {
     public static void main(final String[] args) {
         SpringApplication.run(Launcher.class, args);
     }
-
+    
     @Bean
     public Config loadConfig() {
         return new Config();

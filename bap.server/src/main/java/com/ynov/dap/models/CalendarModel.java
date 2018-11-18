@@ -1,5 +1,7 @@
 package com.ynov.dap.models;
 
+import java.util.Date;
+
 /**
  * Model Calendar.
  * @author POL
@@ -29,7 +31,7 @@ public class CalendarModel {
      *
      * @return the start date
      */
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
@@ -38,7 +40,7 @@ public class CalendarModel {
      *
      * @param inStartDate the new start date
      */
-    public void setStartDate(final String inStartDate) {
+    public void setStartDate(final Date inStartDate) {
         this.startDate = inStartDate;
     }
 
@@ -47,7 +49,7 @@ public class CalendarModel {
      *
      * @return the end date
      */
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
@@ -56,7 +58,7 @@ public class CalendarModel {
      *
      * @param inEndDate the new end date
      */
-    public void setEndDate(final String inEndDate) {
+    public void setEndDate(final Date inEndDate) {
         this.endDate = inEndDate;
     }
 
@@ -82,10 +84,10 @@ public class CalendarModel {
     private String subject;
 
     /** The start date. */
-    private String startDate;
+    private Date startDate;
 
     /** The end date. */
-    private String endDate;
+    private Date endDate;
 
     /** The state. */
     private String state;
@@ -98,11 +100,15 @@ public class CalendarModel {
      * @param inEndDate *calendar end date*
      * @param inState *calendar state*
      */
-    public CalendarModel(final String inSubject, final String inStartDate,
-             final String inEndDate, final String inState) {
+    public CalendarModel(final String inSubject, final Date inStartDate,
+             final Date inEndDate, final String inState) {
         this.subject = inSubject;
         this.startDate = inStartDate;
         this.endDate = inEndDate;
         this.state = inState;
     }
+
+	public CalendarModel() {
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @PropertySource("classpath:config.properties")
-public final class Config {
+public class Config {
 
 	@Autowired
 	private Environment env;
@@ -22,16 +22,29 @@ public final class Config {
     private String credentialsFolderToken = dataStoreDirectory + "/google/tokens";
     
 	public Config() {
-		if (env != null) {
+		System.out.println(env);
+		
+		/*
+		if (env.getProperty("application_name") != null) {
 			this.applicationName = env.getProperty("application_name");
-			
-			this.clientSecretFile = env.getProperty("credentials_file");
-			this.credentialsFolder = env.getProperty("credentials_folder");
-			this.credentialsFolderToken = env.getProperty("credentials_token");
-
-			this.oAuth2CallbackUrl = env.getProperty("oAuth2CallbackUrl");
-
 		}
+		
+		if (env.getProperty("credentials_file") != null) {
+			this.clientSecretFile = env.getProperty("credentials_file");
+		}
+		
+		if (env.getProperty("credentials_folder") != null) {
+			this.credentialsFolder = env.getProperty("credentials_folder");
+		}
+		
+		if (env.getProperty("credentials_token") != null) {
+			this.credentialsFolderToken = env.getProperty("credentials_token");
+		}
+		
+		if (env.getProperty("oAuth2CallbackUrl") != null) {
+			this.oAuth2CallbackUrl = env.getProperty("oAuth2CallbackUrl");
+		}
+		*/
 	}
     
     public String getoAuth2CallbackUrl() {

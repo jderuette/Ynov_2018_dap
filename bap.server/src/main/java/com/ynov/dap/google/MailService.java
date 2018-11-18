@@ -42,14 +42,13 @@ public class MailService extends GoogleService {
     public MailModel getNbUnreadEmails(final String user) throws Exception, IOException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-        
         AppUser appUser = appUserRepository.findByName(user);
-        List<GoogleAccount> fdp = appUser.getGoogleAccounts();
-        
+        List<GoogleAccount> accounts = appUser.getGoogleAccounts();
+
         MailModel mail = new MailModel();
         mail.setUnRead(0);
-        
-        for (GoogleAccount account: fdp) {
+
+        for (GoogleAccount account: accounts) {
             Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
                     .setApplicationName(env.getProperty("application_name"))
                     .build();
@@ -57,8 +56,6 @@ public class MailService extends GoogleService {
             Label label = service.users().labels().get("me", "INBOX").execute();
             mail.setUnRead(mail.getUnRead() + label.getMessagesUnread());
         }
-
-        //Label label = service.users().labels().get("me", "INBOX").execute();
 
         getLogger().info("nb messages unread " + mail.getUnRead() + " for user : " + user);
         return mail;
