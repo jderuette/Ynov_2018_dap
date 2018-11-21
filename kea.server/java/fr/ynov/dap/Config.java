@@ -45,51 +45,51 @@ public class Config {
 
   /**
    * set the URL you want to redirect when authentication is done.
-   * @param openAuth2CallbackUrl url de redirection
+   * @param authCallbackURL url de redirection
    */
-  public void setoAuth2CallbackUrl(String openAuth2CallbackUrl) {
-    this.openAuth2CallbackUrl = openAuth2CallbackUrl;
+  public void setoAuth2CallbackUrl(final String authCallbackURL) {
+    this.openAuth2CallbackUrl = authCallbackURL;
   }
 
   /**
    * set the httpTransport.
-   * @param httpTransport needed to communicate
+   * @param netHttpTransport needed to communicate
    */
-  public void setHttpTransport(NetHttpTransport httpTransport) {
-    this.httpTransport = httpTransport;
+  public void setHttpTransport(final NetHttpTransport netHttpTransport) {
+    this.httpTransport = netHttpTransport;
   }
 
   /**
    * set the directory where the credentials.json is stored.
-   * @param credentialsFolder folder that contains google credentials
+   * @param credFolder folder that contains google credentials
    */
-  public void setCredentialsFolder(String credentialsFolder) {
-    this.credentialsFolder = credentialsFolder;
+  public void setCredentialsFolder(final String credFolder) {
+    this.credentialsFolder = credFolder;
   }
 
   /**
    * The InputStream is the superclass of all classes representing
    * an input stream of bytes.
-   * @param clientSecretDir directory of credentials
+   * @param clientSecretDirectory directory of credentials
    */
-  public void setClientSecretDir(InputStream clientSecretDir) {
-    this.clientSecretDir = clientSecretDir;
+  public void setClientSecretDir(final InputStream clientSecretDirectory) {
+    this.clientSecretDir = clientSecretDirectory;
   }
 
   /**
    * sets the application name.
-   * @param applicationName of your application
+   * @param appName of your application
    */
-  public void setApplicationName(String applicationName) {
-    this.applicationName = applicationName;
+  public void setApplicationName(final String appName) {
+    this.applicationName = appName;
   }
 
   /**
    * Sets the directory path to the stored credentials.
-   * @param tokensDirectoryPath a string that contains the path
+   * @param tokensDirectory a string that contains the path
    */
-  public void setTokensDirectoryPath(String tokensDirectoryPath) {
-    this.tokensDirectoryPath = tokensDirectoryPath;
+  public void setTokensDirectoryPath(final String tokensDirectory) {
+    this.tokensDirectoryPath = tokensDirectory;
   }
 
   /**

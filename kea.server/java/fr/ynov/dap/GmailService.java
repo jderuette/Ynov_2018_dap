@@ -59,6 +59,7 @@ public class GmailService extends GoogleService {
 
   /**
    * Counts all unread messages from primary category in Gmail.
+   * @param userKey the identifier that wants to access his unread mails
    * @return an integer that tells you how many mails unread you have
    * @throws IOException nothing special
    */
@@ -89,10 +90,11 @@ public class GmailService extends GoogleService {
 
   /**
    * gets all labels in Gmail Service.
+   * @param userKey the user that wants to access his account data
    * @return a string list
    * @throws IOException nothing special
    */
-  public List<String> getLabels(String userKey) throws IOException {
+  public List<String> getLabels(final String userKey) throws IOException {
     gmailService = getService(userKey);
     ListLabelsResponse listResponse = gmailService.users().labels()
         .list(getUser()).execute();
@@ -105,7 +107,10 @@ public class GmailService extends GoogleService {
     }
     return listeLabels;
   }
-
+  /**
+   * get the singleton logger.
+   * @return the logger
+   */
   public Logger getLogger() {
     return LOGGER;
   }

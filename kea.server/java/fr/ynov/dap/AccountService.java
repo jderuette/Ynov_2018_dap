@@ -138,6 +138,9 @@ public class AccountService extends GoogleService {
    */
   protected String buildRedirectUri(final HttpServletRequest req,
       final String destination) {
+    //FIXME Invalid parameter value for redirect_uri: Non-public domains not allowed:
+    //http://www.localhost:8080/oAuth2Callback
+    //to avoid that error we should build the URI dynamically (host, params...)
     final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
     url.setRawPath(destination);
     return url.build();

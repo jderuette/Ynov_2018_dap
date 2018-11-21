@@ -19,13 +19,14 @@ public class CalendarController {
   /**
      * Concatenate all events in the list in one string to display in view.
      * @return string that contains all events in the list
+     * @param userId the userKey specified in URL
      * @throws IOException nothing special
      */
   @RequestMapping("/events/nextEvents/{userKey}")
   @ResponseBody
-  public String eventsToString(@PathVariable String userKey)
+  public String eventsToString(@PathVariable String userId)
       throws IOException {
-    List<Event> listeEvents = calendarService.get2nextEvents(userKey);
+    List<Event> listeEvents = calendarService.get2nextEvents(userId);
     String stringRes = "Prochains évènements :<br><br>";
     for (Event event : listeEvents) {
       stringRes = stringRes + "<br><br>" + calendarService.eventToString(event);

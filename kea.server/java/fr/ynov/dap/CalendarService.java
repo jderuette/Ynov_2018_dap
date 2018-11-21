@@ -32,10 +32,11 @@ public class CalendarService extends GoogleService {
   /**
    * Creates a new service if it has never been created
    * else it returns the service instantiated previously.
+   * @param userKey the user that wants to access his account datas
    * @return the Calendar service
    * @throws IOException nothing special
    */
-  public Calendar getService(String userKey) throws IOException {
+  public Calendar getService(final String userKey) throws IOException {
     if (calendarService == null) {
       calendarService = new Calendar.Builder(
           getCustomConfig().getHttpTransport(), JSON_FACTORY,
@@ -49,10 +50,11 @@ public class CalendarService extends GoogleService {
   /**
    * Uses the Calendar Service to get the 2
    * next events and the date of beginning.
+   * @param userKey the user that wants to access his account datas
    * @return an event list
    * @throws IOException nothing special
    */
-  public ArrayList<Event> get2nextEvents(String userKey) throws IOException {
+  public ArrayList<Event> get2nextEvents(final String userKey) throws IOException {
     calendarService = getService(userKey);
     ArrayList<Event> listeEvenements = new ArrayList<Event>();
     DateTime now = new DateTime(System.currentTimeMillis());

@@ -151,5 +151,8 @@
 		<module name="FinalParameters" />
 		<module name="TodoComment" />
 		<module name="UpperEll" />
+        <module name="CyclomaticComplexity">
+        <property name="max" value="8"/>
+        </module>
 	</module>
 </module>

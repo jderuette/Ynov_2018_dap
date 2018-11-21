@@ -15,16 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 public abstract class GoogleService {
   @Autowired
   protected Config customConfig;
   protected static final JsonFactory JSON_FACTORY = JacksonFactory
       .getDefaultInstance();
   protected List<String> scopes = null;
-  protected String user = "me";
+  protected String gUser = "me";
   //protected GoogleAuthorizationCodeFlow flow = null;
   protected GoogleClientSecrets clientSecrets;
 
@@ -33,11 +31,11 @@ public abstract class GoogleService {
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
-  
+
   public GoogleService() throws InstantiationException, IllegalAccessException {
     init();
   }
-  
+
   /**
    * Initialize the list of scopes used in the application.
    * @throws InstantiationException nothing special
@@ -83,7 +81,7 @@ public abstract class GoogleService {
    * @return the current user that is using the application
    */
   public String getUser() {
-    return user;
+    return gUser;
   }
 
   /**
@@ -91,7 +89,7 @@ public abstract class GoogleService {
    * @param user the userId
    */
   public void setUser(final String user) {
-    this.user = user;
+    this.gUser = user;
   }
 
   /**
