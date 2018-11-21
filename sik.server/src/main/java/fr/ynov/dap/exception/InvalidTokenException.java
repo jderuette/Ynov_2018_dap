@@ -1,6 +1,6 @@
 package fr.ynov.dap.exception;
 
-import fr.ynov.dap.data.TokenResponse;
+import fr.ynov.dap.microsoft.model.TokenResponse;
 
 /**
  * Represent an error when token sended are invalid.

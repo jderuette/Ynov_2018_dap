@@ -39,4 +39,9 @@ public final class Constants {
      */
     public static final int DATABASE_TOKEN_SIZE = 5000;
 
+    /**
+     * Represent value to convert second to millisecond.
+     */
+    public static final int SECOND_TO_MILLISECOND = 1000;
+
 }

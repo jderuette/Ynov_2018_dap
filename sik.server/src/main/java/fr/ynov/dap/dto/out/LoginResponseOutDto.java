@@ -1,6 +1,6 @@
 package fr.ynov.dap.dto.out;
 
-import fr.ynov.dap.model.LoginStatusEnum;
+import fr.ynov.dap.model.enumeration.LoginStatusEnum;
 
 /**
  * Class returned for API when user want to connect.

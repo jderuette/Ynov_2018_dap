@@ -11,10 +11,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 
-import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.exception.NoGoogleAccountException;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
 
 /**
  * Class to manage Gmail API.

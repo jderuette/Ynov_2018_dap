@@ -9,11 +9,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.GMailService;
+import fr.ynov.dap.model.AppUser;
 
 /**
  * Hello World Thymeleaf.

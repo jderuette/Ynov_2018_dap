@@ -10,9 +10,9 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
-import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.exception.NoGoogleAccountException;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
 
 /**
  * Class to manage Contact API.

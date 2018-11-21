@@ -2,7 +2,7 @@ package fr.ynov.dap.contract;
 
 import org.springframework.data.repository.CrudRepository;
 
-import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.model.AppUser;
 
 /**
  * Interface to manage AppUser from and to database.

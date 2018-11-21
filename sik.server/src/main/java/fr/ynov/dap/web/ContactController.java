@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.dto.out.NumberContactOutDto;
 import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.ContactService;
-import fr.ynov.dap.microsoft.OutlookService;
+import fr.ynov.dap.microsoft.service.OutlookService;
+import fr.ynov.dap.model.AppUser;
 
 /**
  * Controller to manage every call to Google Contact API.

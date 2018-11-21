@@ -2,6 +2,8 @@ package fr.ynov.dap.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,12 +19,13 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import com.google.api.services.oauth2.model.Userinfoplus;
 
+import fr.ynov.dap.Constants;
 import fr.ynov.dap.comparator.SortByNearest;
-import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
-import fr.ynov.dap.model.GoogleCalendarEvent;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
+import fr.ynov.dap.model.google.GoogleCalendarEvent;
 
 /**
  * Class to manage Calendar API.
@@ -37,7 +40,7 @@ public class CalendarService extends GoogleAPIService<Calendar> {
      * Auto resolved by Autowire.
      */
     @Autowired
-    private AccountService accountService;
+    private OAuthService accountService;
 
     @Override
     protected final Calendar getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
@@ -60,7 +63,10 @@ public class CalendarService extends GoogleAPIService<Calendar> {
 
         DateTime now = new DateTime(System.currentTimeMillis());
 
-        Events events = calendarService.events().list("primary").setMaxResults(1).setTimeMin(now)
+        OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
+        long epochMillis = utc.toEpochSecond() * Constants.SECOND_TO_MILLISECOND;
+
+        Events events = calendarService.events().list("primary").setMaxResults(1).setTimeMin(new DateTime(epochMillis))
                 .setOrderBy("startTime").setSingleEvents(true).execute();
 
         List<Event> items = events.getItems();

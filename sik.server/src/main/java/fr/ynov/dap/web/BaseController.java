@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.ynov.dap.contract.AppUserRepository;
-import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.dto.out.ExceptionOutDto;
 import fr.ynov.dap.exception.UserNotFoundException;
+import fr.ynov.dap.model.AppUser;
 
 /**
  * BaseController.

@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.contract.ApiEvent;
-import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.dto.out.NextEventOutDto;
 import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.CalendarService;
-import fr.ynov.dap.microsoft.OutlookService;
-import fr.ynov.dap.model.GoogleCalendarEvent;
-import fr.ynov.dap.model.MicrosoftCalendarEvent;
+import fr.ynov.dap.microsoft.service.OutlookService;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleCalendarEvent;
+import fr.ynov.dap.model.microsoft.MicrosoftCalendarEvent;
 
 /**
  * Controller to manage every call to Google Calendar API.

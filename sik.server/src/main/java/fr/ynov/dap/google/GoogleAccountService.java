@@ -2,6 +2,7 @@ package fr.ynov.dap.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 
@@ -10,15 +11,19 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.util.store.DataStore;
 
 import fr.ynov.dap.contract.AppUserRepository;
-import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.exception.MissingSessionParameterException;
+import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.model.AddAccountResult;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.enumeration.CredentialTypeEnum;
+import fr.ynov.dap.model.google.GoogleAccount;
 
 /**
  * Controller to manage google accounts.
@@ -161,6 +166,41 @@ public class GoogleAccountService extends GoogleAPIService {
     protected final Object getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
             final String appName) {
         return null;
+    }
+
+    public final ArrayList<fr.ynov.dap.model.Credential> getStoredCredentials()
+            throws NoConfigurationException, IOException, GeneralSecurityException {
+
+        DataStore<StoredCredential> flow = getFlows().getCredentialDataStore();
+        ArrayList<fr.ynov.dap.model.Credential> credentials = new ArrayList<fr.ynov.dap.model.Credential>();
+
+        flow.keySet().forEach(key -> {
+
+            StoredCredential assocStoredCredential;
+
+            try {
+
+                assocStoredCredential = flow.get(key);
+
+                fr.ynov.dap.model.Credential newCredential = new fr.ynov.dap.model.Credential();
+                newCredential.setUserId(key);
+                newCredential.setToken(assocStoredCredential.getAccessToken());
+                newCredential.setRefreshToken(assocStoredCredential.getRefreshToken());
+                newCredential.setExpirationTime(assocStoredCredential.getExpirationTimeMilliseconds());
+                newCredential.setType(CredentialTypeEnum.GOOGLE);
+
+                credentials.add(newCredential);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+        });
+
+        return credentials;
+
     }
 
 }

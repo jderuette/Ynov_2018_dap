@@ -1,5 +1,7 @@
 package fr.ynov.dap.model;
 
+import fr.ynov.dap.model.enumeration.CredentialTypeEnum;
+
 /**
  * Represent user's credential data.
  * @author Kévin Sibué
@@ -26,6 +28,8 @@ public class Credential {
      * Token's expiration time.
      */
     private long expirationTime;
+
+    private CredentialTypeEnum type;
 
     /**
      * @return the userId
@@ -81,6 +85,20 @@ public class Credential {
      */
     public void setExpirationTime(final long val) {
         this.expirationTime = val;
+    }
+
+    /**
+     * @return the type
+     */
+    public CredentialTypeEnum getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(CredentialTypeEnum type) {
+        this.type = type;
     }
 
 }
