@@ -48,4 +48,9 @@ public final class MicrosoftScopes {
      * Calendar Read scope.
      */
     public static final String CALENDARS_READ = "Calendars.Read";
+
+    /**
+     * Contact Read scope.
+     */
+    public static final String CONTACTS_READ = "Contacts.Read";
 }

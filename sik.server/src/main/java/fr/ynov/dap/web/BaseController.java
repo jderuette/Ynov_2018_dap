@@ -4,12 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fr.ynov.dap.contract.AppUserRepository;
+import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.dto.out.ExceptionOutDto;
+import fr.ynov.dap.exception.UserNotFoundException;
 
 /**
  * BaseController.
@@ -17,6 +21,13 @@ import fr.ynov.dap.dto.out.ExceptionOutDto;
  *
  */
 public abstract class BaseController {
+
+    /**
+     * Instance of AppUserRepository.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     /**
      * Logger instance.
@@ -53,6 +64,14 @@ public abstract class BaseController {
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    protected AppUser GetUserById(final String userId) throws UserNotFoundException {
+        AppUser user = appUserRepository.findByUserKey(userId);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
 }

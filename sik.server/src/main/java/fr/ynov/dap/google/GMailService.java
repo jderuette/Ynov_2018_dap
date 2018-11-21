@@ -11,7 +11,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.exception.NoConfigurationException;
+import fr.ynov.dap.exception.NoGoogleAccountException;
 
 /**
  * Class to manage Gmail API.
@@ -50,7 +53,7 @@ public class GMailService extends GoogleAPIService<Gmail> {
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when configuration is missing
      */
-    public Integer getNbUnreadEmails(final String accountName)
+    private Integer getNbUnreadEmails(final String accountName)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         Gmail gmailService = getService(accountName);
@@ -58,6 +61,23 @@ public class GMailService extends GoogleAPIService<Gmail> {
         Label inboxLabel = gmailService.users().labels().get("me", "INBOX").execute();
 
         return inboxLabel.getMessagesUnread();
+
+    }
+
+    public Integer getNbUnreadEmails(AppUser user)
+            throws NoGoogleAccountException, NoConfigurationException, IOException, GeneralSecurityException {
+
+        if (user.getGoogleAccounts().size() == 0) {
+            throw new NoGoogleAccountException();
+        }
+
+        Integer nbUnreadMail = 0;
+
+        for (GoogleAccount gAcc : user.getGoogleAccounts()) {
+            nbUnreadMail += getNbUnreadEmails(gAcc.getAccountName());
+        }
+
+        return nbUnreadMail;
 
     }
 

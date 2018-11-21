@@ -2,8 +2,6 @@ package fr.ynov.dap.web;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,13 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.MicrosoftAccount;
-import fr.ynov.dap.data.TokenResponse;
 import fr.ynov.dap.dto.out.NextEventOutDto;
+import fr.ynov.dap.dto.out.NumberContactOutDto;
 import fr.ynov.dap.dto.out.UnreadMailOutDto;
+import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
@@ -65,11 +62,12 @@ public class OutlookController extends BaseController {
      * @throws IOException Exception
      * @throws UserNotFoundException Thrown when user is not found.
      * @throws NoMicrosoftAccountException Thrown when user haven't any microsoft account.
+     * @throws NoConfigurationException Exception
      */
     @RequestMapping("/nbUnread/{userId}")
     public final UnreadMailOutDto getNumberOfUnreadMessage(@PathVariable("userId") final String userId,
-            final HttpServletRequest request)
-            throws UserNotFoundException, NoMicrosoftAccountException, IOException, GeneralSecurityException {
+            final HttpServletRequest request) throws UserNotFoundException, NoMicrosoftAccountException,
+            NoConfigurationException, IOException, GeneralSecurityException {
 
         AppUser user = appUserRepository.findByUserKey(userId);
 
@@ -77,21 +75,7 @@ public class OutlookController extends BaseController {
             throw new UserNotFoundException();
         }
 
-        if (user.getMicrosoftAccounts().size() == 0) {
-            throw new NoMicrosoftAccountException();
-        }
-
-        Integer numberOfUnreadMails = 0;
-
-        for (MicrosoftAccount account : user.getMicrosoftAccounts()) {
-
-            String email = account.getEmail();
-            String tenantId = account.getTenantId();
-            TokenResponse tokens = account.getToken();
-
-            numberOfUnreadMails += outlookService.getNbUnreadEmails(tenantId, email, tokens);
-
-        }
+        Integer numberOfUnreadMails = outlookService.getNbUnreadEmails(user);
 
         return new UnreadMailOutDto(numberOfUnreadMails);
 
@@ -107,35 +91,26 @@ public class OutlookController extends BaseController {
             throw new UserNotFoundException();
         }
 
-        if (user.getMicrosoftAccounts().size() == 0) {
-            throw new NoMicrosoftAccountException();
-        }
-
-        ArrayList<MicrosoftCalendarEvent> events = new ArrayList<>();
-
-        for (MicrosoftAccount msAcc : user.getMicrosoftAccounts()) {
-
-            String email = msAcc.getEmail();
-            String tenantId = msAcc.getTenantId();
-            TokenResponse tokens = msAcc.getToken();
-
-            MicrosoftCalendarEvent evnt = outlookService.getNextEvent(tenantId, email, tokens);
-
-            if (evnt != null) {
-                events.add(evnt);
-            }
-
-        }
-
-        if (events.size() == 0) {
-            throw new NoNextEventException();
-        }
-
-        Collections.sort(events, new SortByNearest());
-
-        MicrosoftCalendarEvent evnt = events.get(0);
+        MicrosoftCalendarEvent evnt = outlookService.getNextEvent(user);
 
         return new NextEventOutDto(evnt);
+
+    }
+
+    @RequestMapping("/nbContacts/{userId}")
+    public NumberContactOutDto getNumberOfContacts(@PathVariable("userId") final String userId,
+            final HttpServletRequest request)
+            throws UserNotFoundException, NoMicrosoftAccountException, NoNextEventException, IOException {
+
+        AppUser user = appUserRepository.findByUserKey(userId);
+
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+
+        Integer nbOfContacts = outlookService.getNumberOfContacts(user);
+
+        return new NumberContactOutDto(nbOfContacts);
 
     }
 

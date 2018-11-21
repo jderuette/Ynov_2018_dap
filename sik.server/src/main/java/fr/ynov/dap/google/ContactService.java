@@ -10,6 +10,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.exception.NoGoogleAccountException;
+
 /**
  * Class to manage Contact API.
  * @author Kévin Sibué
@@ -31,7 +35,7 @@ public class ContactService extends GoogleAPIService<PeopleService> {
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      */
-    public Integer getNumberOfContacts(final String accountName) throws GeneralSecurityException, IOException {
+    private Integer getNumberOfContacts(final String accountName) throws GeneralSecurityException, IOException {
 
         PeopleService peopleSrv = getService(accountName);
 
@@ -47,6 +51,24 @@ public class ContactService extends GoogleAPIService<PeopleService> {
         }
 
         return 0;
+
+    }
+
+    public Integer getNumberOfContacts(AppUser user)
+            throws NoGoogleAccountException, GeneralSecurityException, IOException {
+
+        if (user.getGoogleAccounts().size() == 0) {
+            throw new NoGoogleAccountException();
+        }
+
+        Integer nbContacts = 0;
+
+        for (GoogleAccount gAcc : user.getGoogleAccounts()) {
+            String accountName = gAcc.getAccountName();
+            nbContacts += getNumberOfContacts(accountName);
+        }
+
+        return nbContacts;
 
     }
 

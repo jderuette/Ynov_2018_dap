@@ -36,7 +36,7 @@ public class MicrosoftAPIService {
      */
     protected static String[] scopes = { MicrosoftScopes.OPEN_ID, MicrosoftScopes.OFFLINE_ACCESS,
             MicrosoftScopes.PROFILE, MicrosoftScopes.USER_READ, MicrosoftScopes.MAIL_READ,
-            MicrosoftScopes.MAIL_READ_WRITE, MicrosoftScopes.CALENDARS_READ };
+            MicrosoftScopes.MAIL_READ_WRITE, MicrosoftScopes.CALENDARS_READ, MicrosoftScopes.CONTACTS_READ };
 
     /**
      * store app id.

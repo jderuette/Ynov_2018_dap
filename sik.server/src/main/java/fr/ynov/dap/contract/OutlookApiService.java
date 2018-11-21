@@ -1,6 +1,7 @@
 package fr.ynov.dap.contract;
 
 import fr.ynov.dap.data.Message;
+import fr.ynov.dap.data.OutlookContact;
 import fr.ynov.dap.data.OutlookFolder;
 import fr.ynov.dap.data.OutlookUser;
 import fr.ynov.dap.data.PagedResult;
@@ -47,5 +48,8 @@ public interface OutlookApiService {
     @GET("/v1.0/me/events")
     Call<PagedResult<OutlookEvent>> getEvents(@Query("$orderby") String orderBy, @Query("$filter") String filter,
             @Query("$select") String select, @Query("$top") Integer maxResults);
+
+    @GET("/v1.0/me/contacts")
+    Call<PagedResult<OutlookContact>> getContacts(@Query("$orderby") String orderBy, @Query("$select") String select);
 
 }
