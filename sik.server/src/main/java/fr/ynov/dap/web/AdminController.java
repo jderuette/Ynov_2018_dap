@@ -99,6 +99,7 @@ public class AdminController {
         credentials.addAll(googleCredentials);
         credentials.addAll(msCredentials);
 
+        model.addAttribute("userKnown", true);
         model.addAttribute("credentials", credentials);
         model.addAttribute("fragment", "fragments/admin_datastore");
 
@@ -120,7 +121,7 @@ public class AdminController {
      * @throws NoMicrosoftAccountException No microsoft account found for current user
      */
     @RequestMapping("/nextEvent/{userId}")
-    public String showMail(final ModelMap model, @PathVariable("userId") final String userId)
+    public String mail(final ModelMap model, @PathVariable("userId") final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException, UserNotFoundException,
             NoNextEventException, NoGoogleAccountException, NoMicrosoftAccountException {
 
@@ -143,7 +144,7 @@ public class AdminController {
                 events.add(gEvnt);
             }
         } catch (Exception ex) {
-
+            System.out.println("");
         }
 
         try {
@@ -152,7 +153,7 @@ public class AdminController {
                 events.add(msEvnt);
             }
         } catch (Exception ex) {
-
+            System.out.println("");
         }
 
         if (events.size() == 0) {

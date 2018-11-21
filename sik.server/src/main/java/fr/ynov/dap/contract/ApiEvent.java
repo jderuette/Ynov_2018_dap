@@ -1,7 +1,9 @@
 package fr.ynov.dap.contract;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import fr.ynov.dap.model.Attendee;
 import fr.ynov.dap.model.enumeration.AttendeeEventStatusEnum;
 
 /**
@@ -41,5 +43,11 @@ public interface ApiEvent {
      * @return Status
      */
     AttendeeEventStatusEnum getStatusForAttendee(String userMail);
+
+    /**
+     * Get list of every attendees for current event.
+     * @return Attendees.
+     */
+    ArrayList<Attendee> getAttendees();
 
 }

@@ -1,5 +1,6 @@
 package fr.ynov.dap.model.google;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 
 import fr.ynov.dap.contract.ApiEvent;
+import fr.ynov.dap.model.Attendee;
 import fr.ynov.dap.model.enumeration.AttendeeEventStatusEnum;
 import fr.ynov.dap.model.enumeration.EventStatusEnum;
 
@@ -49,6 +51,7 @@ public class GoogleCalendarEvent implements ApiEvent {
     /**
      * @return the subject of the stored Google's event
      */
+    @Override
     public String getSubject() {
         return event.getSummary();
     }
@@ -56,6 +59,7 @@ public class GoogleCalendarEvent implements ApiEvent {
     /**
      * @return the startDate of the stored Google's event
      */
+    @Override
     public Date getStartDate() {
         long val = event.getStart().getDateTime().getValue();
         return new Date(val);
@@ -64,6 +68,7 @@ public class GoogleCalendarEvent implements ApiEvent {
     /**
      * @return the endDate of the stored Google's event
      */
+    @Override
     public Date getEndDate() {
         long val = event.getEnd().getDateTime().getValue();
         return new Date(val);
@@ -90,6 +95,7 @@ public class GoogleCalendarEvent implements ApiEvent {
      * @param userMail user email
      * @return User's status for the current event
      */
+    @Override
     public AttendeeEventStatusEnum getStatusForAttendee(final String userMail) {
 
         if (event == null) {
@@ -131,6 +137,7 @@ public class GoogleCalendarEvent implements ApiEvent {
     /**
      * @return the currentUserStatus
      */
+    @Override
     public AttendeeEventStatusEnum getCurrentUserStatus() {
         return currentUserStatus;
     }
@@ -140,6 +147,20 @@ public class GoogleCalendarEvent implements ApiEvent {
      */
     public void setCurrentUserStatus(final AttendeeEventStatusEnum val) {
         this.currentUserStatus = val;
+    }
+
+    @Override
+    public final ArrayList<Attendee> getAttendees() {
+        ArrayList<Attendee> res = new ArrayList<Attendee>();
+        if (event != null && event.getAttendees() != null) {
+            for (EventAttendee att : event.getAttendees()) {
+                Attendee nAtt = new Attendee();
+                nAtt.setMail(att.getEmail());
+                nAtt.setStatus(getStatusForAttendee(att.getEmail()));
+                res.add(nAtt);
+            }
+        }
+        return res;
     }
 
 }

@@ -1,10 +1,12 @@
 package fr.ynov.dap.model.microsoft;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import fr.ynov.dap.contract.ApiEvent;
 import fr.ynov.dap.microsoft.model.OutlookAttendee;
 import fr.ynov.dap.microsoft.model.OutlookEvent;
+import fr.ynov.dap.model.Attendee;
 import fr.ynov.dap.model.enumeration.AttendeeEventStatusEnum;
 import fr.ynov.dap.utils.StrUtils;
 
@@ -120,6 +122,20 @@ public class MicrosoftCalendarEvent implements ApiEvent {
 
         return AttendeeEventStatusEnum.UNKNOWN;
 
+    }
+
+    @Override
+    public final ArrayList<Attendee> getAttendees() {
+        ArrayList<Attendee> res = new ArrayList<Attendee>();
+        if (getEvent() != null && getEvent().getAttendees() != null) {
+            for (OutlookAttendee att : getEvent().getAttendees()) {
+                Attendee nAtt = new Attendee();
+                nAtt.setMail(att.getEmailAddress().getAddress());
+                nAtt.setStatus(getStatusForAttendee(att.getEmailAddress().getAddress()));
+                res.add(nAtt);
+            }
+        }
+        return res;
     }
 
 }
