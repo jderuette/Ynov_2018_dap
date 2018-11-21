@@ -93,10 +93,10 @@ public class GoogleAccountService extends GoogleService {
             }
 
             GoogleAccount googleAccount = new GoogleAccount();
-            googleAccount.setOwner(user);
+//            googleAccount.setOwner(user);
             googleAccount.setName(accountName);
-            googleRepository.save(googleAccount);
             user.addGoogleAccount(googleAccount);
+            googleRepository.save(googleAccount);
             userRepository.save(user);
             // onSuccess(request, resp, credential);
         } catch (IOException e) {

@@ -8,7 +8,6 @@ public class GoogleAccount {
     @GeneratedValue
     Integer id;
 
-
     @Column
     private String name;
 

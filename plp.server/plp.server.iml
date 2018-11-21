@@ -107,5 +107,6 @@
     <orderEntry type="library" name="Maven: com.google.apis:google-api-services-people:v1-rev277-1.23.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.47" level="project" />
   </component>
 </module>

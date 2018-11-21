@@ -36,21 +36,21 @@ public class MailController {
     /**
      * get the number of unread mail.
      *
-     * @param userId : userKey param
+     * @param userKey : userKey param
      * @return Map : key Total unread
      * @throws IOException              : throws exception
      * @throws GeneralSecurityException : throws exception
      */
     @RequestMapping("/unread")
-    public final Map<String, Integer> getUnread(@RequestParam("userKey") final String userId)
+    public final Map<String, Integer> getUnread(@RequestParam("userKey") final String userKey)
             throws IOException, GeneralSecurityException {
-        AppUser user = userRepository.findByName(userId);
+        AppUser user = userRepository.findByName(userKey);
         Iterator<GoogleAccount> listIteratorGoogle = user.getGoogleAccount().listIterator();
         int nbEmailUnread = 0;
 
         while(listIteratorGoogle.hasNext()) {
-            GoogleAccount current = listIteratorGoogle.next();
-            nbEmailUnread += gMailService.getNbUnreadEmails(current.getName()).get("Unread");
+            GoogleAccount currentAccount = listIteratorGoogle.next();
+            nbEmailUnread += gMailService.getNbUnreadEmails(currentAccount.getName()).get("Unread");
         }
         Map<String, Integer> response = new HashMap<>();
         response.put("unread", nbEmailUnread);

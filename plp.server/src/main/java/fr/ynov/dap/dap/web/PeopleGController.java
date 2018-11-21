@@ -1,6 +1,9 @@
 package fr.ynov.dap.dap.web;
 
 import fr.ynov.dap.dap.PeopleGService;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +27,11 @@ public class PeopleGController {
      */
     @Autowired
     private PeopleGService peopleGService;
+    /**
+     * instantiate userRepository
+     */
+    @Autowired
+    AppUserRepository userRepository;
 
     /**
      * get hte number of contact you have.
@@ -33,6 +44,16 @@ public class PeopleGController {
     @RequestMapping("/total")
     public final Map<String, Integer> getNbContacts(@RequestParam("userKey") final String userId)
             throws IOException, GeneralSecurityException {
-        return peopleGService.getNbContacts(userId);
+        AppUser user = userRepository.findByName(userId);
+        List<GoogleAccount> listGoogleAccount = user.getGoogleAccount();
+        int nbContacts = 0;
+
+        for (GoogleAccount currentAccount : listGoogleAccount) {
+            nbContacts += peopleGService.getNbContacts(currentAccount.getName()).get("Total connection");
+        }
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("nbContacts", nbContacts);
+        return response;
     }
 }
