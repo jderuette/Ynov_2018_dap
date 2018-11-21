@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.util.store.DataStore;
 import com.ynov.dap.google.CredentialService;
-import com.ynov.dap.google.GoogleService;
 import com.ynov.dap.google.MailService;
 
 @Controller
@@ -25,6 +24,7 @@ public class Welcome {
     @Autowired
     private CredentialService credentialService;
 
+    /*
     @RequestMapping("/{gUser}")
     public String returnWelcome(@PathVariable final String gUser, final ModelMap model) {
     	try {
@@ -36,6 +36,7 @@ public class Welcome {
 		}
 		return "welcome";
 	}
+	*/
 
 	@RequestMapping("/data")
 	public String returnDataStore(final ModelMap model) {

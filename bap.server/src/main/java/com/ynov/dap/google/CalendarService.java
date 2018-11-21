@@ -11,7 +11,6 @@ import com.ynov.dap.models.CalendarModel;
 import com.ynov.dap.repository.AppUserRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class CalendarService extends GoogleService {
         	getLogger().info("Next upcoming events for user : " + userId);
 
             Event nextEvent = items.get(0);
-                        
+
             return nextEvent;
         }
     }
@@ -66,28 +65,32 @@ public class CalendarService extends GoogleService {
         AppUser appUser = appUserRepository.findByName(userId);
         List<GoogleAccount> accounts = appUser.getGoogleAccounts();
         List<Event> events = new ArrayList<Event>();
-        
+
         for (GoogleAccount account : accounts) {
         	events.add(resultCalendar(account.getName()));
         }
-        
-        System.out.println(events);
-        
-        Event finalEvent = new Event();
-        
-        if (events.size() == 1) {
-        	
-        }
-        
-		for(int i = 0; i < events.size(); i++) {
-			Event event = events.get(i);
-			if (new Date(event.getStart().getDateTime().getValue()).before(new Date(finalEvent.getStart().getDateTime().getValue()))) {
-				finalEvent = event;
-			}
-		}
 
-		return new CalendarModel(finalEvent.getSummary(), new Date(finalEvent.getStart().getDateTime().getValue()),
-                new Date(finalEvent.getEnd().getDateTime().getValue()), finalEvent.getStatus());
+        Event finalEvent = null;
+
+        if (events.size() == 1) {
+        	Event event = events.get(0);
+    		return new CalendarModel(event.getSummary(), new Date(event.getStart().getDateTime().getValue()),
+                    new Date(event.getEnd().getDateTime().getValue()), event.getStatus());
+        } else {
+    		for(int i = 0; i < events.size(); i++) {
+    			Event event = events.get(i);
+    			if (new Date(event.getStart().getDateTime().getValue()).before(new Date(finalEvent.getStart().getDateTime().getValue()))) {
+    				finalEvent = event;
+    			}
+    		}
+    		
+    		if (finalEvent == null) {
+    			return new CalendarModel("", null, null, "");
+    		}
+    		
+    		return new CalendarModel(finalEvent.getSummary(), new Date(finalEvent.getStart().getDateTime().getValue()),
+                    new Date(finalEvent.getEnd().getDateTime().getValue()), finalEvent.getStatus());
+        }
     }
 
     @Override
