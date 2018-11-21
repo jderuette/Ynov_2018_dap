@@ -26,16 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalendarService extends GoogleService {
 	/**
 	 * resultCalendar function.
-	 * @param userId *id of user*
+	 * @param accountName *id of user*
 	 * @return CalendarModel
 	 * @throws Exception *Exception*
 	 */
-    public CalendarModel getCalendarEvents(final String userId) throws Exception {
+    public CalendarModel getCalendarEvents(final String accountName) throws Exception {
         // Build a new authorized API client service.
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Calendar service = new Calendar.Builder(
         		httpTransport, getCfg().getJsonFactory(),
-        		getCredentials(httpTransport, userId))
+        		getCredentials(httpTransport, accountName))
                 .setApplicationName(getCfg().getApplicationName())
                 .build();
 

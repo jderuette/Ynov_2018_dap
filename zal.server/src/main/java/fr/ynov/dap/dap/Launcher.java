@@ -2,7 +2,10 @@ package fr.ynov.dap.dap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+
+import fr.ynov.dap.dap.data.AppUserRepository;
 
 /**
  * Launcher for SpringBootApp.
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
  *
  */
 @SpringBootApplication
+@EntityScan("fr.ynov.dap.dap.data")
 public class Launcher {
     /**
      * Instantiate config for project.

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.ynov.dap.dap.service.GoogleAccount;
+import fr.ynov.dap.dap.service.GoogleAccountService;
 
 /**
  * The Class Oauth2Controller.
@@ -20,7 +20,7 @@ public class Oauth2Controller {
 	
 	/** The google account. */
 	@Autowired
-	private GoogleAccount googleAccount;
+	private GoogleAccountService googleAccount;
 	
 	/**
 	 * O auth callback.

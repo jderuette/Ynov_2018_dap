@@ -8,14 +8,17 @@ import java.security.GeneralSecurityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
 import fr.ynov.dap.dap.Config;
@@ -24,6 +27,7 @@ import fr.ynov.dap.dap.Config;
  * Google Service.
  * @author loic
  */
+@Component("google")
 public class GoogleService {
 	/**
 	 * logger for log
@@ -57,11 +61,8 @@ public class GoogleService {
 	 * @throws IOException *IOException*
 	 */
 	protected Credential getCredentials(
-        final NetHttpTransport httpTransport, final String userId) throws IOException, GeneralSecurityException {
-        Credential authorize = null;
-		authorize = new AuthorizationCodeInstalledApp(
-	    getFlow(), new LocalServerReceiver()).authorize(userId);
-        return authorize;
+        final NetHttpTransport httpTransport, final String accountName) throws IOException, GeneralSecurityException {
+		return getFlow().loadCredential(accountName);
     }
 	/**
 	 * Get flow for googleAccount.
@@ -81,5 +82,10 @@ public class GoogleService {
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(cfg.getTokenDirectoryPath())))
                 .setAccessType("offline")
                 .build();
+	}
+	
+	public DataStore<StoredCredential> getCredentialDataStore() throws GeneralSecurityException, IOException {
+		GoogleAuthorizationCodeFlow flow = getFlow();
+		return flow.getCredentialDataStore();
 	}
 }

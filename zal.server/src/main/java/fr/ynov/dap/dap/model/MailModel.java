@@ -85,4 +85,7 @@ public class MailModel {
 		this.unreadMessages = um;
 		this.type = t;
 	}
+
+	public MailModel() {
+	}
 }

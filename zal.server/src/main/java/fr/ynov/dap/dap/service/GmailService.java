@@ -41,13 +41,13 @@ public class GmailService extends GoogleService {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
-    public final Gmail getGmailGoogleService(final String userId) {
+    public final Gmail getGmailGoogleService(final String accountName) {
     	NetHttpTransport httpTransport;
     	Gmail service = null;
 		try {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 			service = new Gmail.Builder(httpTransport, getCfg().getJsonFactory(),
-		        		getCredentials(httpTransport, userId))
+		        		getCredentials(httpTransport, accountName))
 		                .setApplicationName(getCfg().getApplicationName())
 		                .build();
 		} catch (GeneralSecurityException | IOException e) {
@@ -62,34 +62,24 @@ public class GmailService extends GoogleService {
      * @throws IOException
      * @throws GeneralSecurityException
      */
-   public final Label getLabel(final String userId) {
+   public final Label getLabel(final String accountName) {
     	Gmail service;
     	Label label = null;
 		try {
-			service = getGmailGoogleService(userId);
-			String user = "me";
-	        label = service.users().labels().get(user, "INBOX").execute();
+			service = getGmailGoogleService(accountName);
+	        label = service.users().labels().get("me", "INBOX").execute();
 		} catch (IOException e) {
 			logger.error("Error when get mail inbox", e);
 		}
 		return label;
-    }
-   /**
-    * get mail inbox total.
-    * @param userId *id of user*
-    * @return string
-    */
-    public final MailModel getMailInboxTotal(final String userId) {
-        Label label = getLabel(userId);
-        return new MailModel(label.getMessagesTotal(), null, label.getName());
     }
     /**
      * get mail inbox unread.
      * @param userId *id of user*
      * @return string
      */
-    public final MailModel getMailInBoxUnread(final String userId) {
-    	Label label = getLabel(userId);
+    public final MailModel getMailInBoxUnread(final String accountName) {
+    	Label label = getLabel(accountName);
     	return new MailModel(label.getMessagesTotal(), label.getMessagesUnread(), label.getName());
     }
 

@@ -110,6 +110,11 @@
   </parent>
  <dependencies>
   <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-web</artifactId>
        </dependency>
@@ -117,47 +122,114 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-thymeleaf</artifactId>
   </dependency>
+  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
     <dependency>
         <groupId>com.google.api-client</groupId>
         <artifactId>google-api-client</artifactId>
         <version>1.23.0</version>
     </dependency>
+    
     <dependency>
         <groupId>com.google.oauth-client</groupId>
         <artifactId>google-oauth-client-jetty</artifactId>
         <version>1.23.0</version>
     </dependency>
+    
     <dependency>
         <groupId>com.google.apis</groupId>
         <artifactId>google-api-services-gmail</artifactId>
         <version>v1-rev72-1.23.0</version>
     </dependency>
+    
      <dependency>
         <groupId>com.google.apis</groupId>
         <artifactId>google-api-services-people</artifactId>
         <version>v1-rev277-1.23.0</version>
     </dependency>
+    
     <dependency>
         <groupId>com.google.apis</groupId>
         <artifactId>google-api-services-calendar</artifactId>
         <version>v3-rev305-1.23.0</version>
     </dependency>
-    <dependency>
+    
+   <dependency>
    <groupId>org.apache.logging.log4j</groupId>
      <artifactId>log4j-api</artifactId>
      <version>2.9.1</version>
    </dependency>
+   
+   <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+   </dependency>
+   
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+    
+     <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+     </dependency>
+     
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-commons</artifactId>
+    </dependency>
+    
    <dependency>
      <groupId>org.apache.logging.log4j</groupId>
      <artifactId>log4j-core</artifactId>
     <version>2.9.1</version>
- </dependency>
+    </dependency>
+
+ <dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-core</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-annotations</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-databind</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>com.squareup.retrofit2</groupId>
+  <artifactId>retrofit</artifactId>
+  <version>2.0.2</version>
+</dependency>
+
+<dependency>
+  <groupId>com.squareup.retrofit2</groupId>
+  <artifactId>converter-jackson</artifactId>
+  <version>2.0.2</version>
+</dependency>
+
+<dependency>
+  <groupId>com.squareup.okhttp3</groupId>
+  <artifactId>logging-interceptor</artifactId>
+  <version>3.2.0</version>
+</dependency>
 </dependencies>
 <reporting>
         <plugins>

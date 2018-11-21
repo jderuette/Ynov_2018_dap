@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.ynov.dap.dap.service.GoogleAccount;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.AppUserRepository;
+import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.data.GoogleAccountRepository;
+import fr.ynov.dap.dap.service.GoogleAccountService;
 
 /**
  * The Class AccountController.
@@ -23,8 +27,13 @@ public class AccountController {
 	
 	/** The google account. */
 	@Autowired
-	private GoogleAccount googleAccount;
+	private GoogleAccountService googleAccountService;
 	
+	@Autowired
+	AppUserRepository appUserRepository;
+	
+	@Autowired
+	GoogleAccountRepository googleRepository;
 	 /**
  	 * Adds the acount.
  	 *
@@ -34,11 +43,17 @@ public class AccountController {
  	 * @return the string
  	 * @throws GeneralSecurityException the general security exception
  	 */
- 	@RequestMapping("/add/{userId}")
-	 public String addAcount(@PathVariable final String userId,
-		final HttpServletRequest request,
-		final HttpSession session) throws GeneralSecurityException {
-		return googleAccount.addAccount(userId, request, session);
+ 	@RequestMapping("/add/{accountName}")
+	 public String addAcount(@PathVariable final String accountName, @RequestParam final String userKey,final HttpServletRequest request, final HttpSession session) throws GeneralSecurityException {
+		AppUser user = appUserRepository.findByUserkey(userKey);
+ 		String response = googleAccountService.addAccount(accountName, request, session);
+ 		if(!response.isEmpty()){
+ 			GoogleAccount googleAccount = new GoogleAccount();
+ 			googleAccount.setName(accountName);
+ 			googleAccount.setOwner(user);
+ 			googleRepository.save(googleAccount);
+ 		}
+ 		return response;
 	}
-
+ 	
 }

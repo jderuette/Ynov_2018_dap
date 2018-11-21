@@ -28,13 +28,13 @@ import com.google.api.client.http.GenericUrl;
  *
  */
 @Service
-public class GoogleAccount extends GoogleService {
+public class GoogleAccountService extends GoogleService {
 	private static final int SENSIBLE_DATA_FIRST_CHAR = 2;
 	private static final int SENSIBLE_DATA_LAST_CHAR = 9;
 	/**
 	 * logger for log.
 	 */
-	private static final Logger LOGGER = LogManager.getLogger(GoogleAccount.class);
+	private static final Logger LOGGER = LogManager.getLogger(GoogleAccountService.class);
 	/**
      * Handle the Google response.
      * @param request The HTTP Request

@@ -140,8 +140,6 @@ public class App
 		
 		URL url = new URL(urlString);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		//TODO zal by Djer ton IDE te dit que ce n'est pas utilisé. A supprimer ? Bug ?
-		int responseCode = con.getResponseCode();
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
 		String inputLine;
