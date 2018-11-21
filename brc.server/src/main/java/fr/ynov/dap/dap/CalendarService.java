@@ -6,7 +6,9 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import fr.ynov.dap.dap.models.CalendarResponse;
+
+import fr.ynov.dap.models.CalendarResponse;
+
 import java.util.Date;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;

@@ -1,12 +1,12 @@
-package fr.ynov.dap.dap.controllers;
+package fr.ynov.dap.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.ynov.dap.dap.data.AppUser;
-import fr.ynov.dap.dap.data.AppUserRepostory;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepostory;
 
 @Controller
 public class UserController {

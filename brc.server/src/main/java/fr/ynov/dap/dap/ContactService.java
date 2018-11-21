@@ -12,7 +12,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
-import fr.ynov.dap.dap.models.ContactResponse;
+import fr.ynov.dap.models.ContactResponse;
 
 /**
  * The Class ContactService.
@@ -21,7 +21,7 @@ import fr.ynov.dap.dap.models.ContactResponse;
 public class ContactService extends GoogleService{
 	
 	/** The logger. */
-	private final static Logger logger = LogManager.getLogger(ContactService.class);
+	final static Logger logger = LogManager.getLogger(ContactService.class);
 	
 	/**
 	 * Result contact.

@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.models;
+package fr.ynov.dap.models;
 
 /**
  * The Class GmailResponse.

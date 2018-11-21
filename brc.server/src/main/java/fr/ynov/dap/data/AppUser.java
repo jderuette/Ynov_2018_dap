@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.data;
+package fr.ynov.dap.data;
 
 import java.util.List;
 

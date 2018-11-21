@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.controllers;
+package fr.ynov.dap.controllers;
 
 import java.io.IOException;
 
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import fr.ynov.dap.dap.GoogleAccountService;
-import fr.ynov.dap.dap.data.AppUser;
-import fr.ynov.dap.dap.data.AppUserRepostory;
-import fr.ynov.dap.dap.data.GoogleAccount;
-import fr.ynov.dap.dap.data.GoogleAccountRepository;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepostory;
+import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.GoogleAccountRepository;
 
 /**
  * The Class GoogleAccountController.
@@ -35,7 +35,7 @@ public class GoogleAccountController {
 	GoogleAccountRepository googleAccountRepository;
 	
 	/** The logger. */
-	private final static Logger logger = LogManager.getLogger(GoogleAccountController.class);
+	final static Logger logger = LogManager.getLogger(GoogleAccountController.class);
 
 	/**
 	 * O auth callback.

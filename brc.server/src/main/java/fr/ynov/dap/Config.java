@@ -1,16 +1,5 @@
-package fr.ynov.dap.dap;
+package fr.ynov.dap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.people.v1.PeopleServiceScopes;
 
 /**
  * The Class Config.

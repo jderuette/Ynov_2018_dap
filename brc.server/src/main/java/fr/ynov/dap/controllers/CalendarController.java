@@ -1,25 +1,21 @@
-package fr.ynov.dap.dap.controllers;
+package fr.ynov.dap.controllers;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.api.services.calendar.Calendar.Events;
 
 import fr.ynov.dap.dap.CalendarService;
-import fr.ynov.dap.dap.data.AppUser;
-import fr.ynov.dap.dap.data.AppUserRepostory;
-import fr.ynov.dap.dap.models.CalendarResponse;
-import fr.ynov.dap.dap.models.GmailResponse;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepostory;
+import fr.ynov.dap.models.CalendarResponse;
 
 /**
  * The Class CalendarController.
@@ -69,10 +65,8 @@ public class CalendarController {
 		if(events.get(0) != null) {
 			output = events.get(0);
 			for(int i=0; i<events.size(); i++) {
-				if(events.size()>1) {	
-					if(events.get(i).getStart().before(output.getStart())) {
-						output = events.get(i);
-					}
+				if(events.size()>1 && events.get(i).getStart().before(output.getStart())) {	
+					output = events.get(i);
 				}	
 			}
 		}

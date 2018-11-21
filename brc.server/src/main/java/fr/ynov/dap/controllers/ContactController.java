@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.controllers;
+package fr.ynov.dap.controllers;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.ynov.dap.dap.ContactService;
-import fr.ynov.dap.dap.models.ContactResponse;
+import fr.ynov.dap.models.ContactResponse;
 
 /**
  * The Class ContactController.

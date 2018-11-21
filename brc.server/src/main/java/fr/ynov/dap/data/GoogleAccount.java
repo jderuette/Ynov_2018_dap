@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.data;
+package fr.ynov.dap.data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
