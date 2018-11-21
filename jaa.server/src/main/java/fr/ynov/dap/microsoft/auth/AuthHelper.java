@@ -3,6 +3,7 @@ package fr.ynov.dap.microsoft.auth;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -192,7 +193,7 @@ public final class AuthHelper {
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
             // Create and configure the Retrofit object
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(authority).client(client)
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                     .addConverterFactory(JacksonConverterFactory.create()).build();
 
             // Generate the token service

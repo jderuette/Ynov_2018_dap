@@ -1,5 +1,6 @@
 package fr.ynov.dap.microsoft.web;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fr.ynov.dap.microsoft.auth.AuthHelper;
 import fr.ynov.dap.microsoft.auth.IdToken;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
+import fr.ynov.dap.microsoft.services.OutlookService;
+import fr.ynov.dap.microsoft.services.OutlookServiceBuilder;
+import fr.ynov.dap.microsoft.services.OutlookUser;
 
 /**
  * @author adrij
@@ -41,6 +45,16 @@ public class AuthorizeController {
                 session.setAttribute("userConnected", true);
                 session.setAttribute("userName", idTokenObj.getName());
                 session.setAttribute("userTenantId", idTokenObj.getTenantId());
+
+             // Get user info
+                OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken(), null);
+                OutlookUser user;
+                try {
+                  user = outlookService.getCurrentUser().execute().body();
+                  session.setAttribute("userEmail", user.getMail());
+                } catch (IOException e) {
+                  session.setAttribute("error", e.getMessage());
+                }
 
                 model.addAttribute("authCode", code);
                 model.addAttribute("idToken", idToken);
