@@ -13,7 +13,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
-import fr.ynov.dap.model.CalendarEvent;
+import fr.ynov.dap.model.GoogleCalendarEvent;
 
 /**
  * Class to manage Calendar API.
@@ -37,7 +37,7 @@ public class CalendarService extends GoogleAPIService<Calendar> {
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      */
-    public CalendarEvent getNextEvent(final String accountName, final String userEmail)
+    public GoogleCalendarEvent getNextEvent(final String accountName, final String userEmail)
             throws GeneralSecurityException, IOException {
 
         Calendar calendarService = getService(accountName);
@@ -53,7 +53,7 @@ public class CalendarService extends GoogleAPIService<Calendar> {
 
             Event gEvent = items.get(0);
 
-            CalendarEvent evnt = new CalendarEvent(gEvent, userEmail);
+            GoogleCalendarEvent evnt = new GoogleCalendarEvent(gEvent, userEmail);
 
             return evnt;
 

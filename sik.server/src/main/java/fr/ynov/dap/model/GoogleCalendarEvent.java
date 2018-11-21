@@ -6,13 +6,15 @@ import java.util.Optional;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 
+import fr.ynov.dap.contract.ApiEvent;
+
 /**
  * Class to store an event.
  * Based on 'Proxy' design pattern.
  * @author Kévin Sibué
  *
  */
-public class CalendarEvent {
+public class GoogleCalendarEvent implements ApiEvent {
 
     /**
      * Event from Google Calendar API.
@@ -34,7 +36,7 @@ public class CalendarEvent {
      * @param evnt Current Event from Google API
      * @param userEmail Current user email
      */
-    public CalendarEvent(final Event evnt, final String userEmail) {
+    public GoogleCalendarEvent(final Event evnt, final String userEmail) {
         this.event = evnt;
         this.googleUserEmail = userEmail;
         if (googleUserEmail != null) {

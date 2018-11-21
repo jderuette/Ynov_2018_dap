@@ -4,6 +4,7 @@ import fr.ynov.dap.data.Message;
 import fr.ynov.dap.data.OutlookFolder;
 import fr.ynov.dap.data.OutlookUser;
 import fr.ynov.dap.data.PagedResult;
+import fr.ynov.dap.model.OutlookEvent;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -42,4 +43,9 @@ public interface OutlookApiService {
     @GET("/v1.0/me/mailfolders/{folderid}/messages")
     Call<PagedResult<Message>> getMessages(@Path("folderid") String folderId, @Query("$orderby") String orderBy,
             @Query("$select") String select, @Query("$top") Integer maxResults);
+
+    @GET("/v1.0/me/events")
+    Call<PagedResult<OutlookEvent>> getEvents(@Query("$orderby") String orderBy, @Query("$filter") String filter,
+            @Query("$select") String select, @Query("$top") Integer maxResults);
+
 }

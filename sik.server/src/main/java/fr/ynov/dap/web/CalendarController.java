@@ -22,7 +22,7 @@ import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.AccountService;
 import fr.ynov.dap.google.CalendarService;
-import fr.ynov.dap.model.CalendarEvent;
+import fr.ynov.dap.model.GoogleCalendarEvent;
 
 /**
  * Controller to manage every call to Google Calendar API.
@@ -79,7 +79,7 @@ public class CalendarController extends BaseController {
             throw new NoGoogleAccountException();
         }
 
-        ArrayList<CalendarEvent> events = new ArrayList<>();
+        ArrayList<GoogleCalendarEvent> events = new ArrayList<>();
 
         for (GoogleAccount gAcc : user.getGoogleAccounts()) {
 
@@ -87,7 +87,7 @@ public class CalendarController extends BaseController {
 
             Userinfoplus userInfo = accountService.getUserInfo(accountName);
 
-            CalendarEvent evnt = calendarService.getNextEvent(accountName, userInfo.getEmail());
+            GoogleCalendarEvent evnt = calendarService.getNextEvent(accountName, userInfo.getEmail());
 
             if (evnt != null) {
                 events.add(evnt);
@@ -101,7 +101,7 @@ public class CalendarController extends BaseController {
 
         Collections.sort(events, new SortByNearest());
 
-        CalendarEvent evnt = events.get(0);
+        GoogleCalendarEvent evnt = events.get(0);
 
         return new NextEventOutDto(evnt);
 
