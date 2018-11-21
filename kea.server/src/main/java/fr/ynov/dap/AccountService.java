@@ -33,7 +33,6 @@ public class AccountService extends GoogleService {
   public AccountService() throws InstantiationException, IllegalAccessException {
     super();
   }
-  
   /**
      * This method is called when the user needs to be authenticated and stores the token.
      * @param code encoded code with google Datas
@@ -76,7 +75,7 @@ public class AccountService extends GoogleService {
           "Error while trying" + " to connect Google Account");
     }
 
-    return "vous êtes connectés aux services YnovDap";
+    return "registered";
   }
 
   /**
@@ -126,7 +125,6 @@ public class AccountService extends GoogleService {
           "Error when trying to add" + " Google account");
       // onError(request, resp, responseUrl);
     }
-
     return decodeCode;
   }
 

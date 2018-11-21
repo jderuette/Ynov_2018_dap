@@ -2,6 +2,9 @@ package fr.ynov.dap;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -27,11 +30,11 @@ public class Config {
    * @throws GeneralSecurityException nothing special
    */
   public Config() throws IOException, GeneralSecurityException {
-    credentialsFolder = "/credentials.json";
-    clientSecretDir = GmailService.class.getResourceAsStream(credentialsFolder);
+    credentialsFolder = "C:/Users/Antoine/Documents/Antoine_Cours/eclipse/credentials/credentials.json";
+    clientSecretDir = new FileInputStream(new File(credentialsFolder));
     httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     applicationName = "HoC DaP";
-    tokensDirectoryPath  = "tokens";
+    tokensDirectoryPath  = "C:/Users/Antoine/Documents/Antoine_Cours/eclipse/credentials";
     openAuth2CallbackUrl = "/oAuth2Callback";
   }
 

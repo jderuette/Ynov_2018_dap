@@ -8,6 +8,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -100,8 +103,7 @@ public abstract class GoogleService {
    * @throws IOException nothing special
    */
   public GoogleAuthorizationCodeFlow getFlow() throws IOException {
-    InputStream in = GmailService.class
-        .getResourceAsStream(getCustomConfig().getCredentialsFolder());
+    InputStream in = new FileInputStream(getCustomConfig().getCredentialsFolder());
     this.clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
         new InputStreamReader(in));
     return new GoogleAuthorizationCodeFlow.Builder(
