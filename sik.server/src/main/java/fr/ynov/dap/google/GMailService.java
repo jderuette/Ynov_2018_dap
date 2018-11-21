@@ -64,7 +64,16 @@ public class GMailService extends GoogleAPIService<Gmail> {
 
     }
 
-    public Integer getNbUnreadEmails(AppUser user)
+    /**
+     * Number of unread email for a specifc user.
+     * @param user Dap User
+     * @return Number of unread email
+     * @throws NoGoogleAccountException No google account for current AppUser
+     * @throws NoConfigurationException No configuration found
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security exception
+     */
+    public Integer getNbUnreadEmails(final AppUser user)
             throws NoGoogleAccountException, NoConfigurationException, IOException, GeneralSecurityException {
 
         if (user.getGoogleAccounts().size() == 0) {

@@ -168,6 +168,13 @@ public class GoogleAccountService extends GoogleAPIService {
         return null;
     }
 
+    /**
+     * Get every stored credential from Google credential file.
+     * @return Google credentials
+     * @throws NoConfigurationException No configuration available
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security exception
+     */
     public final ArrayList<fr.ynov.dap.model.Credential> getStoredCredentials()
             throws NoConfigurationException, IOException, GeneralSecurityException {
 

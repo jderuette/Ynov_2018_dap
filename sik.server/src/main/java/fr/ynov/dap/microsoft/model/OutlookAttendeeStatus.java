@@ -7,6 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.ynov.dap.model.enumeration.AttendeeEventStatusEnum;
 import fr.ynov.dap.utils.StrUtils;
 
+/**
+ * Represent an attendee status from Outlook Calendar API.
+ * @author Kévin Sibué
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookAttendeeStatus {
 
@@ -17,6 +22,9 @@ public class OutlookAttendeeStatus {
      */
     private String response;
 
+    /**
+     * Store response time.
+     */
     private Date time;
 
     /**
@@ -47,6 +55,10 @@ public class OutlookAttendeeStatus {
         this.time = val;
     }
 
+    /**
+     * Get the current status.
+     * @return Current status
+     */
     public AttendeeEventStatusEnum getEventStatus() {
 
         if (StrUtils.isNullOrEmpty(getReponse())) {

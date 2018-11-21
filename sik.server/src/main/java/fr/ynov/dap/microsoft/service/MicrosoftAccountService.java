@@ -39,6 +39,11 @@ public class MicrosoftAccountService extends OutlookAPIService {
 
     }
 
+    /**
+     * Get every credentials stored in database.
+     * @param repo token repository
+     * @return List of every Microsoft credential stored in database
+     */
     public final ArrayList<Credential> getStoredCredentials(final TokenRepository repo) {
 
         if (repo == null) {

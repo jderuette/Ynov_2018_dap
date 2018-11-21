@@ -85,6 +85,15 @@ public class CalendarService extends GoogleAPIService<Calendar> {
 
     }
 
+    /**
+     * Get next user's event.
+     * @param user DaP User
+     * @return User's next event
+     * @throws NoGoogleAccountException No google account found for the current user.
+     * @throws NoNextEventException No next event for the current user.
+     * @throws GeneralSecurityException Security exception
+     * @throws IOException Exception
+     */
     public GoogleCalendarEvent getNextEvent(final AppUser user)
             throws NoGoogleAccountException, NoNextEventException, GeneralSecurityException, IOException {
 

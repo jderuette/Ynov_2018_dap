@@ -191,7 +191,15 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
-    private final Integer getNumberOfContacts(final String tenantId, final String email, final TokenResponse tokens)
+    /**
+     * Get number of contacts for a specific user.
+     * @param tenantId User tenant id.
+     * @param email User email.
+     * @param tokens User token
+     * @return Number of contact for current Microsoft account
+     * @throws IOException Exception
+     */
+    private Integer getNumberOfContacts(final String tenantId, final String email, final TokenResponse tokens)
             throws IOException {
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
@@ -217,6 +225,13 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
+    /**
+     * Get number of contacts for every Microsoft account of a Dap User.
+     * @param user Dap User to use
+     * @return Number of contacts
+     * @throws IOException Exception
+     * @throws NoMicrosoftAccountException Thrown when the current DaP User haven't any MS account
+     */
     public final Integer getNumberOfContacts(final AppUser user) throws IOException, NoMicrosoftAccountException {
 
         if (user.getMicrosoftAccounts().size() == 0) {

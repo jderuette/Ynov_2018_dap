@@ -29,6 +29,9 @@ public class Credential {
      */
     private long expirationTime;
 
+    /**
+     * Type a current credential. e.g. Microsoft, Google, ...
+     */
     private CredentialTypeEnum type;
 
     /**
@@ -95,10 +98,10 @@ public class Credential {
     }
 
     /**
-     * @param type the type to set
+     * @param val the type to set
      */
-    public void setType(CredentialTypeEnum type) {
-        this.type = type;
+    public void setType(final CredentialTypeEnum val) {
+        this.type = val;
     }
 
 }

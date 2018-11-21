@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.ynov.dap.Constants;
+
 /**
  * IdToken from Microsoft services.
  * @author Kévin Sibué
@@ -139,15 +141,15 @@ public class IdToken {
      * @return Unix Date
      */
     private Date getUnixEpochAsDate(final long epoch) {
-        return new Date(epoch * 1000);
+        return new Date(epoch * Constants.SECOND_TO_MILLISECOND);
     }
 
     /**
      * Test if token is valid.
-     * @param nonce Nonce
+     * @param nonc Nonce
      * @return Validity of token
      */
-    private boolean isValid(final String nonce) {
+    private boolean isValid(final String nonc) {
         // This method does some basic validation
         // For more information on validation of ID tokens, see
         // https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#validating-tokens
@@ -161,7 +163,7 @@ public class IdToken {
         }
 
         // Check nonce
-        if (!nonce.equals(this.getNonce())) {
+        if (!nonc.equals(this.getNonce())) {
             // Nonce mismatch
             return false;
         }
@@ -173,9 +175,10 @@ public class IdToken {
      * Parse encoded token.
      * @param encodedToken EncodedToken
      * @param nonce Nonce
-     * @returnId Id Token
+     * @return Id Token
      */
     public static IdToken parseEncodedToken(final String encodedToken, final String nonce) {
+
         // Encoded token is in three parts, separated by '.'
         String[] tokenParts = encodedToken.split("\\.");
 
@@ -186,6 +189,7 @@ public class IdToken {
 
         ObjectMapper mapper = new ObjectMapper();
         IdToken newToken = null;
+
         try {
             newToken = mapper.readValue(decodedBytes, IdToken.class);
             if (!newToken.isValid(nonce)) {
@@ -194,7 +198,9 @@ public class IdToken {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return newToken;
+
     }
 
     /**
@@ -205,10 +211,10 @@ public class IdToken {
     }
 
     /**
-     * @param email the email to set
+     * @param val the email to set
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(final String val) {
+        this.email = val;
     }
 
 }

@@ -4,56 +4,107 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Represent a contact from Microsoft Graph API.
+ * @author Kévin Sibué
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookContact {
 
+    /**
+     * Store Contact id.
+     */
     private String id;
 
+    /**
+     * Store given name.
+     */
     private String givenName;
 
+    /**
+     * Store surname.
+     */
     private String surname;
 
+    /**
+     * Store company name.
+     */
     private String companyName;
 
+    /**
+     * Store email addresses.
+     */
     private ArrayList<EmailAddress> emailAddresses;
 
+    /**
+     * @return the id
+     */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * @param val the id to set
+     */
+    public void setId(final String val) {
+        this.id = val;
     }
 
+    /**
+     * @return the givenName
+     */
     public String getGivenName() {
         return givenName;
     }
 
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
+    /**
+     * @param val the givenName to set
+     */
+    public void setGivenName(final String val) {
+        this.givenName = val;
     }
 
+    /**
+     * @return the surname
+     */
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    /**
+     * @param val the surname to set
+     */
+    public void setSurname(final String val) {
+        this.surname = val;
     }
 
+    /**
+     * @return the companyName
+     */
     public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    /**
+     * @param val the companyName to set
+     */
+    public void setCompanyName(final String val) {
+        this.companyName = val;
     }
 
+    /**
+     * @return the emailAddresses
+     */
     public ArrayList<EmailAddress> getEmailAddresses() {
         return emailAddresses;
     }
 
-    public void setEmailAddresses(ArrayList<EmailAddress> emailAddresses) {
-        this.emailAddresses = emailAddresses;
+    /**
+     * @param val the emailAddresses to set
+     */
+    public void setEmailAddresses(final ArrayList<EmailAddress> val) {
+        this.emailAddresses = val;
     }
+
 }

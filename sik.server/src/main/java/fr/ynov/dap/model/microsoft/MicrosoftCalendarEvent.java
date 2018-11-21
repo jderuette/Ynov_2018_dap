@@ -8,6 +8,12 @@ import fr.ynov.dap.microsoft.model.OutlookEvent;
 import fr.ynov.dap.model.enumeration.AttendeeEventStatusEnum;
 import fr.ynov.dap.utils.StrUtils;
 
+/**
+ * This class implement Proxy pattern.
+ * It allow to manage Outlook event.
+ * @author Kévin Sibué
+ *
+ */
 public class MicrosoftCalendarEvent implements ApiEvent {
 
     /**
@@ -25,30 +31,51 @@ public class MicrosoftCalendarEvent implements ApiEvent {
      */
     private AttendeeEventStatusEnum currentUserStatus;
 
-    public MicrosoftCalendarEvent(final OutlookEvent event, final String email) {
-        this.event = event;
-        this.userMail = email;
+    /**
+     * Default constructor.
+     * @param evt Outlook event
+     * @param mail User email
+     */
+    public MicrosoftCalendarEvent(final OutlookEvent evt, final String mail) {
+        this.event = evt;
+        this.userMail = mail;
     }
 
+    /**
+     * Get Outlook event.
+     * @return Event
+     */
     public OutlookEvent getEvent() {
         return event;
     }
 
+    /**
+     * Return starting date.
+     */
     @Override
     public Date getStartDate() {
         return event.getStart().getDateTime();
     }
 
+    /**
+     * Return ending date.
+     */
     @Override
     public Date getEndDate() {
         return event.getEnd().getDateTime();
     }
 
+    /**
+     * Return event subject.
+     */
     @Override
     public String getSubject() {
         return event.getSubject();
     }
 
+    /**
+     * Return current user status for linked event.
+     */
     @Override
     public AttendeeEventStatusEnum getCurrentUserStatus() {
         if (StrUtils.isNullOrEmpty(userMail)) {

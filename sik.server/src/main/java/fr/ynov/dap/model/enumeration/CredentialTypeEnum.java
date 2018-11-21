@@ -1,9 +1,20 @@
 package fr.ynov.dap.model.enumeration;
 
+/**
+ * This enum allow to describe a credential.
+ * @author Kévin Sibué
+ *
+ */
 public enum CredentialTypeEnum {
 
+    /**
+     * Credential from Google Api.
+     */
     GOOGLE(1),
 
+    /**
+     * Credential from Microsoft Api.
+     */
     MICROSOFT(2);
 
     /**

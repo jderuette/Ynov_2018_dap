@@ -1,5 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport"
@@ -13,9 +12,14 @@
 		<title th:text="#{admin.title}">Data Access Project Admin</title>
 	</head>
 	<body>
-		<div th:include="fragments/navigation :: nav"/>
+		<div th:replace="fragments/navigation"></div>
 		<div class="container-fluid">
-			<div layout:fragment="body"></div>
+			<div class="alert alert-danger" role="alert">
+  				Votre utilisateur n'existe pas ! Merci de réessayer !
+			</div>
+			<div th:replace="${fragment}">
+				<h1>Body</h1>
+			</div>
 		</div>		
 	</body>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

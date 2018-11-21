@@ -42,12 +42,23 @@ public class MailController extends BaseController {
     @Autowired
     private OutlookService outlookService;
 
+    /**
+     * Get number of unread email from every account (ms, google, ...).
+     * @param userId Current user id
+     * @return UnreadMailOutDto instance
+     * @throws UserNotFoundException No user found for this user id
+     * @throws NoConfigurationException No configuration available
+     * @throws NoGoogleAccountException No google account found for this user
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security exception
+     * @throws NoMicrosoftAccountException No microsoft account found for this user
+     */
     @RequestMapping("/nbUnread/{userId}")
     public final UnreadMailOutDto getNumberOfUnreadMessage(@PathVariable("userId") final String userId)
             throws UserNotFoundException, NoConfigurationException, NoGoogleAccountException, IOException,
             GeneralSecurityException, NoMicrosoftAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer googleNbUnreadMail = gmailService.getNbUnreadEmails(user);
 
@@ -72,7 +83,7 @@ public class MailController extends BaseController {
             throws NoConfigurationException, IOException, GeneralSecurityException, UserNotFoundException,
             NoGoogleAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer nbUnreadMail = gmailService.getNbUnreadEmails(user);
 
@@ -96,7 +107,7 @@ public class MailController extends BaseController {
             final HttpServletRequest request) throws UserNotFoundException, NoMicrosoftAccountException,
             NoConfigurationException, IOException, GeneralSecurityException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer numberOfUnreadMails = outlookService.getNbUnreadEmails(user);
 

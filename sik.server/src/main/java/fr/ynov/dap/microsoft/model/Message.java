@@ -5,7 +5,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Message.
+ * Message from Graph API.
  * @author Kévin Sibué
  *
  */
@@ -122,7 +122,7 @@ public class Message {
         this.subject = val;
     }
 
-    /** 
+    /**
      * Return body preview.
      * @return Body
      */

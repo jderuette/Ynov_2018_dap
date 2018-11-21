@@ -29,7 +29,7 @@ public class ContactService extends GoogleAPIService<PeopleService> {
     }
 
     /**
-     * Get next user's event.
+     * Get user number of contact.
      * @param accountName Current user id
      * @return User's number of contacts linked by userId
      * @throws IOException Exception
@@ -54,7 +54,15 @@ public class ContactService extends GoogleAPIService<PeopleService> {
 
     }
 
-    public Integer getNumberOfContacts(AppUser user)
+    /**
+     * Get user number of contact.
+     * @param user DaP user
+     * @return Number of contacts
+     * @throws NoGoogleAccountException No google account found
+     * @throws GeneralSecurityException Security exception
+     * @throws IOException Exception
+     */
+    public Integer getNumberOfContacts(final AppUser user)
             throws NoGoogleAccountException, GeneralSecurityException, IOException {
 
         if (user.getGoogleAccounts().size() == 0) {

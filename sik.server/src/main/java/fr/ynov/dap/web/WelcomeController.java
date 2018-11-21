@@ -45,7 +45,7 @@ public class WelcomeController extends BaseController {
     public String welcome(@PathVariable final String userId, final ModelMap model) throws NoConfigurationException,
             IOException, GeneralSecurityException, UserNotFoundException, NoGoogleAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer nbMail = gmailService.getNbUnreadEmails(user);
 
@@ -57,7 +57,7 @@ public class WelcomeController extends BaseController {
     }
 
     @Override
-    protected String getClassName() {
+    protected final String getClassName() {
         return WelcomeController.class.getName();
     }
 

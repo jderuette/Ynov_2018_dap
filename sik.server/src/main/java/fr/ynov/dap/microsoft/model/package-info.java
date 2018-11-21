@@ -1,4 +1,5 @@
 /**
+ * Every class that represent object from Microsoft Graph API.
  * @author kevinsibue
  *
  */

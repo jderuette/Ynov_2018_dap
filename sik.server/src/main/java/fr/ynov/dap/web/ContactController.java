@@ -3,8 +3,6 @@ package fr.ynov.dap.web;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,12 +40,22 @@ public class ContactController extends BaseController {
     @Autowired
     private OutlookService outlookService;
 
+    /**
+     * Get number of contacts from every account (ms, google, ...).
+     * @param userId User id
+     * @return NumberContactOutDto instance
+     * @throws GeneralSecurityException Security exception
+     * @throws IOException Exception
+     * @throws UserNotFoundException No user found for this user id
+     * @throws NoGoogleAccountException No google account found for this user
+     * @throws NoMicrosoftAccountException No microsoft found fot this user
+     */
     @RequestMapping("/nbContacts/{userId}")
     public final NumberContactOutDto getNumberOfContacts(@PathVariable("userId") final String userId)
             throws GeneralSecurityException, IOException, UserNotFoundException, NoGoogleAccountException,
             NoMicrosoftAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer googleNbContacts = contactService.getNumberOfContacts(user);
 
@@ -58,7 +66,7 @@ public class ContactController extends BaseController {
     }
 
     /**
-     * Endpoint to get the user's number of contact.
+     * Endpoint to get the user's number of contact from every Google account.
      * @param userId User's Id
      * @return Number of contact for user linked by userId. JSON Formatted.
      * @throws IOException Exception
@@ -70,7 +78,7 @@ public class ContactController extends BaseController {
     public final NumberContactOutDto getGoogleNumberOfContacts(@PathVariable("userId") final String userId)
             throws GeneralSecurityException, IOException, UserNotFoundException, NoGoogleAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer nbContacts = contactService.getNumberOfContacts(user);
 
@@ -78,12 +86,20 @@ public class ContactController extends BaseController {
 
     }
 
+    /**
+     * Endpoint to get the user's number of contact from every Microsoft accounts.
+     * @param userId User's Id
+     * @return NumberContactOutDto instance
+     * @throws UserNotFoundException No user found
+     * @throws NoMicrosoftAccountException No microsoft account linked with this user
+     * @throws NoNextEventException no next event for current user on microsoft
+     * @throws IOException exception
+     */
     @RequestMapping("/microsoft/nbContacts/{userId}")
-    public NumberContactOutDto getMicrosoftNumberOfContacts(@PathVariable("userId") final String userId,
-            final HttpServletRequest request)
+    public NumberContactOutDto getMicrosoftNumberOfContacts(@PathVariable("userId") final String userId)
             throws UserNotFoundException, NoMicrosoftAccountException, NoNextEventException, IOException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         Integer nbOfContacts = outlookService.getNumberOfContacts(user);
 

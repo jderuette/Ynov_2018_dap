@@ -2,6 +2,11 @@ package fr.ynov.dap.microsoft.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Represent an attendee from Microsoft Graph API.
+ * @author Kévin Sibué
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookAttendee {
 

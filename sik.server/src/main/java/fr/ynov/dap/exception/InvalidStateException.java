@@ -23,7 +23,7 @@ public class InvalidStateException extends Exception {
 
     /**
      * Default constructor.
-     * @param token used but invalid
+     * @param state used but invalid
      */
     public InvalidStateException(final UUID state) {
         super("Invalid state : " + state);

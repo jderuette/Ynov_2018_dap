@@ -49,12 +49,23 @@ public class CalendarController extends BaseController {
     @Autowired
     private OutlookService outlookService;
 
+    /**
+     * Get next event for a specific user from every linked account (e.g. microsoft, google, ...)
+     * @param userId User id
+     * @return NextEventOutDto instance
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Thrown when a security exception occurred.
+     * @throws UserNotFoundException Thrown when user is not found
+     * @throws NoGoogleAccountException Thrown when user haven't any google account
+     * @throws NoMicrosoftAccountException Thrown when user haven't any microsoft account
+     * @throws NoNextEventException Thrown when user haven't any next event
+     */
     @RequestMapping("/nextEvent/{userId}")
     public final NextEventOutDto getNextEvent(@PathVariable("userId") final String userId)
             throws UserNotFoundException, NoGoogleAccountException, NoNextEventException, GeneralSecurityException,
             IOException, NoMicrosoftAccountException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         List<ApiEvent> events = new ArrayList<>();
 
@@ -93,7 +104,7 @@ public class CalendarController extends BaseController {
             throws GeneralSecurityException, IOException, UserNotFoundException, NoGoogleAccountException,
             NoNextEventException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         GoogleCalendarEvent evnt = calendarService.getNextEvent(user);
 
@@ -101,12 +112,22 @@ public class CalendarController extends BaseController {
 
     }
 
+    /**
+     * Get next event for microsoft account of a user.
+     * @param userId User id
+     * @param request http request
+     * @return NextEventOutDto instance
+     * @throws UserNotFoundException User unknow
+     * @throws NoMicrosoftAccountException No microsoft account for specified user
+     * @throws NoNextEventException No next event found for current user
+     * @throws IOException Exception
+     */
     @RequestMapping("/microsoft/nextEvent/{userId}")
     public NextEventOutDto getMicrosoftNextEvent(@PathVariable("userId") final String userId,
             final HttpServletRequest request)
             throws UserNotFoundException, NoMicrosoftAccountException, NoNextEventException, IOException {
 
-        AppUser user = GetUserById(userId);
+        AppUser user = getUserById(userId);
 
         MicrosoftCalendarEvent evnt = outlookService.getNextEvent(user);
 

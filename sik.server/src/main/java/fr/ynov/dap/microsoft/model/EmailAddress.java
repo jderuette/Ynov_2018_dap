@@ -2,6 +2,11 @@ package fr.ynov.dap.microsoft.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Represent an email address from Microsoft Graph API.
+ * @author Kévin Sibué
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailAddress {
 
@@ -33,6 +38,7 @@ public class EmailAddress {
 
     /**
      * Return addresses.
+     * @return Adresse
      */
     public String getAddress() {
         return address;

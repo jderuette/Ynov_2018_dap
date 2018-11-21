@@ -22,7 +22,7 @@ public class SessionOutDto {
     /**
      * @param val the logged to set
      */
-    public void setLogged(Boolean val) {
+    public void setLogged(final Boolean val) {
         this.logged = val;
     }
 
