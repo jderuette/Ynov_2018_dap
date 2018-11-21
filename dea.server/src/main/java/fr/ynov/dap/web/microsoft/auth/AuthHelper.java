@@ -5,6 +5,7 @@ package fr.ynov.dap.web.microsoft.auth;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.UUID;
 import org.springframework.web.util.UriComponentsBuilder;

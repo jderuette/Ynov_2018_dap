@@ -1,16 +1,29 @@
 
-<header th:include="base  :: header"></header>
+<div th:if="${error != null}" class="alert alert-danger">Error:
+	${error}</div>
 
-<div th:unless="${error == null}" th:text="${'Error: ' + error}"
-	class="alert alert-danger"></div>
-
-
-<pre>
-	<code>
-		<p th:text="${'Auth code: ' + session.authCode}"></p>
-		
-		<p th:text="${'ID token: ' + session.idToken}"></p>
-		
-		<p th:text="${'Access token: ' + session.accessToken}"></p>
-	</code>
-</pre>
+<table class="table">
+	<caption>Inbox</caption>
+	<thead>
+		<tr>
+			<th><span class="glyphicon glyphicon-envelope"></span></th>
+			<th>From</th>
+			<th>Subject</th>
+			<th>Received</th>
+			<th>Preview</th>
+		</tr>
+	</thead>
+	<tbody>
+		<th:block th:each="message : ${messages}">
+			<tr class="${message.isRead == true ? '' : 'info'}">
+				<td><th:if test="${message.isRead == false}">
+						<span class="glyphicon glyphicon-envelope"></span>
+					</th:if></td>
+				<td th:text="${message.from.emailAddress.name}" /></td>
+				<td th:text="${message.subject}" /></td>
+				<td th:text="${message.receivedDateTime}" /></td>
+				<td th:text="${message.bodyPreview}" /></td>
+			</tr>
+		</th:block>
+	</tbody>
+</table>
