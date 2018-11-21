@@ -78,7 +78,7 @@ public class AccountController extends BaseController {
      * @param userKey user Key
      * @return Html page
      */
-    @RequestMapping("/account/add/{userKey}")
+    @RequestMapping(value = "/account/add/{userKey}", method = RequestMethod.POST)
     public AppUser addNewUser(@PathVariable final String userKey) {
 
         AppUser newUser = new AppUser();
@@ -104,7 +104,7 @@ public class AccountController extends BaseController {
      * @throws AddAccountFailedException Exception
      * @throws IOException Exception
      */
-    @RequestMapping("/account/google/add/{gAccountName}/{userId}")
+    @RequestMapping(value = "/account/google/add/{gAccountName}/{userId}", method = RequestMethod.POST)
     public String addGoogleAccount(@PathVariable final String gAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
             throws GeneralSecurityException, UserNotFoundException, AddAccountFailedException, IOException {
@@ -178,7 +178,7 @@ public class AccountController extends BaseController {
      * @throws UserNotFoundException Exception
      * @throws IOException Exception
      */
-    @RequestMapping("/account/microsoft/add/{msAccountName}/{userId}")
+    @RequestMapping(value = "/account/microsoft/add/{msAccountName}/{userId}", method = RequestMethod.POST)
     public void addMicrosoftAccount(@PathVariable final String msAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
             throws UserNotFoundException, IOException {

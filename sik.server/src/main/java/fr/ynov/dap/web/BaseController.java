@@ -67,11 +67,15 @@ public abstract class BaseController {
     }
 
     protected AppUser GetUserById(final String userId) throws UserNotFoundException {
+
         AppUser user = appUserRepository.findByUserKey(userId);
+
         if (user == null) {
             throw new UserNotFoundException();
         }
+
         return user;
+
     }
 
 }

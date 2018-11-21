@@ -52,7 +52,7 @@ public class Message {
 
     /**
      * set id.
-     * @param val
+     * @param val id value
      */
     public void setId(final String val) {
         this.id = val;

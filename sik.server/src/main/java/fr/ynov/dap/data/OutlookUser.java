@@ -27,6 +27,7 @@ public class OutlookUser {
 
     /**
      * Return user id.
+     * @return user id
      */
     public String getId() {
         return id;

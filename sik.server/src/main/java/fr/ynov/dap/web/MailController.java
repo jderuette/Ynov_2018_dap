@@ -42,6 +42,7 @@ public class MailController extends BaseController {
     @Autowired
     private OutlookService outlookService;
 
+    @RequestMapping("/nbUnread/{userId}")
     public final UnreadMailOutDto getNumberOfUnreadMessage(@PathVariable("userId") final String userId)
             throws UserNotFoundException, NoConfigurationException, NoGoogleAccountException, IOException,
             GeneralSecurityException, NoMicrosoftAccountException {

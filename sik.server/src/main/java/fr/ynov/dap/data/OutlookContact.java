@@ -8,9 +8,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class OutlookContact {
 
     private String id;
+
     private String givenName;
+
     private String surname;
+
     private String companyName;
+
     private ArrayList<EmailAddress> emailAddresses;
 
     public String getId() {

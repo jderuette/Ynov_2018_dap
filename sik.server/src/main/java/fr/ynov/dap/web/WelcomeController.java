@@ -9,7 +9,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.exception.NoConfigurationException;
+import fr.ynov.dap.exception.NoGoogleAccountException;
+import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.GMailService;
 
 /**
@@ -19,7 +22,7 @@ import fr.ynov.dap.google.GMailService;
  */
 @Controller
 @RequestMapping("/welcome")
-public class WelcomeController {
+public class WelcomeController extends BaseController {
 
     /**
      * Gmail service instance.
@@ -35,18 +38,27 @@ public class WelcomeController {
      * @throws GeneralSecurityException Exception
      * @throws IOException Exception
      * @throws NoConfigurationException Exception
+     * @throws UserNotFoundException Exception
+     * @throws NoGoogleAccountException Exception
      */
     @RequestMapping("/{userId}")
-    public String welcome(@PathVariable final String userId, final ModelMap model)
-            throws NoConfigurationException, IOException, GeneralSecurityException {
+    public String welcome(@PathVariable final String userId, final ModelMap model) throws NoConfigurationException,
+            IOException, GeneralSecurityException, UserNotFoundException, NoGoogleAccountException {
 
-        Integer nbMail = gmailService.getNbUnreadEmails(userId);
+        AppUser user = GetUserById(userId);
+
+        Integer nbMail = gmailService.getNbUnreadEmails(user);
 
         Integer nbunreadEmails = nbMail;
         model.addAttribute("nbEmails", nbunreadEmails);
 
         return "welcome";
 
+    }
+
+    @Override
+    protected String getClassName() {
+        return WelcomeController.class.getName();
     }
 
 }
