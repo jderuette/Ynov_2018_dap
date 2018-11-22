@@ -47,6 +47,25 @@ public class AccountService extends HttpService {
 
     }
 
+    /**
+     * Add new microsoft account to server.
+     * @param userId Current user id
+     * @param accountName Current user account name
+     * @throws IOException Exception
+     * @throws ServerSideException Exception thrown when server send an error
+     * @throws URISyntaxException Exception thrown when uri is invalid
+     */
+    public void addMicrosoftAccount(final String accountName, final String userId)
+            throws IOException, ServerSideException, URISyntaxException {
+
+        String url = getUrl() + "/microsoft/add/" + accountName + "/" + userId;
+
+        URI redirectUrl = new URI(url);
+
+        Desktop.getDesktop().browse(redirectUrl);
+
+    }
+
     @Override
     protected final String getUrl() {
         return super.getUrl() + "/account";

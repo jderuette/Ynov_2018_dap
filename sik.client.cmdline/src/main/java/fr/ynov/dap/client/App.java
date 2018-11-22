@@ -12,9 +12,7 @@ import fr.ynov.dap.client.dto.in.UnreadMailInDto;
 import fr.ynov.dap.client.exception.ServerSideException;
 import fr.ynov.dap.client.model.AttendeeEventStatusEnum;
 import fr.ynov.dap.client.service.AccountService;
-import fr.ynov.dap.client.service.CalendarService;
-import fr.ynov.dap.client.service.ContactService;
-import fr.ynov.dap.client.service.GmailService;
+import fr.ynov.dap.client.service.DaPAPIService;
 
 /**
  * Application launcher class.
@@ -88,11 +86,13 @@ public final class App {
      */
     private static void showUserInformations(final String userId) {
 
-        showNumberOfUnreadMessage(userId);
+        DaPAPIService dapService = new DaPAPIService();
 
-        showNextEvent(userId);
+        showNumberOfUnreadMessage(dapService, userId);
 
-        showNumberOfContact(userId);
+        showNextEvent(dapService, userId);
+
+        showNumberOfContact(dapService, userId);
 
     }
 
@@ -172,16 +172,49 @@ public final class App {
     }
 
     /**
-     * Use GmailService to provide number of unread mail for current logged user.
-     * @param userId User id of current logged user.
+     * Use AccountService to log new user.
+     * @param userId User id of user.
+     * @param accountName User account name.
+     * @throws URISyntaxException Exception
+     * @throws ServerSideException Exception returned by server
+     * @throws IOException Exception
      */
-    private static void showNumberOfUnreadMessage(final String userId) {
+    private static void addMicrosoftAccount(final String accountName, final String userId) {
 
-        GmailService gmailSrv = new GmailService();
+        AccountService accSrv = new AccountService();
 
         try {
 
-            UnreadMailInDto result = gmailSrv.getUnreadMail(userId);
+            accSrv.addMicrosoftAccount(accountName, userId);
+
+        } catch (URISyntaxException e) {
+
+            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e,
+                    e.getMessage());
+
+        } catch (IOException e) {
+
+            writeDefaultError(e.getMessage());
+
+        } catch (ServerSideException e) {
+
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
+                    e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * Use GmailService to provide number of unread mail for current logged user.
+     * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
+     */
+    private static void showNumberOfUnreadMessage(final DaPAPIService dapService, final String userId) {
+
+        try {
+
+            UnreadMailInDto result = dapService.getUnreadMail(userId);
 
             writeLine("You have %d unread messages.", result.getNumberOfUnreadMail());
 
@@ -201,14 +234,13 @@ public final class App {
     /**
      * Use CalendarService to provide next event for current logged user.
      * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
      */
-    private static void showNextEvent(final String userId) {
-
-        CalendarService calendarSrv = new CalendarService();
+    private static void showNextEvent(final DaPAPIService dapService, final String userId) {
 
         try {
 
-            NextEventInDto result = calendarSrv.getNextEvent(userId);
+            NextEventInDto result = dapService.getNextEvent(userId);
 
             writeLine("Next event is %s.", result.getEventSummary());
 
@@ -250,14 +282,13 @@ public final class App {
     /**
      * Use ContactService to provide number of contact for current logged user.
      * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
      */
-    private static void showNumberOfContact(final String userId) {
-
-        ContactService contactSrv = new ContactService();
+    private static void showNumberOfContact(final DaPAPIService dapService, final String userId) {
 
         try {
 
-            NumberContactInDto result = contactSrv.getNumberOfContact(userId);
+            NumberContactInDto result = dapService.getNumberOfContact(userId);
 
             writeLine("You have %d contacts.", result.getNumberOfContacts());
 
