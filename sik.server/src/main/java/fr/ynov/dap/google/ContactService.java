@@ -10,7 +10,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
-import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.model.AppUser;
 import fr.ynov.dap.model.google.GoogleAccount;
 
@@ -58,15 +57,13 @@ public class ContactService extends GoogleAPIService<PeopleService> {
      * Get user number of contact.
      * @param user DaP user
      * @return Number of contacts
-     * @throws NoGoogleAccountException No google account found
      * @throws GeneralSecurityException Security exception
      * @throws IOException Exception
      */
-    public Integer getNumberOfContacts(final AppUser user)
-            throws NoGoogleAccountException, GeneralSecurityException, IOException {
+    public Integer getNumberOfContacts(final AppUser user) throws GeneralSecurityException, IOException {
 
         if (user.getGoogleAccounts().size() == 0) {
-            throw new NoGoogleAccountException();
+            return 0;
         }
 
         Integer nbContacts = 0;

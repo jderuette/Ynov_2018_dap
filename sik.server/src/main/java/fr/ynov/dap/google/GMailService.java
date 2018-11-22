@@ -12,7 +12,6 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 
 import fr.ynov.dap.exception.NoConfigurationException;
-import fr.ynov.dap.exception.NoGoogleAccountException;
 import fr.ynov.dap.model.AppUser;
 import fr.ynov.dap.model.google.GoogleAccount;
 
@@ -68,16 +67,15 @@ public class GMailService extends GoogleAPIService<Gmail> {
      * Number of unread email for a specifc user.
      * @param user Dap User
      * @return Number of unread email
-     * @throws NoGoogleAccountException No google account for current AppUser
      * @throws NoConfigurationException No configuration found
      * @throws IOException Exception
      * @throws GeneralSecurityException Security exception
      */
     public Integer getNbUnreadEmails(final AppUser user)
-            throws NoGoogleAccountException, NoConfigurationException, IOException, GeneralSecurityException {
+            throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (user.getGoogleAccounts().size() == 0) {
-            throw new NoGoogleAccountException();
+            return 0;
         }
 
         Integer nbUnreadMail = 0;

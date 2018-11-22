@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.exception.NoConfigurationException;
-import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.microsoft.builder.OutlookServiceBuilder;
 import fr.ynov.dap.microsoft.contract.OutlookApiService;
@@ -40,22 +39,28 @@ public class OutlookService extends OutlookAPIService {
 
     /**
      * Get number of unread email for a user.
-     * @param tenantId Tenant Id
-     * @param email Email id
-     * @param tokens Tokens
+     * @param msAcc User's microsoft account
      * @return Number of unread email for user linked userId
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when configuration is missing
      */
-    private Integer getNbUnreadEmails(final String tenantId, final String email, final TokenResponse tokens)
+    private Integer getNbUnreadEmails(final MicrosoftAccount msAcc)
             throws NoConfigurationException, IOException, GeneralSecurityException {
+
+        if (msAcc == null) {
+            return 0;
+        }
+
+        String email = msAcc.getEmail();
+        String tenantId = msAcc.getTenantId();
+        TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
             return 0;
         }
 
-        TokenResponse newTokens = OutlookAPIService.ensureTokens(tokens, tenantId);
+        TokenResponse newTokens = getToken(msAcc);
 
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(newTokens.getAccessToken(), email);
 
@@ -72,28 +77,23 @@ public class OutlookService extends OutlookAPIService {
     /**
      * Get number of email for every Microsoft account of a user.
      * @param user Dap User to use
-     * @throws NoMicrosoftAccountException Fired when the user passed on params haven't any Microsoft account registered
      * @throws NoConfigurationException Thrown when configuration is missing
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @return Number of unread email
      */
     public final Integer getNbUnreadEmails(final AppUser user)
-            throws NoMicrosoftAccountException, NoConfigurationException, IOException, GeneralSecurityException {
+            throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-            throw new NoMicrosoftAccountException();
+            return 0;
         }
 
         Integer numberOfUnreadMails = 0;
 
         for (MicrosoftAccount account : user.getMicrosoftAccounts()) {
 
-            String email = account.getEmail();
-            String tenantId = account.getTenantId();
-            TokenResponse tokens = account.getToken();
-
-            numberOfUnreadMails += getNbUnreadEmails(tenantId, email, tokens);
+            numberOfUnreadMails += getNbUnreadEmails(account);
 
         }
 
@@ -103,20 +103,25 @@ public class OutlookService extends OutlookAPIService {
 
     /**
      * Get next event of a specific Microsoft account.
-     * @param tenantId Microsoft user tenant id
-     * @param email Microsoft account email
-     * @param tokens Token of Microsoft account
+     * @param msAcc User's microsoft account
      * @return Next event of the current Microsoft account
      * @throws IOException Exception
      */
-    private MicrosoftCalendarEvent getNextEvent(final String tenantId, final String email, final TokenResponse tokens)
-            throws IOException {
+    private MicrosoftCalendarEvent getNextEvent(final MicrosoftAccount msAcc) throws IOException {
+
+        if (msAcc == null) {
+            return null;
+        }
+
+        String email = msAcc.getEmail();
+        String tenantId = msAcc.getTenantId();
+        TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
             return null;
         }
 
-        TokenResponse newTokens = OutlookAPIService.ensureTokens(tokens, tenantId);
+        TokenResponse newTokens = getToken(msAcc);
 
         String filter = "start/dateTime ge '" + Instant.now().toString() + "'";
         String sort = "start/dateTime ASC";
@@ -154,24 +159,18 @@ public class OutlookService extends OutlookAPIService {
      * @return Next event of the current Microsoft account
      * @throws IOException Exception
      * @throws NoNextEventException If there no next event
-     * @throws NoMicrosoftAccountException If the user haven't any Microsoft account linked.
      */
-    public MicrosoftCalendarEvent getNextEvent(final AppUser user)
-            throws NoMicrosoftAccountException, NoNextEventException, IOException {
+    public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws NoNextEventException, IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-            throw new NoMicrosoftAccountException();
+            return null;
         }
 
         ArrayList<MicrosoftCalendarEvent> events = new ArrayList<>();
 
         for (MicrosoftAccount msAcc : user.getMicrosoftAccounts()) {
 
-            String email = msAcc.getEmail();
-            String tenantId = msAcc.getTenantId();
-            TokenResponse tokens = msAcc.getToken();
-
-            MicrosoftCalendarEvent evnt = getNextEvent(tenantId, email, tokens);
+            MicrosoftCalendarEvent evnt = getNextEvent(msAcc);
 
             if (evnt != null) {
                 events.add(evnt);
@@ -193,14 +192,19 @@ public class OutlookService extends OutlookAPIService {
 
     /**
      * Get number of contacts for a specific user.
-     * @param tenantId User tenant id.
-     * @param email User email.
-     * @param tokens User token
+     * @param msAcc User's microsoft account
      * @return Number of contact for current Microsoft account
      * @throws IOException Exception
      */
-    private Integer getNumberOfContacts(final String tenantId, final String email, final TokenResponse tokens)
-            throws IOException {
+    private Integer getNumberOfContacts(final MicrosoftAccount msAcc) throws IOException {
+
+        if (msAcc == null) {
+            return 0;
+        }
+
+        String email = msAcc.getEmail();
+        String tenantId = msAcc.getTenantId();
+        TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
             return null;
@@ -209,7 +213,7 @@ public class OutlookService extends OutlookAPIService {
         String sort = "GivenName ASC";
         String properties = "GivenName,Surname,CompanyName,EmailAddresses";
 
-        TokenResponse newTokens = OutlookAPIService.ensureTokens(tokens, tenantId);
+        TokenResponse newTokens = getToken(msAcc);
 
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(newTokens.getAccessToken(), email);
 
@@ -230,23 +234,18 @@ public class OutlookService extends OutlookAPIService {
      * @param user Dap User to use
      * @return Number of contacts
      * @throws IOException Exception
-     * @throws NoMicrosoftAccountException Thrown when the current DaP User haven't any MS account
      */
-    public final Integer getNumberOfContacts(final AppUser user) throws IOException, NoMicrosoftAccountException {
+    public final Integer getNumberOfContacts(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-            throw new NoMicrosoftAccountException();
+            return 0;
         }
 
         Integer nbOfContacts = 0;
 
         for (MicrosoftAccount msAcc : user.getMicrosoftAccounts()) {
 
-            String email = msAcc.getEmail();
-            String tenantId = msAcc.getTenantId();
-            TokenResponse tokens = msAcc.getToken();
-
-            Integer nb = getNumberOfContacts(tenantId, email, tokens);
+            Integer nb = getNumberOfContacts(msAcc);
 
             nbOfContacts += nb;
 

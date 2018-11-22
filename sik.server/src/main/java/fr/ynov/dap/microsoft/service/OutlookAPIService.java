@@ -6,9 +6,13 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import fr.ynov.dap.contract.MicrosoftAccountRepository;
 import fr.ynov.dap.microsoft.MicrosoftScopes;
 import fr.ynov.dap.microsoft.contract.TokenService;
 import fr.ynov.dap.microsoft.model.TokenResponse;
+import fr.ynov.dap.model.microsoft.MicrosoftAccount;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
@@ -21,6 +25,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  *
  */
 public class OutlookAPIService {
+
+    /**
+     * Current configuration.
+     */
+    @Autowired
+    private MicrosoftAccountRepository msAccountRepository;
 
     /**
      * Constant than store authority value.
@@ -175,42 +185,67 @@ public class OutlookAPIService {
     }
 
     /**
-     * Chech if token need to be refresh and refresh it if neede.
-     * @param tokens Current token response
-     * @param tenantId Tenant Id
+     * Check if token need to be refresh and refresh it if needed.
+     * @param msAcc User Microsoft account
      * @return New token
      */
-    public static TokenResponse ensureTokens(final TokenResponse tokens, final String tenantId) {
-        // Are tokens still valid?
+    public static TokenResponse ensureTokens(final MicrosoftAccount msAcc) {
+
+        if (msAcc == null) {
+            return null;
+        }
+
+        TokenResponse tokens = msAcc.getToken();
+        String tenantId = msAcc.getTenantId();
+
         Calendar now = Calendar.getInstance();
+
         if (now.getTime().before(tokens.getExpirationTime())) {
-            // Still valid, return them as-is
+
             return tokens;
+
         } else {
-            // Expired, refresh the tokens
-            // Create a logging interceptor to log request and responses
+
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-            // Create and configure the Retrofit object
             Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                     .addConverterFactory(JacksonConverterFactory.create()).build();
 
-            // Generate the token service
             TokenService tokenService = retrofit.create(TokenService.class);
 
             try {
-                return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
-                        "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
+
+                TokenResponse newToken = tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(),
+                        getAppPassword(), "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
+
+                return newToken;
+
             } catch (IOException e) {
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());
                 return error;
             }
+
         }
+
+    }
+
+    /**
+     * Get a token. Refresh it if needed and save it on database.
+     * @param msAcc User Microsoft account
+     * @return New token from Microsoft Graph API
+     */
+    public final TokenResponse getToken(final MicrosoftAccount msAcc) {
+        TokenResponse newTokens = OutlookAPIService.ensureTokens(msAcc);
+        if (newTokens != null) {
+            msAcc.setToken(newTokens);
+            msAccountRepository.save(msAcc);
+        }
+        return newTokens;
     }
 
 }

@@ -17,11 +17,10 @@ import fr.ynov.dap.contract.ApiEvent;
 import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.contract.TokenRepository;
 import fr.ynov.dap.exception.NoConfigurationException;
-import fr.ynov.dap.exception.NoGoogleAccountException;
-import fr.ynov.dap.exception.NoMicrosoftAccountException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.CalendarService;
+import fr.ynov.dap.google.ContactService;
 import fr.ynov.dap.google.GoogleAccountService;
 import fr.ynov.dap.microsoft.service.MicrosoftAccountService;
 import fr.ynov.dap.microsoft.service.OutlookService;
@@ -73,6 +72,13 @@ public class AdminController {
     private OutlookService outlookService;
 
     /**
+     * Instance of Calendar service.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private ContactService contactService;
+
+    /**
      * Instance of AppUserRepository.
      * Auto resolved by Autowire.
      */
@@ -117,13 +123,11 @@ public class AdminController {
      * @throws GeneralSecurityException Security exception
      * @throws UserNotFoundException User not found exception
      * @throws NoNextEventException No next event found for current user
-     * @throws NoGoogleAccountException No google account found for current user
-     * @throws NoMicrosoftAccountException No microsoft account found for current user
      */
     @RequestMapping("/nextEvent/{userId}")
-    public String mail(final ModelMap model, @PathVariable("userId") final String userId)
+    public String calendar(final ModelMap model, @PathVariable("userId") final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException, UserNotFoundException,
-            NoNextEventException, NoGoogleAccountException, NoMicrosoftAccountException {
+            NoNextEventException {
 
         AppUser user = appUserRepository.findByUserKey(userId);
 
@@ -138,22 +142,14 @@ public class AdminController {
 
         List<ApiEvent> events = new ArrayList<>();
 
-        try {
-            GoogleCalendarEvent gEvnt = calendarService.getNextEvent(user);
-            if (gEvnt != null) {
-                events.add(gEvnt);
-            }
-        } catch (Exception ex) {
-            System.out.println("");
+        GoogleCalendarEvent gEvnt = calendarService.getNextEvent(user);
+        if (gEvnt != null) {
+            events.add(gEvnt);
         }
 
-        try {
-            MicrosoftCalendarEvent msEvnt = outlookService.getNextEvent(user);
-            if (msEvnt != null) {
-                events.add(msEvnt);
-            }
-        } catch (Exception ex) {
-            System.out.println("");
+        MicrosoftCalendarEvent msEvnt = outlookService.getNextEvent(user);
+        if (msEvnt != null) {
+            events.add(msEvnt);
         }
 
         if (events.size() == 0) {
@@ -165,6 +161,81 @@ public class AdminController {
         model.addAttribute("userKnown", true);
         model.addAttribute("event", events.get(0));
         model.addAttribute("fragment", "fragments/admin_calendar");
+
+        return "base";
+
+    }
+
+    /**
+     * Show number of unread mail for current user.
+     * @param model Model for page.
+     * @param userId Id of current user.
+     * @return Html page
+     * @throws NoConfigurationException No configuration available
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security Exception
+     */
+    @RequestMapping("/mails/{userId}")
+    public String mail(final ModelMap model, @PathVariable("userId") final String userId)
+            throws NoConfigurationException, IOException, GeneralSecurityException {
+
+        AppUser user = appUserRepository.findByUserKey(userId);
+
+        if (user == null) {
+
+            model.addAttribute("userKnown", false);
+            model.addAttribute("fragment", "fragments/admin_mail");
+
+            return "base";
+
+        }
+
+        Integer nbUnreadMails = 0;
+
+        nbUnreadMails += outlookService.getNbUnreadEmails(user);
+
+        nbUnreadMails += contactService.getNumberOfContacts(user);
+
+        model.addAttribute("userKnown", true);
+        model.addAttribute("count", nbUnreadMails);
+        model.addAttribute("fragment", "fragments/admin_mail");
+
+        return "base";
+
+    }
+
+    /**
+     * Show number of contacts.
+     * @param model Mode for page
+     * @param userId Id of current user
+     * @return Html Page
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security exception
+     */
+    @RequestMapping("/contacts/{userId}")
+    public String contacts(final ModelMap model, @PathVariable("userId") final String userId)
+            throws IOException, GeneralSecurityException {
+
+        AppUser user = appUserRepository.findByUserKey(userId);
+
+        if (user == null) {
+
+            model.addAttribute("userKnown", false);
+            model.addAttribute("fragment", "fragments/admin_contact");
+
+            return "base";
+
+        }
+
+        Integer nbContacts = 0;
+
+        nbContacts += outlookService.getNumberOfContacts(user);
+
+        nbContacts += contactService.getNumberOfContacts(user);
+
+        model.addAttribute("userKnown", true);
+        model.addAttribute("count", nbContacts);
+        model.addAttribute("fragment", "fragments/admin_contact");
 
         return "base";
 

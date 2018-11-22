@@ -1,4 +1,5 @@
 <h1 th:text="#{admin.next_event.title}">Title</h1>
+<br />
 <div class="card" style="width: 18rem;">
   	<div class="card-body">
     	<h5 class="card-title" th:text="${{event.getSubject()}}">Event Subject</h5>
@@ -18,3 +19,5 @@
 		</li>
   	</ul>
 </div>
+<br />
+<span class="badge badge-secondary" th:text="#{admin.navigation.info}">Info</span>

@@ -13,8 +13,10 @@
 	</head>
 	<body>
 		<div th:replace="fragments/navigation :: nav"></div>
-		<div class="container-fluid" th:if="${userKnown} == true">
+		<div class="container" th:if="${userKnown} == true">
+			<br />
 			<div th:insert="${fragment}"></div>
+			<br />
 		</div>		
 		<div class="alert alert-danger" role="alert" th:if="${userKnown} == false">
   			Utilisateur inconnu ! Merci de réessayer !
