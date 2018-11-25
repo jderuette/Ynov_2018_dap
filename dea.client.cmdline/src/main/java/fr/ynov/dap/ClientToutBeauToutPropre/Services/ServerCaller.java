@@ -12,9 +12,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+/**
+ * Classe ServerCaller
+ * 
+ * @author antod
+ *
+ */
 public abstract class ServerCaller
 {
+  /**
+   * variable utilisée pour l'endpoint vers le serveur
+   */
   protected final static String endpoint = "http://localhost:8080";
+
+  /**
+   * Variable utilisée pour logger
+   */
   private static Logger logger = LogManager.getLogger();
 
   /**

@@ -14,10 +14,8 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <!-- <tilesx:useAttribute name="current" /> -->
   <div class="container">
 
-    <!-- Static navbar -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -35,13 +33,10 @@
             <li class="${current == 'index' ? 'active' : '' }">
               <a href="/index">Home</a>
             </li>
-            <!-- <c:if test="${userConnected eq true}"> -->
               <li th:if="${userConnected == true}" class="${current == 'mail' ? 'active' : '' }">
                 <a href="/mail">Mail</a>
               </li>
-            <!-- </c:if> -->
           </ul>
-          <!-- <c:if test="${userConnected eq true}"> -->
           <div th:if="${userConnected == true}" >
             <p class="navbar-text navbar-right">Signed in as ${userName}</p>
             <ul class="nav navbar-nav navbar-right">
@@ -50,7 +45,6 @@
               </li>
             </ul>
             </div>
-          <!-- </c:if> -->
         </div>
       </div>
     </nav>

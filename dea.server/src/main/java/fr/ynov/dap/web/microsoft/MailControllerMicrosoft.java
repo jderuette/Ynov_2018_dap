@@ -2,9 +2,10 @@
 package fr.ynov.dap.web.microsoft;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.MicrosoftAccount;
+import fr.ynov.dap.microsoft.Folder;
 import fr.ynov.dap.microsoft.Message;
 import fr.ynov.dap.web.microsoft.auth.AuthHelper;
 import fr.ynov.dap.web.microsoft.auth.TokenResponse;
@@ -44,7 +46,9 @@ public class MailControllerMicrosoft
       @RequestParam String userKey)
   {
     AppUser myUser = appUserRepository.findByName(userKey);
-    List<Message> totalMessages = new ArrayList<Message>();
+//    List<Message> totalMessages = new ArrayList<Message>();
+    Map<String, Message[]> totalMessages = new HashMap<String, Message[]>();
+    
     Message[] allMessages = null;
 
     // On filtre sur tous les comptes microsofts
@@ -53,7 +57,6 @@ public class MailControllerMicrosoft
 
     for (int i = 0; i < allAccounts.size(); i++)
     {
-
       account = allAccounts.get(i);
       TokenResponse tokens = account.getTokenResponse();
 
@@ -77,13 +80,11 @@ public class MailControllerMicrosoft
         {
           PagedResult<Message> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute()
               .body();
-
+          
           allMessages = messages.getValue();
-
-          for (int iMessage = 0; iMessage < allMessages.length; iMessage++)
-          {
-            totalMessages.add(allMessages[iMessage]);
-          }
+          
+          totalMessages.put(account.getUserName(), allMessages);
+          
         } catch (Exception e)
         {
           LOGGER.error("error", e.getMessage());
@@ -94,7 +95,7 @@ public class MailControllerMicrosoft
       }
     }
 
-    model.addAttribute("messages", totalMessages);
+    model.addAttribute("totalMessages", totalMessages);
 
     return "mail";
   }

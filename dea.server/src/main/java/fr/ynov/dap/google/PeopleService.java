@@ -47,8 +47,10 @@ public class PeopleService extends GoogleServices
     LOGGER.info("Début du getService People pour l'utilisateur " + userId);
 
     com.google.api.services.people.v1.PeopleService people = new com.google.api.services.people.v1.PeopleService.Builder(
-        HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userId)).setApplicationName(config.getApplicationName()).build();
-    Integer nbContacts = people.people().connections().list("people/" + userId).setPersonFields("names").execute()
+        HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userId)).setApplicationName(super.config.getApplicationName())
+            .build();
+
+    Integer nbContacts = people.people().connections().list("people/me").setPersonFields("names").execute()
         .getTotalPeople();
 
     LOGGER.info("Fin du getService People pour l'utilisateur " + userId);

@@ -2,6 +2,12 @@
 package fr.ynov.dap;
 
 
+/**
+ * Classe de configuration
+ * 
+ * @author antod
+ *
+ */
 public class Config
 {
   /**
@@ -52,6 +58,7 @@ public class Config
 
   /**
    * Renvoie le chemin vers l'adresse de callback
+   * 
    * @return
    */
   public String getoAuth2CallbackUrl()

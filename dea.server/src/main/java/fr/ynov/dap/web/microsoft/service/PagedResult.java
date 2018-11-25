@@ -12,6 +12,9 @@ public class PagedResult<T>
   @JsonProperty("@odata.nextLink")
   private String nextPageLink;
   private T[] value;
+  
+  @JsonProperty("@odata.count")
+  private Integer count;
 
   public String getNextPageLink()
   {
@@ -31,5 +34,15 @@ public class PagedResult<T>
   public void setValue(T[] value)
   {
     this.value = value;
+  }
+
+  public Integer getCount()
+  {
+    return count;
+  }
+
+  public void setCount(Integer count)
+  {
+    this.count = count;
   }
 }

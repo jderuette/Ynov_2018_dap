@@ -2,7 +2,6 @@
 package fr.ynov.dap.web.microsoft;
 
 
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -22,9 +21,6 @@ import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.web.microsoft.auth.AuthHelper;
 import fr.ynov.dap.web.microsoft.auth.IdToken;
 import fr.ynov.dap.web.microsoft.auth.TokenResponse;
-import fr.ynov.dap.web.microsoft.service.OutlookService;
-import fr.ynov.dap.web.microsoft.service.OutlookServiceBuilder;
-import fr.ynov.dap.web.microsoft.service.OutlookUser;
 
 
 /**
@@ -66,38 +62,27 @@ public class AuthorizeController
 
         if (idTokenObj != null)
         {
-          String name = idTokenObj.getName();
           String tenantId = idTokenObj.getTenantId();
           TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
-//          session.setAttribute("tokens", tokenResponse);
-//          session.setAttribute("userConnected", true);
-//          session.setAttribute("userName", idTokenObj.getName());
-
-          // Get user info
-//          OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken(), null);
-//          OutlookUser user;
 
           try
           {
             // Enregistrement de l'utilisateur connecté
             final String userKey = getAttributeFromSession(session, "userKey");
+            final String accountName = getAttributeFromSession(session, "accountName");
             AppUser appUser = appUserRepository.findByName(userKey);
 
             MicrosoftAccount microsoftAccount = new MicrosoftAccount();
-            microsoftAccount.setUserName(name);
+            microsoftAccount.setUserName(accountName);
             microsoftAccount.setTenantId(tenantId);
             microsoftAccount.setTokenResponse(tokenResponse);
 
             appUser.addMicrosoftAccounts(microsoftAccount);
             appUserRepository.save(appUser);
-
-//            user = outlookService.getCurrentUser().execute().body();
-//            session.setAttribute("userEmail", user.getMail());
           } catch (Exception e)
           {
             LOGGER.error("error in AuthorizeController", e.getMessage());
           }
-//          session.setAttribute("userTenantId", idTokenObj.getTenantId());
         } else
         {
           LOGGER.error("error", "ID token failed validation.");
@@ -132,6 +117,7 @@ public class AuthorizeController
     session.setAttribute("expected_state", state);
     session.setAttribute("expected_nonce", nonce);
     session.setAttribute("userKey", userKey);
+    session.setAttribute("accountName", accountName);
 
     return "redirect:" + loginUrl;
   }

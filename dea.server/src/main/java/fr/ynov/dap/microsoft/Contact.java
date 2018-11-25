@@ -3,7 +3,6 @@ package fr.ynov.dap.microsoft;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ynov.dap.web.microsoft.service.EmailAddress;
 
 

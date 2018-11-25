@@ -7,8 +7,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+/**
+ * Classe AccountServiceCaller
+ * 
+ * @author antod
+ *
+ */
 public class AccountServiceCaller extends ServerCaller
 {
+  /**
+   * Variable utilisée pour logger
+   */
   private static Logger logger = LogManager.getLogger();
 
   /**
