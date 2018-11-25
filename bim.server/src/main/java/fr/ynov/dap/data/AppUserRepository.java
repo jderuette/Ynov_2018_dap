@@ -11,7 +11,7 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
     /**
      * Return user by name.
-     * @paramname used to find user
+     * @param name used to find user
      * @return user
      */
     AppUser findByName(String name);

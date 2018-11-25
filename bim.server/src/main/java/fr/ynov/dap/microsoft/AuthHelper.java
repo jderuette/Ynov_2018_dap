@@ -34,7 +34,7 @@ public final class AuthHelper {
     /**
      * Asked rights.
      */
-    private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read" };
+    private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read", "Calendars.Read", "Contacts.Read"};
 
     /**
      * appId.
@@ -190,7 +190,7 @@ public final class AuthHelper {
     /**
      * if token is expired, refresh it.
      * @param tokens to test
-     * @param tenantId
+     * @param tenantId tenant
      * @return refreshed token
      */
     public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {

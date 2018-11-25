@@ -3,7 +3,6 @@ package fr.ynov.dap.web.google;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,19 +39,18 @@ public class CalendarController {
 
     /**
      * get next event.
-     * @param gUser google user
      * @param userKey applicative user
      * @return next event
      * @throws Exception  if user not found
      */
-    @RequestMapping("/event/google/next/{gUser}")
-    public final Event getNextEvent(@PathVariable final String gUser, @RequestParam("userKey") final String userKey)
+    @RequestMapping("/event/google/next")
+    public final Event getNextEvent(@RequestParam("userKey") final String userKey)
             throws Exception {
-        LOGGER.info("Récupération du prochain evenement du calendrier de l'utilisateur {}...", gUser);
+        LOGGER.info("Récupération du prochain evenement du calendrier de l'utilisateur {}...", "me");
 
         AppUser user = repository.findByName(userKey);
 
-        return calendarService.getNextEvent(user, gUser);
+        return calendarService.getNextEvent(user, "me");
 
     }
 }

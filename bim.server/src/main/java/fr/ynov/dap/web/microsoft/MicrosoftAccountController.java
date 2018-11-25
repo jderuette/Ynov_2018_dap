@@ -1,6 +1,5 @@
 package fr.ynov.dap.web.microsoft;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
-import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.data.microsoft.IdToken;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
-import fr.ynov.dap.data.microsoft.OutlookUser;
 import fr.ynov.dap.data.microsoft.TokenResponse;
 import fr.ynov.dap.data.microsoft.TokenResponseRepository;
 import fr.ynov.dap.microsoft.AuthHelper;
-import fr.ynov.dap.microsoft.OutlookApiRequests;
-import fr.ynov.dap.microsoft.OutlookRequestsBuilder;
 
 @Controller
 public class MicrosoftAccountController {
@@ -39,10 +34,6 @@ public class MicrosoftAccountController {
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 10;
 
-    /**
-     * Duration before user expiration.
-     */
-    private static final Long EXPIRATION_TIME = (long) (3600 * 4);
     /**
      * Logger.
      */
@@ -62,7 +53,9 @@ public class MicrosoftAccountController {
 
     /**
      * return helloWorld template.
-     * @param model model
+     * @param accountName account.
+     * @param session session
+     * @param userKey userKey
      * @param request http request
      * @return helloWorld template
      */
@@ -112,7 +105,8 @@ public class MicrosoftAccountController {
                 AppUser user = userRepository.findByName(userKey);
                 user.addMicrosoftAccount(new MicrosoftAccount(accountName, tokenResponse, idTokenObj.getTenantId()));
                 userRepository.save(user);
-                LOGGER.debug("Utilisateur crée en base");
+                LOGGER.debug("Utilisateur crée en base", "Token : "
+                        + tokenResponse.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
 
             } else {
                 LOGGER.error("Impossible de valider le token reçu", "ID token failed validation.");

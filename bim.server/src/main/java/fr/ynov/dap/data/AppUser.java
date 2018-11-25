@@ -45,12 +45,15 @@ public class AppUser {
 
     /**
      * Constructor.
-     * @param name
+     * @param name name
      */
     public AppUser(String name) {
         this.name = name;
     }
 
+    /**
+     * default constructor.
+     */
     public AppUser() {
 
     }

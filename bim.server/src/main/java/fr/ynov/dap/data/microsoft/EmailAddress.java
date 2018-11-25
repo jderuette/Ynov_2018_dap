@@ -4,6 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailAddress {
+
+    /**
+     * Default constructor for serialization.
+     */
+    public EmailAddress() {
+    }
+
+    /**
+     * @param name contact name
+     * @param address contact address
+     */
+    public EmailAddress(String name, String address) {
+        super();
+        this.name = name;
+        this.address = address;
+    }
+
     /**
      * Name.
      */

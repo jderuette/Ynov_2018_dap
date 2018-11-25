@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * microsoft token response
+ * microsoft token response.
  * @author MBILLEMAZ
  *
  */
@@ -45,21 +45,21 @@ public class TokenResponse {
     /**
      * access token.
      */
-    @Column(length=2048)
+    @Column(length = 2048)
     @JsonProperty("access_token")
     private String accessToken;
 
     /**
      * refresh token.
      */
-    @Column(length=2048)
+    @Column(length = 2048)
     @JsonProperty("refresh_token")
     private String refreshToken;
 
     /**
      * id token.
      */
-    @Column(length=2048)
+    @Column(length = 2048)
     @JsonProperty("id_token")
     private String idToken;
     /**
@@ -82,6 +82,22 @@ public class TokenResponse {
      * expiration.
      */
     private Date expirationTime;
+
+
+    
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * @return the tokenType

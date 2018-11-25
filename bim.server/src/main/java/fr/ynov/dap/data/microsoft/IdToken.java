@@ -93,7 +93,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param expirationTime
+     * @param expirationTime time before expiration
      */
     public void setExpirationTime(final long expirationTime) {
         this.expirationTime = expirationTime;
@@ -109,7 +109,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param notBefore
+     * @param notBefore not before
      */
     public void setNotBefore(final long notBefore) {
         this.notBefore = notBefore;
@@ -125,7 +125,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param tenantId
+     * @param tenantId tenantId
      */
     public void setTenantId(final String tenantId) {
         this.tenantId = tenantId;
@@ -141,7 +141,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param nonce
+     * @param nonce nonce
      */
     public void setNonce(final String nonce) {
         this.nonce = nonce;
@@ -157,7 +157,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param name
+     * @param name name
      */
     public void setName(final String name) {
         this.name = name;
@@ -173,7 +173,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param email
+     * @param email email
      */
     public void setEmail(final String email) {
         this.email = email;
@@ -189,7 +189,7 @@ public class IdToken {
 
     /**
      * update value.
-     * @param preferredUsername
+     * @param preferredUsername userName
      */
     public void setPreferredUsername(final String preferredUsername) {
         this.preferredUsername = preferredUsername;
@@ -205,7 +205,7 @@ public class IdToken {
 
     /**
      * upadte value.
-     * @param objectId
+     * @param objectId id
      */
     public void setObjectId(final String objectId) {
         this.objectId = objectId;

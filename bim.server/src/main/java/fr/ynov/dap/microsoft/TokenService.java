@@ -16,13 +16,13 @@ public interface TokenService {
 
     /**
      * Get token.
-     * @param tenantId 
-     * @param clientId
-     * @param clientSecret
-     * @param grantType
-     * @param code
-     * @param redirectUrl
-     * @return
+     * @param tenantId tenant
+     * @param clientId client
+     * @param clientSecret secret
+     * @param grantType grant
+     * @param code code
+     * @param redirectUrl redirect
+     * @return token
      */
     @FormUrlEncoded
     @POST("/{tenantid}/oauth2/v2.0/token")

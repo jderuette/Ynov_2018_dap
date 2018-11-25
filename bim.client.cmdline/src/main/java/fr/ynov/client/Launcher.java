@@ -17,7 +17,7 @@ public class Launcher {
             String event = args[0];
             String user = args[1];
 
-            String account = "me";
+            String account = null;
             if (args.length == 3) {
                 account = args[2];
             }
@@ -26,19 +26,21 @@ public class Launcher {
 
             switch (event) {
             case "getNbUnreadMail":
-                controller.nbUnreadMail(user, account);
+                controller.nbUnreadMail(user);
                 break;
             case "getNextEvent":
-                controller.getNextEvent(user, account);
+                controller.getNextEvent(user);
                 break;
             case "getNbContact":
-                controller.getNbContact(user, account);
+                controller.getNbContact(user);
                 break;
             case "addUser":
                 controller.addUser(user);
                 break;
-            case "addAccount":
-                controller.addAccount(user, account);
+            case "addGoogleAccount":
+                controller.addGoogleAccount(user, account);
+            case "addMicrosoftAccount":
+                controller.addMicrosoftAccount(user, account);
             default:
                 printHelp();
 
@@ -52,8 +54,7 @@ public class Launcher {
      */
     public static void printHelp() {
         System.out.println("deux parametres sont nécessaires.\n"
-                + "Parametre 1 : Action (getNbUnreadMail | getNextEvent | getNbContact | addUser)\n"
-                + "Parametre 2 : Utilisateur applicatif\n" + "Parametre 3 (addAccount) : nom du compte à ajouté"
-                + "Parametre 3 (optionnel, tous les autres) : compte google (par défaut \"me\"");
+                + "Parametre 1 : Action (getNbUnreadMail | getNextEvent | getNbContact | addUser | addGoogleAccount | addMicrosoftAccount)\n"
+                + "Parametre 2 : Utilisateur applicatif\n" + "Parametre 3 (addAccount) : nom du compte à ajouter");
     }
 }

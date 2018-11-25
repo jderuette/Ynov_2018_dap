@@ -109,6 +109,7 @@ public abstract class CommonGoogleService {
 
         try {
             File file = new File(this.config.getCredentialsFolder() + "credentials.json");
+            System.out.println(file.getPath());
             InputStreamReader in = new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8"));
             GoogleClientSecrets clientSecrets;
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, in);

@@ -33,9 +33,9 @@ public class MicrosoftAccount {
     }
 
     /**
-     * @param name
-     * @param token
-     * @param tenantId
+     * @param name name 
+     * @param token token
+     * @param tenantId tenant
      */
     public MicrosoftAccount(String name, TokenResponse token, String tenantId) {
         super();
