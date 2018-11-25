@@ -125,4 +125,24 @@ public class AppUser {
 
         return accountNames;
     }
+
+    /**
+     * Get a Microsoft account by his name.
+     * @param accountName account name of the Microsoft account.
+     * @return the Microsoft account.
+     */
+    public MicrosoftAccount getMicrosoftAccountByName(final String accountName) {
+        if (!getMicrosoftAccountNames().contains(accountName)) {
+            return null;
+        }
+
+        List<MicrosoftAccount> accounts = getMicrosoftAccounts();
+
+        for (MicrosoftAccount account : accounts) {
+            if (account.getAccountName().equals(accountName)) {
+                return account;
+            }
+        }
+        return null;
+    }
 }

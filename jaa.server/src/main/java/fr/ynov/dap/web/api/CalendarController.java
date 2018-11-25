@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.services.calendar.model.Event;
 
-import fr.ynov.dap.services.CalendarService;
+import fr.ynov.dap.services.google.CalendarService;
 
 /**
  * @author adrij

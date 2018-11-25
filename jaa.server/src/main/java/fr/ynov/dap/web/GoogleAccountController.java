@@ -26,7 +26,7 @@ import com.google.api.client.http.GenericUrl;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.GoogleAccount;
-import fr.ynov.dap.services.GoogleService;
+import fr.ynov.dap.services.google.GoogleService;
 
 /**
  * Google Account controller used to create a new Google Account.

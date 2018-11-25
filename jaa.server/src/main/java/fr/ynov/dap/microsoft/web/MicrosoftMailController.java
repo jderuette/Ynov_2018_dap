@@ -13,10 +13,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.ynov.dap.microsoft.auth.AuthHelper;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
-import fr.ynov.dap.microsoft.services.Message;
-import fr.ynov.dap.microsoft.services.OutlookService;
-import fr.ynov.dap.microsoft.services.OutlookServiceBuilder;
-import fr.ynov.dap.microsoft.services.PagedResult;
+import fr.ynov.dap.services.microsoft.Message;
+import fr.ynov.dap.services.microsoft.OutlookService;
+import fr.ynov.dap.services.microsoft.OutlookServiceBuilder;
+import fr.ynov.dap.services.microsoft.PagedResult;
 
 @Controller
 public class MicrosoftMailController {

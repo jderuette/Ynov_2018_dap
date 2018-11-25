@@ -7,7 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
-import fr.ynov.dap.services.GoogleAuthorizationFlowService;
+
+import fr.ynov.dap.services.google.GoogleAuthorizationFlowService;
 import fr.ynov.dap.web.api.GoogleController;
 
 /**

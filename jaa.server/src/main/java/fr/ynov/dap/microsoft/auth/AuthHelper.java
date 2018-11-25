@@ -32,7 +32,14 @@ public final class AuthHelper {
     /**
      * Scopes used for authorization.
      */
-    private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read" };
+    private static String[] scopes = {
+            "openid",
+            "offline_access",
+            "profile",
+            "User.Read",
+            "Mail.Read",
+            "Calendars.Read"
+        };
 
     /**
      * Application Id.

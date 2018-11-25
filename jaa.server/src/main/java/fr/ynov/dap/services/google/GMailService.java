@@ -1,4 +1,4 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import java.util.List;
 
@@ -15,8 +15,7 @@ import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 
 /**
- * @author adrij
- *
+ * Google Mail Service.
  */
 @Service
 public final class GMailService extends GoogleService {

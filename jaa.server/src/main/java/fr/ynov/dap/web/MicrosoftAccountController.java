@@ -1,10 +1,8 @@
 package fr.ynov.dap.web;
 
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,9 +25,6 @@ import fr.ynov.dap.exceptions.AuthorizationException;
 import fr.ynov.dap.microsoft.auth.AuthHelper;
 import fr.ynov.dap.microsoft.auth.IdToken;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
-import fr.ynov.dap.microsoft.services.OutlookService;
-import fr.ynov.dap.microsoft.services.OutlookServiceBuilder;
-import fr.ynov.dap.microsoft.services.OutlookUser;
 
 /**
  * Microsoft Account controller used to create a new Microsoft Account.
@@ -158,14 +153,16 @@ public class MicrosoftAccountController {
         microsoftAccount.setAccountName(accountName);
         try {
             microsoftAccount.setTokenResponse(tokenResponse);
+            microsoftAccount.setIdToken(idTokenObj);
         } catch (JsonProcessingException jpe) {
-            throw new AuthorizationException("Failed to store the token response.", jpe);
+            throw new AuthorizationException("Failed to store the token response or the token id.", jpe);
         }
 
         AppUser appUser = repository.findByUserKey(userKey);
+        microsoftAccount.setOwner(appUser);
         appUser.addMicrosoftAccount(microsoftAccount);
         repository.save(appUser);
 
-        return "redirect:/";
+        return "redirect:/"; //TODO
     }
 }

@@ -1,4 +1,4 @@
-package fr.ynov.dap.microsoft.services;
+package fr.ynov.dap.services.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

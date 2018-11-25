@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.ynov.dap.microsoft.auth.IdToken;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
 
 /**
@@ -79,71 +80,71 @@ public class MicrosoftAccount {
         this.accountName = name;
     }
 
-    /**
-     * Authorization code.
-     */
-    @Column(length = STRING_LENGTH)
-    private String authCode;
-
-    /**
-     * Getter of the authCode.
-     * @return Authorization Code.
-     */
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    /**
-     * Setter of authCode.
-     * @param code Authorization Code.
-     */
-    public void setAuthCode(final String code) {
-        this.authCode = code;
-    }
-
-    /**
-     * Id of the Token.
-     */
-    @Column(length = STRING_LENGTH)
-    private String idToken;
-
-    /**
-     * Getter of the idToken.
-     * @return Id of the token.
-     */
-    public String getIdToken() {
-        return idToken;
-    }
-
-    /**
-     * Setter of the idToken.
-     * @param token id of the token.
-     */
-    public void setIdToken(final String token) {
-        this.idToken = token;
-    }
-
-    /**
-     * Access token.
-     */
-    @Column
-    private String accessToken;
-
-    /**
-     * Getter of the Access Token.
-     * @return the access token.
-     */
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    /**
-     * Setter of the Access Token.
-     * @param token Access Token
-     */
-    public void setAccessToken(final String token) {
-        this.accessToken = token;
-    }
+//    /**
+//     * Authorization code.
+//     */
+//    @Column(length = STRING_LENGTH)
+//    private String authCode;
+//
+//    /**
+//     * Getter of the authCode.
+//     * @return Authorization Code.
+//     */
+//    public String getAuthCode() {
+//        return authCode;
+//    }
+//
+//    /**
+//     * Setter of authCode.
+//     * @param code Authorization Code.
+//     */
+//    public void setAuthCode(final String code) {
+//        this.authCode = code;
+//    }
+//
+//    /**
+//     * Id of the Token.
+//     */
+//    @Column(length = STRING_LENGTH)
+//    private String idToken;
+//
+//    /**
+//     * Getter of the idToken.
+//     * @return Id of the token.
+//     */
+//    public String getIdToken() {
+//        return idToken;
+//    }
+//
+//    /**
+//     * Setter of the idToken.
+//     * @param token id of the token.
+//     */
+//    public void setIdToken(final String token) {
+//        this.idToken = token;
+//    }
+//
+//    /**
+//     * Access token.
+//     */
+//    @Column
+//    private String accessToken;
+//
+//    /**
+//     * Getter of the Access Token.
+//     * @return the access token.
+//     */
+//    public String getAccessToken() {
+//        return accessToken;
+//    }
+//
+//    /**
+//     * Setter of the Access Token.
+//     * @param token Access Token
+//     */
+//    public void setAccessToken(final String token) {
+//        this.accessToken = token;
+//    }
 
     /**
      * TokenResponse from the Microsoft API.
@@ -154,9 +155,9 @@ public class MicrosoftAccount {
     /**
      * Getter of the TokenResponse.
      * @return the Microsoft token response.
-     * @throws JsonParseException exception of the parse fails.
+     * @throws JsonParseException exception if the parse fails.
      * @throws JsonMappingException exception if the mapping fails.
-     * @throws IOException exception if stored value is incorrect.
+     * @throws IOException exception if the stored value is incorrect.
      */
     public TokenResponse getTokenResponse() throws JsonParseException, JsonMappingException, IOException {
         return new ObjectMapper().readValue(tokenResponse, TokenResponse.class);
@@ -171,6 +172,31 @@ public class MicrosoftAccount {
         this.tokenResponse = (String) new ObjectMapper().writeValueAsString(token);
     }
 
+    /**
+     * IdToken from the Microsoft API.
+     */
+    @Column(length = STRING_LENGTH)
+    private String idToken;
+
+    /**
+     * IdToken getter.
+     * @return the token id.
+     * @throws JsonParseException exception if the parse fails.
+     * @throws JsonMappingException exception if the mapping fails.
+     * @throws IOException exception if the stored value is incorrect.
+     */
+    public IdToken getIdToken() throws JsonParseException, JsonMappingException, IOException {
+        return new ObjectMapper().readValue(idToken, IdToken.class);
+    }
+
+    /**
+     * IdToken setter.
+     * @param idTok IdToken.
+     * @throws JsonProcessingException exception if the serialization fails.
+     */
+    public void setIdToken(final IdToken idTok) throws JsonProcessingException {
+        this.idToken = (String) new ObjectMapper().writeValueAsString(idTok);
+    }
 
     /**
      * Default Constructor.

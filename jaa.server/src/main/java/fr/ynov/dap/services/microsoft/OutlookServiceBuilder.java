@@ -1,4 +1,4 @@
-package fr.ynov.dap.microsoft.services;
+package fr.ynov.dap.services.microsoft;
 
 import java.io.IOException;
 import java.util.UUID;

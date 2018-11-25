@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fr.ynov.dap.microsoft.auth.AuthHelper;
 import fr.ynov.dap.microsoft.auth.IdToken;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
-import fr.ynov.dap.microsoft.services.OutlookService;
-import fr.ynov.dap.microsoft.services.OutlookServiceBuilder;
-import fr.ynov.dap.microsoft.services.OutlookUser;
+import fr.ynov.dap.services.microsoft.OutlookService;
+import fr.ynov.dap.services.microsoft.OutlookServiceBuilder;
+import fr.ynov.dap.services.microsoft.OutlookUser;
 
 /**
  * @author adrij
@@ -26,7 +26,7 @@ import fr.ynov.dap.microsoft.services.OutlookUser;
 @Controller
 public class AuthorizeController {
 
-    @RequestMapping(value = "/authorize", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public String authorize(final ModelMap model, @RequestParam("code") String code,
             @RequestParam("id_token") String idToken, @RequestParam("state") UUID state, HttpServletRequest request) {
 
@@ -70,7 +70,7 @@ public class AuthorizeController {
         }
 
         return "microsoftMail";
-    }
+    }*/
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request) {
