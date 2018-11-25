@@ -35,7 +35,7 @@ public class GoogleAccount {
     }
 
     /**
-     * set the owner of this GoogleAccount.
+     * Set the owner of this GoogleAccount.
      * @param user AppUser (owner) of this GoogleAccount.
      */
     public void setOwner(final AppUser user) {
@@ -43,7 +43,7 @@ public class GoogleAccount {
     }
 
     /**
-     * name of account.
+     * Name of the account.
      */
     @Column
     private String accountName;

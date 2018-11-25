@@ -29,7 +29,7 @@ import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.services.GoogleService;
 
 /**
- * @author adrij
+ * Google Account controller used to create a new Google Account.
  *
  */
 @Controller
@@ -181,7 +181,8 @@ public class GoogleAccountController extends GoogleService {
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/add/account/{accountName}")
-    public String addAccount(@PathVariable final String accountName, @RequestParam("userKey") final String userKey,
+    public String addAccount(@PathVariable final String accountName,
+            @RequestParam(USER_KEY_PARAM_NAME) final String userKey,
             final HttpServletRequest request,
             final HttpSession session) throws GeneralSecurityException {
         String response = "errorOccurs";

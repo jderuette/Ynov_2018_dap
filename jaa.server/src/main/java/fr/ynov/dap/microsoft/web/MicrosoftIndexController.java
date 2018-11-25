@@ -38,7 +38,8 @@ public class MicrosoftIndexController {
 
         Integer nbUnreadEmail = 5;
         model.addAttribute("nbEmails", nbUnreadEmail);
+        model.addAttribute("fragment", "fragments/microsoftTest");
 
-        return "microsoftIndex";
+        return "base";
     }
 }
