@@ -1,56 +1,101 @@
 package fr.ynov.dap.services.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Event entity used by the Microsoft API.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
+    /**
+     * Id.
+     */
     private String id;
+    /**
+     * Subject of the event.
+     */
     private String subject;
+    /**
+     * Organizer of the event.
+     */
     private Recipient organizer;
+    /**
+     * Start of the event.
+     */
     private DateTimeTimeZone start;
+    /**
+     * End of the event.
+     */
     private DateTimeTimeZone end;
 
+    /**
+     * Id getter.
+     * @return id.
+     */
     public String getId() {
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * Id setter.
+     * @param i id
+     */
+    public void setId(final String i) {
+        this.id = i;
     }
-
+    /**
+     * Subject getter.
+     * @return subject of the event.
+     */
     public String getSubject() {
         return subject;
     }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
+    /**
+     * Subject setter.
+     * @param s subject of the event.
+     */
+    public void setSubject(final String s) {
+        this.subject = s;
     }
-
+    /**
+     * Organizer getter.
+     * @return Organizer of the event.
+     */
     public Recipient getOrganizer() {
         return organizer;
     }
-
-    public void setOrganizer(Recipient organizer) {
-        this.organizer = organizer;
+    /**
+     * Organizer setter.
+     * @param r Organizer of the event.
+     */
+    public void setOrganizer(final Recipient r) {
+        this.organizer = r;
     }
-
+    /**
+     * Start getter.
+     * @return start of the event.
+     */
     public DateTimeTimeZone getStart() {
         return start;
     }
-
-    public void setStart(DateTimeTimeZone start) {
-        this.start = start;
+    /**
+     * Start setter.
+     * @param s start of the event.
+     */
+    public void setStart(final DateTimeTimeZone s) {
+        this.start = s;
     }
-
+    /**
+     * End getter.
+     * @return end of the event.
+     */
     public DateTimeTimeZone getEnd() {
         return end;
     }
-
-    public void setEnd(DateTimeTimeZone end) {
-        this.end = end;
+    /**
+     * End setter.
+     * @param e end of the event.
+     */
+    public void setEnd(final DateTimeTimeZone e) {
+        this.end = e;
     }
 }
