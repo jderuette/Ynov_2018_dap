@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * Entité des compte GoogleAccount
+ * Entité des comptes GoogleAccount
  * @author antod
  *
  */

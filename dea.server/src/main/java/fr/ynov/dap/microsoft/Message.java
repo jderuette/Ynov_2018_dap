@@ -1,9 +1,10 @@
 
-package fr.ynov.dap.web.microsoft.service;
+package fr.ynov.dap.microsoft;
 
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fr.ynov.dap.web.microsoft.service.Recipient;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)

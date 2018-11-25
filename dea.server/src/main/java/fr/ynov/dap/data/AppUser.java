@@ -38,15 +38,33 @@ public class AppUser
   private List<GoogleAccount> googleAccounts = new ArrayList<GoogleAccount>();
 
   /**
-   * Ajoute un compte à l'utilisateur
+   * Liste des comptes microsoft
+   */
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+  private List<MicrosoftAccount> microsoftAccounts = new ArrayList<MicrosoftAccount>();
+
+  /**
+   * Ajoute un compte google à l'utilisateur
    * 
    * @param account
    */
-  public void addGoogleAccount(GoogleAccount account)
+  public void addGoogleAccount(GoogleAccount googleAccount)
   {
-    account.setOwner(this);
+    googleAccount.setOwner(this);
 
-    this.getAccounts().add(account);
+    this.getGoogleAccounts().add(googleAccount);
+  }
+
+  /**
+   * Ajoute un compte microsoft à l'utilisateur
+   * 
+   * @param microsoftAccount
+   */
+  public void addMicrosoftAccounts(MicrosoftAccount microsoftAccount)
+  {
+    microsoftAccount.setOwner(this);
+
+    this.getMicrosoftAccounts().add(microsoftAccount);
   }
 
   /**
@@ -74,8 +92,18 @@ public class AppUser
    * 
    * @return
    */
-  public List<GoogleAccount> getAccounts()
+  public List<GoogleAccount> getGoogleAccounts()
   {
     return googleAccounts;
+  }
+
+  /**
+   * Récupère les comptes microsoft
+   * 
+   * @return
+   */
+  public List<MicrosoftAccount> getMicrosoftAccounts()
+  {
+    return microsoftAccounts;
   }
 }

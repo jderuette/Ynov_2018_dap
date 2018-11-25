@@ -4,13 +4,24 @@ package fr.ynov.dap.web.microsoft.auth;
 
 import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse
 {
+  /**
+   * Id du tokenResponse
+   */
+  @Id
+  @GeneratedValue
+  private Integer Id;
+
   @JsonProperty("token_type")
   private String tokenType;
   private String scope;

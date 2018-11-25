@@ -26,7 +26,8 @@ public class AuthHelper
   private static final String authority = "https://login.microsoftonline.com";
   private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 
-  private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read" };
+  private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read", "Calendars.Read",
+      "Contacts.Read" };
 
   private static String appId = null;
   private static String appPassword = null;

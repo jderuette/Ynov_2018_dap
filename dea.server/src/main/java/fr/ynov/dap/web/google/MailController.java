@@ -60,7 +60,7 @@ public class MailController
     if (null != myUser)
     {
       unreadMessages = 0;
-      List<GoogleAccount> allAccounts = myUser.getAccounts();
+      List<GoogleAccount> allAccounts = myUser.getGoogleAccounts();
 
       // On boucle sur tous les comptes
       for (int i = 0; i < allAccounts.size(); i++)

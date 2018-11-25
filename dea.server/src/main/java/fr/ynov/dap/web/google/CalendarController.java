@@ -49,14 +49,12 @@ public class CalendarController
   /**
    * Appelle le service calendar pour renvoyer les 10 prochains évènements
    * 
-   * @param user Addresse pour laquelle on veut récupérer le nombre de mail
    * @return Les 10 prochains évènements
    * @throws GeneralSecurityException
    * @throws IOException
    */
-  @RequestMapping("/calendar/getUpcomingEvent/{user}")
-  public Event getUpcomingEvent(@RequestParam("userKey") final String userKey, @PathVariable String user, Config config)
-      throws GeneralSecurityException, IOException
+  @RequestMapping("/calendar/getUpcomingEvent")
+  public Event getUpcomingEvent(@RequestParam String userKey) throws GeneralSecurityException, IOException
   {
     AppUser myUser = appUserRepository.findByName(userKey);
 
@@ -65,7 +63,7 @@ public class CalendarController
 
     if (null != myUser)
     {
-      List<GoogleAccount> allAccounts = myUser.getAccounts();
+      List<GoogleAccount> allAccounts = myUser.getGoogleAccounts();
 
       // On boucle sur tous les comptes
       for (int i = 0; i < allAccounts.size(); i++)

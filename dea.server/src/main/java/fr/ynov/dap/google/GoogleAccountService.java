@@ -145,7 +145,7 @@ public class GoogleAccountService extends GoogleServices
 
     if (null == attribute)
     {
-      LOGGER.error("accountName in Session is NULL in Callback");
+      LOGGER.error(attributeName + " in Session is NULL in Callback");
       throw new ServletException(
           "Error when trying to add Google acocunt : " + attributeName + " is NULL is User Session");
     }
@@ -209,7 +209,7 @@ public class GoogleAccountService extends GoogleServices
    * @return the view to Display (on Error)
    * @throws GeneralSecurityException
    */
-  @RequestMapping("/add/account/{accountName}")
+  @RequestMapping("/account/add/google/{accountName}")
   // Ajouter un @RequestParams dans les paramètres
   public String addAccount(@PathVariable final String accountName, @RequestParam final String userKey,
       final HttpServletRequest request, final HttpSession session) throws GeneralSecurityException
