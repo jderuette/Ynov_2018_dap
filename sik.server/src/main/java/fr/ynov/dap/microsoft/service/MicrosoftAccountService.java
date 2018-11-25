@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import fr.ynov.dap.contract.TokenRepository;
+import fr.ynov.dap.contract.MicrosoftAccountRepository;
+import fr.ynov.dap.exception.NoConfigurationException;
+import fr.ynov.dap.microsoft.model.TokenResponse;
 import fr.ynov.dap.model.Credential;
 import fr.ynov.dap.model.enumeration.CredentialTypeEnum;
 
@@ -24,11 +26,15 @@ public class MicrosoftAccountService extends OutlookAPIService {
      * @param nonce Current nonce
      * @return Login url
      */
-    public static String getLoginUrl(final UUID state, final UUID nonce) {
+    public String getLoginUrl(final UUID state, final UUID nonce) {
+
+        if (getConfig() == null) {
+            throw new NoConfigurationException();
+        }
 
         UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
-        urlBuilder.queryParam("client_id", getAppId());
-        urlBuilder.queryParam("redirect_uri", getRedirectUrl());
+        urlBuilder.queryParam("client_id", getConfig().getMicrosoftAppId());
+        urlBuilder.queryParam("redirect_uri", getConfig().getMicrosoftRedirectUrl());
         urlBuilder.queryParam("response_type", "code id_token");
         urlBuilder.queryParam("scope", getScopes());
         urlBuilder.queryParam("state", state);
@@ -44,7 +50,7 @@ public class MicrosoftAccountService extends OutlookAPIService {
      * @param repo token repository
      * @return List of every Microsoft credential stored in database
      */
-    public final ArrayList<Credential> getStoredCredentials(final TokenRepository repo) {
+    public final ArrayList<Credential> getStoredCredentials(final MicrosoftAccountRepository repo) {
 
         if (repo == null) {
             return new ArrayList<>();
@@ -52,13 +58,16 @@ public class MicrosoftAccountService extends OutlookAPIService {
 
         ArrayList<Credential> credentials = new ArrayList<>();
 
-        repo.findAll().forEach(token -> {
+        repo.findAll().forEach(account -> {
+
+            TokenResponse token = account.getToken();
 
             Credential newCredential = new Credential();
-            newCredential.setUserId(token.getId().toString());
+            newCredential.setUserId(account.getAccountName());
             newCredential.setToken(token.getAccessToken());
             newCredential.setRefreshToken(token.getRefreshToken());
             newCredential.setExpirationTime(token.getExpirationTime().getTime());
+            newCredential.setTenantId(account.getTenantId());
             newCredential.setType(CredentialTypeEnum.MICROSOFT);
 
             credentials.add(newCredential);

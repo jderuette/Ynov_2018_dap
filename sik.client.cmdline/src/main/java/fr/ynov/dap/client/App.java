@@ -58,9 +58,16 @@ public final class App {
                 showUserInformations(userId);
                 break;
             case "add":
-                if (args.length >= 2) {
-                    String accountName = args[2];
-                    addGoogleAccount(accountName, userId);
+                if (args.length >= 3) {
+                    String accountType = args[2].toLowerCase();
+                    String accountName = args[3];
+                    if (accountType.equals("google")) {
+                        addGoogleAccount(accountName, userId);
+                    } else if (accountType.equals("microsoft")) {
+                        addMicrosoftAccount(accountName, userId);
+                    } else {
+                        showError();
+                    }
                 } else {
                     showError();
                 }

@@ -46,6 +46,12 @@ public class MicrosoftAccount {
     private String tenantId;
 
     /**
+     * Account name column.
+     */
+    @Column
+    private String accountName;
+
+    /**
      * List of every google account for this user.
      */
     @OneToOne(cascade = CascadeType.ALL)
@@ -120,6 +126,20 @@ public class MicrosoftAccount {
      */
     public void setTenantId(final String val) {
         this.tenantId = val;
+    }
+
+    /**
+     * @return the accountName
+     */
+    public String getAccountName() {
+        return accountName;
+    }
+
+    /**
+     * @param val the accountName to set
+     */
+    public void setAccountName(final String val) {
+        this.accountName = val;
     }
 
 }

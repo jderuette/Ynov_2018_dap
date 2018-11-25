@@ -3,16 +3,19 @@
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
    		<li class="nav-item">
-        	<a class="nav-link" href="/admin/users">Credentials</a>
+        	<a class="nav-link" href="/admin/users" th:text="#{navigation.item.credentials}">Credentials</a>
       	</li>
       	<li class="nav-item">
-        	<a class="nav-link" href="/admin/nextEvent/kev">Calendar</a>
+        	<a class="nav-link" href="/admin/nextEvent/kev" th:text="#{navigation.item.calendar}">Calendar</a>
       	</li>
       	<li class="nav-item">
-        	<a class="nav-link" href="/admin/contacts/kev">Contacts</a>
+        	<a class="nav-link" href="/admin/contacts/kev" th:text="#{navigation.item.contacts}">Contacts</a>
       	</li>
       	<li class="nav-item">
-        	<a class="nav-link" href="/admin/mails/kev">Mails</a>
+        	<a class="nav-link" href="/admin/mails/kev" th:text="#{navigation.item.mails}">Mails</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="/admin/mails/list/kev" th:text="#{navigation.item.mails_list}">Mails list</a>
       	</li>
    	</ul>
   </div>

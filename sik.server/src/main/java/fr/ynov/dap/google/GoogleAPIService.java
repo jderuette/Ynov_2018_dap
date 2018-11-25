@@ -1,9 +1,10 @@
 package fr.ynov.dap.google;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.google.api.services.oauth2.Oauth2Scopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import fr.ynov.dap.Config;
+import fr.ynov.dap.exception.ConfigurationException;
 import fr.ynov.dap.exception.NoConfigurationException;
 
 /**
@@ -148,17 +150,28 @@ public abstract class GoogleAPIService<T> {
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-        final String clientSecretFolder = getConfig().getClientSecretFile();
-        final String tokenFile = getConfig().getCredentialFolder();
+        InputStreamReader file = new InputStreamReader(new FileInputStream(config.getGoogleCredentialsPath()),
+                Charset.forName("UTF-8"));
 
-        InputStream in = GoogleAPIService.class.getResourceAsStream(clientSecretFolder);
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(getJsonFactory(), new InputStreamReader(in));
+        if (file.ready()) {
 
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
-                new File(getConfig().getDatastoreDirectory() + File.separator + tokenFile));
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(getJsonFactory(), file);
 
-        return new GoogleAuthorizationCodeFlow.Builder(httpTransport, getJsonFactory(), clientSecrets, ALL_SCOPES)
-                .setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
+            final String tokenFile = getConfig().getCredentialFolder();
+
+            FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
+                    new File(getConfig().getDatastoreDirectory() + File.separator + tokenFile));
+
+            file.close();
+
+            return new GoogleAuthorizationCodeFlow.Builder(httpTransport, getJsonFactory(), clientSecrets, ALL_SCOPES)
+                    .setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
+
+        } else {
+
+            throw new ConfigurationException();
+
+        }
 
     }
 

@@ -8,17 +8,19 @@ import java.util.Collections;
 
 import org.springframework.stereotype.Service;
 
+import fr.ynov.dap.Constants;
 import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.exception.NoConfigurationException;
-import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.microsoft.builder.OutlookServiceBuilder;
 import fr.ynov.dap.microsoft.contract.OutlookApiService;
+import fr.ynov.dap.microsoft.model.Message;
 import fr.ynov.dap.microsoft.model.OutlookContact;
 import fr.ynov.dap.microsoft.model.OutlookEvent;
 import fr.ynov.dap.microsoft.model.OutlookFolder;
 import fr.ynov.dap.microsoft.model.PagedResult;
 import fr.ynov.dap.microsoft.model.TokenResponse;
 import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.microsoft.Inbox;
 import fr.ynov.dap.model.microsoft.MicrosoftAccount;
 import fr.ynov.dap.model.microsoft.MicrosoftCalendarEvent;
 import fr.ynov.dap.utils.StrUtils;
@@ -158,9 +160,8 @@ public class OutlookService extends OutlookAPIService {
      * @param user Current Dap User to use
      * @return Next event of the current Microsoft account
      * @throws IOException Exception
-     * @throws NoNextEventException If there no next event
      */
-    public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws NoNextEventException, IOException {
+    public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
             return null;
@@ -179,7 +180,7 @@ public class OutlookService extends OutlookAPIService {
         }
 
         if (events.size() == 0) {
-            throw new NoNextEventException();
+            return null;
         }
 
         Collections.sort(events, new SortByNearest());
@@ -252,6 +253,78 @@ public class OutlookService extends OutlookAPIService {
         }
 
         return nbOfContacts;
+
+    }
+
+    /**
+     * Get every messages for a Microsoft account.
+     * @param msAcc Microsoft Account
+     * @return List of message
+     * @throws IOException Exception
+     */
+    private ArrayList<Message> getMessages(final MicrosoftAccount msAcc) throws IOException {
+
+        if (msAcc == null) {
+            return new ArrayList<Message>();
+        }
+
+        String email = msAcc.getEmail();
+        String tenantId = msAcc.getTenantId();
+        TokenResponse tokens = msAcc.getToken();
+
+        if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
+            return null;
+        }
+
+        String folder = "inbox";
+        String sort = "receivedDateTime DESC";
+        String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
+        Integer maxResults = Constants.NUMBER_OF_MAILS;
+
+        TokenResponse newTokens = getToken(msAcc);
+
+        OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(newTokens.getAccessToken(), email);
+
+        Response<PagedResult<Message>> resp = outlookService.getMessages(folder, sort, properties, maxResults)
+                .execute();
+
+        PagedResult<Message> msg = resp.body();
+
+        return msg.toArrayList();
+
+    }
+
+    /**
+     * Get every messages for a DaP User.
+     * @param user DaP User.
+     * @return List of message
+     * @throws IOException Exception
+     */
+    public final ArrayList<Inbox> getMessages(final AppUser user) throws IOException {
+
+        if (user == null) {
+            return new ArrayList<Inbox>();
+        }
+
+        if (user.getMicrosoftAccounts().size() == 0) {
+            return new ArrayList<Inbox>();
+        }
+
+        ArrayList<Inbox> inboxs = new ArrayList<Inbox>();
+
+        for (MicrosoftAccount acc : user.getMicrosoftAccounts()) {
+
+            ArrayList<Message> messages = getMessages(acc);
+
+            Inbox inb = new Inbox();
+            inb.setAccount(acc);
+            inb.setMessages(messages);
+
+            inboxs.add(inb);
+
+        }
+
+        return inboxs;
 
     }
 

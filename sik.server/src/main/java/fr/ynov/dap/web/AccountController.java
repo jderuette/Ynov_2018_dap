@@ -78,7 +78,7 @@ public class AccountController extends BaseController {
      * @param userKey user Key
      * @return Html page
      */
-    @RequestMapping(value = "/account/add/{userKey}", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/add/{userKey}") //, method = RequestMethod.POST)
     public AppUser addNewUser(@PathVariable final String userKey) {
 
         AppUser newUser = new AppUser();
@@ -104,7 +104,7 @@ public class AccountController extends BaseController {
      * @throws AddAccountFailedException Exception
      * @throws IOException Exception
      */
-    @RequestMapping(value = "/account/google/add/{gAccountName}/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/google/add/{gAccountName}/{userId}") //, method = RequestMethod.POST)
     public String addGoogleAccount(@PathVariable final String gAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
             throws GeneralSecurityException, UserNotFoundException, AddAccountFailedException, IOException {
@@ -178,7 +178,7 @@ public class AccountController extends BaseController {
      * @throws UserNotFoundException Exception
      * @throws IOException Exception
      */
-    @RequestMapping(value = "/account/microsoft/add/{msAccountName}/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/microsoft/add/{msAccountName}/{userId}") //, method = RequestMethod.POST
     public void addMicrosoftAccount(@PathVariable final String msAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
             throws UserNotFoundException, IOException {
@@ -195,8 +195,9 @@ public class AccountController extends BaseController {
         session.setAttribute(Constants.SESSION_EXPECTED_STATE, state);
         session.setAttribute(Constants.SESSION_EXPECTED_NONCE, nonce);
         session.setAttribute(Constants.SESSION_USER_ID, userId);
+        session.setAttribute(Constants.SESSION_ACCOUNT_NAME, msAccountName);
 
-        String redirectUrl = MicrosoftAccountService.getLoginUrl(state, nonce);
+        String redirectUrl = msAccountService.getLoginUrl(state, nonce);
 
         response.sendRedirect(redirectUrl);
 
@@ -213,19 +214,22 @@ public class AccountController extends BaseController {
      * @throws MissingSessionParameterException Exception.
      * @throws InvalidTokenException Exception.
      * @throws InvalidStateException Exception.
+     * @throws IOException Exception
      */
     @RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
             @RequestParam("state") final UUID state, final HttpServletRequest request) throws UserNotFoundException,
-            MissingSessionParameterException, InvalidTokenException, InvalidStateException {
+            MissingSessionParameterException, InvalidTokenException, InvalidStateException, IOException {
 
         HttpSession session = request.getSession();
 
         UUID expectedState = (UUID) session.getAttribute(Constants.SESSION_EXPECTED_STATE);
         UUID expectedNonce = (UUID) session.getAttribute(Constants.SESSION_EXPECTED_NONCE);
         String userId = (String) session.getAttribute(Constants.SESSION_USER_ID);
+        String accountName = (String) session.getAttribute(Constants.SESSION_ACCOUNT_NAME);
 
-        if (expectedNonce == null || expectedState == null || StrUtils.isNullOrEmpty(userId)) {
+        if (expectedNonce == null || expectedState == null || StrUtils.isNullOrEmpty(userId)
+                || StrUtils.isNullOrEmpty(accountName)) {
             throw new MissingSessionParameterException();
         }
 
@@ -235,8 +239,7 @@ public class AccountController extends BaseController {
 
             if (idTokenObj != null) {
 
-                TokenResponse tokenResponse = MicrosoftAccountService.getTokenFromAuthCode(code,
-                        idTokenObj.getTenantId());
+                TokenResponse tokenResponse = msAccountService.getTokenFromAuthCode(code, idTokenObj.getTenantId());
 
                 AppUser currentUser = appUserRepository.findByUserKey(userId);
 
@@ -249,6 +252,7 @@ public class AccountController extends BaseController {
                 msAccount.setTenantId(idTokenObj.getTenantId());
                 msAccount.setToken(tokenResponse);
                 msAccount.setEmail(idTokenObj.getEmail());
+                msAccount.setAccountName(accountName);
 
                 currentUser.addMicrosoftAccount(msAccount);
 

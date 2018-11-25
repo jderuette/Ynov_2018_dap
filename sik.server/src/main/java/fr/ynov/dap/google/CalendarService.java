@@ -21,7 +21,6 @@ import com.google.api.services.oauth2.model.Userinfoplus;
 
 import fr.ynov.dap.Constants;
 import fr.ynov.dap.comparator.SortByNearest;
-import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.model.AppUser;
 import fr.ynov.dap.model.google.GoogleAccount;
 import fr.ynov.dap.model.google.GoogleCalendarEvent;
@@ -88,12 +87,10 @@ public class CalendarService extends GoogleAPIService<Calendar> {
      * Get next user's event.
      * @param user DaP User
      * @return User's next event
-     * @throws NoNextEventException No next event for the current user.
      * @throws GeneralSecurityException Security exception
      * @throws IOException Exception
      */
-    public GoogleCalendarEvent getNextEvent(final AppUser user)
-            throws NoNextEventException, GeneralSecurityException, IOException {
+    public GoogleCalendarEvent getNextEvent(final AppUser user) throws GeneralSecurityException, IOException {
 
         if (user.getGoogleAccounts().size() == 0) {
             return null;
@@ -116,7 +113,7 @@ public class CalendarService extends GoogleAPIService<Calendar> {
         }
 
         if (events.size() == 0) {
-            throw new NoNextEventException();
+            return null;
         }
 
         Collections.sort(events, new SortByNearest());

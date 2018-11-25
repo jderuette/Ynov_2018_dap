@@ -1,5 +1,8 @@
 package fr.ynov.dap.microsoft.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -53,6 +56,14 @@ public class PagedResult<T> {
      */
     public void setValue(final T[] val) {
         this.value = val;
+    }
+
+    /**
+     * Get current values.
+     * @return Values
+     */
+    public ArrayList<T> toArrayList() {
+        return new ArrayList<T>(Arrays.asList(value));
     }
 
 }

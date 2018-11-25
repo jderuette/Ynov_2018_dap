@@ -15,18 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.contract.ApiEvent;
 import fr.ynov.dap.contract.AppUserRepository;
-import fr.ynov.dap.contract.TokenRepository;
+import fr.ynov.dap.contract.MicrosoftAccountRepository;
 import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.exception.NoNextEventException;
 import fr.ynov.dap.exception.UserNotFoundException;
 import fr.ynov.dap.google.CalendarService;
 import fr.ynov.dap.google.ContactService;
+import fr.ynov.dap.google.GMailService;
 import fr.ynov.dap.google.GoogleAccountService;
 import fr.ynov.dap.microsoft.service.MicrosoftAccountService;
 import fr.ynov.dap.microsoft.service.OutlookService;
 import fr.ynov.dap.model.AppUser;
 import fr.ynov.dap.model.Credential;
 import fr.ynov.dap.model.google.GoogleCalendarEvent;
+import fr.ynov.dap.model.microsoft.Inbox;
 import fr.ynov.dap.model.microsoft.MicrosoftCalendarEvent;
 
 /**
@@ -51,11 +53,11 @@ public class AdminController {
     private MicrosoftAccountService msAccountService;
 
     /**
-     * Instance of TokenRepository service.
+     * Instance of MicrosoftAccountRepository service.
      * Auto resolved by Autowire.
      */
     @Autowired
-    private TokenRepository tokenRepository;
+    private MicrosoftAccountRepository msAccountRepository;
 
     /**
      * Instance of Calendar service.
@@ -86,6 +88,13 @@ public class AdminController {
     private AppUserRepository appUserRepository;
 
     /**
+     * Instance of GMailService.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private GMailService gmailService;
+
+    /**
      * Method return a view to show every user stored on datastore.
      * @param model Model
      * @return Html page
@@ -99,7 +108,7 @@ public class AdminController {
 
         ArrayList<Credential> googleCredentials = googleAccountService.getStoredCredentials();
 
-        ArrayList<Credential> msCredentials = msAccountService.getStoredCredentials(tokenRepository);
+        ArrayList<Credential> msCredentials = msAccountService.getStoredCredentials(msAccountRepository);
 
         ArrayList<Credential> credentials = new ArrayList<>();
         credentials.addAll(googleCredentials);
@@ -153,7 +162,13 @@ public class AdminController {
         }
 
         if (events.size() == 0) {
-            throw new NoNextEventException();
+
+            model.addAttribute("userKnown", true);
+            model.addAttribute("event", null);
+            model.addAttribute("fragment", "fragments/admin_calendar");
+
+            return "base";
+
         }
 
         Collections.sort(events, new SortByNearest());
@@ -194,7 +209,7 @@ public class AdminController {
 
         nbUnreadMails += outlookService.getNbUnreadEmails(user);
 
-        nbUnreadMails += contactService.getNumberOfContacts(user);
+        nbUnreadMails += gmailService.getNbUnreadEmails(user);
 
         model.addAttribute("userKnown", true);
         model.addAttribute("count", nbUnreadMails);
@@ -236,6 +251,39 @@ public class AdminController {
         model.addAttribute("userKnown", true);
         model.addAttribute("count", nbContacts);
         model.addAttribute("fragment", "fragments/admin_contact");
+
+        return "base";
+
+    }
+
+    /**
+     * Get every mail from every microsoft account.
+     * @param model Model for page
+     * @param userId Id of current user
+     * @return Html page
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security Exception
+     */
+    @RequestMapping("/mails/list/{userId}")
+    public String mailsList(final ModelMap model, @PathVariable("userId") final String userId)
+            throws IOException, GeneralSecurityException {
+
+        AppUser user = appUserRepository.findByUserKey(userId);
+
+        if (user == null) {
+
+            model.addAttribute("userKnown", false);
+            model.addAttribute("fragment", "fragments/admin_mail_list");
+
+            return "base";
+
+        }
+
+        ArrayList<Inbox> inboxs = outlookService.getMessages(user);
+
+        model.addAttribute("userKnown", true);
+        model.addAttribute("inboxs", inboxs);
+        model.addAttribute("fragment", "fragments/admin_mail_list");
 
         return "base";
 

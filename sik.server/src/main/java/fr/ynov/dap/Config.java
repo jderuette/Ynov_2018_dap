@@ -1,5 +1,12 @@
 package fr.ynov.dap;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Properties;
+
+import fr.ynov.dap.exception.ConfigurationException;
 import fr.ynov.dap.utils.StrUtils;
 
 /**
@@ -20,11 +27,6 @@ public class Config {
     private static final String CREDENTIALS_FOLDER = "dap";
 
     /**
-     * Default config for client secret dir.
-     */
-    private static final String CLIENT_SECRET_DIR = "/web_credentials.json";
-
-    /**
      * Default config for application name.
      */
     private static final String APPLICATION_NAME = "HoC DaP";
@@ -33,6 +35,15 @@ public class Config {
      * Default config for datastore directory.
      */
     private static final String DATASTORE_DIRECTORY = System.getProperty("user.home");
+
+    private static final String GOOGLE_CREDENTIAL_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "credentials.json";
+
+    private static final String MICROSOFT_CREDENTIAL_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "auth.properties";
+
+    private static final String GLOBAL_CONFIG_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "dap_global_config.properties";
 
     /**
      * Store OAuth2 callback url.
@@ -45,11 +56,6 @@ public class Config {
     private String credentialsFolder = CREDENTIALS_FOLDER;
 
     /**
-     * Store filename of credentials.
-     */
-    private String clientSecretDir = CLIENT_SECRET_DIR;
-
-    /**
      * Store application name.
      */
     private String applicationName = APPLICATION_NAME;
@@ -59,22 +65,35 @@ public class Config {
      */
     private String datastoreDirectory = DATASTORE_DIRECTORY;
 
+    private String googleCredentialsPath = GOOGLE_CREDENTIAL_PATH;
+
+    private String microsoftCredentialsPath = MICROSOFT_CREDENTIAL_PATH;
+
+    private String microsoftAppId;
+
+    private String microsoftRedirectUrl;
+
+    private String microsoftAppPassword;
+
     /**
      * Default constructor.
+     * @throws IOException Exception
      */
-    public Config() {
-
+    public Config() throws IOException {
+        loadConfig();
     }
 
     /**
      * Default constructor.
      * @param dataStoreDirectory Directory path to store credential file
+     * @throws IOException Exception
      */
-    public Config(final String dataStoreDirectory) {
+    public Config(final String dataStoreDirectory) throws IOException {
         if (dataStoreDirectory != null) {
             String newPath = StrUtils.resolvePath(dataStoreDirectory);
             datastoreDirectory = newPath;
         }
+        loadConfig();
     }
 
     /**
@@ -118,27 +137,161 @@ public class Config {
     }
 
     /**
-     * Return client secret file.
-     * @return Client secret file
-     */
-    public String getClientSecretFile() {
-        return clientSecretDir;
-    }
-
-    /**
-     * Set new client secret file.
-     * @param clientSecretFile Client secret file
-     */
-    public void setClientSecretFile(final String clientSecretFile) {
-        clientSecretDir = clientSecretFile;
-    }
-
-    /**
      * Return OAuth2 CallBack Url.
      * @return OAuth2 CallBack Url
      */
     public String getOAuth2CallbackUrl() {
         return oAuth2CallbackUrl;
+    }
+
+    /**
+     * @return the googleCredentialsPath
+     */
+    public String getGoogleCredentialsPath() {
+        return googleCredentialsPath;
+    }
+
+    /**
+     * @param val the googleCredentialsPath to set
+     */
+    public void setGoogleCredentialsPath(final String val) {
+        this.googleCredentialsPath = val;
+    }
+
+    /**
+     * @return the microsoftCredentialsPath
+     */
+    public String getMicrosoftCredentialsPath() {
+        return microsoftCredentialsPath;
+    }
+
+    /**
+     * @param val the microsoftCredentialsPath to set
+     */
+    public void setMicrosoftCredentialsPath(final String val) {
+        this.microsoftCredentialsPath = val;
+    }
+
+    /**
+     * @return the microsoftAppId
+     */
+    public String getMicrosoftAppId() {
+        return microsoftAppId;
+    }
+
+    /**
+     * @param val the microsoftAppId to set
+     */
+    public void setMicrosoftAppId(final String val) {
+        this.microsoftAppId = val;
+    }
+
+    /**
+     * @return the microsoftRedirectUrl
+     */
+    public String getMicrosoftRedirectUrl() {
+        return microsoftRedirectUrl;
+    }
+
+    /**
+     * @param val the microsoftRedirectUrl to set
+     */
+    public void setMicrosoftRedirectUrl(final String val) {
+        this.microsoftRedirectUrl = val;
+    }
+
+    /**
+     * @return the microsoftAppPassword
+     */
+    public String getMicrosoftAppPassword() {
+        return microsoftAppPassword;
+    }
+
+    /**
+     * @param val the microsoftAppPassword to set
+     */
+    public void setMicrosoftAppPassword(final String val) {
+        this.microsoftAppPassword = val;
+    }
+
+    private void loadConfig() throws IOException {
+
+        InputStreamReader isr = loadGlobalConfig();
+
+        if (isr != null) {
+
+            Properties authProps = new Properties();
+
+            try {
+
+                authProps.load(isr);
+
+                oAuth2CallbackUrl = authProps.getProperty("dap.providers.google.callback_url");
+                credentialsFolder = authProps.getProperty("dap.providers.google.credentials_folder_name");
+                googleCredentialsPath = authProps.getProperty("dap.providers.google.api.credentials_path");
+
+                microsoftAppId = authProps.getProperty("dap.providers.microsoft.app_id");
+                microsoftAppPassword = authProps.getProperty("dap.providers.microsoft.app_password");
+                microsoftRedirectUrl = authProps.getProperty("dap.providers.microsoft.redirect_url");
+
+                applicationName = authProps.getProperty("dap.application_name");
+
+            } finally {
+
+                isr.close();
+
+            }
+
+        } else {
+
+            loadMicrosoftConfig();
+
+        }
+
+    }
+
+    /**
+     * Load configuration.
+     * @throws IOException Exception
+     */
+    protected void loadMicrosoftConfig() throws IOException {
+
+        InputStreamReader file = new InputStreamReader(new FileInputStream(getMicrosoftCredentialsPath()),
+                Charset.forName("UTF-8"));
+
+        if (file.ready()) {
+
+            Properties authProps = new Properties();
+
+            try {
+
+                authProps.load(file);
+
+                microsoftAppId = authProps.getProperty("appId");
+                microsoftAppPassword = authProps.getProperty("appPassword");
+                microsoftRedirectUrl = authProps.getProperty("redirectUrl");
+
+            } finally {
+
+                file.close();
+
+            }
+
+        } else {
+
+            throw new ConfigurationException();
+
+        }
+
+    }
+
+    private InputStreamReader loadGlobalConfig() throws IOException {
+        InputStreamReader file = new InputStreamReader(new FileInputStream(GLOBAL_CONFIG_PATH),
+                Charset.forName("UTF-8"));
+        if (file.ready()) {
+            return file;
+        }
+        return null;
     }
 
 }

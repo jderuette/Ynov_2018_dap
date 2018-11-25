@@ -1,14 +1,13 @@
 package fr.ynov.dap.microsoft.service;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import fr.ynov.dap.Config;
 import fr.ynov.dap.contract.MicrosoftAccountRepository;
+import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.microsoft.MicrosoftScopes;
 import fr.ynov.dap.microsoft.contract.TokenService;
 import fr.ynov.dap.microsoft.model.TokenResponse;
@@ -25,6 +24,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  *
  */
 public class OutlookAPIService {
+
+    /**
+     * Current configuration.
+     */
+    @Autowired
+    private Config config;
 
     /**
      * Current configuration.
@@ -50,70 +55,14 @@ public class OutlookAPIService {
             MicrosoftScopes.MAIL_READ_WRITE, MicrosoftScopes.CALENDARS_READ, MicrosoftScopes.CONTACTS_READ };
 
     /**
-     * store app id.
-     */
-    private static String appId = null;
-
-    /**
-     * Store app password.
-     */
-    private static String appPassword = null;
-
-    /**
-     * Store redirect url.
-     */
-    private static String redirectUrl = null;
-
-    /**
      * Default constructor.
      */
     public OutlookAPIService() {
 
     }
 
-    /**
-     * Get app id or load config.
-     * @return App id
-     */
-    protected static String getAppId() {
-        if (appId == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return appId;
-    }
-
-    /**
-     * Get app password or load config.
-     * @return App password
-     */
-    protected static String getAppPassword() {
-        if (appPassword == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return appPassword;
-    }
-
-    /**
-     * Get redirect url or load config.
-     * @return Redirect url
-     */
-    protected static String getRedirectUrl() {
-        if (redirectUrl == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return redirectUrl;
+    public Config getConfig() {
+        return config;
     }
 
     /**
@@ -129,67 +78,43 @@ public class OutlookAPIService {
     }
 
     /**
-     * Load configuration.
-     * @throws IOException Exception
-     */
-    protected static void loadConfig() throws IOException {
-        String authConfigFile = "auth.properties";
-        InputStream authConfigStream = MicrosoftAccountService.class.getClassLoader()
-                .getResourceAsStream(authConfigFile);
-
-        if (authConfigStream != null) {
-            Properties authProps = new Properties();
-            try {
-                authProps.load(authConfigStream);
-                appId = authProps.getProperty("appId");
-                appPassword = authProps.getProperty("appPassword");
-                redirectUrl = authProps.getProperty("redirectUrl");
-            } finally {
-                authConfigStream.close();
-            }
-        } else {
-            throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
-        }
-    }
-
-    /**
      * Retrieve token from auth code.
      * @param authCode AuthCode
      * @param tenantId TenantId
      * @return Token response
+     * @throws IOException Exception
      */
-    public static TokenResponse getTokenFromAuthCode(final String authCode, final String tenantId) {
-        // Create a logging interceptor to log request and responses
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public TokenResponse getTokenFromAuthCode(final String authCode, final String tenantId) throws IOException {
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        // Create and configure the Retrofit object
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
-
-        // Generate the token service
-        TokenService tokenService = retrofit.create(TokenService.class);
-
-        try {
-            Response<TokenResponse> resp = tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(),
-                    getAppPassword(), "authorization_code", authCode, getRedirectUrl()).execute();
-            return resp.body();
-        } catch (IOException e) {
-            TokenResponse error = new TokenResponse();
-            error.setError("IOException");
-            error.setErrorDescription(e.getMessage());
-            return error;
+        if (config == null) {
+            throw new NoConfigurationException();
         }
+
+        TokenService tokenService = createTokenService();
+
+        String appId = config.getMicrosoftAppId();
+        String appPassword = config.getMicrosoftAppPassword();
+        String redirectUrl = config.getMicrosoftRedirectUrl();
+
+        Response<TokenResponse> resp = tokenService
+                .getAccessTokenFromAuthCode(tenantId, appId, appPassword, "authorization_code", authCode, redirectUrl)
+                .execute();
+
+        return resp.body();
+
     }
 
     /**
      * Check if token need to be refresh and refresh it if needed.
      * @param msAcc User Microsoft account
      * @return New token
+     * @throws IOException Exception
      */
-    public static TokenResponse ensureTokens(final MicrosoftAccount msAcc) {
+    public TokenResponse ensureTokens(final MicrosoftAccount msAcc) throws IOException {
+
+        if (config == null) {
+            throw new NoConfigurationException();
+        }
 
         if (msAcc == null) {
             return null;
@@ -206,29 +131,16 @@ public class OutlookAPIService {
 
         } else {
 
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            TokenService tokenService = createTokenService();
 
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            String appId = config.getMicrosoftAppId();
+            String appPassword = config.getMicrosoftAppPassword();
+            String redirectUrl = config.getMicrosoftRedirectUrl();
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
-                    .addConverterFactory(JacksonConverterFactory.create()).build();
+            TokenResponse newToken = tokenService.getAccessTokenFromRefreshToken(tenantId, appId, appPassword,
+                    "refresh_token", tokens.getRefreshToken(), redirectUrl).execute().body();
 
-            TokenService tokenService = retrofit.create(TokenService.class);
-
-            try {
-
-                TokenResponse newToken = tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(),
-                        getAppPassword(), "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
-
-                return newToken;
-
-            } catch (IOException e) {
-                TokenResponse error = new TokenResponse();
-                error.setError("IOException");
-                error.setErrorDescription(e.getMessage());
-                return error;
-            }
+            return newToken;
 
         }
 
@@ -238,14 +150,29 @@ public class OutlookAPIService {
      * Get a token. Refresh it if needed and save it on database.
      * @param msAcc User Microsoft account
      * @return New token from Microsoft Graph API
+     * @throws IOException Exception
      */
-    public final TokenResponse getToken(final MicrosoftAccount msAcc) {
-        TokenResponse newTokens = OutlookAPIService.ensureTokens(msAcc);
+    public final TokenResponse getToken(final MicrosoftAccount msAcc) throws IOException {
+        TokenResponse newTokens = ensureTokens(msAcc);
         if (newTokens != null) {
             msAcc.setToken(newTokens);
             msAccountRepository.save(msAcc);
         }
         return newTokens;
+    }
+
+    public final TokenService createTokenService() {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        return retrofit.create(TokenService.class);
+
     }
 
 }

@@ -35,6 +35,11 @@ public class Credential {
     private CredentialTypeEnum type;
 
     /**
+     * Store tenant id for API which use it.
+     */
+    private String tenantId = "";
+
+    /**
      * @return the userId
      */
     public String getUserId() {
@@ -102,6 +107,20 @@ public class Credential {
      */
     public void setType(final CredentialTypeEnum val) {
         this.type = val;
+    }
+
+    /**
+     * @return the tenantId
+     */
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    /**
+     * @param val the tenantId to set
+     */
+    public void setTenantId(final String val) {
+        this.tenantId = val;
     }
 
 }

@@ -1,5 +1,7 @@
 package fr.ynov.dap;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
@@ -30,9 +32,10 @@ public class Launcher {
     /**
      * Return current API configuration.
      * @return Configuration
+     * @throws IOException Exception
      */
     @Bean
-    public Config loadConfig() {
+    public Config loadConfig() throws IOException {
         return new Config();
     }
 

@@ -44,4 +44,9 @@ public final class Constants {
      */
     public static final int SECOND_TO_MILLISECOND = 1000;
 
+    /**
+     * Represent the number of email to load.
+     */
+    public static final int NUMBER_OF_MAILS = 10;
+
 }
