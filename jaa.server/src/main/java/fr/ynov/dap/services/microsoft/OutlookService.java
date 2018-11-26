@@ -18,17 +18,28 @@ public interface OutlookService {
       @Query("$top") Integer maxResults
     );
 
+    @GET("/v1.0/me/mailfolders/{folderid}/messages")
+    Call<PagedResult<Message>> getMessages(
+      @Path("folderid") String folderId,
+      @Query("$orderby") String orderBy,
+      @Query("$select") String select,
+      @Query("$top") Integer maxResults,
+      @Query("$filter") String filter,
+      @Query("count") Boolean count
+    );
+
     @GET("/v1.0/me/events")
     Call<PagedResult<Event>> getEvents(
           @Query("$orderby") String orderBy,
           @Query("$select") String select,
           @Query("$top") Integer maxResults
     );
-    
+
     @GET("/v1.0/me/contacts")
     Call<PagedResult<Contact>> getContacts(
         @Query("$orderby") String orderBy,
         @Query("$select") String select,
-        @Query("$top") Integer maxResults
+        @Query("$top") Integer maxResults,
+        @Query("$count") Boolean count
     );
   }

@@ -10,7 +10,7 @@ import fr.ynov.dap.exceptions.AuthorizationException;
  * @author adrij
  *
  */
-public abstract class GoogleController {
+public abstract class DapController {
     /**
      *  Handle authorization exception.
      * @param ex exception

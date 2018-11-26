@@ -23,7 +23,7 @@ import fr.ynov.dap.exceptions.ServiceException;
  *
  */
 @Service
-public final class CalendarService extends GoogleService {
+public final class GCalendarService extends GoogleService {
     /**
      * Logger used for logs.
      */

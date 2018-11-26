@@ -7,19 +7,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.ynov.dap.services.google.PeopleGoogleService;
+import fr.ynov.dap.services.microsoft.MicrosoftContactService;
 
 /**
- * @author adrij
- *
+ * ContactController that uses the google and the Microsoft api.
  */
 @RestController
 @RequestMapping("/people")
-public class PeopleController extends GoogleController {
+public class ContactController {
+
     /**
-     * get peopleGoogleService with Spring.
+     * Get the peopleGoogleService with Spring.
      */
     @Autowired
-    private PeopleGoogleService peopleService;
+    private PeopleGoogleService googlePeopleService;
+
+    /**
+     * Get the MicrosoftContactService with Spring.
+     */
+    @Autowired
+    private MicrosoftContactService microsoftContactService;
 
     /**
      * Get near Event from now.
@@ -29,7 +36,9 @@ public class PeopleController extends GoogleController {
      */
     @RequestMapping(value = "/number", method = RequestMethod.GET)
     public Integer getNumberOfPeople(@RequestParam("userKey") final String userKey) throws Exception {
-        return peopleService.getNumberOfContacts(userKey);
+        Integer numberOfAllGoogleContacts = googlePeopleService.getNumberOfAllContactsOfAllAccount(userKey);
+        Integer numberOfAllMicrosoftContacts = microsoftContactService.getNumberOfAllContacts(userKey);
+        return numberOfAllGoogleContacts + numberOfAllMicrosoftContacts;
     }
 
 }

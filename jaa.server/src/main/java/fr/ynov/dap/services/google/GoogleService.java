@@ -23,6 +23,7 @@ import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import fr.ynov.dap.Config;
+import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.exceptions.AuthorizationException;
 
 /**
@@ -34,6 +35,19 @@ public abstract class GoogleService {
      * Logger used for logs.
      */
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * AppUserRepository instantiate thanks to the injection of dependency.
+     */
+    @Autowired
+    private AppUserRepository repository;
+    /**
+     * AppUser getter.
+     * @return used by the child googleServices.
+     */
+    protected AppUserRepository getRepository() {
+        return repository;
+    }
 
     /**
      * config used by GoogleService.

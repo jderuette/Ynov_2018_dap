@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.api.client.auth.oauth2.StoredCredential;
 
 import fr.ynov.dap.services.google.GoogleAuthorizationFlowService;
-import fr.ynov.dap.web.api.GoogleController;
+import fr.ynov.dap.web.api.DapController;
 
 /**
  * @author adrij
  *
  */
 @Controller
-public class GoogleAutorisationFlowController extends GoogleController {
+public class GoogleAutorisationFlowController extends DapController {
 
     /**
      * Instantiate GoogleAuthorizationFlow using injection of dependency.

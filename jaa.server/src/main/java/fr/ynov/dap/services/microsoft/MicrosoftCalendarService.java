@@ -12,13 +12,13 @@ import fr.ynov.dap.microsoft.auth.TokenResponse;
  * Microsoft Calendar Service.
  */
 @Service
-public class CalendarService extends MicrosoftService {
+public class MicrosoftCalendarService extends MicrosoftService {
 
     /**
      * Constructor.
      * @param key You have to provide the userKey of the AppUser to use.
      */
-    public CalendarService(final String key) {
+    public MicrosoftCalendarService(final String key) {
         super(key);
     }
 
@@ -37,7 +37,7 @@ public class CalendarService extends MicrosoftService {
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         String sortByStartTimeInDescendingOrder = "start/dateTime DESC";
-        String properties = "organizer,subject,start,end";
+        String properties = "organizer,subject,start,end,isOrganizer";
         Integer maxResults = 10;
 
         try {

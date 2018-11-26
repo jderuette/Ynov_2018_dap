@@ -6,32 +6,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.api.services.calendar.model.Event;
-
-import fr.ynov.dap.services.google.CalendarService;
+import fr.ynov.dap.services.google.GCalendarService;
+import fr.ynov.dap.services.microsoft.MicrosoftCalendarService;
 
 /**
- * @author adrij
- *
+ * CalendarController of the application that uses the Google and the Microsoft API.
  */
 @RestController
 @RequestMapping("/calendar")
-public class CalendarController {
+public class CalendarController extends DapController {
     /**
-     * get the calendar service thanks Spring.
+     * Get the google calendar service thanks Spring.
      */
     @Autowired
-    private CalendarService calendarService;
+    private GCalendarService googleCalendarService;
 
+    /**
+     * Get the Microsoft calendar thanks to Spring.
+     */
+    @Autowired
+    private MicrosoftCalendarService microsoftCalendarService;
 
     /**
      * Get the next Event from now.
      * @param userKey user key needed for authentication
-     * @return near event from now
+     * @return near event from now.
+     * It's an object because we can't now if we will get a Google or a Microsoft event.
      * @throws Exception exception
      */
     @RequestMapping(value = "/event/next", method = RequestMethod.GET)
-    public Event getNextEvent(@RequestParam("userKey") final String userKey) throws Exception {
-        return calendarService.getNextEventForAllAccount(userKey);
+    public Object getNextEvent(@RequestParam("userKey") final String userKey) throws Exception {
+        return googleCalendarService.getNextEventForAllAccount(userKey);
     }
+
 }

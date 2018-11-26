@@ -27,7 +27,24 @@ public class Event {
      * End of the event.
      */
     private DateTimeTimeZone end;
-
+    /**
+     * Is the organizer of the event.
+     */
+    private Boolean isOrganizer;
+    /**
+     * IsOrganizer getter.
+     * @return If you are the organizer of the event.
+     */
+    public Boolean getIsOrganizer() {
+        return isOrganizer;
+    }
+    /**
+     * IsOrganizer setter.
+     * @param isOrganize if you are the organizer of the event.
+     */
+    public void setIsOrganizer(final Boolean isOrganize) {
+        this.isOrganizer = isOrganize;
+    }
     /**
      * Id getter.
      * @return id.

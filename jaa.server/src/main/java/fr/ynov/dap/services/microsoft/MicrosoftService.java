@@ -42,6 +42,14 @@ public abstract class MicrosoftService {
     private AppUserRepository repository;
 
     /**
+     * Protected repository getter.
+     * @return the AppUser repository.
+     */
+    protected AppUserRepository getRepository() {
+        return repository;
+    }
+
+    /**
      * userKey of the AppUser. It's used to get credentials data.
      */
     private String userKey;
