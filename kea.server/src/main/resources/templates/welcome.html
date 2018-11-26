@@ -3,20 +3,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
-
 <meta name="description" content="The Dap trainning project admin" />
-
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Data Access Project" />
-
-<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
-
-<title th:text="#{admin.title}"></title>
-
+<div th:replace="~{fragments/ressources :: ressources}"></div>
+<title th:text="#{welcome.title}"></title>
 </head>
-<body>
-<h1> welcome home</h1>
 
-<div><span th:text="#{email.yh}"></span>&nbsp;<span th:text="${nbEmails}"></span>&nbsp;<span th:text="#{email.nb}"></span></div>
+<body>
+	<div th:insert="~{fragments/header :: header}"></div>
+	<h1 th:text="#{index.welcome}"></h1>
+	<div th:text="#{welcome.description}"></div>
+	<div th:text="#{welcome.todo}"></div>
+	<br><br>
+	<a class="btn btn-primary" href="/user/add/registerForm" th:text="#{account.newdap}"></a>
+
+	<!-- <div><span th:text="#{email.yh}"></span>&nbsp;<span th:text="${nbEmails}"></span>&nbsp;<span th:text="#{email.nb}"></span></div>-->
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

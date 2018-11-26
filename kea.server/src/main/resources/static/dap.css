@@ -1,1 +1,16 @@
 h1 {color:purple;}
+
+.footer_bottom{
+	width: 100%;
+	position: absolute;
+	background-color: rgb(150,150,150);
+	padding-top: 15px;
+	padding-bottom:15px;
+	color: white;
+	bottom: 0;
+}
+
+.teacher_message{
+	font-size: 1.3em;
+	color: red;
+}

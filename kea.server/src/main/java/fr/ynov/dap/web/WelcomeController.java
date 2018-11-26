@@ -8,8 +8,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * This controller is used for the welcomePage before being connected.
+ * @author Antoine
+ *
+ */
 @Controller
-public class Welcome {
+public class WelcomeController {
 
   /**
    * the gmail service from fr.ynov.dap.

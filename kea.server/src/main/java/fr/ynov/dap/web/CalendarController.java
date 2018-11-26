@@ -10,11 +10,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * A controller to display datas form the googleCalendar API.
+ * @author Antoine
+ *
+ */
 @RestController
 public class CalendarController {
 
+  /**
+   * The service to access googleCalendar API.
+   */
   @Autowired
-  CalendarService calendarService;
+  private CalendarService calendarService;
+
+  /**
+   * get the calendarService.
+   * @return the calendarService
+   */
+  public CalendarService getCalendarService() {
+    return calendarService;
+  }
 
   /**
      * Concatenate all events in the list in one string to display in view.
@@ -24,7 +40,7 @@ public class CalendarController {
      */
   @RequestMapping("/events/nextEvents/{userKey}")
   @ResponseBody
-  public String eventsToString(@PathVariable String userId)
+  public String eventsToString(final @PathVariable String userId)
       throws IOException {
     List<Event> listeEvents = calendarService.get2nextEvents(userId);
     String stringRes = "Prochains évènements :<br><br>";

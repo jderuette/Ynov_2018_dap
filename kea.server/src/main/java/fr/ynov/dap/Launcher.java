@@ -38,7 +38,7 @@ public class Launcher {
    * @throws IOException nothing special
    * @throws GeneralSecurityException nothing special
    */
-  public static void main(String[] args)
+  public static void main(final String[] args)
       throws IOException, GeneralSecurityException {
     SpringApplication.run(Launcher.class, args);
   }

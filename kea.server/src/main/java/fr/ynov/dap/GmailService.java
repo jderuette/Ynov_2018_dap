@@ -24,6 +24,9 @@ public class GmailService extends GoogleService {
    * The gmail service to use the google API.
    */
   private Gmail gmailService = null;
+  /**
+   * the object used to report in log.
+   */
   private static final Logger LOGGER = LogManager
       .getLogger(GoogleService.class);
 
@@ -63,7 +66,7 @@ public class GmailService extends GoogleService {
    * @return an integer that tells you how many mails unread you have
    * @throws IOException nothing special
    */
-  public int getUnreadMessageCount(String userKey) throws IOException {
+  public int getUnreadMessageCount(final String userKey) throws IOException {
     gmailService = getService(userKey);
     ListMessagesResponse listMessagesResponse = gmailService.users().messages()
         .list(getUser())

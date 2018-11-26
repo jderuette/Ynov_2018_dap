@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<title th:text="#{app.mails}"></title>
+<div th:replace="~{fragments/ressources :: ressources}"></div>
+</head>
+<body>
+	<div class="header_container" th:insert="~{fragments/header :: header}"></div>
+	<h1><span th:text="#{mails.title}"></span>&nbsp;<span th:text="${username}"></span></h1>
+	<div class="container"><span th:text="#{email.yh}"></span>&nbsp;<span th:text="${nbUnread}"></span>&nbsp;<span th:text="#{email.nb}"></span><span th:text="#{email.parmi}"></span>&nbsp;<span th:text="${nbAccount}"></span>&nbsp;<span th:text="#{email.account}"></span></div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

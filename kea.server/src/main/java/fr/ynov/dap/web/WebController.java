@@ -1,7 +1,7 @@
-package fr.ynov.dap;
+package fr.ynov.dap.web;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Antoine
  *
  */
-@RestController
+@Controller
 public class WebController {
 
+  /**
+   * Renders the template "index.html".
+   * @return a string that references a template
+   */
   @RequestMapping("/")
   public String index() {
-    return "Greetings from Spring Boot!";
+    return "welcome";
   }
 }

@@ -14,5 +14,5 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
    * @param userId generated in AppUser
    * @return the user with the id(userKey)
    */
-  public AppUser findByUserKey(String userId);
+  AppUser findByUserKey(String userId);
 }
