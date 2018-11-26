@@ -8,6 +8,7 @@
 	</h2>
 	<thead>
 		<tr>
+			<th></th>
 	      	<th th:text="#{admin.mails_list.table.from}">From</th>
 	      	<th th:text="#{admin.mails_list.table.subject}">Subject</th>
 	      	<th th:text="#{admin.mails_list.table.received_at}">Received</th>
@@ -16,6 +17,14 @@
 	</thead>
 	<tbody>
 		<tr th:each="message : ${inbox.messages}">
+			<td>
+				<span class="badge badge-danger" th:if="${message.isRead} == false">
+					<i class="far fa-envelope"></i>
+				</span>
+				<span class="badge badge-primary" th:if="${message.isRead} == true">
+					<i class="far fa-envelope-open"></i>
+				</span>
+			</td>
         	<td scope="row" th:text="${{message.from.emailAddress.address}}">XXX</td>
         	<td scope="row" th:text="${{message.subject}}">XXX</td>
         	<td scope="row" th:text="${#dates.format(message.receivedDateTime, 'dd/MM/yyyy HH:mm')}">XXX</td>
