@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.services.calendar.model.Event;
+
 import fr.ynov.dap.services.google.GCalendarService;
 import fr.ynov.dap.services.microsoft.MicrosoftCalendarService;
 
@@ -36,7 +38,27 @@ public class CalendarController extends DapController {
      */
     @RequestMapping(value = "/event/next", method = RequestMethod.GET)
     public Object getNextEvent(@RequestParam("userKey") final String userKey) throws Exception {
-        return googleCalendarService.getNextEventForAllAccount(userKey);
-    }
+        Event googleEvent = googleCalendarService.getNextEventForAllAccount(userKey);
+        fr.ynov.dap.services.microsoft.Event microsoftEvent =
+                microsoftCalendarService.getNextEventsOfAllAccount(userKey);
 
+        if (googleEvent == null && microsoftEvent == null) {
+            return null;
+        }
+
+        if (googleEvent == null && microsoftEvent != null) {
+            return microsoftEvent;
+        }
+
+        if (microsoftEvent == null && googleEvent != null) {
+            return googleEvent;
+        }
+
+        if (googleEvent.getStart().getDateTime().getValue() < microsoftEvent.getStart().getDateTime().getTime()) {
+            return googleEvent;
+        }
+        else {
+            return microsoftEvent;
+        }
+    }
 }

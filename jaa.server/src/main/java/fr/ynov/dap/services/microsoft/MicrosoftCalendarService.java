@@ -1,9 +1,12 @@
 package fr.ynov.dap.services.microsoft;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.exceptions.ServiceException;
 import fr.ynov.dap.microsoft.auth.TokenResponse;
@@ -28,7 +31,7 @@ public class MicrosoftCalendarService extends MicrosoftService {
      * @return ResultPages that contains the events (Event) of the specified Microsoft Account.
      * @throws ServiceException exception of this service.
      */
-    public PagedResult<Event> getEvents(final MicrosoftAccount account) throws ServiceException {
+    public Event getNextEvent(final MicrosoftAccount account) throws ServiceException {
         getLog().info("Try to get microsoft events with accountName=" + account.getAccountName());
 
         TokenResponse tokens = getTokens(account);
@@ -44,11 +47,46 @@ public class MicrosoftCalendarService extends MicrosoftService {
           PagedResult<Event> events = outlookService.getEvents(
               sortByStartTimeInDescendingOrder, properties, maxResults)
               .execute().body();
-          return events;
+          if (events.getValue() == null) {
+              return null;
+          }
+          return events.getValue()[0];
         } catch (IOException ioe) {
             getLog().error("An occured while trying to get microsoft events from the API.", ioe);
             throw new ServiceException("Get Microsoft events failed.", ioe);
         }
+    }
+
+    /**
+     * Get the next event of all Microsoft account.
+     * @param userKey user key.
+     * @return the next event.
+     * @throws ServiceException
+     */
+    public Event getNextEventsOfAllAccount(final String userKey) throws ServiceException {
+        AppUser appUser = getRepository().findByUserKey(userKey);
+        List<MicrosoftAccount> accounts = appUser.getMicrosoftAccounts();
+        List<Event> events = new ArrayList<Event>();
+
+        for (MicrosoftAccount account : accounts) {
+            Event event = getNextEvent(account);
+            if (event != null) {
+                events.add(event);
+            }
+        }
+
+        if (events.isEmpty()) {
+            return null;
+        }
+
+        Event nextEvent = events.get(0);
+        for (Event event : events) {
+            if (event.getStart().getDateTime().getTime() < nextEvent.getStart().getDateTime().getTime()) {
+                nextEvent = event;
+            }
+        }
+
+        return nextEvent;
     }
 
 }

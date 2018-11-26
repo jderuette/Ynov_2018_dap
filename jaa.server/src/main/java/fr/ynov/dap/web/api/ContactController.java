@@ -14,7 +14,7 @@ import fr.ynov.dap.services.microsoft.MicrosoftContactService;
  */
 @RestController
 @RequestMapping("/people")
-public class ContactController {
+public class ContactController extends DapController {
 
     /**
      * Get the peopleGoogleService with Spring.

@@ -12,8 +12,16 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * OutlookServiceBuilder, used to create the OutlookService.
+ */
 public class OutlookServiceBuilder {
-
+    /**
+     * Create the Outlook service.
+     * @param accessToken access token.
+     * @param userEmail email of the user.
+     * @return Outlook service.
+     */
     public static OutlookService getOutlookService(String accessToken, String userEmail) {
         // Create a request interceptor to add headers that belong on
         // every request
@@ -32,18 +40,15 @@ public class OutlookServiceBuilder {
             }
         };
 
-        // Create a logging interceptor to log request and responses
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(requestInterceptor)
                 .addInterceptor(loggingInterceptor).build();
 
-        // Create and configure the Retrofit object
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://graph.microsoft.com").client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
-        // Generate the token service
         return retrofit.create(OutlookService.class);
     }
 }
