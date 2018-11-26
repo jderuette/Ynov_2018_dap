@@ -1,0 +1,24 @@
+<table xmlns:th="http://www.thymeleaf.org">
+    <div th:text="${error}"></div>
+    <div th:text="${nbUnread}"></div>
+
+    <tr>
+        <th>Id</th>
+        <!--<th>Received at </th>-->
+        <!--&lt;!&ndash;<th>From address </th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>From name </th>&ndash;&gt;-->
+        <!--<th>Is read</th>-->
+        <!--<th>Subject</th>-->
+        <!--<th>Body</th>-->
+    </tr>
+    <tr th:each="message : ${messages}">
+        <!--<td th:text="${message.id}"></td>-->
+        <!--<td th:text="${message.receivedDateTime}"></td>-->
+        <!--&lt;!&ndash;<td th:text="${message.fromAddress}"></td>&ndash;&gt;-->
+        <!--&lt;!&ndash;<td th:text="${message.fromName}"></td>&ndash;&gt;-->
+        <!--<td th:text="${message.isRead}"></td>-->
+        <!--<td th:text="${message.subject}"></td>-->
+        <!--<td th:text="${message.bodyPreview}"></td>-->
+        <td th:text="${message.getFrom().getEmailAddress().getName()}"></td>
+    </tr>
+</table>
