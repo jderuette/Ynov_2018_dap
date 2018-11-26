@@ -14,6 +14,9 @@ import java.util.*;
 @Service
 public class UserService {
 
+    /**
+     * Autowired UserRepository
+     */
     @Autowired
     private UserRepository userRepository;
 

@@ -1,4 +1,4 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.*;
@@ -16,6 +16,9 @@ import java.util.*;
 @Service
 public class CalendarService {
 
+    /**
+     * Autowired GoogleHelper
+     */
     @Autowired
     private GoogleHelper googleHelper;
 

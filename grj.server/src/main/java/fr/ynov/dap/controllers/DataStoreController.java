@@ -17,9 +17,19 @@ import java.util.*;
 @Controller
 public class DataStoreController {
 
+    /**
+     * Autowired DataStoreService
+     */
     @Autowired
     private DataStoreService dataStoreService;
 
+    /**
+     * Return the data stored in StoredCredential
+     *
+     * @param model Model
+     * @return Data store view
+     * @throws IOException Exception
+     */
     @RequestMapping("/data-store")
     public String dataStore(ModelMap model) throws IOException {
 

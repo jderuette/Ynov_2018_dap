@@ -12,6 +12,9 @@ import java.util.Map;
 @RestController
 public class UserController {
 
+    /**
+     * Autowired UserService
+     */
     @Autowired
     private UserService userService;
 

@@ -8,12 +8,24 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+/**
+ * DataStoreService
+ */
 @Service
 public class DataStoreService {
 
+    /**
+     * Autowired GoogleHelper
+     */
     @Autowired
     GoogleHelper googleHelper;
 
+    /**
+     * Get data store credential
+     *
+     * @return DataStore of StoredCredential
+     * @throws IOException Exception
+     */
     public DataStore<StoredCredential> getDataStore() throws IOException {
         return googleHelper.getFlow().getCredentialDataStore();
     }

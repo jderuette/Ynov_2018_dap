@@ -1,10 +1,11 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import com.google.api.client.auth.oauth2.*;
+import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import fr.ynov.dap.helpers.GoogleHelper;
 import fr.ynov.dap.models.*;
-import fr.ynov.dap.repositories.*;
+import fr.ynov.dap.repositories.UserRepository;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+/**
+ * GoogleAccountService
+ */
 @Service
 public class GoogleAccountService extends GoogleHelper {
 
-    private static final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
-
+    /**
+     * Autowired GoogleHelper
+     */
     @Autowired
     private GoogleHelper googleHelper;
 
+    /**
+     * Autowired UserRepository
+     */
     @Autowired
     private UserRepository userRepository;
 
+    private static final Logger  LOG                      = LogManager.getLogger(GoogleAccountService.class);
     private static final String  OAUTH_CALLBACK_URL       = "/oAuth2Callback";
     private static final Integer SENSIBLE_DATA_FIRST_CHAR = 3;
     private static final Integer SENSIBLE_DATA_LAST_CHAR  = 8;

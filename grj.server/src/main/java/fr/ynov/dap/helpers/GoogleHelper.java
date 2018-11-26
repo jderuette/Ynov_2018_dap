@@ -12,7 +12,7 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.*;
 import com.google.api.services.people.v1.*;
 import fr.ynov.dap.*;
-import fr.ynov.dap.services.GoogleAccountService;
+import fr.ynov.dap.services.google.GoogleAccountService;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,9 +30,15 @@ import java.util.*;
 @Component
 public class GoogleHelper {
 
+    /**
+     * Autowired Configuration
+     */
     @Autowired
     private Configuration configuration;
 
+    /**
+     * Autowired GoogleAccountService
+     */
     @Autowired
     private GoogleAccountService googleAccountService;
 
@@ -41,6 +47,9 @@ public class GoogleHelper {
     private              NetHttpTransport HTTP_TRANSPORT;
     private static final Logger           LOG = LogManager.getLogger(GoogleHelper.class);
 
+    /**
+     * GoogleHelper default constructor
+     */
     public GoogleHelper() {
         JSON_FACTORY = JacksonFactory.getDefaultInstance();
         SCOPES = Arrays.asList(GmailScopes.GMAIL_LABELS, CalendarScopes.CALENDAR_READONLY, PeopleServiceScopes.CONTACTS_READONLY);

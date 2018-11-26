@@ -1,9 +1,8 @@
-package fr.ynov.dap.controllers;
+package fr.ynov.dap.controllers.google;
 
-import com.google.api.services.calendar.model.Event;
 import fr.ynov.dap.models.*;
 import fr.ynov.dap.repositories.UserRepository;
-import fr.ynov.dap.services.CalendarService;
+import fr.ynov.dap.services.google.CalendarService;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +18,28 @@ import java.util.*;
 @RestController
 public class CalendarController {
 
+    /**
+     * Autowired CalendarService class
+     */
     @Autowired
     private CalendarService calendarService;
 
+    /**
+     * Autowired UserRepository class
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Log4j logger
+     */
     private final static Logger LOGGER = LogManager.getLogger(CalendarController.class);
 
     /**
-     * Return the next event
+     * Retrieve the next event of all google account of a user.
      *
-     * @param userName userKey to log
-     * @return HashMap with the next event
+     * @param userName name of the user to retrieve
+     * @return Map with the next event
      * @throws GeneralSecurityException Exception
      * @throws IOException              Exception
      */
@@ -40,8 +48,14 @@ public class CalendarController {
 
         Map<String, String> response = new HashMap<>();
 
-        User                user                  = userRepository.findByName(userName);
-        List<GoogleAccount> userGoogleAccountList = user.getAccounts();
+        User user = userRepository.findByName(userName);
+
+        if (user == null) {
+            response.put("error", "User does not exist");
+            return response;
+        }
+
+        List<GoogleAccount> userGoogleAccountList = user.getGoogleAccountList();
 
         for (GoogleAccount currentGoogleAccount : userGoogleAccountList) {
             Map<String, String> currentNextEvent = calendarService.getNextEvent(currentGoogleAccount.getName());

@@ -1,8 +1,8 @@
-package fr.ynov.dap.controllers;
+package fr.ynov.dap.controllers.google;
 
 import fr.ynov.dap.helpers.GoogleHelper;
 import fr.ynov.dap.repositories.UserRepository;
-import fr.ynov.dap.services.GoogleAccountService;
+import fr.ynov.dap.services.google.GoogleAccountService;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +17,24 @@ import javax.servlet.http.*;
 @Controller
 public class GoogleAccountController extends GoogleHelper {
 
+    /**
+     * Autowired GoogleAccountService
+     */
     @Autowired
     private GoogleAccountService googleAccountService;
 
+    /**
+     * Autowired UserRepository
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Autowired GoogleHelper
+     */
     @Autowired
     private GoogleHelper googleHelper;
+
 
     private static final Logger LOGGER             = LogManager.getLogger(GoogleAccountController.class);
     private static final String OAUTH_CALLBACK_URL = "/oAuth2Callback";
