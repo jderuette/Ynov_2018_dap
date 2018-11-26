@@ -35,8 +35,6 @@ public final class OutlookServiceBuilder {
      */
     public static OutlookApiService getOutlookService(final String accessToken, final String userEmail) {
 
-        // Create a request interceptor to add headers that belong on
-        // every request
         Interceptor requestInterceptor = new Interceptor() {
             @Override
             public Response intercept(final Interceptor.Chain chain) throws IOException {
@@ -52,18 +50,15 @@ public final class OutlookServiceBuilder {
             }
         };
 
-        // Create a logging interceptor to log request and responses
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(requestInterceptor)
                 .addInterceptor(loggingInterceptor).build();
 
-        // Create and configure the Retrofit object
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://graph.microsoft.com").client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
-        // Generate the token service
         return retrofit.create(OutlookApiService.class);
 
     }

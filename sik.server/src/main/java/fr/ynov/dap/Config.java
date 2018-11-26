@@ -66,6 +66,12 @@ public class Config {
     private String microsoftAppPassword;
 
     /**
+     * Store Microsoft Authority Url.
+     */
+    @Value("${dap.providers.microsoft.authority_url}")
+    private String microsoftAuthorityUrl;
+
+    /**
      * Default constructor.
      * @throws IOException Exception
      */
@@ -143,6 +149,13 @@ public class Config {
      */
     public String getMicrosoftAppPassword() {
         return microsoftAppPassword;
+    }
+
+    /**
+     * @return the microsoftAuthorityUrl
+     */
+    public String getMicrosoftAuthorityUrl() {
+        return microsoftAuthorityUrl;
     }
 
 }

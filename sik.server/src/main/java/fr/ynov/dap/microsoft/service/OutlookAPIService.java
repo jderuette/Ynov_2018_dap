@@ -3,6 +3,8 @@ package fr.ynov.dap.microsoft.service;
 import java.io.IOException;
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.ynov.dap.Config;
@@ -26,6 +28,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class OutlookAPIService {
 
     /**
+     * Logger instance.
+     */
+    private Logger logger = LogManager.getLogger();
+
+    /**
      * Current configuration.
      */
     @Autowired
@@ -36,16 +43,6 @@ public class OutlookAPIService {
      */
     @Autowired
     private MicrosoftAccountRepository msAccountRepository;
-
-    /**
-     * Constant than store authority value.
-     */
-    protected static final String AUTHORITY = "https://login.microsoftonline.com";
-
-    /**
-     * Constant that store authorize url.
-     */
-    protected static final String AUTHORIZE_URL = AUTHORITY + "/common/oauth2/v2.0/authorize";
 
     /**
      * Every scopes needed.
@@ -61,8 +58,16 @@ public class OutlookAPIService {
 
     }
 
+    public Logger getLogger() {
+        return logger;
+    }
+
     public Config getConfig() {
         return config;
+    }
+
+    public String getAuthorizeUrl() {
+        return config.getMicrosoftAuthorityUrl() + "/common/oauth2/v2.0/authorize";
     }
 
     /**
@@ -117,6 +122,9 @@ public class OutlookAPIService {
         }
 
         if (msAcc == null) {
+
+            getLogger().warn("MicrosoftAccount is null. Null token is return");
+
             return null;
         }
 
@@ -127,9 +135,13 @@ public class OutlookAPIService {
 
         if (now.getTime().before(tokens.getExpirationTime())) {
 
+            getLogger().info("Token is still valid.");
+
             return tokens;
 
         } else {
+
+            getLogger().warn("Token is invalid. Try to refresh it.");
 
             TokenService tokenService = createTokenService();
 
@@ -168,7 +180,7 @@ public class OutlookAPIService {
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(getAuthorizeUrl()).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         return retrofit.create(TokenService.class);

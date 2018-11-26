@@ -51,7 +51,11 @@ public class OutlookService extends OutlookAPIService {
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (msAcc == null) {
+
+            getLogger().warn("MicrosoftAccount is null");
+
             return 0;
+
         }
 
         String email = msAcc.getEmail();
@@ -59,7 +63,11 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
+
+            getLogger().warn("MicrosoftAccount information are empty or null");
+
             return 0;
+
         }
 
         TokenResponse newTokens = getToken(msAcc);
@@ -69,7 +77,11 @@ public class OutlookService extends OutlookAPIService {
         OutlookFolder inboxFolder = outlookService.getFolder(INBOX_FOLDER_NAME).execute().body();
 
         if (inboxFolder == null) {
+
+            getLogger().warn("Graph API respond with empty or malformed JSON");
+
             return 0;
+
         }
 
         return inboxFolder.getUnreadItemCount();
@@ -88,7 +100,11 @@ public class OutlookService extends OutlookAPIService {
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
+
+            getLogger().warn("No MicrosoftAccount found for this DaP user");
+
             return 0;
+
         }
 
         Integer numberOfUnreadMails = 0;
@@ -112,7 +128,11 @@ public class OutlookService extends OutlookAPIService {
     private MicrosoftCalendarEvent getNextEvent(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
+
+            getLogger().warn("MicrosoftAccount is null");
+
             return null;
+
         }
 
         String email = msAcc.getEmail();
@@ -120,7 +140,11 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
+
+            getLogger().warn("MicrosoftAccount information are empty or null");
+
             return null;
+
         }
 
         TokenResponse newTokens = getToken(msAcc);
@@ -164,7 +188,11 @@ public class OutlookService extends OutlookAPIService {
     public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
+
+            getLogger().warn("Current user " + user.getId() + " haven't any MicrosoftAccount");
+
             return null;
+
         }
 
         ArrayList<MicrosoftCalendarEvent> events = new ArrayList<>();
@@ -180,7 +208,11 @@ public class OutlookService extends OutlookAPIService {
         }
 
         if (events.size() == 0) {
+
+            getLogger().warn("No next event found for current user : " + user.getId());
+
             return null;
+
         }
 
         Collections.sort(events, new SortByNearest());
@@ -200,7 +232,11 @@ public class OutlookService extends OutlookAPIService {
     private Integer getNumberOfContacts(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
+
+            getLogger().warn("MicrosoftAccount is null");
+
             return 0;
+
         }
 
         String email = msAcc.getEmail();
@@ -208,7 +244,11 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
+
+            getLogger().warn("MicrosoftAccount information are empty or null");
+
             return null;
+
         }
 
         String sort = "GivenName ASC";
@@ -226,6 +266,8 @@ public class OutlookService extends OutlookAPIService {
             return contacts.getValue().length;
         }
 
+        getLogger().warn("Value return by Graph API isn't valid for microsoft account : " + msAcc.getId());
+
         return 0;
 
     }
@@ -239,7 +281,11 @@ public class OutlookService extends OutlookAPIService {
     public final Integer getNumberOfContacts(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
+
+            getLogger().warn("Current user " + user.getId() + " haven't any MicrosoftAccount");
+
             return 0;
+
         }
 
         Integer nbOfContacts = 0;
@@ -265,7 +311,11 @@ public class OutlookService extends OutlookAPIService {
     private ArrayList<Message> getMessages(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
+
+            getLogger().warn("MicrosoftAccount is null");
+
             return new ArrayList<Message>();
+
         }
 
         String email = msAcc.getEmail();
@@ -273,7 +323,11 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
+
+            getLogger().warn("MicrosoftAccount information are empty or null");
+
             return null;
+
         }
 
         String folder = "inbox";
@@ -307,7 +361,11 @@ public class OutlookService extends OutlookAPIService {
         }
 
         if (user.getMicrosoftAccounts().size() == 0) {
+
+            getLogger().warn("Current user " + user.getId() + " haven't any MicrosoftAccount");
+
             return new ArrayList<Inbox>();
+
         }
 
         ArrayList<Inbox> inboxs = new ArrayList<Inbox>();

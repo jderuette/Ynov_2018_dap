@@ -42,6 +42,10 @@ public abstract class BaseController {
         return logger;
     }
 
+    public AppUserRepository getAppUserRepository() {
+        return appUserRepository;
+    }
+
     /**
      * Return current class name.
      * @return Class name
@@ -60,7 +64,7 @@ public abstract class BaseController {
 
         ExceptionOutDto response = new ExceptionOutDto(ex.getLocalizedMessage());
 
-        getLogger().error(ex.getLocalizedMessage());
+        getLogger().error(ex.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -77,7 +81,11 @@ public abstract class BaseController {
         AppUser user = appUserRepository.findByUserKey(userId);
 
         if (user == null) {
+
+            getLogger().error("Try to get undefined user with id : " + userId);
+
             throw new UserNotFoundException();
+
         }
 
         return user;

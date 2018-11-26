@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.ynov.dap.comparator.SortByNearest;
 import fr.ynov.dap.contract.ApiEvent;
-import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.contract.MicrosoftAccountRepository;
 import fr.ynov.dap.exception.NoConfigurationException;
 import fr.ynov.dap.exception.NoNextEventException;
@@ -38,7 +37,7 @@ import fr.ynov.dap.model.microsoft.MicrosoftCalendarEvent;
  */
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController extends BaseController {
 
     /**
      * Auto inject on GoogleAccountService.
@@ -79,13 +78,6 @@ public class AdminController {
      */
     @Autowired
     private ContactService contactService;
-
-    /**
-     * Instance of AppUserRepository.
-     * Auto resolved by Autowire.
-     */
-    @Autowired
-    private AppUserRepository appUserRepository;
 
     /**
      * Instance of GMailService.
@@ -138,9 +130,11 @@ public class AdminController {
             throws NoConfigurationException, IOException, GeneralSecurityException, UserNotFoundException,
             NoNextEventException {
 
-        AppUser user = appUserRepository.findByUserKey(userId);
+        AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
+
+            getLogger().warn("User is undefined. Show Admin Calendar with error");
 
             model.addAttribute("userKnown", false);
             model.addAttribute("fragment", "fragments/admin_calendar");
@@ -194,9 +188,11 @@ public class AdminController {
     public String mail(final ModelMap model, @PathVariable("userId") final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
-        AppUser user = appUserRepository.findByUserKey(userId);
+        AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
+
+            getLogger().warn("User is undefined. Show Admin Mail with error");
 
             model.addAttribute("userKnown", false);
             model.addAttribute("fragment", "fragments/admin_mail");
@@ -231,9 +227,11 @@ public class AdminController {
     public String contacts(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException {
 
-        AppUser user = appUserRepository.findByUserKey(userId);
+        AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
+
+            getLogger().warn("User is undefined. Show Admin Contact with error");
 
             model.addAttribute("userKnown", false);
             model.addAttribute("fragment", "fragments/admin_contact");
@@ -268,9 +266,11 @@ public class AdminController {
     public String mailsList(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException {
 
-        AppUser user = appUserRepository.findByUserKey(userId);
+        AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
+
+            getLogger().warn("User is undefined. Show Admin Mail List with error");
 
             model.addAttribute("userKnown", false);
             model.addAttribute("fragment", "fragments/admin_mail_list");
@@ -287,6 +287,11 @@ public class AdminController {
 
         return "base";
 
+    }
+
+    @Override
+    protected final String getClassName() {
+        return AdminController.class.getName();
     }
 
 }

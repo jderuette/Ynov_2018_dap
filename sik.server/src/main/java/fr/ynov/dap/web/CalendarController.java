@@ -80,7 +80,11 @@ public class CalendarController extends BaseController {
         }
 
         if (events.size() == 0) {
+
+            getLogger().error("No next event found for user with id : " + userId);
+
             throw new NoNextEventException();
+
         }
 
         Collections.sort(events, new SortByNearest());
@@ -108,6 +112,14 @@ public class CalendarController extends BaseController {
 
         GoogleCalendarEvent evnt = calendarService.getNextEvent(user);
 
+        if (evnt == null) {
+
+            getLogger().error("No Google next event found for user with id : " + userId);
+
+            throw new NoNextEventException();
+
+        }
+
         return new NextEventOutDto(evnt);
 
     }
@@ -130,6 +142,14 @@ public class CalendarController extends BaseController {
         AppUser user = getUserById(userId);
 
         MicrosoftCalendarEvent evnt = outlookService.getNextEvent(user);
+
+        if (evnt == null) {
+
+            getLogger().error("No Microsoft next event found for user with id : " + userId);
+
+            throw new NoNextEventException();
+
+        }
 
         return new NextEventOutDto(evnt);
 
