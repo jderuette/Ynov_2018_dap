@@ -17,14 +17,6 @@ import fr.ynov.dap.microsoft.auth.TokenResponse;
 @Service
 public class MicrosoftMailService extends MicrosoftService {
     /**
-     * Constructor.
-     * @param userKey You have to provide the userKey of the AppUser to use.
-     */
-    public MicrosoftMailService(final String userKey) {
-        super(userKey);
-    }
-
-    /**
      * Get Mails of a Microsoft Account.
      * @param account Specify the Microsoft Account.
      * @return ResultPages that contains the mails (messages) of the specified Microsoft Account.

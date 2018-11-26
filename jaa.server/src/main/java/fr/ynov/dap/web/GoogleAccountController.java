@@ -180,7 +180,7 @@ public class GoogleAccountController extends GoogleService {
      * @return the view to Display (on Error)
      * @throws GeneralSecurityException exception
      */
-    @RequestMapping("/add/account/{accountName}")
+    @RequestMapping("/account/add/google/{accountName}")
     public String addAccount(@PathVariable final String accountName,
             @RequestParam(USER_KEY_PARAM_NAME) final String userKey,
             final HttpServletRequest request,

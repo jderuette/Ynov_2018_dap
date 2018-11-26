@@ -17,14 +17,6 @@ import fr.ynov.dap.microsoft.auth.TokenResponse;
 public class MicrosoftContactService extends MicrosoftService {
 
     /**
-     * Constructor.
-     * @param key You have to provide the userKey of the AppUser to use.
-     */
-    public MicrosoftContactService(final String key) {
-        super(key);
-    }
-
-    /**
      * Get Contacts of a Microsoft Account.
      * @param account Microsoft account.
      * @return ResultPages that contains the contacts of the specified Microsoft Account.

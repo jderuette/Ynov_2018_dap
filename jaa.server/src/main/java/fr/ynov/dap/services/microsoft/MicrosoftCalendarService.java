@@ -18,14 +18,6 @@ import fr.ynov.dap.microsoft.auth.TokenResponse;
 public class MicrosoftCalendarService extends MicrosoftService {
 
     /**
-     * Constructor.
-     * @param key You have to provide the userKey of the AppUser to use.
-     */
-    public MicrosoftCalendarService(final String key) {
-        super(key);
-    }
-
-    /**
      * Get Events of a Microsoft Account.
      * @param account Microsoft account.
      * @return ResultPages that contains the events (Event) of the specified Microsoft Account.

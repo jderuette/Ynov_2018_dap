@@ -27,7 +27,7 @@ public class MicrosoftAccount {
      * Length of the string to save on the database.
      * It's used to specify the length of long string, like the authCode.
      */
-    private static final int STRING_LENGTH = 5000;
+    private static final int STRING_LENGTH = 8192;
 
     /**
      * Microsoft Account Id.
@@ -80,72 +80,6 @@ public class MicrosoftAccount {
         this.accountName = name;
     }
 
-//    /**
-//     * Authorization code.
-//     */
-//    @Column(length = STRING_LENGTH)
-//    private String authCode;
-//
-//    /**
-//     * Getter of the authCode.
-//     * @return Authorization Code.
-//     */
-//    public String getAuthCode() {
-//        return authCode;
-//    }
-//
-//    /**
-//     * Setter of authCode.
-//     * @param code Authorization Code.
-//     */
-//    public void setAuthCode(final String code) {
-//        this.authCode = code;
-//    }
-//
-//    /**
-//     * Id of the Token.
-//     */
-//    @Column(length = STRING_LENGTH)
-//    private String idToken;
-//
-//    /**
-//     * Getter of the idToken.
-//     * @return Id of the token.
-//     */
-//    public String getIdToken() {
-//        return idToken;
-//    }
-//
-//    /**
-//     * Setter of the idToken.
-//     * @param token id of the token.
-//     */
-//    public void setIdToken(final String token) {
-//        this.idToken = token;
-//    }
-//
-//    /**
-//     * Access token.
-//     */
-//    @Column
-//    private String accessToken;
-//
-//    /**
-//     * Getter of the Access Token.
-//     * @return the access token.
-//     */
-//    public String getAccessToken() {
-//        return accessToken;
-//    }
-//
-//    /**
-//     * Setter of the Access Token.
-//     * @param token Access Token
-//     */
-//    public void setAccessToken(final String token) {
-//        this.accessToken = token;
-//    }
-
     /**
      * TokenResponse from the Microsoft API.
      */
@@ -195,6 +129,7 @@ public class MicrosoftAccount {
      * @throws JsonProcessingException exception if the serialization fails.
      */
     public void setIdToken(final IdToken idTok) throws JsonProcessingException {
+        String tokenTest = (String) new ObjectMapper().writeValueAsString(idTok);
         this.idToken = (String) new ObjectMapper().writeValueAsString(idTok);
     }
 

@@ -37,6 +37,7 @@ public class ContactController extends DapController {
     @RequestMapping(value = "/number", method = RequestMethod.GET)
     public Integer getNumberOfPeople(@RequestParam("userKey") final String userKey) throws Exception {
         Integer numberOfAllGoogleContacts = googlePeopleService.getNumberOfAllContactsOfAllAccount(userKey);
+        microsoftContactService.setUserKey(userKey);
         Integer numberOfAllMicrosoftContacts = microsoftContactService.getNumberOfAllContacts(userKey);
         return numberOfAllGoogleContacts + numberOfAllMicrosoftContacts;
     }

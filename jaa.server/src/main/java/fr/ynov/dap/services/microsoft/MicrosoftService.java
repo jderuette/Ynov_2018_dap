@@ -55,10 +55,10 @@ public abstract class MicrosoftService {
     private String userKey;
 
     /**
-     * Constructor.
-     * @param key You have to provide the userKey of the AppUser to use.
+     * set the userKey. Used to retrieve data.
+     * @param key userKey
      */
-    public MicrosoftService(final String key) {
+    public void setUserKey(final String key) {
         this.userKey = key;
     }
 

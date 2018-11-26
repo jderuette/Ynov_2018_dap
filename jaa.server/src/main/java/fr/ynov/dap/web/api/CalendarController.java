@@ -39,6 +39,7 @@ public class CalendarController extends DapController {
     @RequestMapping(value = "/event/next", method = RequestMethod.GET)
     public Object getNextEvent(@RequestParam("userKey") final String userKey) throws Exception {
         Event googleEvent = googleCalendarService.getNextEventForAllAccount(userKey);
+        microsoftCalendarService.setUserKey(userKey);
         fr.ynov.dap.services.microsoft.Event microsoftEvent =
                 microsoftCalendarService.getNextEventsOfAllAccount(userKey);
 

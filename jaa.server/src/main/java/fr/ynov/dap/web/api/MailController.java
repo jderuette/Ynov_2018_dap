@@ -39,6 +39,7 @@ public class MailController extends DapController {
             @RequestParam("userKey") final String userKey) throws Exception {
 
         Integer totalUnreadGoogleMails = gmailService.getUnreadEmailsNumberOfAllAccount(user, userKey);
+        microsoftMailService.setUserKey(userKey);
         Integer totalUnreadMicrosoftMails = microsoftMailService.getUnreadEmailsNumberOfAllAccount(userKey);
         return totalUnreadGoogleMails + totalUnreadMicrosoftMails;
     }
