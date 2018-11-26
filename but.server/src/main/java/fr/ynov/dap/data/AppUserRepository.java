@@ -13,4 +13,11 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
      * @return result of search.
      */
     AppUser findByUserKey(String userKey);
+
+    /**
+     * Exist AppUser by UserKey.
+     * @param userKey userKey of user.
+     * @return result of search.
+     */
+    boolean existsByUserKey(String userKey);
 }

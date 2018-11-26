@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.data.microsoft.MicrosoftAccount;
+
 /**
  * Model for AppUser.
  * @author thibault
@@ -38,13 +41,10 @@ public class AppUser {
     private List<GoogleAccount> googleAccounts;
 
     /**
-     * Add a google account of this user.
-     * @param account the GoogleAccount to add
+     * Microsoft accounts of user.
      */
-    public void addGoogleAccount(final GoogleAccount account) {
-        account.setOwner(this);
-        this.getGoogleAccounts().add(account);
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<MicrosoftAccount> microsoftAccounts;
 
     /**
      * @return the id
@@ -65,6 +65,38 @@ public class AppUser {
      */
     public void setGoogleAccounts(final List<GoogleAccount> gAccounts) {
         this.googleAccounts = gAccounts;
+    }
+
+    /**
+     * Add a google account of this user.
+     * @param account the GoogleAccount to add
+     */
+    public void addGoogleAccount(final GoogleAccount account) {
+        account.setOwner(this);
+        this.getGoogleAccounts().add(account);
+    }
+
+    /**
+     * @return the microsoftAccounts
+     */
+    public List<MicrosoftAccount> getMicrosoftAccounts() {
+        return microsoftAccounts;
+    }
+
+    /**
+     * @param mAccounts the microsoftAccounts to set
+     */
+    public void setMicrosoftAccounts(final List<MicrosoftAccount> mAccounts) {
+        this.microsoftAccounts = mAccounts;
+    }
+
+    /**
+     * Add a Microsoft account of this user.
+     * @param account the MicrosoftAccount to add
+     */
+    public void addMicrosoftAccount(final MicrosoftAccount account) {
+        account.setOwner(this);
+        this.getMicrosoftAccounts().add(account);
     }
 
     /**

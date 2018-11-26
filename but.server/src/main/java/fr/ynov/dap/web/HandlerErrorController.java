@@ -38,7 +38,7 @@ public abstract class HandlerErrorController {
         return ResponseEntity
                 .status(e.getStatusCode())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body("{\"code\": " + (e.getStatusCode() + 1) + ", \"message\": \""
+                .body("{\"code\": " + e.getStatusCode() + ", \"message\": \""
                     + e.getMessage().replaceAll("\"", "\\\\\"")
                     + "\"}");
     }

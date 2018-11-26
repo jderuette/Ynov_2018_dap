@@ -7,12 +7,14 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import fr.ynov.dap.Config;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.google.GoogleAccountRepository;
+import fr.ynov.dap.data.google.JPADataStoreFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Manage Google Service.
  * @author thibault
@@ -36,6 +39,12 @@ public abstract class GoogleService {
      */
     @Autowired
     private Config config;
+
+    /**
+     * Repository of GoogleAccount.
+     */
+    @Autowired
+    private GoogleAccountRepository repository;
 
     /**
      * Json Factory for Google Service.
@@ -60,25 +69,27 @@ public abstract class GoogleService {
 
     /**
      * Creates an authorized Credential object.
-     * @param userKey : user id associate token
+     * @param accountName : user id associate token
+     * @param owner : owner user of credential
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      * @throws GeneralSecurityException Security on Google API
      */
-    protected Credential getCredentials(final String userKey)
+    protected Credential getCredentials(final String accountName, final AppUser owner)
             throws IOException, GeneralSecurityException {
-        this.logger.info("Generate credentials Google API for user '" + userKey + "'");
-        GoogleAuthorizationCodeFlow flow = this.getFlow();
-        return flow.loadCredential(userKey);
+        this.logger.info("Generate credentials Google API for account '" + accountName + "'");
+        GoogleAuthorizationCodeFlow flow = this.getFlow(owner);
+        return flow.loadCredential(accountName);
     }
 
     /**
      * Creates an Google authorization flow.
+     * @param owner : owner user of flow
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      * @throws GeneralSecurityException Security on Google API
      */
-    protected GoogleAuthorizationCodeFlow getFlow()
+    protected GoogleAuthorizationCodeFlow getFlow(final AppUser owner)
             throws IOException, GeneralSecurityException {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         this.logger.info("Generate new flow with scopes for Google API.");
@@ -92,8 +103,9 @@ public abstract class GoogleService {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY,
                 clientSecrets, getScopes())
                         .setDataStoreFactory(
-                                new FileDataStoreFactory(new java.io.File(this.config.getTokenDirPath())))
-                        .setAccessType("offline").build();
+                                new JPADataStoreFactory(repository, owner))
+                        .setAccessType("offline").setApprovalPrompt("auto").build();
+
         return flow;
     }
 

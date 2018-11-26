@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpResponseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
@@ -21,6 +21,9 @@ import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.GenericUrl;
 
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepository;
+
 /**
  * @author thibault
  *
@@ -29,9 +32,25 @@ import com.google.api.client.http.GenericUrl;
 public class GoogleAccountService extends GoogleService {
 
     /**
+     * Account name key.
+     */
+    public static final String ACCOUNT_NAME_KEY = "accountName";
+
+    /**
+     * User key.
+     */
+    public static final String USER_KEY = "userKey";
+
+    /**
      * Logger for the class.
      */
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * Repository of AppUser.
+     */
+    @Autowired
+    private AppUserRepository repositoryUser;
 
     /**
      * Index of first char for sensible data.
@@ -43,22 +62,43 @@ public class GoogleAccountService extends GoogleService {
     private static final int SENSIBLE_DATA_LAST_CHAR = 5;
 
     /**
+     * retrieve the key in Session.
+     * @param key key of parameter
+     * @param session the HTTP Session
+     * @return the current User Id in Session
+     * @throws ServletException if no User Id in session
+     */
+    public String getInSession(final String key, final HttpSession session) throws ServletException {
+        String param = null;
+        if (null != session && null != session.getAttribute(key)) {
+            param = (String) session.getAttribute(key);
+        }
+        if (null == param) {
+            logger.error(key + " in Session is NULL in Callback");
+            throw new ServletException("Error when trying to add Google account : " + key + " is NULL in User Session");
+        }
+        return param;
+    }
+
+    /**
      * Handle the Google response.
      * @param request The HTTP Request
      * @param code    The (encoded) code use by Google (token, expirationDate,...)
-     * @param accountName the account name of User.
+     * @param accountName the google account to add.
+     * @param owner Owner of credential (account name)
      * @throws ServletException When Google account could not be connected to DaP.
      * @return true if success add account.
      */
     public Boolean oAuthCallback(final String code, final HttpServletRequest request,
-            final String accountName) throws ServletException {
+            final String accountName, final AppUser owner)
+            throws ServletException {
         Boolean success = false;
         final String decodedCode = extracCode(request);
 
         final String redirectUri = buildRedirectUri(request, getConfig().getOAuth2CallbackUrl());
 
         try {
-            final GoogleAuthorizationCodeFlow flow = super.getFlow();
+            final GoogleAuthorizationCodeFlow flow = super.getFlow(owner);
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
 
             final Credential credential = flow.createAndStoreCredential(response, accountName);
@@ -69,14 +109,14 @@ public class GoogleAccountService extends GoogleService {
 
             if (credential.getRefreshToken() != null) {
                 logger.info("Refresh token is not null");
-              } else {
+            } else {
                 logger.info("Refresh token is null!");
-              }
+            }
 
             if (logger.isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
-                    logger.debug("New user credential stored with accountName : "
-                            + accountName + "partial AccessToken : "
+                    logger.debug("New user credential stored with accountName : " + accountName
+                            + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
                 }
             }
@@ -132,34 +172,32 @@ public class GoogleAccountService extends GoogleService {
      * @param accountName the user to store Data
      * @param userKey the user key logged.
      * @param request the HTTP request
+     * @param session the HTTP session
      * @return the redirect URI.
      * @throws IOException If the credentials.json file cannot be found or bad request.
      * @throws GeneralSecurityException Security on Google API
      */
     public String getAddAccountGoogleRedirectURI(final String accountName, final String userKey,
-            final HttpServletRequest request) throws IOException, GeneralSecurityException {
+            final HttpServletRequest request, final HttpSession session) throws IOException, GeneralSecurityException {
         String response = null;
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
 
-        flow = super.getFlow();
+        AppUser owner = repositoryUser.findByUserKey(userKey);
+
+        flow = super.getFlow(owner);
         credential = flow.loadCredential(accountName);
 
         if (credential != null && credential.getAccessToken() != null) {
             throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "AccountAlreadyAdded");
         } else {
             final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-            JSONObject state = new JSONObject();
-            state.put("accountName", accountName);
-            state.put("userKey", userKey);
-
-            authorizationUrl.setRedirectUri(
-                    buildRedirectUri(request, getConfig().getOAuth2CallbackUrl())
-                );
-            authorizationUrl.setState(Base64.encodeBase64String(state.toString().getBytes("UTF-8")));
+            authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfig().getOAuth2CallbackUrl()));
 
             // store userId in session for CallBack Access
-            //session.setAttribute("userId", accountName);
+            session.setAttribute(ACCOUNT_NAME_KEY, accountName);
+            session.setAttribute(USER_KEY, userKey);
+
             response = authorizationUrl.build();
         }
         return response;

@@ -6,12 +6,15 @@ import java.security.GeneralSecurityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
+
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.google.GoogleAccount;
+
 /**
  * Manage Google GMAIL Service.
  * @author thibault
@@ -24,30 +27,34 @@ public class GMAILService extends GoogleService {
      * Logger for the class.
      */
     private static Logger logger = LogManager.getLogger();
+
     /**
      * Connect to google Calendar service.
-     * @param userId ID of user (associate token)
+     * @param accountName ID of user (associate token)
+     * @param owner Owner of credential (account name)
      * @return calendar service connected
      * @throws IOException Exception produced by failed interrupted I/O operations
      * @throws GeneralSecurityException Google security exception
      */
-    public Gmail getService(final String userId) throws IOException, GeneralSecurityException {
-        logger.info("Generate service GMAIL for user '" + userId + "'");
+    public Gmail getService(final String accountName, final AppUser owner)
+            throws IOException, GeneralSecurityException {
+        logger.info("Generate service GMAIL for user '" + accountName + "'");
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(httpTransport, this.getJsonFactory(), this.getCredentials(userId))
+        Gmail service = new Gmail.Builder(httpTransport, this.getJsonFactory(), this.getCredentials(accountName, owner))
                 .setApplicationName(this.getConfig().getApplicationName()).build();
         return service;
     }
     /**
      * Get number of email unread.
-     * @param userId id of google user
+     * @param accountName id of google user
+     * @param owner Owner of credential (account name)
      * @return number of email unread
      * @throws IOException google server response error HTTP
      */
-    public int getUnreadEmailsNumber(@RequestParam("userId") final String userId) throws IOException {
+    public int getUnreadEmailsNumber(final String accountName, final AppUser owner) throws IOException {
         int numberUnread = 0;
         try {
-            Gmail service = this.getService(userId);
+            Gmail service = this.getService(accountName, owner);
             Gmail.Users.Messages.List requestMessages = service.users().messages().list("me")
                     .setQ("category:primary is:unread");
 
@@ -59,7 +66,23 @@ public class GMAILService extends GoogleService {
                 requestMessages.setPageToken(response.getNextPageToken());
             } while (requestMessages.getPageToken() != null);
         } catch (GeneralSecurityException e) {
-            logger.error("Error when fetching email for user '" + userId + "'.", e);
+            logger.error("Error when fetching email for account '" + accountName + "'.", e);
+        }
+
+        return numberUnread;
+    }
+
+    /**
+     * Get number of email unread for all emails of one user.
+     * @param user User of application
+     * @return number of email unread
+     * @throws IOException google server response error HTTP
+     */
+    public int getUnreadEmailsNumberOfAllEmails(final AppUser user) throws IOException {
+        int numberUnread = 0;
+
+        for (GoogleAccount gAccount : user.getGoogleAccounts()) {
+            numberUnread += getUnreadEmailsNumber(gAccount.getAccountName(), user);
         }
 
         return numberUnread;

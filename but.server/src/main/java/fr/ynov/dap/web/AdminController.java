@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fr.ynov.dap.data.AppUserRepository;
+import fr.ynov.dap.data.google.GoogleAccountRepository;
+import fr.ynov.dap.data.microsoft.MicrosoftAccountRepository;
 import fr.ynov.dap.google.AdminService;
 
 /**
@@ -19,24 +22,29 @@ import fr.ynov.dap.google.AdminService;
 public class AdminController extends HandlerErrorController {
 
     /**
-     * Admin google service.
+     * Repository of GoogleAccount.
      */
     @Autowired
-    private AdminService adminService;
+    private GoogleAccountRepository repositoryGoogleAccount;
+
+    /**
+     * Repository of MicrosoftAccount.
+     */
+    @Autowired
+    private MicrosoftAccountRepository repositoryMicrosoftAccount;
 
     /**
      * Route admin page.
      * @param model Model data for View
      * @return template name
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
     @RequestMapping("/admin")
-    public String welcome(final ModelMap model) {
-        try {
-            model.addAttribute("credentials", this.adminService.getCredentialDataStore());
-        } catch (IOException | GeneralSecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return "admin";
+    public String welcome(final ModelMap model) throws IOException, GeneralSecurityException {
+        model.addAttribute("credentialsGoogle", repositoryGoogleAccount.findAll());
+        model.addAttribute("credentialsMicrosoft", repositoryMicrosoftAccount.findAll());
+        model.addAttribute("fragment", "admin");
+        return "base";
     }
 }
