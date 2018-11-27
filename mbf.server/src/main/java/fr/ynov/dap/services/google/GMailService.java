@@ -4,7 +4,11 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
+import fr.ynov.dap.data.google.AppUser;
+import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.repositories.AppUserRepository;
 import fr.ynov.dap.services.google.responses.ServiceResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,6 +20,9 @@ import java.util.logging.Logger;
  */
 @Service
 public class GMailService extends GoogleService {
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     /**
      * The logger of the GMailService class.
@@ -43,6 +50,13 @@ public class GMailService extends GoogleService {
      */
     public final ServiceResponse<Label> getUnreadEmail (final String userKey) {
         ServiceResponse<Label> response = new ServiceResponse<>();
+
+        AppUser appUser = appUserRepository.findByName(userKey);
+
+    for (GoogleAccount googleAccount: appUser.getAccounts()) {
+        System.out.println(googleAccount);
+        }
+
         try {
             Label label = getService(userKey).users().labels().get("me", "INBOX").execute();
             response.setData(label);

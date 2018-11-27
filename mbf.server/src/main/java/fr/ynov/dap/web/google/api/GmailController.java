@@ -1,4 +1,4 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google.api;
 
 import com.google.api.services.gmail.model.Label;
 import fr.ynov.dap.services.google.GMailService;

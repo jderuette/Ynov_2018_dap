@@ -42,7 +42,7 @@ public class NetworkManager {
         WebService.makeHttpCall("/email/nbUnread?userKey=" + userKey, new RequestHandler() {
             @Override
             public void uponSuccess(String response) {
-                JSONObject json = new JSONObject(response);
+                JSONObject json = new JSONObject(response).getJSONObject("data");
                 Integer numberOfUnreadEmails = json.getInt("messagesUnread");
                 String msg = "You have " + numberOfUnreadEmails + " unread messages.";
                 System.out.println(msg);
@@ -63,16 +63,17 @@ public class NetworkManager {
         WebService.makeHttpCall("/event/upcomingEvent?userKey=" + userKey, new RequestHandler() {
             @Override
             public void uponSuccess(String response) {
-                JSONObject json = new JSONObject(response);
-                String dateKey = "date";
-                if (json.has(dateKey)) {
-                    logger.info("You have no upcoming event.");
+                JSONObject json = new JSONObject(response).getJSONObject("data");
+                String messageKey = "message";
+                if (json.has(messageKey)) {
+                    System.out.println(json.getString(messageKey));
                 } else {
+
                     Date endDate = new Date(json.getJSONObject("end").getJSONObject("date").getInt("value"));
                     Date startingDate = new Date(json.getJSONObject("originalStartTime").getJSONObject("date").getInt("value"));
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                     String msg = "Your next event is '" + json.getString("summary") +  "'. It starts on " + dateFormat.format(startingDate) + " and ends on " + dateFormat.format(endDate) + ". The status of this event is: " + json.getString("status") + ".";
-                    logger.info(msg);
+                    System.out.println(msg);
                 }
             }
             @Override
@@ -91,12 +92,12 @@ public class NetworkManager {
             @Override
             public void uponSuccess(String response) {
                 JSONObject json = new JSONObject(response);
-
-                if (json.has("message")) {
-                    logger.info(json.getString("message"));
+                String messageKey = "message";
+                if (json.has(messageKey)) {
+                    System.out.println(json.getString(messageKey));
                 } else {
-                    JSONArray connections = json.getJSONArray("connections");
-                    logger.info("You have " + connections.length() + " contacts");
+                    JSONArray connections = json.getJSONObject("data").getJSONArray("connections");
+                    System.out.println("You have " + connections.length() + " contacts");
                 }
             }
 
