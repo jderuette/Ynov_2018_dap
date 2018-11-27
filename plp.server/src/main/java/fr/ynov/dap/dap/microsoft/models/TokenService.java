@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.microsoft;
+package fr.ynov.dap.dap.microsoft.models;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

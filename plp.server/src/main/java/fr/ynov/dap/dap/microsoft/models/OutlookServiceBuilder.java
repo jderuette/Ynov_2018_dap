@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.microsoft;
+package fr.ynov.dap.dap.microsoft.models;
 
 import java.io.IOException;
 import java.util.UUID;

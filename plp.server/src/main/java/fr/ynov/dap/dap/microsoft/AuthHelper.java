@@ -1,5 +1,9 @@
 package fr.ynov.dap.dap.microsoft;
 
+import fr.ynov.dap.dap.microsoft.models.TokenResponse;
+import fr.ynov.dap.dap.microsoft.models.TokenService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.FileNotFoundException;
@@ -16,6 +20,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class AuthHelper {
     private static final String authority = "https://login.microsoftonline.com";
     private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
+
+    /**
+     * Instantiate Logger.
+     */
+    private static final Logger LOG = LogManager.getLogger(AuthHelper.class);
 
     private static String[] scopes = {
             "openid",
@@ -34,6 +43,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                LOG.error("Can't get AppId", e);
                 return null;
             }
         }
@@ -44,6 +54,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                LOG.error("Can't get AppPassword", e);
                 return null;
             }
         }
@@ -55,6 +66,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                LOG.error("Can't get RedirectUrl", e);
                 return null;
             }
         }
@@ -85,6 +97,7 @@ public class AuthHelper {
             }
         }
         else {
+            LOG.error("Property file '" + authConfigFile + "' not found in the classpath.");
             throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
         }
     }
@@ -128,6 +141,7 @@ public class AuthHelper {
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
+            LOG.error("Error when trying to getTokenFromAuthCode", e);
             return error;
         }
     }
@@ -165,6 +179,7 @@ public class AuthHelper {
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());
+                LOG.error("Error when trying to refresh token", e);
                 return error;
             }
         }

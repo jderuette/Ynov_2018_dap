@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.microsoft;
+package fr.ynov.dap.dap.microsoft.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

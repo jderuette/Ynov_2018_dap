@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.microsoft;
+package fr.ynov.dap.dap.microsoft.models;
 
 import java.util.Calendar;
 import java.util.Date;
