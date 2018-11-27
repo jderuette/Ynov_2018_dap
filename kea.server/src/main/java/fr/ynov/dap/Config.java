@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import org.springframework.stereotype.Component;
+
 /**
  * Contains all configuration needed to call the Google API.
  * @author Antoine
@@ -17,11 +18,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Config {
+  /**
+   * the path to the storedCredentials.
+   */
   private String credentialsFolder;
-  private InputStream clientSecretDir;
+  /**
+   * the file that contains storedCredentials.
+   */
+  private InputStream clientSecretInputStream;
+  /**
+   * The application name.
+   */
   private String applicationName;
+  /**
+   * The path to the file that contains tokens.
+   */
   private String tokensDirectoryPath;
+  /**
+   * the object to use HTTP protocols.
+   */
   private NetHttpTransport httpTransport;
+  /**
+   * the URI authorized to redirect to Ynov Dap.
+   */
   private String openAuth2CallbackUrl;
 
   /**
@@ -30,11 +49,12 @@ public class Config {
    * @throws GeneralSecurityException nothing special
    */
   public Config() throws IOException, GeneralSecurityException {
-    credentialsFolder = "C:/Users/Antoine/Documents/Antoine_Cours/eclipse/credentials/credentials.json";
-    clientSecretDir = new FileInputStream(new File(credentialsFolder));
+    credentialsFolder = System.getProperty("user.home")
+        + "/Documents/Antoine_Cours/eclipse/credentials/credentials.json";
+    clientSecretInputStream = new FileInputStream(new File(credentialsFolder));
     httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     applicationName = "HoC DaP";
-    tokensDirectoryPath  = "C:/Users/Antoine/Documents/Antoine_Cours/eclipse/credentials";
+    tokensDirectoryPath = System.getProperty("user.home") + "/Documents/Antoine_Cours/eclipse/credentials";
     openAuth2CallbackUrl = "/oAuth2Callback";
   }
 
@@ -76,7 +96,7 @@ public class Config {
    * @param clientSecretDirectory directory of credentials
    */
   public void setClientSecretDir(final InputStream clientSecretDirectory) {
-    this.clientSecretDir = clientSecretDirectory;
+    this.clientSecretInputStream = clientSecretDirectory;
   }
 
   /**
@@ -109,7 +129,7 @@ public class Config {
    * @return the inputStream
    */
   public InputStream getClientSecretDir() {
-    return clientSecretDir;
+    return clientSecretInputStream;
   }
 
   /**

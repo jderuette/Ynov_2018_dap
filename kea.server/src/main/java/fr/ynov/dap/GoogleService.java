@@ -8,6 +8,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,15 +19,50 @@ import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * All services classes extends this class.
+ * @author Antoine
+ *
+ */
 public abstract class GoogleService {
+  /**
+   * the customConfig made in Config.java.
+   */
   @Autowired
-  protected Config customConfig;
+  private Config customConfig;
+  /**
+   * used to parse Json.
+   */
   protected static final JsonFactory JSON_FACTORY = JacksonFactory
       .getDefaultInstance();
-  protected List<String> scopes = null;
-  protected String gUser = "me";
-  //protected GoogleAuthorizationCodeFlow flow = null;
-  protected GoogleClientSecrets clientSecrets;
+  /**
+   * All googles services scopes.
+   */
+  private List<String> scopes = null;
+  /**
+   * the current User authentified.
+   */
+  private String gUser = "me";
+  /**
+   * the clientSecret Directory.
+   */
+  private GoogleClientSecrets clientSecrets;
+
+  /**
+   * get all google scopes.
+   * @return a list of String
+   */
+  public List<String> getScopes() {
+    return scopes;
+  }
+
+  /**
+   * get the clientSecret File.
+   * @return a googleClientSecret File
+   */
+  public GoogleClientSecrets getClientSecrets() {
+    return clientSecrets;
+  }
 
   /**
    * instantiate all the scopes needed in the whole application.
@@ -46,8 +82,16 @@ public abstract class GoogleService {
   public void init() throws InstantiationException, IllegalAccessException {
     ArrayList<String> myscopes = new ArrayList<String>(
         Arrays.asList(GmailScopes.GMAIL_LABELS, GmailScopes.GMAIL_READONLY,
-            CalendarScopes.CALENDAR_READONLY));
+            CalendarScopes.CALENDAR_READONLY, PeopleServiceScopes.CONTACTS_READONLY));
     this.scopes = myscopes;
+  }
+
+  /**
+   * returns the current user.
+   * @return a String that contains "me"
+   */
+  public String getgUser() {
+    return gUser;
   }
 
   /**
@@ -102,7 +146,8 @@ public abstract class GoogleService {
    * @throws IOException nothing special
    */
   public GoogleAuthorizationCodeFlow getFlow() throws IOException {
-    InputStream in = new FileInputStream(getCustomConfig().getCredentialsFolder());
+    InputStream in = new FileInputStream(
+        getCustomConfig().getCredentialsFolder());
     this.clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
         new InputStreamReader(in));
     return new GoogleAuthorizationCodeFlow.Builder(

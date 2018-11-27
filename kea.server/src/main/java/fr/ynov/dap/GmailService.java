@@ -52,10 +52,10 @@ public class GmailService extends GoogleService {
       //TODO kea by Djer Attention ne multi-compte tu vas avoir des probleme,
       // car tu va "mettre en cache" le service du premier utilisateur.
       // Et tout les autre ne verront QUE les informations de ce premier utilisateur.
-      gmailService = new Gmail.Builder(customConfig.getHttpTransport(),
+      gmailService = new Gmail.Builder(getCustomConfig().getHttpTransport(),
           JSON_FACTORY,
           getCredentials(userKey))
-              .setApplicationName(customConfig.getApplicationName()).build();
+              .setApplicationName(getCustomConfig().getApplicationName()).build();
     }
     return gmailService;
   }

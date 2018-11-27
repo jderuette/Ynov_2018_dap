@@ -5,16 +5,26 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+/**
+ * This service has access to the GoogleCalendar API.
+ * @author Antoine
+ *
+ */
 @Service
 public class CalendarService extends GoogleService {
+  /**
+   * the googlecalendar service from google.
+   */
   private Calendar calendarService = null;
+  /**
+   * the object used to write logs.
+   */
   private static final Logger LOGGER = LogManager
       .getLogger(GoogleService.class);
 
@@ -54,23 +64,21 @@ public class CalendarService extends GoogleService {
    * @return an event list
    * @throws IOException nothing special
    */
-  public ArrayList<Event> get2nextEvents(final String userKey) throws IOException {
+  public Event getnextEvent(final String userKey) throws IOException {
     calendarService = getService(userKey);
-    ArrayList<Event> listeEvenements = new ArrayList<Event>();
+    Event evenement = null;
     DateTime now = new DateTime(System.currentTimeMillis());
-    Events events = calendarService.events().list("primary").setMaxResults(2)
-        .setTimeMin(now).setOrderBy("startTime").setSingleEvents(true)
+    Events events = calendarService.events().list("primary").setTimeMin(now)
+        .setMaxResults(1).setOrderBy("startTime").setSingleEvents(true)
         .execute();
     List<Event> items = events.getItems();
+    eventToString(items.get(0));
     if (items.isEmpty()) {
       LOGGER.info("Aucun evenements trouves");
     } else {
-      //System.out.println("Evènements à venir :");
-      for (Event event : items) {
-        listeEvenements.add(event);
-      }
+      evenement = items.get(0);
     }
-    return listeEvenements;
+    return evenement;
   }
 
   /**
@@ -86,5 +94,13 @@ public class CalendarService extends GoogleService {
     }
     String stringEvent = "nom évènement:\n" + eventName + " : " + eventDateTime;
     return stringEvent;
+  }
+
+  /**
+   * get the singleton logger.
+   * @return the logger
+   */
+  public Logger getLogger() {
+    return LOGGER;
   }
 }
