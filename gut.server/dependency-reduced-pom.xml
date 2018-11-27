@@ -4,11 +4,20 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <version>2.0.5.RELEASE</version>
+<<<<<<< HEAD
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.ynov.dap</groupId>
   <artifactId>dap</artifactId>
   <name>dap</name>
+=======
+    <relativePath>../pom.xml/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fr.ynov.dap</groupId>
+  <artifactId>gut.server</artifactId>
+  <name>gut.server</name>
+>>>>>>> refs/heads/master
   <version>0.0.1-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <build>
