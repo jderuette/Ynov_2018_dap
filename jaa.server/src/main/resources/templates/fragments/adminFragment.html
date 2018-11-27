@@ -1,0 +1,24 @@
+<h1 th:text="#{admin.title}"></h1>
+<div>
+	<table class="table">
+		<tr class="thead-dark">
+			<th scope="col" th:text="#{admin.user}"></th>
+			<th scope="col" th:text="#{admin.accountName}"></th>
+			<th scope="col" th:text="#{admin.accountType}"></th> 
+			<th scope="col" th:text="#{admin.accessToken}"></th>
+			<th scope="col" th:text="#{admin.refreshToken}"></th>
+			<th scope="col" th:text="#{admin.tenandtId}"></th>
+			<th scope="col" th:text="#{admin.expirationTimeMilliseconds}"></th>
+		</tr>
+		<tr th:each="account : ${account}">
+			<td scope="row" th:text="${account.userKey}"></td>
+			<td scope="row" th:text="${account.accountName}"></td>
+			<td scope="row" th:text="${account.accountType}"></td>
+			<td scope="row" th:text="${account.accessToken}"></td>
+			<td scope="row" th:text="${account.refreshToken}"></td>
+			<td scope="row" th:text="${account.tenantId}"></td>
+			<td scope="row" th:text="${#dates.format(account.expirationTimeMilliseconds, 'dd-MMM-yyyy mm:ss')}"></td>
+		</tr>
+	</table>
+</div>
+

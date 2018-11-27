@@ -25,7 +25,7 @@ public interface OutlookService {
       @Query("$select") String select,
       @Query("$top") Integer maxResults,
       @Query("$filter") String filter,
-      @Query("count") Boolean count
+      @Query("$count") Boolean count
     );
 
     @GET("/v1.0/me/events")
