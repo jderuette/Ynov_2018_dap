@@ -1,6 +1,8 @@
 package fr.ynov.dap.services.microsoft;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +14,6 @@ import fr.ynov.dap.microsoft.auth.TokenResponse;
 
 /**
  * Microsoft Mail Service.
- *
  */
 @Service
 public class MicrosoftMailService extends MicrosoftService {
@@ -95,7 +96,35 @@ public class MicrosoftMailService extends MicrosoftService {
         }
 
         return totalNumberofUnreadMail;
+    }
 
+    /**
+     * Get first email for each Microsoft account owned by an AppUser.
+     * @param userKey user key of the appUser.
+     * @return a list for each Microsoft account that contains a list of messages.
+     * @throws ServiceException exception.
+     */
+    public List<List<Message>> getFirstEmails(final String userKey) throws ServiceException{
+        AppUser appUser = getRepository().findByUserKey(userKey);
+        List<MicrosoftAccount> accounts = appUser.getMicrosoftAccounts();
+
+        List<List<Message>> mailsForMicrosoftAccounts = new ArrayList<List<Message>>();
+
+        for (MicrosoftAccount account : accounts) {
+            List<Message> messages = new ArrayList<Message>();
+            try {
+                PagedResult<Message> emailsPage = getMails(account);
+                messages = new ArrayList<>(Arrays.asList(emailsPage.getValue()));
+            } catch (ServiceException se) {
+                getLog().error("Faild to get microsoft emails", se);
+                throw new ServiceException("Failed to get microsoft emails.", se);
+            }
+
+            mailsForMicrosoftAccounts.add(messages);
+
+        }
+
+        return mailsForMicrosoftAccounts;
     }
 
 }

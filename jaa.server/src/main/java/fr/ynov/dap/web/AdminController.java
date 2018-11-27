@@ -13,7 +13,7 @@ import fr.ynov.dap.services.AdminService;
 import fr.ynov.dap.web.api.DapController;
 
 /**
- * Admin page.
+ * Admin Controller.
  */
 @Controller
 public class AdminController extends DapController {
