@@ -9,6 +9,8 @@ import java.util.Date;
 @Entity
 public class MicrosoftAccount {
 
+    private final static int TEXT_FIELD_MAX_LENGTH = 5000;
+
     /**
      * MicrosoftAccount's ID.
      */
@@ -25,7 +27,7 @@ public class MicrosoftAccount {
     /**
      * MicrosoftAccount's tenant id.
      */
-    @Column(length = 5000)
+    @Column(length = TEXT_FIELD_MAX_LENGTH)
     private String tenantId;
 
     @Column
@@ -34,10 +36,10 @@ public class MicrosoftAccount {
     @Column
     private Date tokenExpirationTime;
 
-    @Column(length = 5000)
+    @Column(length = TEXT_FIELD_MAX_LENGTH)
     private String token;
 
-    @Column(length = 5000)
+    @Column(length = TEXT_FIELD_MAX_LENGTH)
     private String refreshToken;
 
 

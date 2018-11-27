@@ -1,7 +1,7 @@
 package fr.ynov.dap.helpers;
 
 import fr.ynov.dap.models.MicrosoftAccount;
-import fr.ynov.dap.models.microsoft.TokenResponse;
+import fr.ynov.dap.models.microsoft.MicrosoftTokenResponse;
 import fr.ynov.dap.services.microsoft.TokenService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -148,9 +148,9 @@ public class MicrosoftAuthHelper {
      *
      * @param authCode authCode
      * @param tenantId tenantID
-     * @return TokenResponse
+     * @return MicrosoftTokenResponse
      */
-    public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
+    public static MicrosoftTokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
         // Create a logging interceptor to log request and responses
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -172,7 +172,7 @@ public class MicrosoftAuthHelper {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(),
                     "authorization_code", authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
-            TokenResponse error = new TokenResponse();
+            MicrosoftTokenResponse error = new MicrosoftTokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
             return error;
@@ -211,14 +211,14 @@ public class MicrosoftAuthHelper {
             TokenService tokenService = retrofit.create(TokenService.class);
 
             try {
-                TokenResponse tokenResponse = tokenService.getAccessTokenFromRefreshToken(microsoftAccount.getTenantId(), getAppId(), getAppPassword(),
+                MicrosoftTokenResponse microsoftTokenResponse = tokenService.getAccessTokenFromRefreshToken(microsoftAccount.getTenantId(), getAppId(), getAppPassword(),
                         "refresh_token", microsoftAccount.getRefreshToken(), getRedirectUrl()).execute().body();
 
-                microsoftAccount.setToken(tokenResponse.getAccessToken());
-                microsoftAccount.setRefreshToken(tokenResponse.getRefreshToken());
-                microsoftAccount.setTokenExpirationTime(tokenResponse.getExpirationTime());
+                microsoftAccount.setToken(microsoftTokenResponse.getAccessToken());
+                microsoftAccount.setRefreshToken(microsoftTokenResponse.getRefreshToken());
+                microsoftAccount.setTokenExpirationTime(microsoftTokenResponse.getExpirationTime());
             } catch (IOException e) {
-                TokenResponse error = new TokenResponse();
+                MicrosoftTokenResponse error = new MicrosoftTokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());
             }

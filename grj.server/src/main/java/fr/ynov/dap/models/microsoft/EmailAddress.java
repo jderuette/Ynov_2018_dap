@@ -2,6 +2,7 @@ package fr.ynov.dap.models.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailAddress {
     private String name;

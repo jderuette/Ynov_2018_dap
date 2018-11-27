@@ -2,11 +2,29 @@ package fr.ynov.dap.models.microsoft;
 
 import com.fasterxml.jackson.annotation.*;
 
+/**
+ * MicrosoftPagedResult
+ *
+ * @param <T>
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PagedResult<T> {
+public class MicrosoftPagedResult<T> {
+
+    /**
+     * nextPageLink
+     */
     @JsonProperty("@odata.nextLink")
     private String nextPageLink;
-    private T[]    value;
+
+    /**
+     * value
+     */
+    private T[] value;
+
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public String getNextPageLink() {
         return nextPageLink;

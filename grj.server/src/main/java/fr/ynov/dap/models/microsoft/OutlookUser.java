@@ -2,11 +2,31 @@ package fr.ynov.dap.models.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * OutlookUser
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookUser {
+
+    /**
+     * id
+     */
     private String id;
+
+    /**
+     * mail
+     */
     private String mail;
+
+    /**
+     * display name
+     */
     private String displayName;
+
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public String getId() {
         return id;

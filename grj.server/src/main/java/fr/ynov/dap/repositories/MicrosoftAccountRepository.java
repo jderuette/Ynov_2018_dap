@@ -1,7 +1,7 @@
 package fr.ynov.dap.repositories;
 
-import fr.ynov.dap.models.User;
+import fr.ynov.dap.models.*;
 import org.springframework.data.repository.CrudRepository;
 
-public interface MicrosoftAccountRepository extends CrudRepository<User, Integer> {
+public interface MicrosoftAccountRepository extends CrudRepository<MicrosoftAccount, Integer> {
 }

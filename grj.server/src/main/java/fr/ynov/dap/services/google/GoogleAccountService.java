@@ -83,7 +83,7 @@ public class GoogleAccountService extends GoogleHelper {
             }
 
         } catch (IOException e) {
-            LOG.error("Exception while trying to store user Credential", e);
+            LOG.error("Exception while trying to store user AccountCredential", e);
         }
 
         LOG.info("Google account " + googleAccountName + " is successfully added to user " + userName);

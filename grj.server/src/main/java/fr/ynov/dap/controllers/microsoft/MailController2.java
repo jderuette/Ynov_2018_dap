@@ -21,6 +21,8 @@ public class MailController2 {
     @Autowired
     UserRepository userRepository;
 
+    private static final int MAX_RESULT = 10;
+
     @RequestMapping("/microsoft/mail/{userName}")
     public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable final String userName) {
 
@@ -42,10 +44,10 @@ public class MailController2 {
                 // Only return the properties we care about
                 String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
                 // Return at most 10 messages
-                Integer maxResults = 10;
+                Integer maxResults = MAX_RESULT;
 
                 try {
-                    PagedResult<Message> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
+                    MicrosoftPagedResult<MicrosoftMessage> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
 
                     return "ss";
                 } catch (IOException e) {

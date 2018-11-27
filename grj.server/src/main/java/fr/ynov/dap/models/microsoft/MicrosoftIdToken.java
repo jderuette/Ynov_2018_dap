@@ -5,26 +5,65 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 
+/**
+ * MicrosoftIdToken
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class IdToken {
-    // NOTE: This is just a subset of the claims returned in the
-    // ID token. For a full listing, see:
-    // https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#idtokens
+public class MicrosoftIdToken {
+
+    /**
+     * expirationTime
+     */
     @JsonProperty("exp")
-    private long   expirationTime;
+    private long expirationTime;
+
+    /**
+     * notBefore
+     */
     @JsonProperty("nbf")
-    private long   notBefore;
+    private long notBefore;
+
+    /**
+     * tenantId
+     */
     @JsonProperty("tid")
     private String tenantId;
+
+    /**
+     * nonce
+     */
     private String nonce;
+
+    /**
+     * name
+     */
     private String name;
+
+    /**
+     * email
+     */
     private String email;
+
+    /**
+     * preferredUsername
+     */
     @JsonProperty("preferred_username")
     private String preferredUsername;
+
+    /**
+     * objectId
+     */
     @JsonProperty("oid")
     private String objectId;
 
-    public static IdToken parseEncodedToken(String encodedToken, String nonce) {
+    /**
+     * Parse encoded token
+     *
+     * @param encodedToken encodedToken
+     * @param nonce        nonce
+     * @return MicrosoftIdToken
+     */
+    public static MicrosoftIdToken parseEncodedToken(String encodedToken, String nonce) {
         // Encoded token is in three parts, separated by '.'
         String[] tokenParts = encodedToken.split("\\.");
 
@@ -33,10 +72,10 @@ public class IdToken {
 
         byte[] decodedBytes = Base64.getUrlDecoder().decode(idToken);
 
-        ObjectMapper mapper   = new ObjectMapper();
-        IdToken      newToken = null;
+        ObjectMapper     mapper   = new ObjectMapper();
+        MicrosoftIdToken newToken = null;
         try {
-            newToken = mapper.readValue(decodedBytes, IdToken.class);
+            newToken = mapper.readValue(decodedBytes, MicrosoftIdToken.class);
             if (!newToken.isValid(nonce)) {
                 return null;
             }
@@ -45,6 +84,10 @@ public class IdToken {
         }
         return newToken;
     }
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public long getExpirationTime() {
         return expirationTime;
@@ -118,6 +161,12 @@ public class IdToken {
         return new Date(epoch * 1000);
     }
 
+    /**
+     * Is Valid
+     *
+     * @param nonce nonce
+     * @return boolean
+     */
     private boolean isValid(String nonce) {
         // This method does some basic validation
         // For more information on validation of ID tokens, see
@@ -132,11 +181,6 @@ public class IdToken {
         }
 
         // Check nonce
-        if (!nonce.equals(this.getNonce())) {
-            // Nonce mismatch
-            return false;
-        }
-
-        return true;
+        return nonce.equals(this.getNonce());
     }
 }

@@ -1,4 +1,4 @@
-package fr.ynov.dap.controllers;
+package fr.ynov.dap.controllers.common;
 
 import fr.ynov.dap.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

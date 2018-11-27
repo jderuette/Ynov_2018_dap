@@ -77,9 +77,9 @@ public class GoogleHelper {
 
 
     /**
-     * Creates an authorized Credential object.
+     * Creates an authorized AccountCredential object.
      *
-     * @return An authorized Credential object.
+     * @return An authorized AccountCredential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
     private Credential getCredentials(String userKey) throws IOException {

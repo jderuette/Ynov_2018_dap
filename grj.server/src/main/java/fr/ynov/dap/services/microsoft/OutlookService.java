@@ -10,7 +10,7 @@ public interface OutlookService {
     Call<OutlookUser> getCurrentUser();
 
     @GET("/v1.0/me/mailfolders/{folderid}/messages")
-    Call<PagedResult<Message>> getMessages(
+    Call<MicrosoftPagedResult<MicrosoftMessage>> getMessages(
             @Path("folderid") String folderId,
             @Query("$orderby") String orderBy,
             @Query("$select") String select,

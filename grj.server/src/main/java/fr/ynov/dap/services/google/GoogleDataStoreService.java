@@ -1,4 +1,4 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.util.store.DataStore;
@@ -12,7 +12,7 @@ import java.io.IOException;
  * DataStoreService
  */
 @Service
-public class DataStoreService {
+public class GoogleDataStoreService {
 
     /**
      * Autowired GoogleHelper

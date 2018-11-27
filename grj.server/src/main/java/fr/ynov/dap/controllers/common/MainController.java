@@ -1,4 +1,4 @@
-package fr.ynov.dap.controllers;
+package fr.ynov.dap.controllers.common;
 
 import org.springframework.web.bind.annotation.*;
 

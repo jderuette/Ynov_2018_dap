@@ -4,25 +4,74 @@ import com.fasterxml.jackson.annotation.*;
 
 import java.util.*;
 
+/**
+ * MicrosoftTokenResponse
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TokenResponse {
+public class MicrosoftTokenResponse {
+
+    /**
+     * Token Type
+     */
     @JsonProperty("token_type")
     private String tokenType;
+
+    /**
+     * Scope
+     */
     private String scope;
+
+    /**
+     * Expire In
+     */
     @JsonProperty("expires_in")
-    private int    expiresIn;
+    private int expiresIn;
+
+    /**
+     * Access Token
+     */
     @JsonProperty("access_token")
     private String accessToken;
+
+    /**
+     * Refresh Token
+     */
     @JsonProperty("refresh_token")
     private String refreshToken;
+
+    /**
+     * Id Token
+     */
     @JsonProperty("id_token")
     private String idToken;
+
+    /**
+     * Error
+     */
     private String error;
+
+    /**
+     * Error Description
+     */
     @JsonProperty("error_description")
     private String errorDescription;
+
+    /**
+     * Error Code
+     */
     @JsonProperty("error_codes")
-    private int[]  errorCodes;
-    private Date   expirationTime;
+    private int[] errorCodes;
+
+    /**
+     * Expiration time
+     */
+    private Date expirationTime;
+
+
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public String getTokenType() {
         return tokenType;

@@ -1,6 +1,6 @@
 package fr.ynov.dap.services.microsoft;
 
-import fr.ynov.dap.models.microsoft.TokenResponse;
+import fr.ynov.dap.models.microsoft.MicrosoftTokenResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -8,7 +8,7 @@ public interface TokenService {
 
     @FormUrlEncoded
     @POST("/{tenantid}/oauth2/v2.0/token")
-    Call<TokenResponse> getAccessTokenFromAuthCode(
+    Call<MicrosoftTokenResponse> getAccessTokenFromAuthCode(
             @Path("tenantid") String tenantId,
             @Field("client_id") String clientId,
             @Field("client_secret") String clientSecret,
@@ -19,7 +19,7 @@ public interface TokenService {
 
     @FormUrlEncoded
     @POST("/{tenantid}/oauth2/v2.0/token")
-    Call<TokenResponse> getAccessTokenFromRefreshToken(
+    Call<MicrosoftTokenResponse> getAccessTokenFromRefreshToken(
             @Path("tenantid") String tenantId,
             @Field("client_id") String clientId,
             @Field("client_secret") String clientSecret,

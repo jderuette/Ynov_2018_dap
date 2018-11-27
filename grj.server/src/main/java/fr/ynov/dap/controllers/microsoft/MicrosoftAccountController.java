@@ -70,18 +70,18 @@ public class MicrosoftAccountController {
             String microsoftAccountName = (String) session.getAttribute("microsoftAccountName");
 
             if (state.equals(expectedState)) {
-                IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
-                if (idTokenObj != null) {
+                MicrosoftIdToken microsoftIdTokenObj = MicrosoftIdToken.parseEncodedToken(idToken, expectedNonce.toString());
+                if (microsoftIdTokenObj != null) {
 
                     if (userName != null && microsoftAccountName != null) {
-                        TokenResponse tokenResponse = MicrosoftAuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
-                        User          user          = userRepository.findByName(userName);
+                        MicrosoftTokenResponse microsoftTokenResponse = MicrosoftAuthHelper.getTokenFromAuthCode(code, microsoftIdTokenObj.getTenantId());
+                        User                   user                   = userRepository.findByName(userName);
                         microsoftAccount.setName(microsoftAccountName);
-                        microsoftAccount.setToken(tokenResponse.getAccessToken());
-                        microsoftAccount.setRefreshToken(tokenResponse.getRefreshToken());
+                        microsoftAccount.setToken(microsoftTokenResponse.getAccessToken());
+                        microsoftAccount.setRefreshToken(microsoftTokenResponse.getRefreshToken());
 
                         // Get user info
-                        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken(), null);
+                        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(microsoftTokenResponse.getAccessToken(), null);
                         OutlookUser    outlookUser;
                         try {
                             outlookUser = outlookService.getCurrentUser().execute().body();
@@ -90,8 +90,8 @@ public class MicrosoftAccountController {
                             session.setAttribute("error", e.getMessage());
                         }
 
-                        microsoftAccount.setTenantId(idTokenObj.getTenantId());
-                        microsoftAccount.setTokenExpirationTime(tokenResponse.getExpirationTime());
+                        microsoftAccount.setTenantId(microsoftIdTokenObj.getTenantId());
+                        microsoftAccount.setTokenExpirationTime(microsoftTokenResponse.getExpirationTime());
 
                         user.addMicrosoftAccount(microsoftAccount);
                         userRepository.save(user);

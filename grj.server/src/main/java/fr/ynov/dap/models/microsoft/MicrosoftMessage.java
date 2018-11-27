@@ -4,14 +4,46 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
 
+/**
+ * MicrosoftMessage
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Message {
-    private String    id;
-    private Date      receivedDateTime;
-    private Recipient from;
-    private Boolean   isRead;
-    private String    subject;
-    private String    bodyPreview;
+public class MicrosoftMessage {
+
+    /**
+     * id
+     */
+    private String id;
+
+    /**
+     * receivedDateTime
+     */
+    private Date receivedDateTime;
+
+    /**
+     * from
+     */
+    private MicrosoftRecipient from;
+
+    /**
+     * isRead
+     */
+    private Boolean isRead;
+
+    /**
+     * subject
+     */
+    private String subject;
+
+    /**
+     * bodyPreview
+     */
+    private String bodyPreview;
+
+
+    /*
+    GETTERS AND SETTERS
+     */
 
     public String getId() {
         return id;
@@ -29,11 +61,11 @@ public class Message {
         this.receivedDateTime = receivedDateTime;
     }
 
-    public Recipient getFrom() {
+    public MicrosoftRecipient getFrom() {
         return from;
     }
 
-    public void setFrom(Recipient from) {
+    public void setFrom(MicrosoftRecipient from) {
         this.from = from;
     }
 
