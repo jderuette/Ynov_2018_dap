@@ -1,7 +1,14 @@
 package fr.ynov.dap;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -50,19 +57,16 @@ public class Config {
     /**
      * Store Microsoft App Id.
      */
-    @Value("${dap.providers.microsoft.app_id}")
     private String microsoftAppId;
 
     /**
      * Store Microsoft Redirect Url.
      */
-    @Value("${dap.providers.microsoft.redirect_url}")
     private String microsoftRedirectUrl;
 
     /**
      * Store Microsoft App Password.
      */
-    @Value("${dap.providers.microsoft.app_password}")
     private String microsoftAppPassword;
 
     /**
@@ -72,10 +76,21 @@ public class Config {
     private String microsoftAuthorityUrl;
 
     /**
+     * Store Microsoft configuration file path.
+     */
+    @Value("${dap.providers.microsoft.configuration_path}")
+    private String microsoftConfigurationPath;
+
+    /**
+     * Logger instance.
+     */
+    private Logger logger = LogManager.getLogger();
+
+    /**
      * Default constructor.
      * @throws IOException Exception
      */
-    public Config() {
+    public Config() throws IOException {
 
     }
 
@@ -84,7 +99,7 @@ public class Config {
      * @param dataStoreDirectory Directory path to store credential file
      * @throws IOException Exception
      */
-    public Config(final String dataStoreDirectory) {
+    public Config(final String dataStoreDirectory) throws IOException {
         if (dataStoreDirectory != null) {
             String newPath = StrUtils.resolvePath(dataStoreDirectory);
             datastoreDirectory = newPath;
@@ -156,6 +171,50 @@ public class Config {
      */
     public String getMicrosoftAuthorityUrl() {
         return microsoftAuthorityUrl;
+    }
+
+    /**
+     * Load Microsoft configuration from file.
+     * @throws IOException Exception
+     */
+    public void loadConfig() throws IOException {
+
+        if (StrUtils.isNullOrEmpty(microsoftConfigurationPath)) {
+
+            logger.warn("Microsoft Configuration Path is null or empty. Can't load appId, Password and Redirect Url.");
+
+            return;
+
+        }
+
+        InputStreamReader file = new InputStreamReader(new FileInputStream(microsoftConfigurationPath),
+                Charset.forName("UTF-8"));
+
+        if (file.ready()) {
+
+            Properties msProps = new Properties();
+
+            try {
+
+                msProps.load(file);
+
+                microsoftAppId = msProps.getProperty("appId");
+                microsoftAppPassword = msProps.getProperty("appPassword");
+                microsoftRedirectUrl = msProps.getProperty("redirectUrl");
+
+            } finally {
+
+                file.close();
+
+            }
+
+        } else {
+
+            throw new FileNotFoundException(
+                    "Property file '" + microsoftConfigurationPath + "' not found in the classpath.");
+
+        }
+
     }
 
 }

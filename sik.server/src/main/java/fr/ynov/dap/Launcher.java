@@ -36,7 +36,9 @@ public class Launcher {
      */
     @Bean
     public Config loadConfig() throws IOException {
-        return new Config();
+        Config conf = new Config();
+        conf.loadConfig();
+        return conf;
     }
 
 }

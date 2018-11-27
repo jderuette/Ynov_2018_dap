@@ -42,6 +42,10 @@ public abstract class BaseController {
         return logger;
     }
 
+    /**
+     * Get current instance of app user repository.
+     * @return App user repository
+     */
     public AppUserRepository getAppUserRepository() {
         return appUserRepository;
     }

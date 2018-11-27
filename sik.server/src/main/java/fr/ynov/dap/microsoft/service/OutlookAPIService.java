@@ -58,14 +58,26 @@ public class OutlookAPIService {
 
     }
 
+    /**
+     * Get current instance of logger.
+     * @return Logger
+     */
     public Logger getLogger() {
         return logger;
     }
 
+    /**
+     * Get current instance of configuration.
+     * @return Configuration
+     */
     public Config getConfig() {
         return config;
     }
 
+    /**
+     * Get authorize url for graph API.
+     * @return Authorize url
+     */
     public String getAuthorizeUrl() {
         return config.getMicrosoftAuthorityUrl() + "/common/oauth2/v2.0/authorize";
     }
@@ -173,6 +185,10 @@ public class OutlookAPIService {
         return newTokens;
     }
 
+    /**
+     * Create token service from interface.
+     * @return Instance of token service
+     */
     public final TokenService createTokenService() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -180,7 +196,9 @@ public class OutlookAPIService {
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(getAuthorizeUrl()).client(client)
+        String authorizeUrl = getAuthorizeUrl();
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(authorizeUrl).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         return retrofit.create(TokenService.class);

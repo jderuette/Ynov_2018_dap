@@ -21,6 +21,16 @@ import fr.ynov.dap.client.service.DaPAPIService;
 public final class App {
 
     /**
+     * Index of account type.
+     */
+    private static final Integer PARAMS_ACCOUNT_TYPE_INDEX = 2;
+
+    /**
+     * Index of account name.
+     */
+    private static final Integer PARAMS_ACCOUNT_NAME_INDEX = 3;
+
+    /**
      * Default constructor.
      */
     private App() {
@@ -58,9 +68,9 @@ public final class App {
                 showUserInformations(userId);
                 break;
             case "add":
-                if (args.length >= 3) {
-                    String accountType = args[2].toLowerCase();
-                    String accountName = args[3];
+                if (args.length >= PARAMS_ACCOUNT_NAME_INDEX) {
+                    String accountType = args[PARAMS_ACCOUNT_TYPE_INDEX].toLowerCase();
+                    String accountName = args[PARAMS_ACCOUNT_NAME_INDEX];
                     if (accountType.equals("google")) {
                         addGoogleAccount(accountName, userId);
                     } else if (accountType.equals("microsoft")) {
