@@ -13,8 +13,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
-import fr.ynov.dap.microsoft.models.TokenResponse;
-import fr.ynov.dap.microsoft.service.TokenService;
+import fr.ynov.dap.microsoft.contract.TokenService;
+import fr.ynov.dap.microsoft.data.TokenResponse;
 
 public class AuthHelper {
   private static final String authority = "https://login.microsoftonline.com";

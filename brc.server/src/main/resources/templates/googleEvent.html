@@ -1,5 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -7,6 +11,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/index">DAP</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -17,16 +24,39 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}">Events</a>
-      </li>
+      </li>  
       <li class="nav-item">
         <a class="nav-link" th:href="/admin">Admin</a>
-      </li>     
+      </li>    
     </ul>
   </div>
 </nav>
-
 </head>
 <body>
-<h1> Welcome on DAP</h1>
-</body>
+ <th:if test="${error ne null}">
+  <span th:text="${error}"></span>
+</th:if>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Organizer</th>
+      <th>Subject</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    <div th:each="event : ${events}">
+      <tr>
+        <td th:text="${event.organizer}"></td>
+        <td th:text="${event.subject}"></td>
+        <td th:text="${event.start}"></td>
+        <td th:text="${event.end}"></td>
+      </tr>
+    </div>
+  </tbody>
+</table>
+
+ </body>
 </html>
