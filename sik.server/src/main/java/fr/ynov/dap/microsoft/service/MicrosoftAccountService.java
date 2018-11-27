@@ -32,7 +32,7 @@ public class MicrosoftAccountService extends OutlookAPIService {
             throw new NoConfigurationException();
         }
 
-        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(getAuthorizeUrl());
+        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
         urlBuilder.queryParam("client_id", getConfig().getMicrosoftAppId());
         urlBuilder.queryParam("redirect_uri", getConfig().getMicrosoftRedirectUrl());
         urlBuilder.queryParam("response_type", "code id_token");

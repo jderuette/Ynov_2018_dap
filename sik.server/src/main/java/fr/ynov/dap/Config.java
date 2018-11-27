@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import fr.ynov.dap.utils.StrUtils;
-
 /**
  * This class allow developer to configure this application.
  * @author Kévin Sibué
@@ -23,6 +21,12 @@ import fr.ynov.dap.utils.StrUtils;
 @Configuration
 @PropertySource("classpath:dap.properties")
 public class Config {
+
+    /**
+     * Path where microsoft auth properties files are stored.
+     */
+    private static final String MICROSOFT_AUTH_PROPERTIES_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "auth.properties";
 
     /**
      * Store OAuth2 callback url.
@@ -70,18 +74,6 @@ public class Config {
     private String microsoftAppPassword;
 
     /**
-     * Store Microsoft Authority Url.
-     */
-    @Value("${dap.providers.microsoft.authority_url}")
-    private String microsoftAuthorityUrl;
-
-    /**
-     * Store Microsoft configuration file path.
-     */
-    @Value("${dap.providers.microsoft.configuration_path}")
-    private String microsoftConfigurationPath;
-
-    /**
      * Logger instance.
      */
     private Logger logger = LogManager.getLogger();
@@ -91,19 +83,7 @@ public class Config {
      * @throws IOException Exception
      */
     public Config() throws IOException {
-
-    }
-
-    /**
-     * Default constructor.
-     * @param dataStoreDirectory Directory path to store credential file
-     * @throws IOException Exception
-     */
-    public Config(final String dataStoreDirectory) throws IOException {
-        if (dataStoreDirectory != null) {
-            String newPath = StrUtils.resolvePath(dataStoreDirectory);
-            datastoreDirectory = newPath;
-        }
+        loadConfig();
     }
 
     /**
@@ -167,27 +147,12 @@ public class Config {
     }
 
     /**
-     * @return the microsoftAuthorityUrl
-     */
-    public String getMicrosoftAuthorityUrl() {
-        return microsoftAuthorityUrl;
-    }
-
-    /**
      * Load Microsoft configuration from file.
      * @throws IOException Exception
      */
     public void loadConfig() throws IOException {
 
-        if (StrUtils.isNullOrEmpty(microsoftConfigurationPath)) {
-
-            logger.warn("Microsoft Configuration Path is null or empty. Can't load appId, Password and Redirect Url.");
-
-            return;
-
-        }
-
-        InputStreamReader file = new InputStreamReader(new FileInputStream(microsoftConfigurationPath),
+        InputStreamReader file = new InputStreamReader(new FileInputStream(MICROSOFT_AUTH_PROPERTIES_PATH),
                 Charset.forName("UTF-8"));
 
         if (file.ready()) {
@@ -211,7 +176,7 @@ public class Config {
         } else {
 
             throw new FileNotFoundException(
-                    "Property file '" + microsoftConfigurationPath + "' not found in the classpath.");
+                    "Property file '" + MICROSOFT_AUTH_PROPERTIES_PATH + "' not found in the classpath.");
 
         }
 

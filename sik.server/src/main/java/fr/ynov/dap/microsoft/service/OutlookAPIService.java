@@ -45,6 +45,16 @@ public class OutlookAPIService {
     private MicrosoftAccountRepository msAccountRepository;
 
     /**
+     * Constant than store authority value.
+     */
+    protected static final String AUTHORITY = "https://login.microsoftonline.com";
+
+    /**
+     * Constant that store authorize url.
+     */
+    protected static final String AUTHORIZE_URL = AUTHORITY + "/common/oauth2/v2.0/authorize/";
+
+    /**
      * Every scopes needed.
      */
     protected static String[] scopes = { MicrosoftScopes.OPEN_ID, MicrosoftScopes.OFFLINE_ACCESS,
@@ -72,14 +82,6 @@ public class OutlookAPIService {
      */
     public Config getConfig() {
         return config;
-    }
-
-    /**
-     * Get authorize url for graph API.
-     * @return Authorize url
-     */
-    public String getAuthorizeUrl() {
-        return config.getMicrosoftAuthorityUrl() + "/common/oauth2/v2.0/authorize";
     }
 
     /**
@@ -196,9 +198,7 @@ public class OutlookAPIService {
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        String authorizeUrl = getAuthorizeUrl();
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(authorizeUrl).client(client)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORIZE_URL).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         return retrofit.create(TokenService.class);
