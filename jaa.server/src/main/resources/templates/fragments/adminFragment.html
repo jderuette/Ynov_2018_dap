@@ -1,5 +1,10 @@
 <h1 th:text="#{admin.title}"></h1>
-<div>
+
+<div th:if="${#lists.isEmpty(account)}">
+	<div th:text="#{admin.emptyAccount}"></div>
+</div>
+
+<div th:if="${not #lists.isEmpty(account)}">
 	<table class="table">
 		<tr class="thead-dark">
 			<th scope="col" th:text="#{admin.user}"></th>

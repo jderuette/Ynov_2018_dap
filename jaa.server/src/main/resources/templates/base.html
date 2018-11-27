@@ -17,6 +17,7 @@
 
 </head>
 <body>
+	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
     <div th:include="${fragment}"></div>
 </div>
 	
