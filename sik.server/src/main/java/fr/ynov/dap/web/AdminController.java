@@ -40,6 +40,21 @@ import fr.ynov.dap.model.microsoft.MicrosoftCalendarEvent;
 public class AdminController extends BaseController {
 
     /**
+     * Default page name to use.
+     */
+    private static final String DEFAULT_PAGE_NAME = "base";
+
+    /**
+     * User known attribute name to use on model.
+     */
+    private static final String USER_KNOWN_ATTRIBUTE = "userKnown";
+
+    /**
+     * Fragment attribute name to use on model.
+     */
+    private static final String FRAGMENT_ATTRIBUTE = "fragment";
+
+    /**
      * Auto inject on GoogleAccountService.
      */
     @Autowired
@@ -106,11 +121,9 @@ public class AdminController extends BaseController {
         credentials.addAll(googleCredentials);
         credentials.addAll(msCredentials);
 
-        model.addAttribute("userKnown", true);
         model.addAttribute("credentials", credentials);
-        model.addAttribute("fragment", "fragments/admin_datastore");
 
-        return "base";
+        return getPageWithFragment(model, true, "fragments/admin_datastore");
 
     }
 
@@ -136,10 +149,7 @@ public class AdminController extends BaseController {
 
             getLogger().warn("User is undefined. Show Admin Calendar with error");
 
-            model.addAttribute("userKnown", false);
-            model.addAttribute("fragment", "fragments/admin_calendar");
-
-            return "base";
+            return getPageWithFragment(model, false, "fragments/admin_calendar");
 
         }
 
@@ -157,21 +167,17 @@ public class AdminController extends BaseController {
 
         if (events.size() == 0) {
 
-            model.addAttribute("userKnown", true);
             model.addAttribute("event", null);
-            model.addAttribute("fragment", "fragments/admin_calendar");
 
-            return "base";
+            return getPageWithFragment(model, true, "fragments/admin_calendar");
 
         }
 
         Collections.sort(events, new SortByNearest());
 
-        model.addAttribute("userKnown", true);
         model.addAttribute("event", events.get(0));
-        model.addAttribute("fragment", "fragments/admin_calendar");
 
-        return "base";
+        return getPageWithFragment(model, true, "fragments/admin_calendar");
 
     }
 
@@ -194,10 +200,7 @@ public class AdminController extends BaseController {
 
             getLogger().warn("User is undefined. Show Admin Mail with error");
 
-            model.addAttribute("userKnown", false);
-            model.addAttribute("fragment", "fragments/admin_mail");
-
-            return "base";
+            return getPageWithFragment(model, false, "fragments/admin_mail");
 
         }
 
@@ -207,11 +210,9 @@ public class AdminController extends BaseController {
 
         nbUnreadMails += gmailService.getNbUnreadEmails(user);
 
-        model.addAttribute("userKnown", true);
         model.addAttribute("count", nbUnreadMails);
-        model.addAttribute("fragment", "fragments/admin_mail");
 
-        return "base";
+        return getPageWithFragment(model, true, "fragments/admin_mail");
 
     }
 
@@ -233,10 +234,7 @@ public class AdminController extends BaseController {
 
             getLogger().warn("User is undefined. Show Admin Contact with error");
 
-            model.addAttribute("userKnown", false);
-            model.addAttribute("fragment", "fragments/admin_contact");
-
-            return "base";
+            return getPageWithFragment(model, false, "fragments/admin_contact");
 
         }
 
@@ -246,11 +244,9 @@ public class AdminController extends BaseController {
 
         nbContacts += contactService.getNumberOfContacts(user);
 
-        model.addAttribute("userKnown", true);
         model.addAttribute("count", nbContacts);
-        model.addAttribute("fragment", "fragments/admin_contact");
 
-        return "base";
+        return getPageWithFragment(model, true, "fragments/admin_contact");
 
     }
 
@@ -272,20 +268,31 @@ public class AdminController extends BaseController {
 
             getLogger().warn("User is undefined. Show Admin Mail List with error");
 
-            model.addAttribute("userKnown", false);
-            model.addAttribute("fragment", "fragments/admin_mail_list");
-
-            return "base";
+            return getPageWithFragment(model, false, "fragments/admin_mail_list");
 
         }
 
         ArrayList<Inbox> inboxs = outlookService.getMessages(user);
 
-        model.addAttribute("userKnown", true);
         model.addAttribute("inboxs", inboxs);
-        model.addAttribute("fragment", "fragments/admin_mail_list");
 
-        return "base";
+        return getPageWithFragment(model, true, "fragments/admin_mail_list");
+
+    }
+
+    /**
+     * Update model to be conform with page.
+     * @param model ModelMap
+     * @param known True if user is knoww
+     * @param fragmentName Fragment to use on page
+     * @return Base page to use
+     */
+    private String getPageWithFragment(final ModelMap model, final Boolean known, final String fragmentName) {
+
+        model.addAttribute(USER_KNOWN_ATTRIBUTE, known);
+        model.addAttribute(FRAGMENT_ATTRIBUTE, fragmentName);
+
+        return DEFAULT_PAGE_NAME;
 
     }
 

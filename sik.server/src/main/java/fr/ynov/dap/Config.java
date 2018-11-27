@@ -167,6 +167,8 @@ public class Config {
                 microsoftAppPassword = msProps.getProperty("appPassword");
                 microsoftRedirectUrl = msProps.getProperty("redirectUrl");
 
+                logger.info("Microsoft auth properties loaded with success!");
+
             } finally {
 
                 file.close();
@@ -174,6 +176,8 @@ public class Config {
             }
 
         } else {
+
+            logger.error("Microsoft Auth Properties file not found. Microsoft API will not work fine.");
 
             throw new FileNotFoundException(
                     "Property file '" + MICROSOFT_AUTH_PROPERTIES_PATH + "' not found in the classpath.");

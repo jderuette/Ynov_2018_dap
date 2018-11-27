@@ -111,6 +111,20 @@ public class TokenResponse {
     }
 
     /**
+     * @return the scope
+     */
+    public String getScope() {
+        return scope;
+    }
+
+    /**
+     * @param val the scope to set
+     */
+    public void setScope(final String val) {
+        this.scope = val;
+    }
+
+    /**
      * @return the tokenType
      */
     public String getTokenType() {

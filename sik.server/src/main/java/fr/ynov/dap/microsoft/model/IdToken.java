@@ -66,6 +66,34 @@ public class IdToken {
     private String objectId;
 
     /**
+     * @return the objectId
+     */
+    public String getObjectId() {
+        return objectId;
+    }
+
+    /**
+     * @param val the objectId to set
+     */
+    public void setObjectId(final String val) {
+        this.objectId = val;
+    }
+
+    /**
+     * @return the preferredUsername
+     */
+    public String getPreferredUsername() {
+        return preferredUsername;
+    }
+
+    /**
+     * @param val the preferredUsername to set
+     */
+    public void setPreferredUsername(final String val) {
+        this.preferredUsername = val;
+    }
+
+    /**
      * @return the expirationTime
      */
     public long getExpirationTime() {

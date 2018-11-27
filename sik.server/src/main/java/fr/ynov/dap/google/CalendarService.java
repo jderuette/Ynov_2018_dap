@@ -59,8 +59,6 @@ public class CalendarService extends GoogleAPIService<Calendar> {
 
         Calendar calendarService = getService(accountName);
 
-        DateTime now = new DateTime(System.currentTimeMillis());
-
         OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
         long epochMillis = utc.toEpochSecond() * Constants.SECOND_TO_MILLISECOND;
 

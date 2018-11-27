@@ -29,11 +29,6 @@ public class MicrosoftCalendarEvent implements ApiEvent {
     private String userMail;
 
     /**
-     * Current user status.
-     */
-    private AttendeeEventStatusEnum currentUserStatus;
-
-    /**
      * Default constructor.
      * @param evt Outlook event
      * @param mail User email

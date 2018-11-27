@@ -91,7 +91,8 @@ public class OutlookAPIService {
     protected static String getScopes() {
         StringBuilder sb = new StringBuilder();
         for (String scope : scopes) {
-            sb.append(scope + " ");
+            sb.append(scope);
+            sb.append(" ");
         }
         return sb.toString().trim();
     }
