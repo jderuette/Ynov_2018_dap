@@ -29,7 +29,7 @@
 		</RollingRandomAccessFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="fr.houseofcode" level="debug" additivity="false">
+		<Logger name="fr.ynov.dap" level="debug" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef
 				ref="RollingRandomAccessFileOneByDayForTwentyDays" />
