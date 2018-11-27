@@ -25,6 +25,7 @@ public class DateTimeTimeZone {
     public Date getDateTime() {
         return dateTime;
     }
+
     /**
      * DateTime setter.
      * @param date date time.
@@ -32,6 +33,7 @@ public class DateTimeTimeZone {
     public void setDateTime(final Date date) {
         this.dateTime = date;
     }
+
     /**
      * TimeZone getter.
      * @return time zone.
@@ -39,6 +41,7 @@ public class DateTimeTimeZone {
     public String getTimeZone() {
         return timeZone;
     }
+
     /**
      * TimeZone setter.
      * @param zone time zone.

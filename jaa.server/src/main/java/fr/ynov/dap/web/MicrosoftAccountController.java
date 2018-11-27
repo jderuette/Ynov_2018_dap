@@ -135,13 +135,13 @@ public class MicrosoftAccountController {
 
         if (!state.equals(expectedState)) {
             model.addAttribute("error", "Unexpected state returned from authority.");
-            return "redirect:/"; //TODO
+            return "redirect:/accountAdded";
         }
 
         IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
         if (idTokenObj == null) {
             model.addAttribute("error", "ID token failed validation.");
-            return "redirect:/"; //TODO
+            return "redirect:/accountAdded";
         }
 
         TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
@@ -163,6 +163,6 @@ public class MicrosoftAccountController {
         appUser.addMicrosoftAccount(microsoftAccount);
         repository.save(appUser);
 
-        return "redirect:/"; //TODO
+        return "redirect:/accountAdded";
     }
 }

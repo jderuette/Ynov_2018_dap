@@ -25,9 +25,15 @@ public class MailsController {
     @Autowired
     private MicrosoftMailService mailService;
 
+    /**
+     * Get mails of Microsoft accounts of a specified AppUser account.
+     * @param userKey user key of the UserApp account.
+     * @param model model to display to the view.
+     * @return the name of the view to display.
+     */
     @RequestMapping("/microsoftMails")
     public String microsoftIndex(@RequestParam("userKey") final String userKey,
-            final ModelMap model, final HttpServletRequest request) {
+            final ModelMap model) {
 
         model.addAttribute("fragment", "fragments/microsoftMailFragment");
         List<List<Message>> messagesFoEachAccount;

@@ -95,7 +95,7 @@ public class IdToken {
      * @return the token.
      */
     private static String getTheTokenPart(final String[] tokenParts) {
-     // The three parts are: header.token.signature
+        // The three parts are: header.token.signature
         String idToken = tokenParts[1];
         return idToken;
     }
@@ -107,6 +107,7 @@ public class IdToken {
     public long getExpirationTime() {
         return expirationTime;
     }
+
     /**
      * ExpirationTime setter.
      * @param expiration expiration time.
@@ -114,6 +115,7 @@ public class IdToken {
     public void setExpirationTime(final long expiration) {
         this.expirationTime = expiration;
     }
+
     /**
      * NotBefore getter.
      * @return not before.
@@ -121,6 +123,7 @@ public class IdToken {
     public long getNotBefore() {
         return notBefore;
     }
+
     /**
      * NotBefore setter.
      * @param before not before.
@@ -128,6 +131,7 @@ public class IdToken {
     public void setNotBefore(final long before) {
         this.notBefore = before;
     }
+
     /**
      * TenantId getter.
      * @return tenant id.
@@ -135,6 +139,7 @@ public class IdToken {
     public String getTenantId() {
         return tenantId;
     }
+
     /**
      * TenantId setter.
      * @param id tenantId.
@@ -142,6 +147,7 @@ public class IdToken {
     public void setTenantId(final String id) {
         this.tenantId = id;
     }
+
     /**
      * Nonce getter.
      * @return Nonce.
@@ -149,6 +155,7 @@ public class IdToken {
     public String getNonce() {
         return nonce;
     }
+
     /**
      * Nonce setter.
      * @param n nonce.
@@ -156,6 +163,7 @@ public class IdToken {
     public void setNonce(final String n) {
         this.nonce = n;
     }
+
     /**
      * Name getter.
      * @return name.
@@ -163,6 +171,7 @@ public class IdToken {
     public String getName() {
         return name;
     }
+
     /**
      * Name setter.
      * @param n name.
@@ -170,6 +179,7 @@ public class IdToken {
     public void setName(final String n) {
         this.name = n;
     }
+
     /**
      * Email getter.
      * @return email.
@@ -177,6 +187,7 @@ public class IdToken {
     public String getEmail() {
         return email;
     }
+
     /**
      * Email setter.
      * @param e email.
@@ -184,6 +195,7 @@ public class IdToken {
     public void setEmail(final String e) {
         this.email = e;
     }
+
     /**
      * PreferredUsername getter.
      * @return preferred username (seems like an email?!).
@@ -191,6 +203,7 @@ public class IdToken {
     public String getPreferredUsername() {
         return preferredUsername;
     }
+
     /**
      * PreferredUsername setter.
      * @param username preferred username.
@@ -198,6 +211,7 @@ public class IdToken {
     public void setPreferredUsername(final String username) {
         this.preferredUsername = username;
     }
+
     /**
      * ObjectId getter.
      * @return objectId.
@@ -205,6 +219,7 @@ public class IdToken {
     public String getObjectId() {
         return objectId;
     }
+
     /**
      * ObjectId setter.
      * @param object ObjectId.
@@ -212,6 +227,7 @@ public class IdToken {
     public void setObjectId(final String object) {
         this.objectId = object;
     }
+
     /**
      * Convert UnixEpoch to Date.
      * @param epoch Unix epoch

@@ -32,7 +32,7 @@ public class MicrosoftContactService extends MicrosoftService {
 
         String sortGivenNameInAscendingOrder = "GivenName ASC";
         String properties = "GivenName,Surname,CompanyName,EmailAddresses";
-        Integer maxResults = 10;
+        Integer maxResults = MAX_RESULTS;
         Boolean showCount = true;
 
         try {

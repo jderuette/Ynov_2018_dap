@@ -34,7 +34,7 @@ public class MicrosoftMailService extends MicrosoftService {
         String messageFolder = "inbox";
         String sort = "receivedDateTime DESC";
         String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-        Integer maxResults = 10;
+        Integer maxResults = MAX_RESULTS;
 
         try {
             PagedResult<Message> messages = outlookService.getMessages(messageFolder, sort, properties, maxResults)
@@ -64,7 +64,7 @@ public class MicrosoftMailService extends MicrosoftService {
         String messageFolder = "inbox";
         String sort = "receivedDateTime DESC";
         String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-        Integer maxResults = 10;
+        Integer maxResults = MAX_RESULTS;
         String filter = "isRead eq false";
         Boolean count = true;
 
@@ -104,7 +104,7 @@ public class MicrosoftMailService extends MicrosoftService {
      * @return a list for each Microsoft account that contains a list of messages.
      * @throws ServiceException exception.
      */
-    public List<List<Message>> getFirstEmails(final String userKey) throws ServiceException{
+    public List<List<Message>> getFirstEmails(final String userKey) throws ServiceException {
         AppUser appUser = getRepository().findByUserKey(userKey);
         List<MicrosoftAccount> accounts = appUser.getMicrosoftAccounts();
 
@@ -121,7 +121,6 @@ public class MicrosoftMailService extends MicrosoftService {
             }
 
             mailsForMicrosoftAccounts.add(messages);
-
         }
 
         return mailsForMicrosoftAccounts;

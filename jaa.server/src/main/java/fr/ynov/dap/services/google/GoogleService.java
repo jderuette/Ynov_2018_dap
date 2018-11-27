@@ -27,8 +27,7 @@ import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.exceptions.AuthorizationException;
 
 /**
- * @author adrij
- *
+ * Google Service abstraction.
  */
 public abstract class GoogleService {
     /**

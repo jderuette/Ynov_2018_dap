@@ -15,6 +15,7 @@ public class EmailAddress {
      * Address of the emailAddress.
      */
     private String address;
+
     /**
      * Name getter.
      * @return name.
@@ -22,6 +23,7 @@ public class EmailAddress {
     public String getName() {
         return name;
     }
+
     /**
      * Name setter.
      * @param n name.
@@ -29,6 +31,7 @@ public class EmailAddress {
     public void setName(final String n) {
         this.name = n;
     }
+
     /**
      * Address getter.
      * @return address
@@ -36,6 +39,7 @@ public class EmailAddress {
     public String getAddress() {
         return address;
     }
+
     /**
      * Address setter.
      * @param a address.

@@ -14,6 +14,7 @@ public class PagedResult<T> {
      */
     @JsonProperty("@odata.count")
     private Integer count;
+
     /**
      * Count getter.
      * @return the number of results.
@@ -21,6 +22,7 @@ public class PagedResult<T> {
     public Integer getCount() {
         return count;
     }
+
     /**
      * Counter setter.
      * @param c counter
@@ -28,6 +30,7 @@ public class PagedResult<T> {
     public void setCount(final Integer c) {
         this.count = c;
     }
+
     /**
      * Url to the next pagedResult.
      */
@@ -37,6 +40,7 @@ public class PagedResult<T> {
      * Array of value.
      */
     private T[] value;
+
     /**
      * NextPageLink getter.
      * @return the url of the next page.
@@ -44,6 +48,7 @@ public class PagedResult<T> {
     public String getNextPageLink() {
         return nextPageLink;
     }
+
     /**
      * NextPageLink setter.
      * @param link the url of the next page result.
@@ -51,6 +56,7 @@ public class PagedResult<T> {
     public void setNextPageLink(final String link) {
         this.nextPageLink = link;
     }
+
     /**
      * Value array getter.
      * @return the values (results).
@@ -58,6 +64,7 @@ public class PagedResult<T> {
     public T[] getValue() {
         return value;
     }
+
     /**
      * Value setter.
      * @param v the results.

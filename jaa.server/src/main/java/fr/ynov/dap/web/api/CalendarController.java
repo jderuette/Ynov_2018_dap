@@ -57,8 +57,7 @@ public class CalendarController extends DapController {
 
         if (googleEvent.getStart().getDateTime().getValue() < microsoftEvent.getStart().getDateTime().getTime()) {
             return googleEvent;
-        }
-        else {
+        } else {
             return microsoftEvent;
         }
     }

@@ -19,8 +19,7 @@ import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.exceptions.ServiceException;
 
 /**
- * @author adrij
- *
+ * Google Calendar Service.
  */
 @Service
 public final class GCalendarService extends GoogleService {

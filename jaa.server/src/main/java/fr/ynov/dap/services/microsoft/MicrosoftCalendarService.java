@@ -33,7 +33,7 @@ public class MicrosoftCalendarService extends MicrosoftService {
 
         String sortByStartTimeInDescendingOrder = "start/dateTime DESC";
         String properties = "organizer,subject,start,end,isOrganizer";
-        Integer maxResults = 10;
+        Integer maxResults = MAX_RESULTS;
 
         try {
           PagedResult<Event> events = outlookService.getEvents(
@@ -53,7 +53,7 @@ public class MicrosoftCalendarService extends MicrosoftService {
      * Get the next event of all Microsoft account.
      * @param userKey user key.
      * @return the next event.
-     * @throws ServiceException
+     * @throws ServiceException exception.
      */
     public Event getNextEventsOfAllAccount(final String userKey) throws ServiceException {
         AppUser appUser = getRepository().findByUserKey(userKey);

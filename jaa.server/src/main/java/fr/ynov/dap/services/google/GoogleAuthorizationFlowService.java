@@ -13,8 +13,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.util.store.DataStore;
 
 /**
- * @author adrij
- *
+ * Google Authorization Flow service.
  */
 @Service
 public class GoogleAuthorizationFlowService extends GoogleService {

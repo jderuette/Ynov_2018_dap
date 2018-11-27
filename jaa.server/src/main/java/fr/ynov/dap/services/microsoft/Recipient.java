@@ -2,15 +2,30 @@ package fr.ynov.dap.services.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Used by the Microsoft API.
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Recipient {
-  private EmailAddress emailAddress;
+    /**
+     * Email Address.
+     */
+    private EmailAddress emailAddress;
 
-  public EmailAddress getEmailAddress() {
-    return emailAddress;
-  }
+    /**
+     * Email Address getter.
+     * @return the email address.
+     */
+    public EmailAddress getEmailAddress() {
+        return emailAddress;
+    }
 
-  public void setEmailAddress(EmailAddress emailAddress) {
-    this.emailAddress = emailAddress;
-  }
+    /**
+     * Email Address setter.
+     * @param email Email address.
+     */
+    public void setEmailAddress(final EmailAddress email) {
+        this.emailAddress = email;
+    }
 }

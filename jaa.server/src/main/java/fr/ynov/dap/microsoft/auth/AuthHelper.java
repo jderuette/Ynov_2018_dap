@@ -120,7 +120,7 @@ public final class AuthHelper {
 
     /**
      * Load auth.properties configuration file.
-     * @throws IOException
+     * @throws IOException exception.
      */
     private static void loadConfig() throws IOException {
         String authConfigFile = "auth.properties";
@@ -143,11 +143,11 @@ public final class AuthHelper {
 
     /**
      * Login Url builder.
-     * @param state
-     * @param nonce
-     * @return
+     * @param state the state.
+     * @param nonce the nonce.
+     * @return the login url.
      */
-    public static String getLoginUrl(UUID state, UUID nonce) {
+    public static String getLoginUrl(final UUID state, final UUID nonce) {
 
         UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
         urlBuilder.queryParam("client_id", getAppId());
@@ -161,18 +161,21 @@ public final class AuthHelper {
         return urlBuilder.toUriString();
     }
 
-    public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
-        // Create a logging interceptor to log request and responses
+    /**
+     * Get the token from the auth code.
+     * @param authCode authentication code.
+     * @param tenantId tenant id.
+     * @return the token.
+     */
+    public static TokenResponse getTokenFromAuthCode(final String authCode, final String tenantId) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        // Create and configure the Retrofit object
         Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
-        // Generate the token service
         TokenService tokenService = retrofit.create(TokenService.class);
 
         try {
@@ -186,25 +189,25 @@ public final class AuthHelper {
         }
     }
 
-    public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {
-        // Are tokens still valid?
+    /**
+     * Refresh the token if it has expired.
+     * @param tokens the token.
+     * @param tenantId the tenant id.
+     * @return valid token
+     */
+    public static TokenResponse ensureTokens(final TokenResponse tokens, final String tenantId) {
         Calendar now = Calendar.getInstance();
         if (now.getTime().before(tokens.getExpirationTime())) {
-            // Still valid, return them as-is
             return tokens;
         } else {
-            // Expired, refresh the tokens
-            // Create a logging interceptor to log request and responses
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-            // Create and configure the Retrofit object
             Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                     .addConverterFactory(JacksonConverterFactory.create()).build();
 
-            // Generate the token service
             TokenService tokenService = retrofit.create(TokenService.class);
 
             try {

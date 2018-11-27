@@ -15,8 +15,7 @@ import com.google.api.services.people.v1.model.ContactGroup;
 import fr.ynov.dap.data.AppUser;
 
 /**
- * @author adrij
- *
+ * Google people service.
  */
 @Service
 public class PeopleGoogleService extends GoogleService {
@@ -73,5 +72,4 @@ public class PeopleGoogleService extends GoogleService {
 
         return totalNumberofContacts;
     }
-
 }

@@ -2,6 +2,7 @@ package fr.ynov.dap.services.microsoft;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Message entity used by the Microsoft API.
  */
@@ -39,6 +40,7 @@ public class Message {
     public String getId() {
         return id;
     }
+
     /**
      * Id setter.
      * @param i message id;
@@ -46,6 +48,7 @@ public class Message {
     public void setId(final String i) {
         this.id = i;
     }
+
     /**
      * ReceivedDateTime getter.
      * @return Received message date time
@@ -53,6 +56,7 @@ public class Message {
     public Date getReceivedDateTime() {
         return receivedDateTime;
     }
+
     /**
      * Received message date time setter.
      * @param dateTime received message date time
@@ -60,6 +64,7 @@ public class Message {
     public void setReceivedDateTime(final Date dateTime) {
         this.receivedDateTime = dateTime;
     }
+
     /**
      * From getter.
      * @return Sender of the message.
@@ -67,6 +72,7 @@ public class Message {
     public Recipient getFrom() {
         return from;
     }
+
     /**
      * From setter.
      * @param f sender of the message.
@@ -74,6 +80,7 @@ public class Message {
     public void setFrom(final Recipient f) {
         this.from = f;
     }
+
     /**
      * IsRead getter.
      * @return If the message was read.
@@ -81,6 +88,7 @@ public class Message {
     public Boolean getIsRead() {
         return isRead;
     }
+
     /**
      * IsRead setter.
      * @param read if the message was read.
@@ -88,6 +96,7 @@ public class Message {
     public void setIsRead(final Boolean read) {
         this.isRead = read;
     }
+
     /**
      * Subject getter.
      * @return Subject of the message.
@@ -95,6 +104,7 @@ public class Message {
     public String getSubject() {
         return subject;
     }
+
     /**
      * Subject setter.
      * @param s subject of the message.
@@ -102,6 +112,7 @@ public class Message {
     public void setSubject(final String s) {
         this.subject = s;
     }
+
     /**
      * BodyPreview getter.
      * @return body preview of the message.
@@ -109,6 +120,7 @@ public class Message {
     public String getBodyPreview() {
         return bodyPreview;
     }
+
     /**
      * BodyPreview setter.
      * @param body bodyPreview of the message.

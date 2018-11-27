@@ -58,6 +58,7 @@ public class TokenResponse {
      * Date of the expiration of this TokenResponse.
      */
     private Date expirationTime;
+
     /**
      * tokenType getter.
      * @return token type.
@@ -65,6 +66,7 @@ public class TokenResponse {
     public String getTokenType() {
         return tokenType;
     }
+
     /**
      * tokenType setter.
      * @param type token type.
@@ -72,6 +74,7 @@ public class TokenResponse {
     public void setTokenType(final String type) {
         this.tokenType = type;
     }
+
     /**
      * Scope getter.
      * @return the scope of the token.
@@ -79,6 +82,7 @@ public class TokenResponse {
     public String getScope() {
         return scope;
     }
+
     /**
      * Scope setter.
      * @param s token response scope.
@@ -86,6 +90,7 @@ public class TokenResponse {
     public void setScope(final String s) {
         this.scope = s;
     }
+
     /**
      * Expiration of this token getter.
      * @return expiration of this token.
@@ -93,6 +98,7 @@ public class TokenResponse {
     public int getExpiresIn() {
         return expiresIn;
     }
+
     /**
      * Expiration setter of this token.
      * @param expires duration in seconds until expiration.
@@ -103,6 +109,7 @@ public class TokenResponse {
         now.add(Calendar.SECOND, expiresIn);
         this.expirationTime = now.getTime();
     }
+
     /**
      * Access token getter.
      * @return the access token.
@@ -110,6 +117,7 @@ public class TokenResponse {
     public String getAccessToken() {
         return accessToken;
     }
+
     /**
      * Access token setter.
      * @param access access token.
@@ -117,6 +125,7 @@ public class TokenResponse {
     public void setAccessToken(final String access) {
         this.accessToken = access;
     }
+
     /**
      * RefreshToken getter.
      * @return the refresh token.
@@ -124,6 +133,7 @@ public class TokenResponse {
     public String getRefreshToken() {
         return refreshToken;
     }
+
     /**
      * RefreshToken setter.
      * @param refresh refresh token of the token.
@@ -131,6 +141,7 @@ public class TokenResponse {
     public void setRefreshToken(final String refresh) {
         this.refreshToken = refresh;
     }
+
     /**
      * Token id getter.
      * @return Id of this token.
@@ -138,6 +149,7 @@ public class TokenResponse {
     public String getIdToken() {
         return idToken;
     }
+
     /**
      * IdToken setter.
      * @param id id of the token.
@@ -145,6 +157,7 @@ public class TokenResponse {
     public void setIdToken(final String id) {
         this.idToken = id;
     }
+
     /**
      * Error getter.
      * @return the error.
@@ -152,6 +165,7 @@ public class TokenResponse {
     public String getError() {
         return error;
     }
+
     /**
      * Error setter.
      * @param e error.
@@ -159,6 +173,7 @@ public class TokenResponse {
     public void setError(final String e) {
         this.error = e;
     }
+
     /**
      * ErrorDescription getter.
      * @return error description.
@@ -166,6 +181,7 @@ public class TokenResponse {
     public String getErrorDescription() {
         return errorDescription;
     }
+
     /**
      * Error description setter.
      * @param description error description.
@@ -173,6 +189,7 @@ public class TokenResponse {
     public void setErrorDescription(final String description) {
         this.errorDescription = description;
     }
+
     /**
      * Error codes getter.
      * @return error codes.
@@ -180,6 +197,7 @@ public class TokenResponse {
     public int[] getErrorCodes() {
         return errorCodes;
     }
+
     /**
      * Error codes setter.
      * @param codes error codes.
@@ -187,6 +205,7 @@ public class TokenResponse {
     public void setErrorCodes(final int[] codes) {
         this.errorCodes = codes;
     }
+
     /**
      * expiration time getter.
      * @return Date of the expiration of this token.

@@ -6,6 +6,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * Retrofit interface of the Token service. It will be used to send request to the Microsoft Graph API.
+ */
 public interface TokenService {
 
   @FormUrlEncoded

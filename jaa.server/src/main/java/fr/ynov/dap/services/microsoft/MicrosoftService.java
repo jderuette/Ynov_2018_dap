@@ -36,6 +36,11 @@ public abstract class MicrosoftService {
     }
 
     /**
+     * Number of max results to display.
+     */
+    protected static final Integer MAX_RESULTS = 10;
+
+    /**
      * AppUserRepository instantiate thanks to the injection of dependency.
      */
     @Autowired

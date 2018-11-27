@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,12 +67,16 @@ public class GoogleAccountController extends GoogleService {
      * @param request The HTTP Request
      * @param code The (encoded) code used by Google (token, expirationDate)
      * @param session the HTTP Session
+     * @param model the model to display to the view.
      * @return the view to display
      * @throws ServletException When Google account could not be connected to DaP
      * @throws GeneralSecurityException exception
      */
     @RequestMapping("/oAuth2Callback")
-    public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
+    public String oAuthCallback(
+            @RequestParam final String code,
+            final HttpServletRequest request,
+            final ModelMap model,
             final HttpSession session) throws ServletException, GeneralSecurityException {
         final String decodedCode = extracCode(request);
 
@@ -104,10 +109,11 @@ public class GoogleAccountController extends GoogleService {
             repository.save(appUser);
         } catch (IOException e) {
             log.error("Exception while trying to store user Credential", e);
-            throw new ServletException("Error while trying to conenct Google Account");
+            model.addAttribute("error", "Error while trying to store Google Account Credential.");
+            return "redirect:/accountAdded";
         }
 
-        return "redirect:/";
+        return "redirect:/accountAdded";
     }
 
     /**
@@ -175,6 +181,7 @@ public class GoogleAccountController extends GoogleService {
      * access).
      * @param accountName  the user to store Data
      * @param userKey the userKey of the user
+     * @param model the model to display to the view.
      * @param request the HTTP request
      * @param session the HTTP session
      * @return the view to Display (on Error)
@@ -184,6 +191,7 @@ public class GoogleAccountController extends GoogleService {
     public String addAccount(@PathVariable final String accountName,
             @RequestParam(USER_KEY_PARAM_NAME) final String userKey,
             final HttpServletRequest request,
+            final ModelMap model,
             final HttpSession session) throws GeneralSecurityException {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
@@ -193,7 +201,9 @@ public class GoogleAccountController extends GoogleService {
             credential = flow.loadCredential(accountName);
 
             if (credential != null && credential.getAccessToken() != null) {
-                response = "AccountAlreadyAdded"; //TODO throw exception
+                log.warn("Account " + accountName + " already added.");
+                model.addAttribute("error", "Account " + accountName + " already added");
+                response = "redirect:/accountCreated";
             } else {
                 // redirect to the authorization flow
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
@@ -205,8 +215,10 @@ public class GoogleAccountController extends GoogleService {
             }
         } catch (IOException e) {
             log.error("Error while loading credential (or Google Flow)", e);
+            model.addAttribute("error", "Error while loading credential (or Google Flow)");
+            response = "redirect:/accountCreated";
         }
-        // only when error occurs, else redirected BEFORE
+
         return response;
     }
 

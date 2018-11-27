@@ -22,12 +22,10 @@ public class OutlookServiceBuilder {
      * @param userEmail email of the user.
      * @return Outlook service.
      */
-    public static OutlookService getOutlookService(String accessToken, String userEmail) {
-        // Create a request interceptor to add headers that belong on
-        // every request
+    public static OutlookService getOutlookService(final String accessToken, final String userEmail) {
         Interceptor requestInterceptor = new Interceptor() {
             @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
+            public Response intercept(final Interceptor.Chain chain) throws IOException {
                 Request original = chain.request();
                 Builder builder = original.newBuilder().header("User-Agent", "java-tutorial")
                         .header("client-request-id", UUID.randomUUID().toString())

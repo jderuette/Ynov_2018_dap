@@ -23,7 +23,6 @@ import fr.ynov.dap.services.google.GoogleAuthorizationFlowService;
 
 /**
  * Admin service, used by the AdminController.
- * TODO Extract methods.
  */
 @Service
 public class AdminService {
@@ -31,6 +30,10 @@ public class AdminService {
      * Logger used for logs.
      */
     private static Logger log = LogManager.getLogger();
+    /**
+     * One thousand.
+     */
+    private static final int ONE_THOUSAND = 1000;
 
     /**
      * AppUserRepository instantiate thanks to the injection of dependency.
@@ -58,49 +61,77 @@ public class AdminService {
         Iterable<AppUser> appUsers = repository.findAll();
 
         for (AppUser appUser : appUsers) {
-            // Google
-            List<String> googleAccountNames = appUser.getGoogleAccountNames();
-            Map<String, StoredCredential> googleMap;
-            try {
-                googleMap = googleDataStoreService.getStoreCredentialMap();
-            } catch (GeneralSecurityException | IOException e) {
-                log.error("Fail to get StoreData", e);
-                throw new ServiceException("An error occured while retrieve Google StoreDara", e);
-            }
-            for (String name : googleAccountNames) {
-                StoredCredential googleAccount = googleMap.get(name);
-                if (googleAccount != null) {
-                    AccountData account = new AccountData();
-                    account.setUserKey(appUser.getUserKey());
-                    account.setAccountName(name);
-                    account.setAccessToken(googleAccount.getAccessToken());
-                    account.setRefreshToken(googleAccount.getRefreshToken());
-                    account.setExpirationTimeMilliseconds(googleAccount.getExpirationTimeMilliseconds());
-                    account.setAccountType(Type.Google);
-                    accounts.add(account);
-                }
-            }
-
-            // Microsoft
-            List<MicrosoftAccount> microsoftAccounts = appUser.getMicrosoftAccounts();
-            for (MicrosoftAccount microsoftAccount : microsoftAccounts) {
-                AccountData account = new AccountData();
-                account.setUserKey(appUser.getUserKey());
-                account.setAccountName(microsoftAccount.getAccountName());
-                try {
-                    account.setAccessToken(microsoftAccount.getTokenResponse().getAccessToken());
-                    account.setRefreshToken(microsoftAccount.getTokenResponse().getRefreshToken());
-                    account.setExpirationTimeMilliseconds(microsoftAccount.getIdToken().getExpirationTime() * 1000);
-                    account.setTenantId(microsoftAccount.getIdToken().getTenantId());
-                } catch (IOException e) {
-                    log.error("Error occured during the microsoftAccount reading", e);
-                    throw new ServiceException("Faild to get some properties of Microsoft Account", e);
-                }
-                account.setAccountType(Type.Microsoft);
-                accounts.add(account);
-            }
+            addGoogleAccountToAccounts(accounts, appUser);
+            addMicrosoftAccountToAccounts(accounts, appUser);
         }
 
         return accounts;
+    }
+
+    /**
+     * Parse Microsoft accounts and add them to the acounts list.
+     * @param accounts accounts that will be displayed to the view.
+     * @param appUser AppUser account.
+     * @throws ServiceException exception.
+     */
+    private void addMicrosoftAccountToAccounts(final List<AccountData> accounts, final AppUser appUser)
+            throws ServiceException {
+        List<MicrosoftAccount> microsoftAccounts = appUser.getMicrosoftAccounts();
+        for (MicrosoftAccount microsoftAccount : microsoftAccounts) {
+            AccountData account = new AccountData();
+            account.setUserKey(appUser.getUserKey());
+            account.setAccountName(microsoftAccount.getAccountName());
+            try {
+                account.setAccessToken(microsoftAccount.getTokenResponse().getAccessToken());
+                account.setRefreshToken(microsoftAccount.getTokenResponse().getRefreshToken());
+                account.setExpirationTimeMilliseconds(convertSecondsToMilliseconds(
+                        microsoftAccount.getIdToken().getExpirationTime()));
+                account.setTenantId(microsoftAccount.getIdToken().getTenantId());
+            } catch (IOException e) {
+                log.error("Error occured during the microsoftAccount reading", e);
+                throw new ServiceException("Faild to get some properties of Microsoft Account", e);
+            }
+            account.setAccountType(Type.Microsoft);
+            accounts.add(account);
+        }
+    }
+
+    /**
+      * Parse Google accounts and add them to the acounts list.
+     * @param accounts accounts that will be displayed to the view.
+     * @param appUser AppUser account.
+     * @throws ServiceException exception.
+     */
+    private void addGoogleAccountToAccounts(final List<AccountData> accounts, final AppUser appUser)
+            throws ServiceException {
+        List<String> googleAccountNames = appUser.getGoogleAccountNames();
+        Map<String, StoredCredential> googleMap;
+        try {
+            googleMap = googleDataStoreService.getStoreCredentialMap();
+        } catch (GeneralSecurityException | IOException e) {
+            log.error("Fail to get StoreData", e);
+            throw new ServiceException("An error occured while retrieve Google StoreDara", e);
+        }
+        for (String name : googleAccountNames) {
+            StoredCredential googleAccount = googleMap.get(name);
+            if (googleAccount != null) {
+                AccountData account = new AccountData();
+                account.setUserKey(appUser.getUserKey());
+                account.setAccountName(name);
+                account.setAccessToken(googleAccount.getAccessToken());
+                account.setRefreshToken(googleAccount.getRefreshToken());
+                account.setExpirationTimeMilliseconds(googleAccount.getExpirationTimeMilliseconds());
+                account.setAccountType(Type.Google);
+                accounts.add(account);
+            }
+        }
+    }
+    /**
+     * Convert seconds to milliseconds.
+     * @param seconds seconds
+     * @return milliseconds.
+     */
+    private long convertSecondsToMilliseconds(final long seconds) {
+        return seconds * ONE_THOUSAND;
     }
 }
