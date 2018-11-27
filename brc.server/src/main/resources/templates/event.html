@@ -11,28 +11,22 @@
 </th:if>
 
 <table class="table">
-  <caption>Contacts</caption>
+  <caption>Calendar</caption>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Surname</th>
-      <th>Company</th>
-      <th>Email</th>
+      <th>Organizer</th>
+      <th>Subject</th>
+      <th>Start</th>
+      <th>End</th>
     </tr>
   </thead>
   <tbody>
-    <div th:each="contact : ${contacts}">
+    <div th:each="event : ${events}">
       <tr>
-        <td th:text="${contact.givenName}"></td>
-        <td th:text="${contact.surname}"></td>
-        <td th:text="${contact.companyName}"></td>
-        <td>
-          <ul class="list-inline">
-            <div th:each="address : ${contact.emailAddresses}">
-              <li th:text="${address.address}"></li>
-            </div>
-          </ul>
-        </td>
+        <td th:text="${event.organizer.emailAddress.name}"></td>
+        <td th:text="${event.subject}"></td>
+        <td th:text="${event.start.dateTime}"></td>
+        <td th:text="${event.end.dateTime}"></td>
       </tr>
     </div>
   </tbody>

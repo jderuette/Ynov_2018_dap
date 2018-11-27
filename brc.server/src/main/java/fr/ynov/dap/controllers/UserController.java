@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.ynov.dap.google.data.AppUser;
-import fr.ynov.dap.google.data.AppUserRepostory;
+import fr.ynov.dap.data.AppUser;
+import fr.ynov.dap.data.AppUserRepostory;
 
 @Controller
 public class UserController {

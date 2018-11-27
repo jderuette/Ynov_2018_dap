@@ -1,13 +1,1 @@
-h1 {
-	color:purple;
-}
-.accessToken {
-	word-wrap: break-word;
-	max-width: 1000px;
-}
-table, th, td {
-   border: 1px solid black;
-}
-th, td {
-	padding: 5px;
-}
+h1 {color:purple;}
