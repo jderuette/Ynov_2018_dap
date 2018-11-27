@@ -20,7 +20,7 @@ public class UserController {
     	
     	appUserService.createUser(userKey);
     	
-        return "welcome";
+        return "index";
     }
 
 }

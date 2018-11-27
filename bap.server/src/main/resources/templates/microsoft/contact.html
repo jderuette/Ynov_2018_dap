@@ -9,18 +9,18 @@
 	<th:if test="${error ne null}">
 		<span th:text="${error}"></span>
 	</th:if>
-	<table class="table">
-		<caption>Contacts</caption>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Surname</th>
-				<th>Company</th>
-				<th>Email</th>
-			</tr>
-		</thead>
-		<tbody>
-			<div th:each="accountContacts : ${accounts}">
+	<div th:each="accountContacts : ${accounts}">
+		<table class="table">
+			<caption th:text="#{contacts.title}"></caption>
+			<thead>
+				<tr>
+					<th th:text="#{contacts.name}"></th>
+					<th th:text="#{contacts.surname}"></th>
+					<th th:text="#{contacts.company}"></th>
+					<th th:text="#{contacts.email}"></th>
+				</tr>
+			</thead>
+			<tbody>
 				<div th:each="contact: ${accountContacts}">
 					<tr>
 						<td th:text="${contact.givenName}"></td>
@@ -35,9 +35,8 @@
 						</td>
 					</tr>
 				</div>
-			</div>
-		</tbody>
-	</table>
-
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

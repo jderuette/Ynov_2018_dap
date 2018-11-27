@@ -9,19 +9,18 @@
 	<th:if test="${error ne null}">
 		<span th:text="${error}"></span>
 	</th:if>
-
-	<table class="table">
-		<caption>Calendar</caption>
-		<thead>
-			<tr>
-				<th>Organizer</th>
-				<th>Subject</th>
-				<th>Start</th>
-				<th>End</th>
-			</tr>
-		</thead>
-		<tbody>
-			<div th:each="accountEvents : ${accounts}">
+	<div th:each="accountEvents : ${accounts}">
+		<table class="table">
+			<caption th:text="${events.title}"></caption>
+			<thead>
+				<tr>
+					<th th:text="${events.organizer}"></th>
+					<th th:text="${events.subject}"></th>
+					<th th:text="${events.start}"></th>
+					<th th:text="${events.end}"></th>
+				</tr>
+			</thead>
+			<tbody>
 				<div th:each="event : ${accountEvents}">
 					<tr>
 						<td th:text="${event.organizer.emailAddress.name}"></td>
@@ -30,9 +29,8 @@
 						<td th:text="${event.end.dateTime}"></td>
 					</tr>
 				</div>
-			</div>
-		</tbody>
-	</table>
-
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
