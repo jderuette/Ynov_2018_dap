@@ -6,20 +6,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ynov.dap.services.GMailService;
+import fr.ynov.dap.services.google.GMailService;
+import fr.ynov.dap.services.microsoft.MicrosoftMailService;
 
 /**
- * @author adrij
- *
+ * Mail Controller that used the google and the Microsoft api.
  */
 @RestController
 @RequestMapping("/email")
-public class MailController extends GoogleController {
+public class MailController extends DapController {
     /**
      * Gmail service with the magic of Spring.
      */
     @Autowired
     private GMailService gmailService;
+    /**
+     * Microsoft mail service with the magic of Spring.
+     */
+    @Autowired
+    private MicrosoftMailService microsoftMailService;
 
     /**
      * Get the number of unread emails.
@@ -33,6 +38,9 @@ public class MailController extends GoogleController {
             @RequestParam("user") final String user,
             @RequestParam("userKey") final String userKey) throws Exception {
 
-        return gmailService.getUnreadEmailsNumberOfAllAccount(user, userKey);
+        Integer totalUnreadGoogleMails = gmailService.getUnreadEmailsNumberOfAllAccount(user, userKey);
+        microsoftMailService.setUserKey(userKey);
+        Integer totalUnreadMicrosoftMails = microsoftMailService.getUnreadEmailsNumberOfAllAccount(userKey);
+        return totalUnreadGoogleMails + totalUnreadMicrosoftMails;
     }
 }

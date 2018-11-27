@@ -1,4 +1,4 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -13,8 +13,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.util.store.DataStore;
 
 /**
- * @author adrij
- *
+ * Google Authorization Flow service.
  */
 @Service
 public class GoogleAuthorizationFlowService extends GoogleService {

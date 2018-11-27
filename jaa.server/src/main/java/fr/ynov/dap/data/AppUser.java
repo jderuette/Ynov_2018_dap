@@ -45,13 +45,35 @@ public class AppUser {
     }
 
     /**
-     * Add a GoogleAccount to that UserApp.
+     * Add a GoogleAccount to that AppUser.
      * @param account GoogleAccount to add.
      */
     public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);
+    }
 
+    /**
+     * List of MicrosoftAccount owned by this AppUser.
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
+    private List<MicrosoftAccount> microsoftAccounts;
+
+    /**
+     * Get the list of MicrosoftAccount owned by this AppUser.
+     * @return List of Microsoft accounts.
+     */
+    public List<MicrosoftAccount> getMicrosoftAccounts() {
+        return microsoftAccounts;
+    }
+
+    /**
+     * Add a MicrosoftAccount to that AppUser.
+     * @param account MicrosoftAccoutn to add.
+     */
+    public void addMicrosoftAccount(final MicrosoftAccount account) {
+        account.setOwner(this);
+        this.getMicrosoftAccounts().add(account);
     }
 
     /**
@@ -77,7 +99,7 @@ public class AppUser {
     }
 
     /**
-     * Get the a list of all AccountnName of googleAccount of this AppUser.
+     * Get the list of all AccountName of googleAccount of this AppUser.
      * @return list of accountName
      */
     public List<String> getGoogleAccountNames() {
@@ -90,4 +112,37 @@ public class AppUser {
         return accountNames;
     }
 
+    /**
+     * Get the list of all AccountName of MicrosoftAccount for this AppUser.
+     * @return list of accountName
+     */
+    public List<String> getMicrosoftAccountNames() {
+        List<String> accountNames = new ArrayList<String>();
+        List<MicrosoftAccount> accounts = getMicrosoftAccounts();
+        for (MicrosoftAccount account : accounts) {
+            accountNames.add(account.getAccountName());
+        }
+
+        return accountNames;
+    }
+
+    /**
+     * Get a Microsoft account by his name.
+     * @param accountName account name of the Microsoft account.
+     * @return the Microsoft account.
+     */
+    public MicrosoftAccount getMicrosoftAccountByName(final String accountName) {
+        if (!getMicrosoftAccountNames().contains(accountName)) {
+            return null;
+        }
+
+        List<MicrosoftAccount> accounts = getMicrosoftAccounts();
+
+        for (MicrosoftAccount account : accounts) {
+            if (account.getAccountName().equals(accountName)) {
+                return account;
+            }
+        }
+        return null;
+    }
 }

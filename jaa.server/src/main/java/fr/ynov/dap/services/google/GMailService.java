@@ -1,10 +1,9 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -12,11 +11,9 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.AppUserRepository;
 
 /**
- * @author adrij
- *
+ * Google Mail Service.
  */
 @Service
 public final class GMailService extends GoogleService {
@@ -25,14 +22,9 @@ public final class GMailService extends GoogleService {
      */
     private static Logger log = LogManager.getLogger();
 
-    /**
-     * AppUserRepository instantiate thanks to the injection of dependency.
-     */
-    @Autowired
-    private AppUserRepository repository;
 
     /**
-     * get gmail service.
+     * Get gmail service.
      * @param userKey user key for authentication
      * @return Gmail.
      * @throws Exception exception
@@ -42,6 +34,7 @@ public final class GMailService extends GoogleService {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(getConfig().getApplicationName()).build();
+
         return service;
     }
 
@@ -73,14 +66,14 @@ public final class GMailService extends GoogleService {
     }
 
     /**
-     * get the number of unread emails for all account of an AppUser account.
+     * Get the number of unread emails for all google account of an AppUser account.
      * @param user user needed for the gmail Service.
      * @param userKey userKey of the AppUser account.
-     * @return total number of unread mail for an AppUser.
+     * @return total number of unread google mail for an AppUser.
      * @throws Exception exception
      */
     public Integer getUnreadEmailsNumberOfAllAccount(final String user, final String userKey) throws Exception {
-        AppUser appUser = repository.findByUserKey(userKey);
+        AppUser appUser = getRepository().findByUserKey(userKey);
         List<String> names = appUser.getGoogleAccountNames();
         Integer totalNumberofUnreadMail = 0;
 

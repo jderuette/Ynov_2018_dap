@@ -1,4 +1,4 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -19,11 +19,10 @@ import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.exceptions.ServiceException;
 
 /**
- * @author adrij
- *
+ * Google Calendar Service.
  */
 @Service
-public final class CalendarService extends GoogleService {
+public final class GCalendarService extends GoogleService {
     /**
      * Logger used for logs.
      */
