@@ -1,51 +1,29 @@
 package com.ynov.dap;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 @PropertySource("classpath:config.properties")
 public class Config {
-
-	@Autowired
-	private Environment env;
 	
     private String dataStoreDirectory = System.getProperty("user.home");
 	
+    @Value("${oAuth2CallbackUrl}")
     private String oAuth2CallbackUrl = "/oAuth2Callback";
 
+    @Value("${credentials_file}")
     private String clientSecretFile = "credentials.json";
 
+    @Value("${application_name}")
     private String applicationName = "HoCDaP";
 
+    @Value("${credentials_folder}")
     private String credentialsFolder = dataStoreDirectory + "/google/credential";
+    
+    @Value("${credentials_tokens}")
     private String credentialsFolderToken = dataStoreDirectory + "/google/tokens";
     
-	public Config() {
-		System.out.println(env);
-		
-		/*
-		if (env.getProperty("application_name") != null) {
-			this.applicationName = env.getProperty("application_name");
-		}
-		
-		if (env.getProperty("credentials_file") != null) {
-			this.clientSecretFile = env.getProperty("credentials_file");
-		}
-		
-		if (env.getProperty("credentials_folder") != null) {
-			this.credentialsFolder = env.getProperty("credentials_folder");
-		}
-		
-		if (env.getProperty("credentials_token") != null) {
-			this.credentialsFolderToken = env.getProperty("credentials_token");
-		}
-		
-		if (env.getProperty("oAuth2CallbackUrl") != null) {
-			this.oAuth2CallbackUrl = env.getProperty("oAuth2CallbackUrl");
-		}
-		*/
-	}
+	public Config() {}
     
     public String getoAuth2CallbackUrl() {
         return oAuth2CallbackUrl;

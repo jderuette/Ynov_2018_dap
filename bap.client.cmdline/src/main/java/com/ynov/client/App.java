@@ -25,6 +25,15 @@ public class App
         checkArgs(args);
     }
     
+    private static void usageExplain() {
+		System.out.println("USAGE :");
+		System.out.println("add [google|microsoft] <userId>");
+		System.out.println("view <userId>");
+		System.out.println("email <userId>");
+		System.out.println("calendar <userId>");
+		System.out.println("contact <userId>");
+    }
+    
     /**
      * Check args.
      *
@@ -37,19 +46,28 @@ public class App
     	
     	if (args.length > 2) {
     		System.out.println("TOO MUCH PARAMS");
-    		System.out.println("USAGE :");
-    		System.out.println("add <userId>");
-    		System.out.println("view <userId>");
-    		System.out.println("email <userId>");
-    		System.out.println("calendar <userId>");
-    		System.out.println("contact <userId>");
+    		usageExplain();
     	}
         
         switch (args[0]) {
-	        case "add":	        	
+	        case "add":
+	        	String url = "";
+	        	
+	        	switch (args[1]) {
+	        		case "google":
+	        			url = "http://localhost:8080/account/add/google/" + args[2];
+	        			break;
+	        		case "microsoft":
+	        			url = "http://localhost:8080/account/add/microsoft/" + args[2];
+	        			break;
+		        	default:
+			    		usageExplain();
+			        	break;
+	        	}
+	        	
 	        	URI myURI;
 				try {
-					myURI = new URI("http://localhost:8080/account/add/" + args[1]);
+					myURI = new URI(url);
 					Desktop.getDesktop().browse(myURI);
 
 				} catch (URISyntaxException e) {
@@ -59,26 +77,21 @@ public class App
 				}
 	            break;
 	        case "email":
-	        	System.out.println(getRequest("http://localhost:8080/email/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/mail/unread/final/" + args[1]));
 	            break;
 	        case "calendar":
 	        	System.out.println(getRequest("http://localhost:8080/calendar/" + args[1]));
 	            break;
 	        case "contact":
-	        	System.out.println(getRequest("http://localhost:8080/contact/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/contact/nb/" + args[1]));
 	            break;
 	        case "view":
-	        	System.out.println(getRequest("http://localhost:8080/email/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/mail/unread/final/" + args[1]));
 	        	System.out.println(getRequest("http://localhost:8080/calendar/" + args[1]));
-	        	System.out.println(getRequest("http://localhost:8080/contact/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/contact/nb/" + args[1]));
 	        	break;
 	        default:
-	    		System.out.println("USAGE :");
-	    		System.out.println("add <userId>");
-	    		System.out.println("view <userId>");
-	    		System.out.println("email <userId>");
-	    		System.out.println("calendar <userId>");
-	    		System.out.println("contact <userId>");
+	    		usageExplain();
 	        	break;
         }
     }
