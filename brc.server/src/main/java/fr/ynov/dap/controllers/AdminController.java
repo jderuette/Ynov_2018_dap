@@ -43,7 +43,7 @@ public class AdminController {
 			accountsCredential.add(am);
 		}
 		
-		//Add Microsoft Credentials from dataBase
+		//Add Microsoft Credentials from dap database
 		Iterable<MicrosoftAccount> msCredentials = microsoftAccountRepository.findAll();
 		for(MicrosoftAccount msAccount : msCredentials){
 			AdminModel am = new AdminModel();
