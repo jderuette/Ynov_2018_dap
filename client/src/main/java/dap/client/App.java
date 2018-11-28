@@ -29,7 +29,7 @@ public final class App {
     /**
      * limit of the parameter possible.
      */
-    private static final int LIMIT_NUMBER_PARAMETERS = 3;
+    private static final int LIMIT_NUMBER_PARAMETERS = 4;
     /**
      * give the default the nbr of next event required.
      */
@@ -145,7 +145,7 @@ public final class App {
      */
     private static void commandLink(final String[] args) {
         if (args[1].equalsIgnoreCase(HELP)) {
-            DisplayHelp.callHelp("add", "userKey & accountName");
+            DisplayHelp.callHelp("add", "userKey & accountName & (microsoft | google)");
         } else {
             launchLink(args);
         }
@@ -214,7 +214,7 @@ public final class App {
      */
     private static void launchLink(final String[] args) {
         try {
-            new AccountService().connexionGoogleAccount(args[1], args[2]);
+            new AccountService().connexionGoogleAccount(args[1], args[2], args[3]);
         } catch (final IOException e) {
             e.printStackTrace();
         } catch (final URISyntaxException e) {

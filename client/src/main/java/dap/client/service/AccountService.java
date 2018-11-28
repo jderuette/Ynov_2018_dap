@@ -18,17 +18,19 @@ public class AccountService extends HttpClient {
     /**
      * intitiat the connection , to get if you are authorized or ask you to make
      * them.
-     *
+     * 
+     * @param typeAccount type of account ( microsoft or google)
      * @param userKey     the user in BDD
      * @param accountName hte alias used to connect in google account
      *
      * @throws IOException        if the mapping fall
      * @throws URISyntaxException dunno
      **/
-    public void connexionGoogleAccount(final String userKey, final String accountName)
+    public void connexionGoogleAccount(final String userKey, final String accountName, final String typeAccount)
             throws IOException, URISyntaxException {
 
-        URI uri = new URI(Config.getConf().getRootUrl() + "/account/add/" + userKey + "/" + accountName);
+        final URI uri = new URI(
+                Config.getConf().getRootUrl() + "/account/add/" + userKey + "/" + accountName + "/" + typeAccount);
         Desktop.getDesktop().browse(uri);
     }
 
