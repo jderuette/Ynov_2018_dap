@@ -117,19 +117,11 @@ public class AccountController {
 	/**
 	 * Authorize.
 	 *
-	 * @param code
-	 *            the code
-	 * @param idToken
-	 *            the id token
-	 * @param state
-	 *            the state
-	 * @param request
-	 *            the request
+	 * @param code            the code
+	 * @param idToken            the id token
+	 * @param state            the state
+	 * @param request            the request
 	 * @return the string
-	 * @throws IdTokenException
-	 *             the id token exception
-	 * @throws NoUserFoundException
-	 *             the no user found exception
 	 */
 	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
 	public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,

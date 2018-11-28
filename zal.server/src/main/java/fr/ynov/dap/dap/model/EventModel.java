@@ -18,19 +18,16 @@ public class EventModel {
 	/** The date of end. */
 	private Date dateOfEnd;
 
+	/** The recipient. */
 	private Recipient recipient;
 	
 	/**
 	 * Instantiates a new calendar model.
 	 *
-	 * @param subject
-	 *            the subject
-	 * @param dateOfStart
-	 *            the date of start
-	 * @param dateOfEnd
-	 *            the date of end
-	 * @param choice
-	 *            the choice
+	 * @param subject            the subject
+	 * @param dateOfStart            the date of start
+	 * @param dateOfEnd            the date of end
+	 * @param recipient the recipient
 	 */
 	public EventModel(String subject, Date dateOfStart, Date dateOfEnd, Recipient recipient) {
 		this.subject = subject;
@@ -39,6 +36,11 @@ public class EventModel {
 		this.recipient = recipient;
 	}
 
+	/**
+	 * Instantiates a new event model.
+	 *
+	 * @param noData the no data
+	 */
 	public EventModel(String noData) {
 		this.subject = noData;
 	}
