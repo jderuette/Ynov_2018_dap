@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Class to help with pagination of microsoft.
  * @author thibault
  *
- * @param <T>
+ * @param <T> the entity
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PagedResult<T> {

@@ -30,7 +30,7 @@ import fr.ynov.dap.microsoft.authentication.TokenResponse;
 import fr.ynov.dap.web.HandlerErrorController;
 
 /**
- * Controller to authorize & add microsoft account.
+ * Controller to add microsoft account.
  * @author thibault
  *
  */

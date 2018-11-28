@@ -2,20 +2,24 @@ package fr.ynov.dap;
 
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * Manage all configs of application.
  * @author thibault
  *
  */
+@Configuration
 public class Config {
     /**
-     * Default path of credentials file.
+     * Default name of credentials file.
      */
-    private static final String CREDENTIALS_FILE_PATH = "credentials.json";
+    private static final String CREDENTIALS_FILE_NAME = "credentials.json";
     /**
-     * Default path of auth.properties that contains config microsoft.
+     * Default name of auth.properties that contains config microsoft.
      */
-    private static final String AUTH_PROPERTIES_PATH = "auth.properties";
+    private static final String AUTH_PROPERTIES_NAME = "auth.properties";
     /**
      * Default application name.
      */
@@ -25,20 +29,24 @@ public class Config {
      */
     private static final String ROOT_DIR = Paths.get(System.getProperty("user.home"), "dap").toString();
     /**
-     * Path of credentials file.
+     * Name of credentials file.
      */
-    private String credentialsFilePath;
+    @Value("${config.credentialsFileName:null}")
+    private String credentialsFileName;
     /**
-     * Path of auth.properties that contains tokens.
+     * Name of auth.properties that contains tokens.
      */
-    private String authPropertiesPath;
+    @Value("${config.authPropertiesName:null}")
+    private String authPropertiesName;
     /**
      * My application name.
      */
+    @Value("${config.applicationName:null}")
     private String applicationName;
     /**
      * Root dir of conf.
      */
+    @Value("${config.configDir:null}")
     private String rootDir;
 
     /**
@@ -46,8 +54,8 @@ public class Config {
      * Set defaults config.
      */
     public Config() {
-        this.credentialsFilePath    = CREDENTIALS_FILE_PATH;
-        this.authPropertiesPath     = AUTH_PROPERTIES_PATH;
+        this.credentialsFileName    = CREDENTIALS_FILE_NAME;
+        this.authPropertiesName     = AUTH_PROPERTIES_NAME;
         this.applicationName        = APPLICATION_NAME;
         this.rootDir                = ROOT_DIR;
     }
@@ -56,15 +64,19 @@ public class Config {
      * @return the credentialsFilePath
      */
     public String getCredentialsFilePath() {
-        return Paths.get(rootDir, credentialsFilePath).toString();
+        String name = credentialsFileName;
+        if (credentialsFileName.equals("null")) {
+            name = CREDENTIALS_FILE_NAME;
+        }
+        return Paths.get(getRootDir(), name).toString();
     }
 
     /**
-     * @param path the credentialsFilePath to set
+     * @param path the credentialsFileName to set
      * @return this
      */
-    public Config setCredentialsFilePath(final String path) {
-        this.credentialsFilePath = path;
+    public Config setCredentialsFileName(final String path) {
+        this.credentialsFileName = path;
         return this;
     }
 
@@ -72,15 +84,19 @@ public class Config {
      * @return the authPropertiesPath
      */
     public String getAuthPropertiesPath() {
-        return Paths.get(rootDir, authPropertiesPath).toString();
+        String name = authPropertiesName;
+        if (authPropertiesName.equals("null")) {
+            name = AUTH_PROPERTIES_NAME;
+        }
+        return Paths.get(getRootDir(), name).toString();
     }
 
     /**
-     * @param path the authPropertiesPath to set
+     * @param path the authPropertiesName to set
      * @return this
      */
-    public Config setAuthPropertiesPath(final String path) {
-        this.authPropertiesPath = path;
+    public Config setAuthPropertiesName(final String path) {
+        this.authPropertiesName = path;
         return this;
     }
 
@@ -88,7 +104,11 @@ public class Config {
      * @return the applicationName
      */
     public String getApplicationName() {
-        return applicationName;
+        String name = applicationName;
+        if (applicationName.equals("null")) {
+            name = APPLICATION_NAME;
+        }
+        return name;
     }
 
     /**
@@ -111,7 +131,11 @@ public class Config {
      * @return the rootDir
      */
     protected String getRootDir() {
-        return rootDir;
+        String configDir = rootDir;
+        if (rootDir.equals("null")) {
+            configDir = ROOT_DIR;
+        }
+        return configDir;
     }
 
     /**

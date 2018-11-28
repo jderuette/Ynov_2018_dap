@@ -22,13 +22,4 @@ public class Launcher {
     public static void main(final String[] args) throws IOException, GeneralSecurityException {
         SpringApplication.run(Launcher.class, args);
     }
-
-    /**
-     * Load config for Spring.
-     * @return default Config
-     */
-    @Bean
-    public Config loadConfig() {
-        return new Config();
-    }
 }
