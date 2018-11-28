@@ -1,0 +1,3 @@
+Base de données: MySQL, pas de configuration spéciale nécéssaire.
+Les fichiers credentials.json ET auth.properties doivent se trouver dans le répertoire principal de l'utilisateur (ex: C:/Users/Moi/credentials.json).
+Pour modifier cesparametres, les chemins sont écrits dans le dap.properties qui doit se trouver dans le même répertoire que précedement cité.

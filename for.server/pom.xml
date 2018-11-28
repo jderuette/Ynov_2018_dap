@@ -1,19 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <!-- TODO fr by Djer Il y a un ordre "attendu" pour un pom.xml. Cf mémo Maven. -->
   <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.0.RELEASE</version>
+    </parent>
+    
   <groupId>fr.ynov.dap</groupId>
   <artifactId>for.server</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-
+    
   <name>for.server</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <pmdVersion>6.4.0</pmdVersion>
     <checkstyleVersion>6.18</checkstyleVersion>
   </properties>
   
@@ -32,6 +36,21 @@
          </archive>
        </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+      </configuration>
+      </plugin>
       
       <plugin>
        <artifactId>maven-dependency-plugin</artifactId>
@@ -48,23 +67,9 @@
        </executions>
      </plugin>
      
-     <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-pmd-plugin</artifactId>
-       <executions>
-         <execution>
-           <goals>
-             <goal>check</goal>
-             <goal>cpd-check</goal>
-           </goals>
-         </execution>
-       </executions>
-     </plugin>
-     
      
      <plugin>
        <artifactId>maven-assembly-plugin</artifactId>
-       <version>3.1.0</version>
        <configuration>
          <descriptorRefs>
            <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -81,33 +86,6 @@
     
     <pluginManagement>
      <plugins>
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-pmd-plugin</artifactId>
-         <version>3.10.0</version>
-         <dependencies>
-           <dependency>
-             <groupId>net.sourceforge.pmd</groupId>
-             <artifactId>pmd-core</artifactId>
-             <version>${pmdVersion}</version>
-           </dependency>
-           <dependency>
-             <groupId>net.sourceforge.pmd</groupId>
-             <artifactId>pmd-java</artifactId>
-             <version>${pmdVersion}</version>
-           </dependency>
-           <dependency>
-             <groupId>net.sourceforge.pmd</groupId>
-             <artifactId>pmd-javascript</artifactId>
-             <version>${pmdVersion}</version>
-           </dependency>
-           <dependency>
-             <groupId>net.sourceforge.pmd</groupId>
-             <artifactId>pmd-jsp</artifactId>
-             <version>${pmdVersion}</version>
-           </dependency>
-         </dependencies>
-       </plugin>
        <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -128,13 +106,137 @@
    </pluginManagement>
     
 </build>
-  
+  <dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-framework-bom</artifactId>
+      <version>5.1.2.RELEASE</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
     <dependencies>
 	<dependency>
 	   <groupId>org.springframework.boot</groupId>
 	   <artifactId>spring-boot-starter-web</artifactId>
-	   <version>2.0.5.RELEASE</version>
 	</dependency>
+    <dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <scope>provided</scope>
+  </dependency>
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+  <dependency>
+    <groupId>javax.servlet.jsp</groupId>
+    <artifactId>javax.servlet.jsp-api</artifactId>
+    <version>2.3.2-b02</version>
+    <scope>provided</scope>
+  </dependency>
+
+  <dependency>
+    <groupId>jstl</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-expression</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-beans</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-aop</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context-support</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-tx</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-orm</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-oxm</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-web</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc-portlet</artifactId>
+    <version>4.3.20.RELEASE</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-core</artifactId>
+    <version>3.0.5</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-jsp</artifactId>
+    <version>3.0.5</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-log4j12</artifactId>
+  </dependency>
 	<dependency>
 	   <groupId>com.google.api-client</groupId>
 	   <artifactId>google-api-client</artifactId>
@@ -148,13 +250,24 @@
    <dependency>
    <groupId>org.apache.logging.log4j</groupId>
    <artifactId>log4j-api</artifactId>
-   <version>2.9.1</version>
  </dependency>
  <dependency>
    <groupId>org.apache.logging.log4j</groupId>
    <artifactId>log4j-core</artifactId>
-   <version>2.9.1</version>
  </dependency>
+ <dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-core</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-annotations</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-databind</artifactId>
+</dependency>
 	<dependency>
      <groupId>com.google.apis</groupId>
      <artifactId>google-api-services-gmail</artifactId>
@@ -168,14 +281,46 @@
     <dependency>
 	   <groupId>junit</groupId>
 	   <artifactId>junit</artifactId>
-	   <version>3.8.1</version>
 	   <scope>test</scope>
 	</dependency>
+    <dependency>
+  <groupId>com.squareup.retrofit2</groupId>
+  <artifactId>retrofit</artifactId>
+  <version>2.0.2</version>
+</dependency>
+<dependency>
+  <groupId>com.squareup.retrofit2</groupId>
+  <artifactId>converter-jackson</artifactId>
+  <version>2.0.2</version>
+</dependency>
+<dependency>
+  <groupId>com.squareup.okhttp3</groupId>
+  <artifactId>logging-interceptor</artifactId>
+  <version>3.2.0</version>
+</dependency>
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-people</artifactId>
       <version>v1-rev358-1.25.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.6</version>
+    <scope>runtime</scope>
+    </dependency>
+    <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+</dependency>
+<dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+</dependency>
 </dependencies>
 
 
@@ -186,39 +331,9 @@
 	       <artifactId>spring-boot-maven-plugin</artifactId>
 	   </plugin>
 	   <plugin>
-	       <artifactId>maven-pmd-plugin</artifactId>
-	       <version>3.10.0</version>
-	       <configuration>
-	           <linkXref>true</linkXref>
-	           <targetJdk>1.8</targetJdk>
-	           <skipEmptyReport>false</skipEmptyReport>
-	           <minimumTokens>75</minimumTokens>
-	           <rulesets>
-	           <!-- TODO for by Djer Il n'y a pas de ficheir ici ! -->
-	               <ruleset>/pmd/dap_pmd.xml</ruleset>
-	           </rulesets>
-	       </configuration>
-	   </plugin>
-	   <plugin>
 	       <groupId>org.apache.maven.plugins</groupId>
 	       <artifactId>maven-project-info-reports-plugin</artifactId>
 	       <version>2.9</version>
-	   </plugin>
-	   <plugin>
-	       <groupId>org.apache.maven.plugins</groupId>
-	       <artifactId>maven-checkstyle-plugin</artifactId>
-	       <version>3.0.0</version>
-	       <configuration>
-	       <!-- TODO for by Djer Il n'y a pas de fichier ici ! -->
-	           <configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
-	       </configuration>
-	       <reportSets>
-	           <reportSet>
-	               <reports>
-	                   <report>checkstyle</report>
-	               </reports>
-	           </reportSet>
-	       </reportSets>
 	   </plugin>
 	   <plugin>
 	       <groupId>org.codehaus.mojo</groupId>
