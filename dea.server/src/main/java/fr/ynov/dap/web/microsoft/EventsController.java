@@ -24,6 +24,12 @@ import fr.ynov.dap.web.microsoft.service.OutlookServiceBuilder;
 import fr.ynov.dap.web.microsoft.service.PagedResult;
 
 
+/**
+ * Classe EventsController
+ * 
+ * @author antod
+ *
+ */
 @Controller
 public class EventsController
 {
@@ -38,6 +44,15 @@ public class EventsController
    */
   private final Logger LOGGER = LogManager.getLogger();
 
+  /**
+   * Méthode pour récupérer les events microsoft
+   * 
+   * @param model
+   * @param request
+   * @param redirectAttributes
+   * @param userKey
+   * @return
+   */
   @RequestMapping("/events")
   public String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
       @RequestParam String userKey)

@@ -4,10 +4,8 @@ package fr.ynov.dap.web.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +15,10 @@ import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.google.PeopleService;
-import fr.ynov.dap.microsoft.Contact;
 import fr.ynov.dap.web.microsoft.auth.AuthHelper;
 import fr.ynov.dap.web.microsoft.auth.TokenResponse;
 import fr.ynov.dap.web.microsoft.service.OutlookService;
 import fr.ynov.dap.web.microsoft.service.OutlookServiceBuilder;
-import fr.ynov.dap.web.microsoft.service.PagedResult;
 
 
 /**
@@ -105,8 +101,6 @@ public class PeopleController
   {
     Integer nbContacts = 0;
     AppUser myUser = appUserRepository.findByName(userKey);
-//    List<Contact> totalContacts = new ArrayList<Contact>();
-//    Contact[] allContacts = null;
 
     // On filtre sur les comptes microsoft
     List<MicrosoftAccount> allAccounts = myUser.getMicrosoftAccounts();

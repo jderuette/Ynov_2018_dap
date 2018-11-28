@@ -35,9 +35,19 @@ public class CalendarService extends GoogleServices
     super();
   }
 
+  /**
+   * Variable utilisée pour accéder aux services calendar de Google
+   */
   public CalendarService instanceCalendarService;
 
+  /**
+   * JSON FACTORY
+   */
   private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+  
+  /**
+   * Variable utilisée pour logger les informations
+   */
   private Logger logger = LogManager.getLogger();
 
   /**
@@ -57,7 +67,7 @@ public class CalendarService extends GoogleServices
 
     // List the next 10 events from the primary calendar.
     DateTime now = new DateTime(System.currentTimeMillis());
-    
+
     Events events = calendar.events().list("primary").setMaxResults(1).setTimeMin(now).setOrderBy("startTime")
         .setSingleEvents(true).execute();
 

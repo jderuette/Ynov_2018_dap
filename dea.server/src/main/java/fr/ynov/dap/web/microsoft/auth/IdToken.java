@@ -9,6 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+/**
+ * Classe IdToken
+ * 
+ * @author antod
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IdToken
 {
@@ -29,6 +35,13 @@ public class IdToken
   @JsonProperty("oid")
   private String objectId;
 
+  /**
+   * Méthode parseEncodedToken
+   * 
+   * @param encodedToken
+   * @param nonce
+   * @return
+   */
   public static IdToken parseEncodedToken(String encodedToken, String nonce)
   {
     // Encoded token is in three parts, separated by '.'
@@ -55,86 +68,172 @@ public class IdToken
     return newToken;
   }
 
+  /**
+   * Récupère expirationTime
+   * 
+   * @return
+   */
   public long getExpirationTime()
   {
     return expirationTime;
   }
 
+  /**
+   * Assigne expirationTime
+   * 
+   * @param expirationTime
+   */
   public void setExpirationTime(long expirationTime)
   {
     this.expirationTime = expirationTime;
   }
 
+  /**
+   * Récupère le notBefore
+   * 
+   * @return
+   */
   public long getNotBefore()
   {
     return notBefore;
   }
 
+  /**
+   * Assigne le notBefore
+   * 
+   * @param notBefore
+   */
   public void setNotBefore(long notBefore)
   {
     this.notBefore = notBefore;
   }
 
+  /**
+   * Récupère le tenantId
+   * 
+   * @return
+   */
   public String getTenantId()
   {
     return tenantId;
   }
 
+  /**
+   * Assigne le tenantId
+   * 
+   * @param tenantId
+   */
   public void setTenantId(String tenantId)
   {
     this.tenantId = tenantId;
   }
 
+  /**
+   * Change le nonce
+   * 
+   * @return
+   */
   public String getNonce()
   {
     return nonce;
   }
 
+  /**
+   * Assigne le nonce
+   * 
+   * @param nonce
+   */
   public void setNonce(String nonce)
   {
     this.nonce = nonce;
   }
 
+  /**
+   * Récupère le name
+   * 
+   * @return
+   */
   public String getName()
   {
     return name;
   }
 
+  /**
+   * Assigne le name
+   * 
+   * @param name
+   */
   public void setName(String name)
   {
     this.name = name;
   }
 
+  /**
+   * Récupèe l'email
+   * 
+   * @return
+   */
   public String getEmail()
   {
     return email;
   }
 
+  /**
+   * Assigne l'email
+   * 
+   * @param email
+   */
   public void setEmail(String email)
   {
     this.email = email;
   }
 
+  /**
+   * Récupèe le preferredUsername
+   * 
+   * @return
+   */
   public String getPreferredUsername()
   {
     return preferredUsername;
   }
 
+  /**
+   * Assigne le preferredUsername
+   * 
+   * @param preferredUsername
+   */
   public void setPreferredUsername(String preferredUsername)
   {
     this.preferredUsername = preferredUsername;
   }
 
+  /**
+   * Récupère l'objectId
+   * 
+   * @return
+   */
   public String getObjectId()
   {
     return objectId;
   }
 
+  /**
+   * Assigne l'objectId
+   * 
+   * @param objectId
+   */
   public void setObjectId(String objectId)
   {
     this.objectId = objectId;
   }
 
+  /**
+   * Transforme un long en Date
+   * 
+   * @param epoch
+   * @return
+   */
   private Date getUnixEpochAsDate(long epoch)
   {
     // Epoch timestamps are in seconds,
@@ -144,6 +243,12 @@ public class IdToken
     return new Date(epoch * 1000);
   }
 
+  /**
+   * This method does some basic validation
+   * 
+   * @param nonce
+   * @return
+   */
   private boolean isValid(String nonce)
   {
     // This method does some basic validation

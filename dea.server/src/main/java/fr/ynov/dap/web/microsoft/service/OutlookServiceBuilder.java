@@ -14,9 +14,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
+/**
+ * Classe OutlookServiceBuilder
+ * 
+ * @author antod
+ *
+ */
 public class OutlookServiceBuilder
 {
-
+  /**
+   * Méthode récupérant le service outlook
+   * 
+   * @param accessToken
+   * @return
+   */
   public static OutlookService getOutlookService(String accessToken)
   {
     // Create a request interceptor to add headers that belong on

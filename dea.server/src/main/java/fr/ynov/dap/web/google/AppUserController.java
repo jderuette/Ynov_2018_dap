@@ -10,12 +10,27 @@ import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 
 
+/**
+ * Classe AppUserController pour enregistrer les infos des user dans la BDD
+ * 
+ * @author antod
+ *
+ */
 @RestController
 public class AppUserController
 {
+  /**
+   * Variable appUserRepository
+   */
   @Autowired
   AppUserRepository appUserRepository;
 
+  /**
+   * Ajoute un nouvel userKey dans la BDD
+   * 
+   * @param userKey
+   * @return
+   */
   @RequestMapping("/user/add/{userKey}")
   public String addUserKey(@PathVariable final String userKey)
   {
@@ -26,11 +41,6 @@ public class AppUserController
 
     AppUser appUser = new AppUser();
     appUser.setName(userKey);
-
-//    GoogleAccount gAccount = new GoogleAccount();
-//    gAccount.setOwner(appUser);
-
-//    appUser.addGoogleAccount(gAccount);
     appUserRepository.save(appUser);
 
     return "Compte " + userKey + " ajouté.";

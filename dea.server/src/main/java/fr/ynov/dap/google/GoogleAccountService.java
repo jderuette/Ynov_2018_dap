@@ -117,7 +117,6 @@ public class GoogleAccountService extends GoogleServices
               + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
         }
       }
-      // onSuccess(request, resp, credential);
     } catch (IOException e)
     {
       LOGGER.error("Exception while trying to store user Credential", e);

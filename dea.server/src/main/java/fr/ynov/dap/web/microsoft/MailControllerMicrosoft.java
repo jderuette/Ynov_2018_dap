@@ -2,7 +2,6 @@
 package fr.ynov.dap.web.microsoft;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.MicrosoftAccount;
-import fr.ynov.dap.microsoft.Folder;
 import fr.ynov.dap.microsoft.Message;
 import fr.ynov.dap.web.microsoft.auth.AuthHelper;
 import fr.ynov.dap.web.microsoft.auth.TokenResponse;
@@ -27,6 +25,12 @@ import fr.ynov.dap.web.microsoft.service.OutlookServiceBuilder;
 import fr.ynov.dap.web.microsoft.service.PagedResult;
 
 
+/**
+ * Classe MailControllerMicrosoft
+ * 
+ * @author antod
+ *
+ */
 @Controller
 public class MailControllerMicrosoft
 {
@@ -41,14 +45,22 @@ public class MailControllerMicrosoft
    */
   private final Logger LOGGER = LogManager.getLogger();
 
+  /**
+   * Méthode pour récupérer les mails microsoft
+   * 
+   * @param model
+   * @param request
+   * @param redirectAttributes
+   * @param userKey
+   * @return
+   */
   @RequestMapping("/mail")
   public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
       @RequestParam String userKey)
   {
     AppUser myUser = appUserRepository.findByName(userKey);
-//    List<Message> totalMessages = new ArrayList<Message>();
     Map<String, Message[]> totalMessages = new HashMap<String, Message[]>();
-    
+
     Message[] allMessages = null;
 
     // On filtre sur tous les comptes microsofts
@@ -80,11 +92,11 @@ public class MailControllerMicrosoft
         {
           PagedResult<Message> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute()
               .body();
-          
+
           allMessages = messages.getValue();
-          
+
           totalMessages.put(account.getUserName(), allMessages);
-          
+
         } catch (Exception e)
         {
           LOGGER.error("error", e.getMessage());

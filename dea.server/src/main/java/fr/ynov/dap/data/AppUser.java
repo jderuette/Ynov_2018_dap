@@ -26,6 +26,7 @@ public class AppUser
   @Id
   @GeneratedValue
   private Integer id;
+
   /**
    * Attribut name
    */

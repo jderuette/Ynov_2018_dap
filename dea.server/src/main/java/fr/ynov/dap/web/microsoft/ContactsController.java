@@ -24,6 +24,12 @@ import fr.ynov.dap.web.microsoft.service.OutlookServiceBuilder;
 import fr.ynov.dap.web.microsoft.service.PagedResult;
 
 
+/**
+ * Classe ContactsController
+ * 
+ * @author antod
+ *
+ */
 @Controller
 public class ContactsController
 {

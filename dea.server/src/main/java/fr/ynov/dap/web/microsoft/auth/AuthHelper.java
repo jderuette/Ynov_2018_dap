@@ -23,16 +23,39 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class AuthHelper
 {
+  /**
+   * Constante authority
+   */
   private static final String authority = "https://login.microsoftonline.com";
+  /**
+   * Constante authorizeUrl
+   */
   private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 
+  /**
+   * Variable des scopes microsoft
+   */
   private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read", "Calendars.Read",
       "Contacts.Read" };
 
+  /**
+   * Variable appId
+   */
   private static String appId = null;
+  /**
+   * Variable appPassword
+   */
   private static String appPassword = null;
+  /**
+   * Variable redirectUrl
+   */
   private static String redirectUrl = null;
 
+  /**
+   * Récupération de l'appId
+   * 
+   * @return
+   */
   private static String getAppId()
   {
     if (appId == null)
@@ -48,6 +71,11 @@ public class AuthHelper
     return appId;
   }
 
+  /**
+   * Récupération du appPassword
+   * 
+   * @return
+   */
   private static String getAppPassword()
   {
     if (appPassword == null)
@@ -63,6 +91,11 @@ public class AuthHelper
     return appPassword;
   }
 
+  /**
+   * Récupération du redirectUrl
+   * 
+   * @return
+   */
   private static String getRedirectUrl()
   {
     if (redirectUrl == null)
@@ -78,6 +111,11 @@ public class AuthHelper
     return redirectUrl;
   }
 
+  /**
+   * Récupération ds scopes
+   * 
+   * @return
+   */
   private static String getScopes()
   {
     StringBuilder sb = new StringBuilder();
@@ -88,6 +126,11 @@ public class AuthHelper
     return sb.toString().trim();
   }
 
+  /**
+   * Chargement de la config
+   * 
+   * @throws IOException
+   */
   private static void loadConfig() throws IOException
   {
     String authConfigFile = "auth.properties";
@@ -112,6 +155,13 @@ public class AuthHelper
     }
   }
 
+  /**
+   * Récupération du loginUrl
+   * 
+   * @param state
+   * @param nonce
+   * @return
+   */
   public static String getLoginUrl(UUID state, UUID nonce)
   {
 
@@ -127,6 +177,13 @@ public class AuthHelper
     return urlBuilder.toUriString();
   }
 
+  /**
+   * Récupération du token de connexion
+   * 
+   * @param authCode
+   * @param tenantId
+   * @return
+   */
   public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId)
   {
     // Create a logging interceptor to log request and responses
@@ -155,6 +212,13 @@ public class AuthHelper
     }
   }
 
+  /**
+   * Méthode permettant de s'assurer de l'intégrité des tokens
+   * 
+   * @param tokens
+   * @param tenantId
+   * @return
+   */
   public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId)
   {
     // Are tokens still valid?

@@ -12,16 +12,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+
 /**
  * Classe de démarrage de l'application
+ * 
  * @author antod
  *
  */
 @SpringBootApplication
 public class Launcher
 {
-
-  public String defaultUser = "anthony.delorme81@gmail.com";
+  /**
+   * Variable pour logger des informations
+   */
   private Logger logger = LogManager.getLogger();
 
   /**
@@ -36,6 +39,12 @@ public class Launcher
     SpringApplication.run(Launcher.class, args);
   }
 
+  /**
+   * Fonction commandLineRunner
+   * 
+   * @param ctx
+   * @return
+   */
   public CommandLineRunner commandLineRunner(ApplicationContext ctx)
   {
 

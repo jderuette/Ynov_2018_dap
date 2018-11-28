@@ -96,14 +96,6 @@ public class AuthorizeController
     }
   }
 
-  @RequestMapping("/logout")
-  public String logout(HttpServletRequest request)
-  {
-//    HttpSession session = request.getSession();
-//    session.invalidate();
-    return "redirect:/index";
-  }
-
   @RequestMapping("/account/add/microsoft/{accountName}")
   // Ajouter un @RequestParams dans les paramètres
   public String addAccount(@PathVariable final String accountName, @RequestParam final String userKey,
