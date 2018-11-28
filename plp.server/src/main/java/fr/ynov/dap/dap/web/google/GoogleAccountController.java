@@ -51,10 +51,10 @@ public class GoogleAccountController {
      * Add a Google account (user will be prompt to connect and accept required
      * access).
      *
-     * @param accountName  the user to store Data
-     * @param userKey  the user to store Data
-     * @param request the HTTP request
-     * @param session the HTTP session
+     * @param accountName the user to store Data
+     * @param userKey     the user to store Data
+     * @param request     the HTTP request
+     * @param session     the HTTP session
      * @return the view to Display (on Error)
      * @throws GeneralSecurityException throw exception.
      */

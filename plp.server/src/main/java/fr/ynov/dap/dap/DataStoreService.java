@@ -11,19 +11,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DataStoreService {
+    /**
+     * Instanciate un GoogleService
+     */
     private GoogleService googleService = new GoogleService();
-
+    /**
+     *  Instanciate un AppUserRepository
+     */
     @Autowired
     AppUserRepository userRepository;
 
+    /**
+     *
+     * @return DataStore : retourne le ficheri credential
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
     public DataStore<StoredCredential> getDataStore() throws IOException, GeneralSecurityException {
         return googleService.getFlow().getCredentialDataStore();
     }
 
+    /**
+     *
+     * @return List : contient tous les utilisateurs avec les comptes
+     */
     public List<Map> getInterfaceAdmin() {
         List<Map> response = new ArrayList<>();
         Iterable<AppUser> users = userRepository.findAll();

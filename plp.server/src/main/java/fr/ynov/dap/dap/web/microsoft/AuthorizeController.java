@@ -14,9 +14,20 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/microsoft")
 public class AuthorizeController {
+    /**
+     * instantiate AuthorizeService
+     */
     @Autowired
     AuthorizeService authorizeService;
 
+    /**
+     *
+     * @param code
+     * @param idToken
+     * @param state
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public Map<String, String> authorize(
             @RequestParam("code") String code,

@@ -12,6 +12,9 @@ import java.util.Map;
 
 @Service
 public class AppUserService {
+    /**
+     * instanciate a AppUserRepository
+     */
     private final AppUserRepository repository;
 
     @Autowired
@@ -19,16 +22,20 @@ public class AppUserService {
         this.repository = repository;
     }
 
+    /**
+     *
+     * @param userKey : userKey of user
+     * @return Map : return a map with id and username
+     */
     public Map<String, Object> addUser(@PathVariable final String userKey) {
         Map<String, Object> response = new HashMap<>();
-        if(repository.findByName(userKey) == null) {
+        if (repository.findByName(userKey) == null) {
             AppUser newUser = new AppUser();
             newUser.setName(userKey);
             repository.save(newUser);
             response.put("id", newUser.getId());
             response.put("username", newUser.getName());
-        }
-        else {
+        } else {
             AppUser user = repository.findByName(userKey);
             response.put("id", user.getId());
             response.put("username", user.getName());

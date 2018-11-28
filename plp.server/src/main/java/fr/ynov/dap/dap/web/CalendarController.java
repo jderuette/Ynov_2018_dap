@@ -38,6 +38,11 @@ public class CalendarController {
      */
     private static final Logger LOG = LogManager.getLogger(GCalendarController.class);
 
+    /**
+     * format response for google event
+     * @param google : event calendat
+     * @return Map : contante all same fields than formatEventOutlook
+     */
     private Map<String, Object> formatEventGoogle(final Event google) {
         Map<String, Object> response = new HashMap<>();
 
@@ -54,6 +59,11 @@ public class CalendarController {
         return response;
     }
 
+    /**
+     * format response for microsoft event
+     * @param outlook : event calendar microsoft
+     * @return Map : contante all same fields than formatEventGoogle
+     */
     private Map<String, Object> formatEventOutlook(final EventMicrosoft outlook) {
         Map<String, Object> response = new HashMap<>();
         response.put("organizer", outlook.getOrganizer().getEmailAddress().getName());

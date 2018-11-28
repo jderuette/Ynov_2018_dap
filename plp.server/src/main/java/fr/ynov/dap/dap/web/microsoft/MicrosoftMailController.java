@@ -11,9 +11,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/microsoft")
 public class MicrosoftMailController {
+    /**
+     * instantiate OutlookService
+     */
     @Autowired
     OutlookService outlookService;
 
+    /**
+     * display all mail microsoft of one user
+     *
+     * @param model              : for template
+     * @param redirectAttributes
+     * @param userKey            : name of user
+     * @return a template
+     */
     @RequestMapping("/mail")
     public String mail(Model model, RedirectAttributes redirectAttributes, @RequestParam("userKey") final String userKey) {
         model.addAttribute("accounts", outlookService.mail(userKey, redirectAttributes));

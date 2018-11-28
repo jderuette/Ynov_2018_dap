@@ -2,8 +2,6 @@ package fr.ynov.dap.dap.microsoft;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +11,13 @@ import java.util.UUID;
 
 @Service
 public class MicrosoftAccountService {
+    /**
+     * route of tuto microsoft with session
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     public Map<String, String> index(Model model, HttpServletRequest request) {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();
@@ -28,6 +33,14 @@ public class MicrosoftAccountService {
         return response;
     }
 
+    /**
+     * add an account microsoft
+     *
+     * @param accountName :name account
+     * @param userKey:    user name
+     * @param request     : request
+     * @return return a redirect
+     */
     public String addAccount(final String accountName, final String userKey, final HttpServletRequest request) {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();

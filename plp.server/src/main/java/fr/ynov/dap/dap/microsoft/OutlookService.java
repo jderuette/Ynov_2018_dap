@@ -29,7 +29,12 @@ public class OutlookService {
     @Autowired
     AppUserRepository userRepository;
 
-//    public String mail(final String userKey, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    /**
+     *
+     * @param userKey :name user
+     * @param redirectAttributes : redirect
+     * @return return the 10 last mail of each account of one user
+     */
     public List<Map> mail(final String userKey, RedirectAttributes redirectAttributes) {
 
         AppUser appUser = userRepository.findByName(userKey);
@@ -74,6 +79,11 @@ public class OutlookService {
         return listResponse;
     }
 
+    /**
+     *
+     * @param userKey : name user
+     * @return the number of unread of one user
+     */
     public Integer unreadMail(final String userKey) {
 
         AppUser appUser = userRepository.findByName(userKey);
@@ -87,7 +97,7 @@ public class OutlookService {
             outlookAccount.setToken(AuthHelper.ensureTokens(outlookAccount.getToken(), outlookAccount.getTenantId()));
 
             IOutlookService ioutlookService = OutlookServiceBuilder.getOutlookService(
-                    outlookAccount.getToken().getAccessToken()) ;
+                    outlookAccount.getToken().getAccessToken());
 
             try {
                 OutlookFolder folder = ioutlookService.getFolder("inbox")
@@ -101,12 +111,17 @@ public class OutlookService {
         return nbUnread;
     }
 
+    /**
+     *
+     * @param userKey: name user
+     * @return the last event of one user
+     */
     public EventMicrosoft events(final String userKey) {
         AppUser appUser = userRepository.findByName(userKey);
 
         List<EventMicrosoft> listLastEvents = new ArrayList<>();
         EventMicrosoft lastEvent = null;
-        for(OutlookAccount outlookAccount: appUser.getOutlookAccount()) {
+        for (OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
 
             if (outlookAccount.getToken() == null) {
                 LOG.warn("No token for account Microsoft : " + outlookAccount.getName());
@@ -131,9 +146,8 @@ public class OutlookService {
                 listLastEvents.add(event);
                 if (lastEvent == null) {
                     lastEvent = event;
-                }
-                else {
-                    if(lastEvent.getStart().getDateTime().after(event.getStart().getDateTime())) {
+                } else {
+                    if (lastEvent.getStart().getDateTime().after(event.getStart().getDateTime())) {
                         lastEvent = event;
                     }
                 }
@@ -149,7 +163,7 @@ public class OutlookService {
         AppUser appUser = userRepository.findByName(userKey);
 
         Integer nbContacts = 0;
-        for(OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
+        for (OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
             if (outlookAccount.getToken() == null) {
                 LOG.warn("No token for account Microsoft : " + outlookAccount.getName());
             }

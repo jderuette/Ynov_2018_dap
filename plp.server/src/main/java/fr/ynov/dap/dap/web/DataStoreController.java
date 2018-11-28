@@ -18,9 +18,19 @@ import java.util.Map;
 
 @Controller
 public class DataStoreController {
+    /**
+     * instantiate a DataStoreService
+     */
     @Autowired
     public DataStoreService dataStoreService;
 
+    /**
+     *
+     * @param model : need model for template
+     * @return a name template
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
     @RequestMapping("/credential")
     public String dataStore(ModelMap model) throws IOException, GeneralSecurityException {
         DataStore<StoredCredential> dssc = dataStoreService.getDataStore();
@@ -32,6 +42,11 @@ public class DataStoreController {
         return "dataStore";
     }
 
+    /**
+     *
+     * @param model : model for template
+     * @return a name template
+     */
     @RequestMapping("/dataStore")
     public String dataStoreGM(Model model) {
         model.addAttribute("users", dataStoreService.getInterfaceAdmin());

@@ -4,20 +4,17 @@ import fr.ynov.dap.dap.CalendarService;
 import fr.ynov.dap.dap.data.AppUser;
 import fr.ynov.dap.dap.data.microsoft.OutlookAccount;
 import fr.ynov.dap.dap.data.microsoft.Token;
-import fr.ynov.dap.dap.microsoft.models.*;
+import fr.ynov.dap.dap.microsoft.models.IdToken;
 import fr.ynov.dap.dap.repositories.AppUserRepository;
 import fr.ynov.dap.dap.repositories.OutlookAccountRepository;
-import fr.ynov.dap.dap.repositories.TokenRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,27 +25,36 @@ public class AuthorizeService {
      * Instantiate Logger.
      */
     private static final Logger LOG = LogManager.getLogger(CalendarService.class);
-
+    /**
+     * Instantiate OutlookAccountRepository.
+     */
     @Autowired
     OutlookAccountRepository outlookAccountRepository;
-
+    /**
+     * Instantiate AppUserRepository.
+     */
     @Autowired
     AppUserRepository userRepository;
 
-
-
+    /**
+     * @param code
+     * @param idToken
+     * @param state
+     * @param request
+     * @return
+     */
     public Map<String, String> authorize(String code, String idToken, UUID state, HttpServletRequest request) {
         HttpSession session = request.getSession();
         UUID expectedState = (UUID) session.getAttribute("expected_state");
         UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
 
         String userKey = "";
-        String accountName =  "";
+        String accountName = "";
 
         try {
             userKey = getUserKey(session);
             accountName = getAccountName(session);
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOG.error("can't get userKey or accountName", e);
         }
 
@@ -67,26 +73,10 @@ public class AuthorizeService {
                     outlookAccountRepository.save(outlookAccount);
                     userRepository.save(user);
                 }
-//                session.setAttribute("tokens", tokenResponse);
-//                session.setAttribute("userConnected", true);
-//                session.setAttribute("userName", idTokenObj.getName());
-//                // Get user info
-//                IOutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken());
-//                OutlookUser user;
-//                try {
-//                    user = outlookService.getCurrentUser().execute().body();
-//                    session.setAttribute("userEmail", user.getMail());
-//                } catch (IOException e) {
-//                    session.setAttribute("error", e.getMessage());
-//                    LOG.error("Error when trying to get session for", e);
-//                }
-//                session.setAttribute("userTenantId", idTokenObj.getTenantId());
             } else {
-//                session.setAttribute("error", "ID token failed validation.");
                 LOG.error("ID token failed validation with id : " + idToken);
             }
         } else {
-//            session.setAttribute("error", "Unexpected state returned from authority.");
             LOG.error("unexpected state returned from authority");
         }
 
@@ -136,6 +126,10 @@ public class AuthorizeService {
         return accountName;
     }
 
+    /**
+     * @param request
+     * @return
+     */
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();

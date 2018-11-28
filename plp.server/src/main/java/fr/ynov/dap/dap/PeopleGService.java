@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Pierre Plessy

@@ -15,8 +15,10 @@ import java.security.GeneralSecurityException;
 import java.util.Map;
 
 @Controller
-//@RequestMapping("/microsoft")
 public class MicrosoftAccountController {
+    /**
+     * instantiate MicrosoftAccountService
+     */
     @Autowired
     MicrosoftAccountService microsoftAccountService;
 

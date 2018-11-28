@@ -10,9 +10,17 @@ import java.util.Map;
 
 @RestController
 public class AppUserController {
+    /**
+     * instantiate AppUserService
+     */
     @Autowired
     AppUserService appUserService;
 
+    /**
+     * Add new user
+     * @param userKey :name user
+     * @return name and id of user
+     */
     @RequestMapping("/user/add/{userKey}")
     public Map<String, Object> addUser(@PathVariable final String userKey) {
         return appUserService.addUser(userKey);

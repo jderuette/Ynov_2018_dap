@@ -13,9 +13,18 @@ import java.util.Map;
 @Controller
 @RequestMapping("/microsoft")
 public class MicrosoftEventController {
+    /**
+     * instantiate OutlookService
+     */
     @Autowired
     OutlookService outlookService;
 
+    /**
+     * return the last events microsoft of one user
+     *
+     * @param userKey : name user
+     * @return return the last event microsoft
+     */
     @RequestMapping("/events")
     public Map<String, EventMicrosoft> events(@RequestParam("userKey") final String userKey) {
         Map<String, EventMicrosoft> lastEvent = new HashMap<>();

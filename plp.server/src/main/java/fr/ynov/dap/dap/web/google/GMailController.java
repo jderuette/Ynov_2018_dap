@@ -1,10 +1,6 @@
 package fr.ynov.dap.dap.web.google;
 
 import fr.ynov.dap.dap.GMailService;
-import fr.ynov.dap.dap.data.AppUser;
-import fr.ynov.dap.dap.data.GoogleAccount;
-import fr.ynov.dap.dap.microsoft.OutlookService;
-import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
