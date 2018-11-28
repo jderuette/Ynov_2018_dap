@@ -22,18 +22,15 @@ public class Config {
     /**
      * public application name.
      */
-    //TODO plp by Djer Checkstyle te signale que ca devrait être privé avec acesseurs.
-    public String applicationName;
+    private String applicationName;
     /**
      * Public config for credential folder.
      */
-    //TODO plp by Djer Checkstyle te signale que ca devrait être privé avec acesseurs.
-    public String credentialFolder;
+    private String credentialFolder;
     /**
      * Public config for secret client folder.
      */
-    //TODO plp by Djer Checkstyle te signale que ca devrait être privé avec acesseurs.
-    public String clientSecretFile;
+    private String clientSecretFile;
 
     /**
      * Initialize public variable.
@@ -63,9 +60,8 @@ public class Config {
      * @param clientSecretFile : path to secret client file
      */
     public final void setClientSecretFile(final String clientSecretFile) {
-        //TODO plp by Djer Etrange, tu devrait plutot tester si la chaine "contient \".
         // File.separator te renvoie le séparator du systeme ou s'éxécute Java (le server ici).
-        if (File.separatorChar != '/') {
+        if (File.separatorChar == '\\') {
             this.clientSecretFile = clientSecretFile.replace('/', File.separatorChar);
         } else {
             this.clientSecretFile = clientSecretFile.replace('\\', File.separatorChar);
@@ -81,4 +77,48 @@ public class Config {
         return "/oAuth2Callback";
     }
 
+    /**
+     * Get name's application
+     *
+     * @return String : name's application
+     */
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    /**
+     * Set name's application
+     *
+     * @params applicationName : name's application
+     */
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
+    /**
+     * Get the credential folder
+     *
+     * @return String : path of credential folder
+     */
+    public String getCredentialFolder() {
+        return credentialFolder;
+    }
+
+    /**
+     * Set the path of credential folder
+     *
+     * @params credentialFolder : new path of crendential folder
+     */
+    public void setCredentialFolder(String credentialFolder) {
+        this.credentialFolder = credentialFolder;
+    }
+
+    /**
+     * Get the path of the client secret file
+     *
+     * @return String : path of the secret client file
+     */
+    public String getClientSecretFile() {
+        return clientSecretFile;
+    }
 }
