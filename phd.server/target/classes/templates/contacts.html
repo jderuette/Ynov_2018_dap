@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+</head>
+<body>
+
+	<p th:text=#{nbContactMicrosoftCurrent}></p>
+	<span th:text="${nbContacts}"></span>
+
+	<p th:text=#{nbContactForAllAccountMicrosoft}></p>
+	<span th:text="${nbContactAllAccount}"></span>
+
+	<table class="tableau">
+		<tr>
+			<th th:text=#{contactName}></th>
+			<th th:text=#{contactSurname}></th>
+			<th th:text=#{contactCompany}></th>
+			<th th:text=#{contactEmail}></th>
+		</tr>
+		<th:block th:each="contact : ${contacts}">
+
+			<tr>
+				<td th:text="${contact.givenName}"></td>
+				<td th:text="${contact.surname}"></td>
+				<td th:text="${contact.companyName}"></td>
+				<td><ul:block th:each="email : ${contact.emailAddresses}">
+						<li th:text="${email.address}"></li>
+					</ul:block></td>
+			</tr>
+		</th:block>
+	</table>
+
+</body>
+</html>

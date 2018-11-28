@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+</head>
+<body>
+
+	<p th:text=#{nextEventForAllAccountMicrosoft}></p>
+	<p th:text="${nextEventForAllAccount.organizer.emailAddress.name}">
+	</p>
+	<p th:text="${nextEventForAllAccount.subject}"></p>
+	<p th:text="${nextEventForAllAccount.start.dateTime}"></p>
+	<p th:text="${nextEventForAllAccount.end.dateTime}"></p>
+
+
+
+	<p th:text=#{nextEventForCurrentAccountMicrosoft}></p>
+	<table>
+		<th:block th:each="event : ${events}">
+			<tr>
+				<td th:text="${event.organizer.emailAddress.name}"></td>
+				<td th:text="${event.subject}"></td>
+				<td th:text="${event.start.dateTime}"></td>
+				<td th:text="${event.end.dateTime}"></td>
+			</tr>
+		</th:block>
+	</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

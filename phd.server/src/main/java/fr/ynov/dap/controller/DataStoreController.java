@@ -28,7 +28,7 @@ public class DataStoreController extends GoogleService {
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
-    @RequestMapping("/datastore")
+    @RequestMapping("/google/datastore")
     public String dataStore(final ModelMap model) throws IOException, GeneralSecurityException {
         final GoogleAuthorizationCodeFlow flow = super.getFlow();
         DataStore<StoredCredential> datastore = flow.getCredentialDataStore();

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+</head>
+<body>
+<div th:replace="baseHeader :: header"></div>
+	<h1 th:text=#{titleCredentialsAdmin}></h1>
+
+	<table>
+		<tr>
+			<th th:text=#{typeAccount}></th>
+			<th th:text=#{adminAccountName}></th>
+			<th th:text=#{adminUserTenantId}></th>
+			<th th:text=#{adminUserToken}></th>
+
+		</tr>
+		<th:block th:each="ite : ${iterable}">
+			<tr>
+				<td th:text=${microsoftType}></td>
+				<td th:text="${ite.getAccountName()}"></td>
+				<td th:text="${ite.getUserTenantId()}"></td>
+				<td th:text="${ite.getTokens().getAccessToken()}"></td>
+			</tr>
+		</th:block>
+	</table>
+
+	<table>
+	</tr>
+	<th:block th:each="m : ${map}">
+		<tr>
+			<td th:text=${googleType}></td>
+			<td th:text="${m.key}"></td>
+			<td th:text="${tenantIdEmpty}"></td>
+			<td th:text="${m.value.getAccessToken()}"></td>
+		</tr>
+	</th:block>
+	</table>
+
+	</tr>
+
+
+</body>
+</html>

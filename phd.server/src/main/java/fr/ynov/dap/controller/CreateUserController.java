@@ -24,7 +24,7 @@ public class CreateUserController extends GoogleService {
     /**
      * @param userId .
      */
-    @RequestMapping("/user/add")
+    @RequestMapping("user/add")
     public void createUser(@RequestParam("userKey") final String userId) {
         AppUser appUser = new AppUser();
         appUser.setName(userId);

@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2018</copyright>
     <item>
-      <title>File: 12,
-             Errors: 246,
+      <title>File: 46,
+             Errors: 198,
              Warnings: 0,
              Infos: 0
       </title>
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.GMailController.java">fr/ynov/dap/controller/GMailController.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.controller.GeneralEventController.java">fr/ynov/dap/generalaccount/controller/GeneralEventController.java</a>
                 </td>
                 <td>
                   0
@@ -55,7 +55,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  17
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.Contact.java">fr/ynov/dap/microsoft/data/Contact.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.DateTimeTimeZone.java">fr/ynov/dap/microsoft/data/DateTimeTimeZone.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
                 </td>
               </tr>
                           <tr>
@@ -69,26 +97,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  18
+                  1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.CalendarController.java">fr/ynov/dap/controller/CalendarController.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  24
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#messages.properties">messages.properties</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.service.GeneralEventService.java">fr/ynov/dap/generalaccount/service/GeneralEventService.java</a>
                 </td>
                 <td>
                   0
@@ -111,12 +125,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  26
+                  4
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.service.PeopleGService.java">fr/ynov/dap/service/PeopleGService.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.model.GeneralEvent.java">fr/ynov/dap/generalaccount/model/GeneralEvent.java</a>
                 </td>
                 <td>
                   0
@@ -125,12 +139,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  19
+                  8
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.PeopleGController.java">fr/ynov/dap/controller/PeopleGController.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.service.GeneralContactService.java">fr/ynov/dap/generalaccount/service/GeneralContactService.java</a>
                 </td>
                 <td>
                   0
@@ -139,12 +153,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  19
+                  1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.service.GmailService.java">fr/ynov/dap/service/GmailService.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.auth.AuthHelper.java">fr/ynov/dap/microsoft/auth/AuthHelper.java</a>
                 </td>
                 <td>
                   0
@@ -153,12 +167,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  23
+                  0
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.config.Config.java">fr/ynov/dap/config/Config.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.EmailAddress.java">fr/ynov/dap/microsoft/data/EmailAddress.java</a>
                 </td>
                 <td>
                   0
@@ -167,7 +181,133 @@ under the License.
                   0
                 </td>
                 <td>
-                  46
+                  4
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.CreateUserController.java">fr/ynov/dap/controller/CreateUserController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.service.MicrosoftEventService.java">fr/ynov/dap/microsoft/service/MicrosoftEventService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.GoogleAccountController.java">fr/ynov/dap/controller/GoogleAccountController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.service.GeneralMailService.java">fr/ynov/dap/generalaccount/service/GeneralMailService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.controller.EventsController.java">fr/ynov/dap/microsoft/controller/EventsController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.OutlookUser.java">fr/ynov/dap/microsoft/data/OutlookUser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.data.GoogleAccountData.java">fr/ynov/dap/data/GoogleAccountData.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.data.AppUser.java">fr/ynov/dap/data/AppUser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.service.MicrosoftMailService.java">fr/ynov/dap/microsoft/service/MicrosoftMailService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
                 </td>
               </tr>
                           <tr>
@@ -181,7 +321,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  30
+                  4
                 </td>
               </tr>
                           <tr>
@@ -195,12 +335,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.GoogleAccount.java">fr/ynov/dap/GoogleAccount.java</a>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.controller.IndexController.java">fr/ynov/dap/microsoft/controller/IndexController.java</a>
                 </td>
                 <td>
                   0
@@ -209,7 +349,343 @@ under the License.
                   0
                 </td>
                 <td>
-                  18
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.PagedResult.java">fr/ynov/dap/microsoft/data/PagedResult.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.controller.AuthorizeController.java">fr/ynov/dap/microsoft/controller/AuthorizeController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.GMailController.java">fr/ynov/dap/controller/GMailController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.controller.GeneralAdminController.java">fr/ynov/dap/generalaccount/controller/GeneralAdminController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.auth.IdToken.java">fr/ynov/dap/microsoft/auth/IdToken.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.Recipient.java">fr/ynov/dap/microsoft/data/Recipient.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.controller.ContactsController.java">fr/ynov/dap/microsoft/controller/ContactsController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.service.MicrosoftContactService.java">fr/ynov/dap/microsoft/service/MicrosoftContactService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#messages.properties">messages.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.PageResultForAllMessage.java">fr/ynov/dap/microsoft/data/PageResultForAllMessage.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.service.GmailService.java">fr/ynov/dap/service/GmailService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.controller.GeneralMailController.java">fr/ynov/dap/generalaccount/controller/GeneralMailController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.auth.TokenResponse.java">fr/ynov/dap/microsoft/auth/TokenResponse.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  19
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.controller.MailController.java">fr/ynov/dap/microsoft/controller/MailController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.Event.java">fr/ynov/dap/microsoft/data/Event.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.DataStoreController.java">fr/ynov/dap/controller/DataStoreController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.CalendarController.java">fr/ynov/dap/controller/CalendarController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.Message.java">fr/ynov/dap/microsoft/data/Message.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.service.GeneralAdminService.java">fr/ynov/dap/generalaccount/service/GeneralAdminService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.service.PeopleGService.java">fr/ynov/dap/service/PeopleGService.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.controller.PeopleGController.java">fr/ynov/dap/controller/PeopleGController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.generalaccount.controller.GeneralContactController.java">fr/ynov/dap/generalaccount/controller/GeneralContactController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.config.Config.java">fr/ynov/dap/config/Config.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  7
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://projects.spring.io/spring-boot/#/spring-boot-starter-parent/dap/checkstyle.html#fr.ynov.dap.microsoft.data.MicrosoftAccountData.java">fr/ynov/dap/microsoft/data/MicrosoftAccountData.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
                 </td>
               </tr>
                       </tbody>

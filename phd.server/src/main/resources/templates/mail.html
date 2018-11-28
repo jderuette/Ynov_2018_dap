@@ -4,22 +4,50 @@
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
 
-<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 </head>
 <body>
 
-<th:if test="${error ne null}">
-  <span th:text="${error}"></span>
-</th:if>
+	<th:if test="${error ne null}">
+		<span th:text="${error}"></span>
+	</th:if>
 
-<p>WELCOME RIZ DINDE</p>
+	<p th:text=#{nbMailUnreadForAll}></p>
+	<p th:text="${nbMessagesUnreadAllAccount}"></p>
 
-<div>
-<p> AuthCode :  </p> <span th:text="${authCode}"></span>
-<p> IdToken :  </p> <span th:text="${idToken}"></span>
-<p> AccessToken :  </p> <span th:text="${accessToken}"></span>
-</div>
+	<table>
+		<th:block th:each="message : ${messages}">
+			<tr>
+				<td th:text="${message.from.emailAddress.name}"></td>
+				<td th:text="${message.subject}"></td>
+				<td th:text="${message.receivedDateTime}"></td>
+				<td th:text="${message.bodyPreview}"></td>
+			</tr>
+		</th:block>
+	</table>
 
+	<div th:each="message : ${messagess}">
+		<table>
+			<tr>
+				<th th:text=#{from}></th>
+				<th th:text=#{date}></th>
+				<th th:text=#{subject}></th>
+				<th th:text=#{corpse}></th>
+			</tr>
+			<th:block th:each="m : ${message.value}">
+				<tr>
+					<td th:text="${m.from.emailAddress.name}"></td>
+					<td th:text="${m.receivedDateTime}"></td>
+					<td th:text="${m.subject}"></td>
+					<td th:text="${m.bodyPreview}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+	</table>
+	<p>
+		<a th:href="${logoutUrl}" th:text="#{logoutLabel}" /></a>
+	</p>
 </body>
 </html>
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import fr.ynov.dap.microsoft.AuthHelper;
+import fr.ynov.dap.microsoft.auth.AuthHelper;
 
 /**
  *
@@ -18,13 +18,14 @@ import fr.ynov.dap.microsoft.AuthHelper;
  */
 @Controller
 public class IndexController {
+
     /**
      *
      * @param model .
      * @param request .
      * @return .
      */
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public String index(final Model model, final HttpServletRequest request) {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();
@@ -35,7 +36,6 @@ public class IndexController {
 
         String loginUrl = AuthHelper.getLoginUrl(state, nonce);
         model.addAttribute("loginUrl", loginUrl);
-        // Name of a definition in WEB-INF/defs/pages.xml
         return "index";
     }
 }

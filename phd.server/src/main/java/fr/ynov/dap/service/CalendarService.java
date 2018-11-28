@@ -129,7 +129,7 @@ public class CalendarService extends GoogleService {
                 .setOrderBy("startTime").setSingleEvents(true).execute();
         List<Event> items = events.getItems();
         Event event = null;
-        if (items != null) {
+        if (items.size() > 0) {
             event = items.get(0);
         }
         return event;

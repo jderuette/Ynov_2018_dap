@@ -1,2 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd-cpd/>
+<pmd-cpd>
+   <duplication lines="41" tokens="218">
+      <file line="56"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <file line="115"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <codefragment><![CDATA[            final RedirectAttributes redirectAttributes, @RequestParam("userId") final String userId)
+            throws ParseException, IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by start time in descending order
+        String sort = "start/dateTime ASC";
+        // Only return the properties we care about
+        String properties = "organizer,subject,start,end";
+
+        String filterDate = "start/dateTime ge ";
+        StringBuilder stringBuilderFilter = new StringBuilder();
+        stringBuilderFilter.append(filterDate);
+        String dateNow = Instant.now().toString();
+        stringBuilderFilter.append("'");
+        stringBuilderFilter.append(dateNow);
+        stringBuilderFilter.append("'");
+
+        Integer maxResults = MAX_RESULT;
+
+        try {
+            PagedResult<Event> events = outlookService
+                    .getNextEvents(sort, properties, maxResults, stringBuilderFilter.toString()).execute().body();
+            model.addAttribute("events", events.getValue());
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/index.html";
+        }]]></codefragment>
+   </duplication>
+   <duplication lines="32" tokens="175">
+      <file line="48"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <file line="97"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <codefragment><![CDATA[            final RedirectAttributes redirectAttributes, @RequestParam("userId") final String userId)
+            throws IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by given name in ascending order (A-Z)
+        String sort = "GivenName ASC";
+        // Only return the properties we care about
+        String properties = "GivenName,Surname,CompanyName,EmailAddresses";
+
+        try {
+            PagedResult<Contact> contacts = outlookService.getContacts(sort, properties).execute().body();
+            int nbContact = contacts.getValue().length;
+            model.addAttribute("contacts", contacts.getValue());
+            model.addAttribute("nbContacts", nbContact);
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/index.html";
+        }]]></codefragment>
+   </duplication>
+   <duplication lines="20" tokens="104">
+      <file line="96"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <file line="87"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\MailController.java"/>
+      <codefragment><![CDATA[    public String contactCurrent(final Model model, final HttpServletRequest request,
+            final RedirectAttributes redirectAttributes) throws IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by given name in ascending order (A-Z)
+        String sort = "GivenName ASC";]]></codefragment>
+   </duplication>
+   <duplication lines="20" tokens="92">
+      <file line="48"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <file line="88"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\MailController.java"/>
+      <codefragment><![CDATA[            final RedirectAttributes redirectAttributes, @RequestParam("userId") final String userId)
+            throws IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by given name in ascending order (A-Z)
+        String sort = "GivenName ASC";]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="92">
+      <file line="49"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <file line="97"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\ContactsController.java"/>
+      <file line="57"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <file line="115"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <codefragment><![CDATA[            throws IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by given name in ascending order (A-Z)
+        String sort = "GivenName ASC";]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="90">
+      <file line="57"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <file line="115"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\EventsController.java"/>
+      <file line="88"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\controller\MailController.java"/>
+      <codefragment><![CDATA[            throws ParseException, IOException {
+        HttpSession session = request.getSession();
+        TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
+        if (tokens == null) {
+            // No tokens in session, user needs to sign in
+            redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
+            return "redirect:/";
+        }
+
+        String tenantId = (String) session.getAttribute("userTenantId");
+
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
+
+        String email = (String) session.getAttribute("userEmail");
+
+        OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
+
+        // Sort by start time in descending order
+        String sort = "start/dateTime ASC";]]></codefragment>
+   </duplication>
+   <duplication lines="16" tokens="84">
+      <file line="193"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\auth\AuthHelper.java"/>
+      <file line="230"
+            path="C:\Users\Dom\eclipse-workspace\dap\src\main\java\fr\ynov\dap\microsoft\auth\AuthHelper.java"/>
+      <codefragment><![CDATA[    public static TokenResponse getTokenFromAuthCode(final String authCode, final String tenantId) {
+        // Create a logging interceptor to log request and responses
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        // Create and configure the Retrofit object
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        // Generate the token service
+        TokenService tokenService = retrofit.create(TokenService.class);
+
+        try {
+            return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",]]></codefragment>
+   </duplication>
+</pmd-cpd>
