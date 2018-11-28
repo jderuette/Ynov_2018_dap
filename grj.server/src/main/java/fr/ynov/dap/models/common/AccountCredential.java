@@ -1,4 +1,4 @@
-package fr.ynov.dap.models;
+package fr.ynov.dap.models.common;
 
 /**
  * AccountCredential

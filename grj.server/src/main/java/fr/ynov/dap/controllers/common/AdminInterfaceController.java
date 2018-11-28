@@ -2,7 +2,8 @@ package fr.ynov.dap.controllers.common;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.util.store.DataStore;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.AccountCredential;
+import fr.ynov.dap.models.microsoft.MicrosoftAccount;
 import fr.ynov.dap.repositories.MicrosoftAccountRepository;
 import fr.ynov.dap.services.google.GoogleDataStoreService;
 import org.springframework.beans.factory.annotation.Autowired;

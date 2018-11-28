@@ -1,6 +1,6 @@
 package fr.ynov.dap.helpers;
 
-import fr.ynov.dap.models.MicrosoftAccount;
+import fr.ynov.dap.models.microsoft.MicrosoftAccount;
 import fr.ynov.dap.models.microsoft.MicrosoftTokenResponse;
 import fr.ynov.dap.services.microsoft.TokenService;
 import okhttp3.OkHttpClient;

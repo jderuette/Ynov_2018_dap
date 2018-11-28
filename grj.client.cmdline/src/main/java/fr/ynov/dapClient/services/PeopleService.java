@@ -22,7 +22,7 @@ public class PeopleService {
     public String getNumberContacts(String userKey) throws IOException {
         URL url = null;
         try {
-            url = new URL(DAP_API_URL + "/people/" + userKey);
+            url = new URL(DAP_API_URL + "/contact/" + userKey);
         } catch (MalformedURLException e) {
             LOG.error("Error when created url", e);
         }
@@ -59,10 +59,10 @@ public class PeopleService {
 
         JSONObject obj = new JSONObject(content.toString());
 
-        if (obj.isNull("number_contact")) {
+        if (obj.isNull("total-contacts")) {
             return "You don't have any contact...";
         } else {
-            String numberContacts = obj.get("number_contact").toString();
+            String numberContacts = obj.get("total-contacts").toString();
 
             return "You have " + numberContacts + " contacts.";
         }

@@ -60,15 +60,14 @@ public class CalendarService {
 
         JSONObject obj = new JSONObject(content.toString());
 
-        if (obj.isNull("message")) {
-            String name   = obj.get("name").toString();
-            String start  = obj.get("start_date").toString();
-            String end    = obj.get("end_date").toString();
-            String status = obj.get("status").toString();
+        if (!obj.isNull("startDate")) {
+            String name  = obj.get("name").toString();
+            String start = obj.get("startDate").toString();
+            String end   = obj.get("endDate").toString();
 
-            return "Your next event is " + name + ". It starts " + start + " and ends " + end + " and it is " + status + ".";
+            return "Your next event is " + name + ". It starts " + start + " and ends " + end;
         } else {
-            return obj.get("message").toString();
+            return "You don't have any event";
         }
 
     }

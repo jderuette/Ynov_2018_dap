@@ -1,7 +1,8 @@
 package fr.ynov.dap.services.google;
 
 import fr.ynov.dap.helpers.GoogleHelper;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.User;
+import fr.ynov.dap.models.google.GoogleAccount;
 import fr.ynov.dap.repositories.UserRepository;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

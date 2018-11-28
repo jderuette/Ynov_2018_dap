@@ -23,7 +23,7 @@ public class GmailService {
 
         URL url = null;
         try {
-            url = new URL(DAP_API_URL + "/gmail/" + userKey);
+            url = new URL(DAP_API_URL + "/mail/" + userKey);
         } catch (MalformedURLException e) {
             LOG.error("Error when created url", e);
         }
@@ -58,7 +58,7 @@ public class GmailService {
         in.close();
 
         JSONObject obj         = new JSONObject(content.toString());
-        String     emailUnread = obj.get("email_unread").toString();
+        String     emailUnread = obj.get("total-email-unread").toString();
 
         return "You have " + emailUnread + " email unread";
     }

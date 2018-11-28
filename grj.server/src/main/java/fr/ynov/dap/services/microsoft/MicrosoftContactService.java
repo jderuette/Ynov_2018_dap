@@ -2,7 +2,8 @@ package fr.ynov.dap.services.microsoft;
 
 import com.fasterxml.jackson.databind.*;
 import fr.ynov.dap.helpers.MicrosoftAuthHelper;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.User;
+import fr.ynov.dap.models.microsoft.MicrosoftAccount;
 import fr.ynov.dap.repositories.UserRepository;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

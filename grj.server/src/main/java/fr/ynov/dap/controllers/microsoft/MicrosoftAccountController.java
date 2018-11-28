@@ -1,7 +1,7 @@
 package fr.ynov.dap.controllers.microsoft;
 
 import fr.ynov.dap.helpers.MicrosoftAuthHelper;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.User;
 import fr.ynov.dap.models.microsoft.*;
 import fr.ynov.dap.repositories.UserRepository;
 import fr.ynov.dap.services.microsoft.*;

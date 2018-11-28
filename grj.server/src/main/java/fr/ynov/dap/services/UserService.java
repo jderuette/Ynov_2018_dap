@@ -1,6 +1,6 @@
 package fr.ynov.dap.services;
 
-import fr.ynov.dap.models.User;
+import fr.ynov.dap.models.common.User;
 import fr.ynov.dap.repositories.UserRepository;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

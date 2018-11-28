@@ -1,4 +1,6 @@
-package fr.ynov.dap.models;
+package fr.ynov.dap.models.google;
+
+import fr.ynov.dap.models.common.User;
 
 import javax.persistence.*;
 

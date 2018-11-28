@@ -1,4 +1,7 @@
-package fr.ynov.dap.models;
+package fr.ynov.dap.models.common;
+
+import fr.ynov.dap.models.google.GoogleAccount;
+import fr.ynov.dap.models.microsoft.MicrosoftAccount;
 
 import javax.persistence.*;
 import java.util.List;

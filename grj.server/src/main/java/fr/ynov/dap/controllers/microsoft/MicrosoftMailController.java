@@ -1,7 +1,7 @@
 package fr.ynov.dap.controllers.microsoft;
 
 import fr.ynov.dap.helpers.MicrosoftAuthHelper;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.User;
 import fr.ynov.dap.models.microsoft.*;
 import fr.ynov.dap.repositories.UserRepository;
 import fr.ynov.dap.services.microsoft.*;
@@ -13,20 +13,37 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
+/**
+ * MicrosoftMailController
+ */
 @Controller
-public class MailController2 {
+public class MicrosoftMailController {
 
+    /**
+     * Autowired UserRepository
+     */
     @Autowired
     UserRepository userRepository;
 
     private static final int MAX_RESULT = 10;
 
+    /**
+     * Show account microsoft mail
+     *
+     * @param model              model
+     * @param request            request
+     * @param redirectAttributes redirectAttributes
+     * @param userName           userName
+     * @return String
+     */
     @RequestMapping("/microsoft/mail/{userName}")
     public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable final String userName) {
 
         User user = userRepository.findByName(userName);
+
+        Map<String, MicrosoftMessage[]> mails = new HashMap<>();
 
         if (user != null) {
 
@@ -47,17 +64,19 @@ public class MailController2 {
                 Integer maxResults = MAX_RESULT;
 
                 try {
-                    MicrosoftPagedResult<MicrosoftMessage> messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
-
-                    return "ss";
+                    MicrosoftMessage[] messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body().getValue();
+                    mails.put(currentMicrosoftAccount.getName(), messages);
                 } catch (IOException e) {
-                    redirectAttributes.addFlashAttribute("error", e.getMessage());
-                    return "redirect:/index.html";
+                    e.printStackTrace();
                 }
             }
 
+        } else {
+            return "error";
         }
 
-        return "dd";
+        model.addAttribute("mailsMap", mails);
+        model.addAttribute("userName", user.getName());
+        return "mails";
     }
 }

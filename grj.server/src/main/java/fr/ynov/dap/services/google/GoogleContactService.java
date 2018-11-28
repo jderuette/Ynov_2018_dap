@@ -1,14 +1,13 @@
 package fr.ynov.dap.services.google;
 
 import fr.ynov.dap.helpers.GoogleHelper;
-import fr.ynov.dap.models.*;
+import fr.ynov.dap.models.common.User;
+import fr.ynov.dap.models.google.GoogleAccount;
 import fr.ynov.dap.repositories.UserRepository;
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 /**

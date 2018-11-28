@@ -16,7 +16,7 @@ public class GoogleAccountService {
      */
     public static void addAnAccount(String userKey) throws IOException {
 
-        Desktop.getDesktop().browse(URI.create(DAP_API_URL + "/user/add/" + userKey));
+        Desktop.getDesktop().browse(URI.create(DAP_API_URL + "/user/add/google-account/" + userKey));
 
     }
 }

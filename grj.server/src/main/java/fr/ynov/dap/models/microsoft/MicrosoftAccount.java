@@ -1,4 +1,6 @@
-package fr.ynov.dap.models;
+package fr.ynov.dap.models.microsoft;
+
+import fr.ynov.dap.models.common.User;
 
 import javax.persistence.*;
 import java.util.Date;
