@@ -28,15 +28,23 @@ public class MicrosoftContactService extends MicrosoftBaseService {
     public Integer getNbrContact(final MicrosoftAccount microsoftAccount) throws IOException, SecretFileAccesException {
         // get the reponseBody because MS send only the nomber of contact without json
         // etc ...
+        Integer nbrContact = 0;
         ResponseBody e = getMicrosoftService(microsoftAccount).getNbrContact().execute().body();
+
         if (e != null && !e.string().isEmpty()) {
-            Integer nbrContact = (Integer.valueOf(e.string()));
+            try {
+                nbrContact = (Integer.valueOf(e.string()));
+            } catch (NumberFormatException ex) {
+                getLogger().error("le count des contact microsoft a renvoyé une reponse impossible a parser !"
+                        + microsoftAccount.getAccountName(), ex);
+            }
             return nbrContact;
         } else {
             getLogger().error(
                     "le count des contact microsoft a renvoyé une reponse null" + microsoftAccount.getAccountName());
-            return 0;
+
         }
+        return nbrContact;
     }
 
     @Override

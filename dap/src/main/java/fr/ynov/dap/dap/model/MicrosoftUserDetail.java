@@ -1,10 +1,13 @@
 package fr.ynov.dap.dap.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  *
  * @author David_tepoche
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MicrosoftUserDetail {
 
     /**
