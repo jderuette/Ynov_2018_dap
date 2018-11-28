@@ -46,8 +46,10 @@ public final class App {
      * Default method called on launched.
      * @param args Argument passed on console / terminal
      * Please use the following pattern to works :
-     * - To add new user : "java -jar ksb-client.jar add userId"
+     * - To create new user : "java -jar ksb-client.jar create userId"
      * - To view user's information : "java -jar ksb-client.jar [view] userId"
+     * - To link google account : "java -jar ksb-client.jar add userId google pro"
+     * - To link microsoft account : "java -jar ksb-client.jar add userId microsoft pro"
      * or "java -jar ksb-client.jar userId"
      */
     public static void main(final String[] args) {
@@ -120,8 +122,10 @@ public final class App {
 
         String errorMsg = "Need more argument to run this application.\n"
                 + "Please use the following pattern to works : \n"
-                + "- To add new user : java -jar ksb-client.jar add <userId>\n"
+                + "- To create a new user : java -jar ksb-client.jar create <userId>\n"
                 + "- To view user's information : java -jar ksb-client.jar [view] <userId>\n"
+                + "- To link google account : java -jar ksb-client.jar add userId google pro\n"
+                + "- To link microsoft account : java -jar ksb-client.jar add userId microsoft pro\n"
                 + "\tor java -jar ksb-client.jar <userId>";
 
         writeErrorLine(errorMsg, null);
