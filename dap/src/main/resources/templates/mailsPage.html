@@ -1,0 +1,107 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"
+	media="screen" />
+
+<!-- Custom styles for this template -->
+<link href="album.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header>
+		<div class="collapse bg-dark" id="navbarHeader">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 col-md-7 py-4">
+						<h4 class="text-white">
+							<span th:text="#{navbar.welcome}"></span> <label th:text="${userKey}"></label>
+						</h4>
+					</div>
+					<div class="col-sm-4 offset-md-1 py-4">
+						<h4 class="text-white"></h4>
+						<ul class="list-unstyled">
+							<li><a th:href="@{|/admin/${userKey}/mails|}"
+								class="text-white"><span th:text="#{navbar.link.mails}"></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="navbar navbar-dark bg-dark shadow-sm">
+			<div class="container d-flex justify-content-between">
+				<a th:href="@{|/admin/${userKey}|}" class="navbar-brand d-flex align-items-center"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+						viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="mr-2">
+                        <path
+							d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg> <strong>DAP</strong>
+				</a>
+				<button class="navbar-toggler collapsed" type="button"
+					data-toggle="collapse" data-target="#navbarHeader"
+					aria-controls="navbarHeader" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row" th:each="element : ${emails}">
+				<div  class="container">
+					<h1><span th:text="#{email.account}"></span> : <span th:text="${element.key}"> </span> <h1>
+	
+				</div>
+				<div class="col-md-4 " th:each="mail : ${element.value}">
+					<div class="card mb-4 shadow-sm bg-secondary ">
+
+						<p class="text-light"><span th:text="#{email.from}"></span> : <span th:text="${mail.from.emailAddress.address}"></span></p>
+						
+						 <p class="text-light"><span th:text="#{email.subject}"></span> :	<label th:text="${mail.subject}"></label></p>
+
+						<div class="card-body bg-dark text-light">
+							<p th:text="${mail.bodyPreview}" class="card-text"></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
+
+	<footer class="text-muted">
+		<div class="container">
+			<p class="float-right">
+				<a href="#"><span th:text="#{page.goup}"></span></a>
+			</p>
+
+		</div>
+	</footer>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+	</script>
+
+
+	<script th:src="@{/jquery/jquery.min.js}"></script>
+	<script th:src="@{/popper/popper.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>
