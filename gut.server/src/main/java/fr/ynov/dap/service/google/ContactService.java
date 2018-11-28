@@ -1,13 +1,11 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service.google;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.people.v1.PeopleService;
-import com.google.api.services.people.v1.PeopleService.People;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 
@@ -21,6 +19,7 @@ public class ContactService extends GoogleService{
 	 * @throws IOException
 	 */
 	public ContactService() throws IOException {
+		getLogger().debug("Initialisation du service contact (peopleapi)");
 		init();	
 	}
 
@@ -31,6 +30,7 @@ public class ContactService extends GoogleService{
 	 * @throws IOException
 	 */
 	public PeopleService  getService(String userId) throws IOException {
+		getLogger().debug("Recuperation du service people");
 		return 	new PeopleService .Builder(getConfiguration().getHTTP_TRANSPORT(), JSON_FACTORY, getCredentials(userId))
 				.setApplicationName(getConfiguration().getApplicationName())        
 				.build();
@@ -43,6 +43,7 @@ public class ContactService extends GoogleService{
 	 * @throws IOException
 	 */
 	public int getContactCount(final String userId) throws IOException{
+		getLogger().debug("Recuperation des contacts google");
 		PeopleService service = getService(userId);
 		ListConnectionsResponse r = service.people().connections()
 				.list("people/me")

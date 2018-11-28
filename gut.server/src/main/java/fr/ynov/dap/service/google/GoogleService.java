@@ -1,4 +1,4 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service.google;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,13 +6,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.json.JsonFactory;
@@ -22,6 +21,8 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
+import fr.ynov.dap.Config;
+
 
 public abstract class GoogleService {
 
@@ -29,16 +30,14 @@ public abstract class GoogleService {
 	
 	protected static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static List<String> scopes = null;
-	private static String user ="me";
-	//TODO gut by Djer Ton IDE te dit que ca n'est plus utilisé. A supprimer ? bug ? Doublon ?
-	private Config configuration;
+	private static final String user ="me";
+	private static final Logger logger = LogManager.getLogger();
 	
 	/**
 	 * récupère la config
 	 * @return Config
 	 */
-	//TODO gut by Djer Pourquoi en public ?
-	public Config getConfiguration() {
+	protected Config getConfiguration() {
 		return loadConfig;
 	}
 
@@ -47,60 +46,83 @@ public abstract class GoogleService {
 	 * @param configuration
 	 */
 	public void setConfiguration(Config configuration) {
-		this.configuration = configuration;
 	}
 
 	/**
 	 * Initialisation des scopes pour les APIs Google
 	 */
 	public void init() {
-		ArrayList<String> myscopes = new ArrayList<String>(Arrays.asList(GmailScopes.GMAIL_LABELS, GmailScopes.GMAIL_READONLY, CalendarScopes.CALENDAR_READONLY, PeopleServiceScopes.CONTACTS_READONLY));
+		logger.debug("Initialisation des scopes pour les apis google");
+		ArrayList<String> myscopes = new ArrayList<String>(
+				Arrays.asList(
+						GmailScopes.GMAIL_LABELS,
+						GmailScopes.GMAIL_READONLY,
+						CalendarScopes.CALENDAR_READONLY,
+						PeopleServiceScopes.CONTACTS_READONLY
+						)
+				);
 	    scopes = myscopes;
+	    logger.debug("Chargement de la configuration");
 	    setConfiguration(loadConfig);
+	    
 	}
 	
-	/**
-	 * TODO gut by Djer ce commentaire est faux, ce code charge l'autorisation accordé par un des tes utilisateurs
-	 * Authoriser l'accès aux API google 
+	/** 
+	 * charger l'autorisation accorde pour un utilisateur
 	 * @param userKey
 	 * @return Credential
 	 * @throws IOException
 	 */
-	protected Credential getCredentials(String userKey) throws IOException {
-        //TODO gut by Djer Ce commentaire est devenu faux !
-	    // Load client secrets.
+	protected Credential getCredentials(String userKey) 
+			throws IOException {
+		logger.debug("Recuperation de l'autorisation pour un utilisateur");
 		GoogleAuthorizationCodeFlow flow = getFlow();
-		//TODO gut by Djer AuthorizationCodeInstalledApp ne fonctionne pas en mode"web", utilise flow.loadCredential(userKey)
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
+		return flow.loadCredential(userKey);
+        //return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
     }
 
 	/**
 	 * Récupération de l'utilisateur
 	 * @return String
 	 */
-	//TODO gut by Djer Pourquoi en public ?
-	public static String getUser() {
+	protected static String getUser() {
 		return user;
 	}
 
-	//TODO gut by Djer Atention, en multi-utlisateur tu risques d'écraser la valeur !
-	public static void setUser(String user) {
-		GoogleService.user = user;
-	}
-	
 	/**
 	 * Flow de connection utilisé pour sauvegarde l'utilsiateur dans GoogleAccount
 	 * @return GoogleAuthorizationCodeFlow
 	 * @throws IOException
 	 */
 	public GoogleAuthorizationCodeFlow getFlow() throws IOException {
-		InputStream in = GmailService.class.getResourceAsStream(loadConfig.getCredentialsFolder());
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+		
+		InputStream in = GmailService.class
+				.getResourceAsStream(
+						loadConfig.getCredentialsFolder()
+						);
+		logger.debug("Recuperation des clientSecrets");
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets
+        		.load(JSON_FACTORY,
+        				new InputStreamReader(in)
+        				);
+        logger.debug("Recuperation du flow google");
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        		loadConfig.getHTTP_TRANSPORT(), JSON_FACTORY, clientSecrets, scopes)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(loadConfig.getTokensDirectoryPath())))
+        		loadConfig.getHTTP_TRANSPORT(),
+        		JSON_FACTORY, clientSecrets, scopes
+        		)
+                .setDataStoreFactory(new FileDataStoreFactory(
+                		new java.io.File(
+                				loadConfig.getTokensDirectoryPath()
+                				)
+                		))
                 .setAccessType("offline")
                 .build();
         return flow;
 	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
+	
+	
 }

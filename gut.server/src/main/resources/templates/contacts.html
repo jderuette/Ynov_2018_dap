@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{admin.title}"></title>
+
+
+
+</head>
+<body>
+	<div th:replace="~{fragments/header :: header}"></div>
+
+	<div th:if="${error}" class="alert alert-danger"><span th:text="${error}"></span></div>
+	
+	<table class="table">
+		<caption th:text="#{contacts}"></caption>
+		<thead>
+			<tr>
+				<th th:text="#{name}"></th>
+				<th th:text="#{company}"></th>
+				<th th:text="#{email}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="contact : ${contacts}">
+				<tr>
+					<td th:text="${contact.givenName} ${contact.surname}"></td>
+					<td th:text="${contact.companyName}"></td>
+					<td>
+						<ul class="list-inline">
+							<th:block th:each="address : ${contact.emailAddresses}">
+								<li th:text="${address.address}"></li>
+							</th:block>
+						</ul>
+					</td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -4,20 +4,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
+import fr.ynov.dap.service.google.GmailService;
+
 @Component
 //TODO gut by Djer Principe "ZeroConf" à revoir, ici tu as du "noConf" ! 
 public class Config {
-	private static final String CREDENTIALS_FOLDER = "/credentials.json";
-	private static final InputStream CLIENT_SECRET_DIR = GmailService.class.getResourceAsStream(CREDENTIALS_FOLDER);
-	private static final String APPLICATION_NAME = "HoC DaP";
-	private static final String TOKENS_DIRECTORY_PATH = "tokens";
+	private static String CREDENTIALS_FOLDER = "/credentials.json";
+	private static InputStream CLIENT_SECRET_DIR = GmailService.class.getResourceAsStream(CREDENTIALS_FOLDER);
+	private static String APPLICATION_NAME = "HoC DaP";
+	private static String TOKENS_DIRECTORY_PATH = "tokens";
 	private static NetHttpTransport http_transport = null;
-
+	private static final Logger logger = LogManager.getLogger();
+	
+	
+	public Config(String _credentialsFolder,
+			String _applicationName,
+			String _TokensDirecotryPath) 
+			throws IOException, GeneralSecurityException {
+		logger.debug("Chargement d'une configuration personnalisee");
+		http_transport = GoogleNetHttpTransport.newTrustedTransport();
+		CREDENTIALS_FOLDER = _credentialsFolder;
+		APPLICATION_NAME = _applicationName;
+		TOKENS_DIRECTORY_PATH = _TokensDirecotryPath;
+	}
+	
 	/**
 	 * url de retour pour l'authentification Google
 	 */
@@ -29,6 +46,7 @@ public class Config {
 	 * @throws GeneralSecurityException
 	 */
 	public Config() throws IOException, GeneralSecurityException {
+		logger.debug("Chargement de la configuration par defaut");
 		http_transport = GoogleNetHttpTransport.newTrustedTransport();
 	}
 
@@ -45,7 +63,7 @@ public class Config {
 	 * @return InputStream
 	 */
 	public InputStream getClientSecretDir() {
-		return CLIENT_SECRET_DIR;
+		return CLIENT_SECRET_DIR; 
 	}
 	/**
 	 * Returne le nom de l'application
