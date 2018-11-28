@@ -1,5 +1,7 @@
 package fr.ynov.dap.service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,8 +69,10 @@ public class MicrosoftAuthService {
    */
   private void init() throws IOException {
     String authConfigFile = "auth.properties";
-    InputStream authConfigStream = MicrosoftAuthService.class.getClassLoader()
-        .getResourceAsStream(authConfigFile);
+    InputStream authConfigStream = new FileInputStream(new File(System.getProperty("user.home")
+        + "/Documents/credentials/auth.properties"));
+        /*MicrosoftAuthService.class.getClassLoader()
+        .getResourceAsStream(authConfigFile);*/
 
     if (authConfigStream != null) {
       Properties authProps = new Properties();

@@ -70,13 +70,13 @@ public class Config {
    */
   public Config() throws IOException, GeneralSecurityException {
     googleCredentialsFolder = System.getProperty("user.home")
-        + "/Documents/Antoine_Cours/eclipse/credentials/credentials.json";
+        + "/Documents/credentials/credentials.json";
     googleClientSecretInputStream = new FileInputStream(
         new File(googleCredentialsFolder));
     httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     googleApplicationName = "HoC DaP";
     googleTokensDirectoryPath = System.getProperty("user.home")
-        + "/Documents/Antoine_Cours/eclipse/credentials";
+        + "/Documents/credentials";
     googleAuthCallBack = "/oAuth2Callback";
     microsoftAuthority = "https://login.microsoftonline.com";
     microsoftAuthorizeUrl = microsoftAuthority
@@ -194,83 +194,156 @@ public class Config {
 
   /**
    * set google Credential path.
-   * @param googleCredentialsFolder
+   * @param googleCredentialsPath the path to the credentials file
    */
-  public void setGoogleCredentialsFolder(String googleCredentialsFolder) {
-    this.googleCredentialsFolder = googleCredentialsFolder;
+  public void setGoogleCredentialsFolder(final String googleCredentialsPath) {
+    this.googleCredentialsFolder = googleCredentialsPath;
   }
 
+  /**
+   * get the credentials file.
+   * @return the credentials file
+   */
   public InputStream getGoogleClientSecretInputStream() {
     return googleClientSecretInputStream;
   }
 
+  /**
+   * set the credentials file.
+   * @param newgoogleClientSecretInputStream credential file
+   */
   public void setGoogleClientSecretInputStream(
-      InputStream googleClientSecretInputStream) {
-    this.googleClientSecretInputStream = googleClientSecretInputStream;
+      final InputStream newgoogleClientSecretInputStream) {
+    this.googleClientSecretInputStream = newgoogleClientSecretInputStream;
   }
 
+  /**
+   * get the GoogleApp name.
+   * @return a string
+   */
   public String getGoogleApplicationName() {
     return googleApplicationName;
   }
 
-  public void setGoogleApplicationName(String googleApplicationName) {
-    this.googleApplicationName = googleApplicationName;
+  /**
+   * set the GoogleApp name.
+   * @param newGoogleApplicationName a string
+   */
+  public void setGoogleApplicationName(final String newGoogleApplicationName) {
+    this.googleApplicationName = newGoogleApplicationName;
   }
 
+  /**
+   * get the tokensDirectory.
+   * @return a string
+   */
   public String getGoogleTokensDirectoryPath() {
     return googleTokensDirectoryPath;
   }
 
-  public void setGoogleTokensDirectoryPath(String googleTokensDirectoryPath) {
-    this.googleTokensDirectoryPath = googleTokensDirectoryPath;
+  /**
+   * set the tokens directory.
+   * @param newGoogleTokensDirectoryPath a string
+   */
+  public void setGoogleTokensDirectoryPath(
+      final String newGoogleTokensDirectoryPath) {
+    this.googleTokensDirectoryPath = newGoogleTokensDirectoryPath;
   }
 
+  /**
+   * get authCallBack Url.
+   * @return a string
+   */
   public String getGoogleAuthCallBack() {
     return googleAuthCallBack;
   }
 
-  public void setGoogleAuthCallBack(String googleAuthCallBack) {
-    this.googleAuthCallBack = googleAuthCallBack;
+  /**
+   * set authCallBack url.
+   * @param newGoogleAuthCallBack url authorized for callback
+   */
+  public void setGoogleAuthCallBack(final String newGoogleAuthCallBack) {
+    this.googleAuthCallBack = newGoogleAuthCallBack;
   }
 
+  /**
+   * get microsoft Appid.
+   * @return a string
+   */
   public String getMicrosoftAppId() {
     return microsoftAppId;
   }
 
-  public void setMicrosoftAppId(String microsoftAppId) {
-    this.microsoftAppId = microsoftAppId;
+  /**
+   * sets the microsoft AppId.
+   * @param newMicrosoftAppId in auth.properties
+   */
+  public void setMicrosoftAppId(final String newMicrosoftAppId) {
+    this.microsoftAppId = newMicrosoftAppId;
   }
 
+  /**
+   * get the appPassword in properties.
+   * @return a string
+   */
   public String getMicrosoftAppPassword() {
     return microsoftAppPassword;
   }
 
-  public void setMicrosoftAppPassword(String microsoftAppPassword) {
-    this.microsoftAppPassword = microsoftAppPassword;
+  /**
+   * sets the microsoft appPassword.
+   * @param newMicrosoftAppPassword the string
+   */
+  public void setMicrosoftAppPassword(final String newMicrosoftAppPassword) {
+    this.microsoftAppPassword = newMicrosoftAppPassword;
   }
 
+  /**
+   * get the microsoft url authorized to redirect.
+   * @return a string
+   */
   public String getMicrosoftRedirectUrl() {
     return microsoftRedirectUrl;
   }
 
-  public void setMicrosoftRedirectUrl(String microsoftRedirectUrl) {
-    this.microsoftRedirectUrl = microsoftRedirectUrl;
+  /**
+   * sets the microsoft url authorized to redirect.
+   * @param newmicrosoftRedirectUrl a string
+   */
+  public void setMicrosoftRedirectUrl(final String newmicrosoftRedirectUrl) {
+    this.microsoftRedirectUrl = newmicrosoftRedirectUrl;
   }
 
+  /**
+   * gets the domain for microsoft App.
+   * @return a string
+   */
   public String getMicrosoftAuthority() {
     return microsoftAuthority;
   }
 
-  public void setMicrosoftAuthority(String microsoftAuthority) {
-    this.microsoftAuthority = microsoftAuthority;
+  /**
+   * sests the domain for microsoft App.
+   * @param newMicrosoftAuthority a string
+   */
+  public void setMicrosoftAuthority(final String newMicrosoftAuthority) {
+    this.microsoftAuthority = newMicrosoftAuthority;
   }
 
+  /**
+   * gets the end of authorized Url added in webApp platform.
+   * @return a string
+   */
   public String getMicrosoftAuthorizeUrl() {
     return microsoftAuthorizeUrl;
   }
 
-  public void setMicrosoftAuthorizeUrl(String microsoftAuthorizeUrl) {
-    this.microsoftAuthorizeUrl = microsoftAuthorizeUrl;
+  /**
+   * sets the end of authorized Url added in webApp platform.
+   * @param newMicrosoftAuthorizeUrl a string
+   */
+  public void setMicrosoftAuthorizeUrl(final String newMicrosoftAuthorizeUrl) {
+    this.microsoftAuthorizeUrl = newMicrosoftAuthorizeUrl;
   }
 
 }
