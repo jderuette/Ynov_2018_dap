@@ -14,3 +14,8 @@ h1 {color:purple;}
 	font-size: 1.3em;
 	color: red;
 }
+
+.token_container{
+	max-width: 70%;
+	white-space: break-word;
+}

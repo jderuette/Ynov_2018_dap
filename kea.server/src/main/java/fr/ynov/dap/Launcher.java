@@ -6,7 +6,6 @@ import java.security.GeneralSecurityException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +25,7 @@ public class Launcher {
    * @throws GeneralSecurityException nothing special
    */
   @Bean
-  @Primary
+  //@Primary
   public Config loadConfig() throws IOException, GeneralSecurityException {
     Config conf = new Config();
     return conf;
@@ -44,6 +43,7 @@ public class Launcher {
   }
 
   /*
+   * The method used when a client wants to connect through console.
   public static void showUserInfos()
       throws IOException, GeneralSecurityException {
     Scanner reader = new Scanner(System.in);

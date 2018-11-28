@@ -1,8 +1,8 @@
 package fr.ynov.dap.web;
 
-import fr.ynov.dap.ContactService;
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.repository.AppUserRepository;
+import fr.ynov.dap.service.GoogleContactService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ContactController {
    * the gmailService to get mails information.
    */
   @Autowired
-  private ContactService contactsService;
+  private GoogleContactService contactsService;
   /**
    * the appUserRepository manages all database accesses for The AppUser.
    */

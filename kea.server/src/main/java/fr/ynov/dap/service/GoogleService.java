@@ -1,4 +1,4 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -9,6 +9,8 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
+
+import fr.ynov.dap.Config;
 
 import java.io.FileInputStream;
 import java.io.IOException;

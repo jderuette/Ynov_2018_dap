@@ -17,10 +17,10 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 
-import fr.ynov.dap.AccountService;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.repository.AppUserRepository;
+import fr.ynov.dap.service.GoogleAccountService;
 
 /**
  * this controller manages the AccountService in order to add user in the app and also Google and Microsoft accounts.
@@ -34,7 +34,7 @@ public class AccountController {
    * the AccountService to add and manage user's information.
    */
   @Autowired
-  private AccountService accountService;
+  private GoogleAccountService accountService;
   /**
    * the appUserRepository manages all database accesses for The AppUser.
    */
@@ -54,7 +54,6 @@ public class AccountController {
       final HttpServletRequest request, final HttpSession session)
       throws ServletException {
     final String decodedCode = accountService.extracCode(request);
-
     final String redirectUri = accountService.buildRedirectUri(request,
         accountService.getCustomConfig().getoAuth2CallbackUrl());
 
@@ -95,7 +94,7 @@ public class AccountController {
    * @param accountName the real googleAccount
    * @return the view to Display (on Error)
    */
-  @RequestMapping("/add/account/{accountName}")
+  @RequestMapping("/add/gaccount/{accountName}")
   public String addAccount(
       @RequestParam(value = "userKey", required = true) final String userKey,
       @PathVariable final String accountName, final HttpServletRequest request,
@@ -108,7 +107,7 @@ public class AccountController {
       credential = flow.loadCredential(accountName);
 
       if (credential != null && credential.getAccessToken() != null) {
-        response = "AccountAlreadyAdded";
+        response = "accountAlreadyAdded";
       } else {
         // redirect to the authorization flow
         final AuthorizationCodeRequestUrl authorizationUrl = flow
@@ -120,8 +119,10 @@ public class AccountController {
         response = "redirect:" + authorizationUrl.build();
         if (appUserRepo.findByUserKey(userKey) == null) {
           AppUser user = new AppUser(userKey);
+          appUserRepo.save(user);
           GoogleAccount gAccount = new GoogleAccount();
           gAccount.setGoogleAccountName(accountName);
+          user = appUserRepo.findByUserKey(userKey);
           user.addGoogleAccount(gAccount);
           appUserRepo.save(user);
         } else {

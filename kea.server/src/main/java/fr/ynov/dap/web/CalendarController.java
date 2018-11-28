@@ -1,9 +1,10 @@
 package fr.ynov.dap.web;
 
 import com.google.api.services.calendar.model.Event;
-import fr.ynov.dap.CalendarService;
+
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.repository.AppUserRepository;
+import fr.ynov.dap.service.GoogleCalendarService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class CalendarController {
    * The service to access googleCalendar API.
    */
   @Autowired
-  private CalendarService calendarService;
+  private GoogleCalendarService calendarService;
 
   /**
    * the appUserRepository manages all database accesses for The AppUser.
@@ -38,7 +39,7 @@ public class CalendarController {
    * get the calendarService.
    * @return the calendarService
    */
-  public CalendarService getCalendarService() {
+  public GoogleCalendarService getCalendarService() {
     return calendarService;
   }
 

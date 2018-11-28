@@ -1,10 +1,11 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service;
 
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 import com.google.api.services.gmail.model.ListLabelsResponse;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class GmailService extends GoogleService {
+public class GoogleMailService extends GoogleService {
   /**
    * The gmail service to use the google API.
    */
@@ -36,7 +37,7 @@ public class GmailService extends GoogleService {
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
-  public GmailService()
+  public GoogleMailService()
       throws IOException, InstantiationException, IllegalAccessException {
     super();
   }

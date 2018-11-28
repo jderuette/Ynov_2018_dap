@@ -1,7 +1,8 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.http.GenericUrl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
  *
  */
 @Service
-public class AccountService extends GoogleService {
+public class GoogleAccountService extends GoogleService {
   /**
    * Logger is the object we use to log important informations or report bugs.
    */
@@ -28,7 +29,7 @@ public class AccountService extends GoogleService {
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
-  public AccountService()
+  public GoogleAccountService()
       throws InstantiationException, IllegalAccessException {
     super();
   }

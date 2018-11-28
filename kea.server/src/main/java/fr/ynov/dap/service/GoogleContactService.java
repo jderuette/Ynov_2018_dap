@@ -1,4 +1,4 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,13 +16,13 @@ import com.google.api.services.people.v1.model.Person;
  *
  */
 @Service
-public class ContactService extends GoogleService {
+public class GoogleContactService extends GoogleService {
   /**
    * The constructor to use the service.
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
-  public ContactService()
+  public GoogleContactService()
       throws InstantiationException, IllegalAccessException {
     super();
   }
@@ -68,7 +68,7 @@ public class ContactService extends GoogleService {
         .setPersonFields("names,emailAddresses").execute();
     List<Person> connections = response.getConnections();
     if (connections == null) {
-        LOGGER.info("Aucun contacts trouves pour le userKey:" + userKey);
+        LOGGER.info("Aucun contacts trouve pour le userKey:" + userKey);
     }
     return connections;
   }

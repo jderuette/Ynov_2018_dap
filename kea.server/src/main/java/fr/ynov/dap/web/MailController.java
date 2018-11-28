@@ -1,8 +1,8 @@
 package fr.ynov.dap.web;
 
-import fr.ynov.dap.GmailService;
 import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.repository.AppUserRepository;
+import fr.ynov.dap.service.GoogleMailService;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MailController {
    * the gmailService to get mails information.
    */
   @Autowired
-  private GmailService gmailService;
+  private GoogleMailService gmailService;
   /**
    * the appUserRepository manages all database accesses for The AppUser.
    */
@@ -97,7 +97,7 @@ public class MailController {
    * get the gmailService.
    * @return the gmailService
    */
-  public GmailService getGmailService() {
+  public GoogleMailService getGmailService() {
     return gmailService;
   }
 

@@ -13,6 +13,19 @@
 <body>
 	<div th:insert="~{fragments/header :: header}"></div>
 	<h1 th:text="#{registered.connected}"></h1>
+	<div><!-- 
+		<span th:text="#{registered.youconnected}"></span>&nbsp;
+		 <span th:text="${idToken}"></span> -->
+	</div><br>
+	<div class="token_container">
+		<span th:text="#{registered.token}"></span>&nbsp;:<br><span
+			th:text="${idToken}"></span>
+	</div><br>
+	<div class="token_container">
+		<span th:text="#{registered.authCode}"></span>&nbsp;:<br><span
+			th:text="${authCode}"></span>
+	</div>
+	<div class="teacher_message" th:text="${error}"></div>
 	<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

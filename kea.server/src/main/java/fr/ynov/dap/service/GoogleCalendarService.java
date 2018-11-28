@@ -1,9 +1,10 @@
-package fr.ynov.dap;
+package fr.ynov.dap.service;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CalendarService extends GoogleService {
+public class GoogleCalendarService extends GoogleService {
   /**
    * the googlecalendar service from google.
    */
@@ -34,7 +35,7 @@ public class CalendarService extends GoogleService {
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
-  public CalendarService()
+  public GoogleCalendarService()
       throws IOException, InstantiationException, IllegalAccessException {
     super();
   }

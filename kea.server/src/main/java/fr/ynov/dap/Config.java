@@ -11,7 +11,7 @@ import java.security.GeneralSecurityException;
 import org.springframework.stereotype.Component;
 
 /**
- * Contains all configuration needed to call the Google API.
+ * Contains all configuration needed to call the Google and Microsoft API.
  * @author Antoine
  *
  */
@@ -21,19 +21,19 @@ public class Config {
   /**
    * the path to the storedCredentials.
    */
-  private String credentialsFolder;
+  private String googleCredentialsFolder;
   /**
    * the file that contains storedCredentials.
    */
-  private InputStream clientSecretInputStream;
+  private InputStream googleClientSecretInputStream;
   /**
    * The application name.
    */
-  private String applicationName;
+  private String googleApplicationName;
   /**
    * The path to the file that contains tokens.
    */
-  private String tokensDirectoryPath;
+  private String googleTokensDirectoryPath;
   /**
    * the object to use HTTP protocols.
    */
@@ -41,7 +41,27 @@ public class Config {
   /**
    * the URI authorized to redirect to Ynov Dap.
    */
-  private String openAuth2CallbackUrl;
+  private String googleAuthCallBack;
+  /**
+   * The AppId of the microsoft Web application.
+   */
+  private String microsoftAppId;
+  /**
+   * The password used to use the Web application.
+   */
+  private String microsoftAppPassword;
+  /**
+   * the URI authorized for the redirect after auth.
+   */
+  private String microsoftRedirectUrl;
+  /**
+   * The start of the URL where to authenticate the user.
+   */
+  private String microsoftAuthority;
+  /**
+   * the Url to authenticate.
+   */
+  private String microsoftAuthorizeUrl;
 
   /**
    * Instantiate the NetHttpTransport specifically for Google.
@@ -49,13 +69,21 @@ public class Config {
    * @throws GeneralSecurityException nothing special
    */
   public Config() throws IOException, GeneralSecurityException {
-    credentialsFolder = System.getProperty("user.home")
+    googleCredentialsFolder = System.getProperty("user.home")
         + "/Documents/Antoine_Cours/eclipse/credentials/credentials.json";
-    clientSecretInputStream = new FileInputStream(new File(credentialsFolder));
+    googleClientSecretInputStream = new FileInputStream(
+        new File(googleCredentialsFolder));
     httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-    applicationName = "HoC DaP";
-    tokensDirectoryPath = System.getProperty("user.home") + "/Documents/Antoine_Cours/eclipse/credentials";
-    openAuth2CallbackUrl = "/oAuth2Callback";
+    googleApplicationName = "HoC DaP";
+    googleTokensDirectoryPath = System.getProperty("user.home")
+        + "/Documents/Antoine_Cours/eclipse/credentials";
+    googleAuthCallBack = "/oAuth2Callback";
+    microsoftAuthority = "https://login.microsoftonline.com";
+    microsoftAuthorizeUrl = microsoftAuthority
+        + "/common/oauth2/v2.0/authorize";
+    microsoftAppId = null;
+    microsoftRedirectUrl = null;
+    microsoftAppPassword = null;
   }
 
   /**
@@ -63,7 +91,7 @@ public class Config {
    * @return relative url after domain name
    */
   public String getoAuth2CallbackUrl() {
-    return openAuth2CallbackUrl;
+    return googleAuthCallBack;
   }
 
   /**
@@ -71,7 +99,7 @@ public class Config {
    * @param authCallbackURL url de redirection
    */
   public void setoAuth2CallbackUrl(final String authCallbackURL) {
-    this.openAuth2CallbackUrl = authCallbackURL;
+    this.googleAuthCallBack = authCallbackURL;
   }
 
   /**
@@ -87,7 +115,7 @@ public class Config {
    * @param credFolder folder that contains google credentials
    */
   public void setCredentialsFolder(final String credFolder) {
-    this.credentialsFolder = credFolder;
+    this.googleCredentialsFolder = credFolder;
   }
 
   /**
@@ -96,7 +124,7 @@ public class Config {
    * @param clientSecretDirectory directory of credentials
    */
   public void setClientSecretDir(final InputStream clientSecretDirectory) {
-    this.clientSecretInputStream = clientSecretDirectory;
+    this.googleClientSecretInputStream = clientSecretDirectory;
   }
 
   /**
@@ -104,7 +132,7 @@ public class Config {
    * @param appName of your application
    */
   public void setApplicationName(final String appName) {
-    this.applicationName = appName;
+    this.googleApplicationName = appName;
   }
 
   /**
@@ -112,7 +140,7 @@ public class Config {
    * @param tokensDirectory a string that contains the path
    */
   public void setTokensDirectoryPath(final String tokensDirectory) {
-    this.tokensDirectoryPath = tokensDirectory;
+    this.googleTokensDirectoryPath = tokensDirectory;
   }
 
   /**
@@ -120,7 +148,7 @@ public class Config {
    * @return a string that contains the relative path in the project
    */
   public String getCredentialsFolder() {
-    return credentialsFolder;
+    return googleCredentialsFolder;
   }
 
   /**
@@ -129,7 +157,7 @@ public class Config {
    * @return the inputStream
    */
   public InputStream getClientSecretDir() {
-    return clientSecretInputStream;
+    return googleClientSecretInputStream;
   }
 
   /**
@@ -137,7 +165,7 @@ public class Config {
    * @return  String the application name
    */
   public String getApplicationName() {
-    return applicationName;
+    return googleApplicationName;
   }
 
   /**
@@ -153,6 +181,96 @@ public class Config {
    * @return a string that contains the path
    */
   public String getTokensDirectoryPath() {
-    return tokensDirectoryPath;
+    return googleTokensDirectoryPath;
   }
+
+  /**
+   * get google Credential folder.
+   * @return a string
+   */
+  public String getGoogleCredentialsFolder() {
+    return googleCredentialsFolder;
+  }
+
+  /**
+   * set google Credential path.
+   * @param googleCredentialsFolder
+   */
+  public void setGoogleCredentialsFolder(String googleCredentialsFolder) {
+    this.googleCredentialsFolder = googleCredentialsFolder;
+  }
+
+  public InputStream getGoogleClientSecretInputStream() {
+    return googleClientSecretInputStream;
+  }
+
+  public void setGoogleClientSecretInputStream(
+      InputStream googleClientSecretInputStream) {
+    this.googleClientSecretInputStream = googleClientSecretInputStream;
+  }
+
+  public String getGoogleApplicationName() {
+    return googleApplicationName;
+  }
+
+  public void setGoogleApplicationName(String googleApplicationName) {
+    this.googleApplicationName = googleApplicationName;
+  }
+
+  public String getGoogleTokensDirectoryPath() {
+    return googleTokensDirectoryPath;
+  }
+
+  public void setGoogleTokensDirectoryPath(String googleTokensDirectoryPath) {
+    this.googleTokensDirectoryPath = googleTokensDirectoryPath;
+  }
+
+  public String getGoogleAuthCallBack() {
+    return googleAuthCallBack;
+  }
+
+  public void setGoogleAuthCallBack(String googleAuthCallBack) {
+    this.googleAuthCallBack = googleAuthCallBack;
+  }
+
+  public String getMicrosoftAppId() {
+    return microsoftAppId;
+  }
+
+  public void setMicrosoftAppId(String microsoftAppId) {
+    this.microsoftAppId = microsoftAppId;
+  }
+
+  public String getMicrosoftAppPassword() {
+    return microsoftAppPassword;
+  }
+
+  public void setMicrosoftAppPassword(String microsoftAppPassword) {
+    this.microsoftAppPassword = microsoftAppPassword;
+  }
+
+  public String getMicrosoftRedirectUrl() {
+    return microsoftRedirectUrl;
+  }
+
+  public void setMicrosoftRedirectUrl(String microsoftRedirectUrl) {
+    this.microsoftRedirectUrl = microsoftRedirectUrl;
+  }
+
+  public String getMicrosoftAuthority() {
+    return microsoftAuthority;
+  }
+
+  public void setMicrosoftAuthority(String microsoftAuthority) {
+    this.microsoftAuthority = microsoftAuthority;
+  }
+
+  public String getMicrosoftAuthorizeUrl() {
+    return microsoftAuthorizeUrl;
+  }
+
+  public void setMicrosoftAuthorizeUrl(String microsoftAuthorizeUrl) {
+    this.microsoftAuthorizeUrl = microsoftAuthorizeUrl;
+  }
+
 }
