@@ -89,7 +89,7 @@ public class AccountController {
 		appUser.addGoogleAccount(account);
 		googleAccountRepository.save(account);
 		
-		return "index";
+		return response;
 	}
 	
 	@RequestMapping("/microsoft/account/add/{accountName}")

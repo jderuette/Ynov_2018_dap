@@ -32,11 +32,7 @@ public class WelcomeController {
 
 		NbMailResponse output = new NbMailResponse(gmailService.getNbUnreadMailForAccount(currentUser));
 		model.addAttribute("nbEmails",output.getNbUnreadMail());
+		model.addAttribute("userKey", userKey);
 		return "welcome";
-	}
-	
-	@RequestMapping("/google")
-	public String defaultRoute() throws IOException, Exception {
-		return "index";
 	}
 }

@@ -1,8 +1,10 @@
 package fr.ynov.dap.google.service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,10 +91,9 @@ public class GoogleService {
 		
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final String path = cfg.getCredentialsFilePath();
-        InputStream in = Config.class.getResourceAsStream(path);
-        logger.debug("in : " + in);
-        logger.debug("factory : " + jsonFactory);
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in));
+        InputStreamReader file = new InputStreamReader(new FileInputStream(path),Charset.forName("UTF-8"));
+        logger.info("factory : " + jsonFactory);
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, file);
 
         return new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, jsonFactory, clientSecrets, scopes)

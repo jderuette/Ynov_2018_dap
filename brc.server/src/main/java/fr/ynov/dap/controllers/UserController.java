@@ -21,6 +21,6 @@ public class UserController {
 	
 		appUserRepostory.save(userToSave);
 		
-		return "succes";
+		return "index";
 	}
 }

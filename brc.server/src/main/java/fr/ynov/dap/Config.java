@@ -1,34 +1,31 @@
 package fr.ynov.dap;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * The Class Config.
  *
  * @author clement.brossette
  */
-
+@Primary
+@Configuration
+@PropertySource("classpath:config.properties")
 public class Config {
 	
 	/** The application name. */
+	@Value("${dap.application_name}")
 	private String applicationName;
-	
-    
+	  
     /** The tokens directory path. */
+	@Value("${dap.tokens_directory_path}")
     private String tokensDirectoryPath;
     
     /** The credentials file path. */
+	@Value("${dap.credential_file_path}")
     private String credentialsFilePath;
-    
-    
-    /**
-     * Instantiates a new config.
-     */
-    public Config(){
-    	this.applicationName = "Gmail API Java Quickstart";
-    	this.tokensDirectoryPath  = "tokens";
-    	this.credentialsFilePath  = "/credentials.json";
-    }
-    
 
 	/**
      * Gets the application name.

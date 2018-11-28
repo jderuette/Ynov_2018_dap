@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
@@ -74,7 +75,8 @@ public class GoogleAccountService extends GoogleService{
             throw new ServletException("Error while trying to conenct Google Account");
         }
         logger.info("oauthCallback OK");
-        return "redirect:/";
+        
+        return "redirect:/index";
     }
 
     /**
