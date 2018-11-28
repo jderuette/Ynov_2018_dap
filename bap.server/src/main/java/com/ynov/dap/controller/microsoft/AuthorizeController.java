@@ -29,77 +29,80 @@ import com.ynov.dap.service.microsoft.AuthHelper;
 @Controller
 public class AuthorizeController extends BaseController {
 
-	/** The app user repository. */
-	@Autowired
-	private AppUserRepository appUserRepository;
+    /** The app user repository. */
+    @Autowired
+    private AppUserRepository appUserRepository;
 
-	/** The microsoft account repository. */
-	@Autowired
-	private MicrosoftAccountRepository microsoftAccountRepository;
+    /** The microsoft account repository. */
+    @Autowired
+    private MicrosoftAccountRepository microsoftAccountRepository;
 
-	/**
-	 * Authorize.
-	 *
-	 * @param code the code
-	 * @param idToken the id token
-	 * @param state the state
-	 * @param request the request
-	 * @return the string
-	 * @throws JsonParseException the json parse exception
-	 * @throws JsonMappingException the json mapping exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
-	public String authorize(@RequestParam("code") String code, @RequestParam("id_token") String idToken,
-			@RequestParam("state") UUID state, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+    /**
+     * Authorize.
+     *
+     * @param code    the code
+     * @param idToken the id token
+     * @param state   the state
+     * @param request the request
+     * @return the string
+     * @throws JsonParseException   the json parse exception
+     * @throws JsonMappingException the json mapping exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     */
+    @RequestMapping(value = "/authorize", method = RequestMethod.POST)
+    public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
+            @RequestParam("state") final UUID state, final HttpServletRequest request)
+            throws JsonParseException, JsonMappingException, IOException {
 
-		HttpSession session = request.getSession();
-		UUID expectedState = (UUID) session.getAttribute("expected_state");
-		UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
+        HttpSession session = request.getSession();
+        UUID expectedState = (UUID) session.getAttribute("expected_state");
+        UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
 
-		String accountName = (String) session.getAttribute("accountName");
-		String userKey = (String) session.getAttribute("userKey");
+        String accountName = (String) session.getAttribute("accountName");
+        String userKey = (String) session.getAttribute("userKey");
 
-		if (state.equals(expectedState)) {
-			IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
-			if (idTokenObj != null) {
-				TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
-				String tenantId = idTokenObj.getTenantId();
+        if (state.equals(expectedState)) {
+            IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
+            if (idTokenObj != null) {
+                TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
+                String tenantId = idTokenObj.getTenantId();
 
-				AppUser appUser = appUserRepository.findByName(userKey);
-				
-				if (appUser == null) {
-					getLogger().error("userKey '" + userKey + "' not found");
-					return "index";
-				}
+                AppUser appUser = appUserRepository.findByName(userKey);
 
-				MicrosoftAccount microsoftAccount = new MicrosoftAccount();
-				microsoftAccount.setOwner(appUser);
-				microsoftAccount.setName(accountName);
-				microsoftAccount.setTenantId(tenantId);
-				microsoftAccount.setTokenResponse(tokenResponse);
+                if (appUser == null) {
+                    getLogger().error("userKey '" + userKey + "' not found");
+                    return "index";
+                }
 
-				microsoftAccount.setEmail(idTokenObj.getName());
-				appUser.addMicrosoftAccount(microsoftAccount);
-				microsoftAccountRepository.save(microsoftAccount);
-				
-				session.invalidate();
-			} else {
-				getLogger().error("ID token failed validation.");
-			}
-		} else {
-			getLogger().error("Unexpected state returned from authority.");
-		}
+                MicrosoftAccount microsoftAccount = new MicrosoftAccount();
+                microsoftAccount.setOwner(appUser);
+                microsoftAccount.setName(accountName);
+                microsoftAccount.setTenantId(tenantId);
+                microsoftAccount.setTokenResponse(tokenResponse);
 
-		return "index";
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.controller.BaseController#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return AuthorizeController.class.getName();
-	}
+                microsoftAccount.setEmail(idTokenObj.getName());
+                appUser.addMicrosoftAccount(microsoftAccount);
+                microsoftAccountRepository.save(microsoftAccount);
+
+                session.invalidate();
+            } else {
+                getLogger().error("ID token failed validation.");
+            }
+        } else {
+            getLogger().error("Unexpected state returned from authority.");
+        }
+
+        return "index";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return AuthorizeController.class.getName();
+    }
 
 }

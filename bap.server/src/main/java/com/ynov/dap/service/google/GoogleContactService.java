@@ -21,29 +21,28 @@ import com.ynov.dap.repository.AppUserRepository;
 @Service
 public class GoogleContactService extends GoogleService {
 
-	/** The app user repository. */
-	@Autowired
-	private AppUserRepository appUserRepository;
+    /** The Constant INT_PAGE_SIZE. */
+    private static final int INT_PAGE_SIZE = 100;
+
+    /** The app user repository. */
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     /**
      * Gets the nb contacts.
      *
      * @param account the account
      * @return the nb contacts
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      * @throws GeneralSecurityException the general security exception
      */
     public Integer getNbContacts(final GoogleAccount account) throws IOException, GeneralSecurityException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        PeopleService service = new PeopleService.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
-                .setApplicationName(getConfig().getApplicationName())
-                .build();
+        PeopleService service = new PeopleService.Builder(httpTransport, JSON_FACTORY,
+                getCredentials(account.getName())).setApplicationName(getConfig().getApplicationName()).build();
 
-        ListConnectionsResponse response = service.people().connections()
-                .list("people/me")
-                .setPageSize(100)
-                .setPersonFields("names")
-                .execute();
+        ListConnectionsResponse response = service.people().connections().list("people/me").setPageSize(INT_PAGE_SIZE)
+                .setPersonFields("names").execute();
 
         Integer nbPeople = response.getTotalPeople();
         if (nbPeople != null) {
@@ -60,28 +59,30 @@ public class GoogleContactService extends GoogleService {
      *
      * @param userKey the user key
      * @return the nb contacts
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      * @throws GeneralSecurityException the general security exception
      */
     public ContactModel getNbContacts(final String userKey) throws IOException, GeneralSecurityException {
-		Integer nbContacts = 0;
+        Integer nbContacts = 0;
 
-		AppUser appUser = appUserRepository.findByName(userKey);
-		if (appUser == null) {
-			getLogger().error("userKey '" + userKey + "' not found");
-			return new ContactModel(nbContacts);
-		}
+        AppUser appUser = appUserRepository.findByName(userKey);
+        if (appUser == null) {
+            getLogger().error("userKey '" + userKey + "' not found");
+            return new ContactModel(nbContacts);
+        }
 
-		for (GoogleAccount account : appUser.getGoogleAccounts()) {
-			nbContacts += getNbContacts(account);
-		}
+        for (GoogleAccount account : appUser.getGoogleAccounts()) {
+            nbContacts += getNbContacts(account);
+        }
 
         getLogger().info("Total Contacts for userKey : " + userKey);
 
-		return new ContactModel(nbContacts);
+        return new ContactModel(nbContacts);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.ynov.dap.service.BaseService#getClassName()
      */
     @Override

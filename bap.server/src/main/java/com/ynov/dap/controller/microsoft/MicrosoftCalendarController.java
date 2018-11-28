@@ -21,28 +21,31 @@ public class MicrosoftCalendarController extends BaseController {
     /** The microsoft calendar service. */
     @Autowired
     private MicrosoftCalendarService microsoftCalendarService;
-	
-	/**
-	 * Gets the template microsoft next event.
-	 *
-	 * @param appUser the app user
-	 * @param model the model
-	 * @param redirectAttributes the redirect attributes
-	 * @return the template microsoft next event
-	 * @throws Exception the exception
-	 */
-	@GetMapping("/microsoft/{appUser}/view")
-	public String getTemplateMicrosoftNextEvent(@PathVariable final String appUser, Model model, RedirectAttributes redirectAttributes) throws Exception {
-		model.addAttribute("accounts", microsoftCalendarService.getEvents(appUser));
 
-		return "microsoft/events";
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.controller.BaseController#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return MicrosoftCalendarController.class.getName();
-	}
+    /**
+     * Gets the template microsoft next event.
+     *
+     * @param appUser            the app user
+     * @param model              the model
+     * @param redirectAttributes the redirect attributes
+     * @return the template microsoft next event
+     * @throws Exception the exception
+     */
+    @GetMapping("/microsoft/{appUser}/view")
+    public String getTemplateMicrosoftNextEvent(@PathVariable final String appUser, final Model model,
+            final RedirectAttributes redirectAttributes) throws Exception {
+        model.addAttribute("accounts", microsoftCalendarService.getEvents(appUser));
+
+        return "microsoft/events";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return MicrosoftCalendarController.class.getName();
+    }
 }

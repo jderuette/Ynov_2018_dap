@@ -23,68 +23,72 @@ import com.ynov.dap.service.microsoft.MicrosoftContactService;
 @RequestMapping("contact/nb")
 public class ContactController extends BaseController {
 
-	/** The google contact service. */
-	@Autowired
-	private GoogleContactService googleContactService;
+    /** The google contact service. */
+    @Autowired
+    private GoogleContactService googleContactService;
 
-	/** The microsoft contact service. */
-	@Autowired
-	private MicrosoftContactService microsoftContactService;
+    /** The microsoft contact service. */
+    @Autowired
+    private MicrosoftContactService microsoftContactService;
 
-	/**
-	 * Gets the nb contacts.
-	 *
-	 * @param appUser the app user
-	 * @return the nb contacts
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
-	@RequestMapping(value = "/google/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ContactModel> getGoogleNbContacts(@PathVariable final String appUser) throws IOException, GeneralSecurityException {
-		if (appUser == null || appUser.length() <= 0) {
-			return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
-		}
+    /**
+     * Gets the nb contacts.
+     *
+     * @param appUser the app user
+     * @return the nb contacts
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
+    @RequestMapping(value = "/google/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ContactModel> getGoogleNbContacts(@PathVariable final String appUser)
+            throws IOException, GeneralSecurityException {
+        if (appUser == null || appUser.length() <= 0) {
+            return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
+        }
 
+        return new ResponseEntity<ContactModel>(googleContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
+    }
 
-		return new ResponseEntity<ContactModel>(googleContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
-	}
+    /**
+     * Gets the microsoft nb contacts.
+     *
+     * @param appUser the app user
+     * @return the microsoft nb contacts
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    @RequestMapping(value = "/microsoft/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ContactModel> getMicrosoftNbContacts(@PathVariable final String appUser) throws IOException {
 
-	/**
-	 * Gets the microsoft nb contacts.
-	 *
-	 * @param appUser the app user
-	 * @return the microsoft nb contacts
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	@RequestMapping(value = "/microsoft/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ContactModel> getMicrosoftNbContacts(@PathVariable final String appUser) throws IOException {
+        return new ResponseEntity<ContactModel>(microsoftContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
+    }
 
-		return new ResponseEntity<ContactModel>(microsoftContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
-	}
+    /**
+     * Gets the nb contacts.
+     *
+     * @param appUser the app user
+     * @return the nb contacts
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
+    @GetMapping(value = "/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ContactModel> getNbContacts(@PathVariable final String appUser)
+            throws IOException, GeneralSecurityException {
+        ContactModel googleContact = googleContactService.getNbContacts(appUser);
+        ContactModel microsoftContact = microsoftContactService.getNbContacts(appUser);
 
-	/**
-	 * Gets the nb contacts.
-	 *
-	 * @param appUser the app user
-	 * @return the nb contacts
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
-	@GetMapping(value = "/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ContactModel> getNbContacts(@PathVariable final String appUser) throws IOException, GeneralSecurityException {
-		ContactModel googleContact = googleContactService.getNbContacts(appUser);
-		ContactModel microsoftContact = microsoftContactService.getNbContacts(appUser);
-		
-		return new ResponseEntity<ContactModel>(new ContactModel(googleContact.getNbContacts() + microsoftContact.getNbContacts()),
-				HttpStatus.ACCEPTED);
-	}
+        return new ResponseEntity<ContactModel>(
+                new ContactModel(googleContact.getNbContacts() + microsoftContact.getNbContacts()),
+                HttpStatus.ACCEPTED);
+    }
 
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.controller.BaseController#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return ContactController.class.getName();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return ContactController.class.getName();
+    }
 
 }

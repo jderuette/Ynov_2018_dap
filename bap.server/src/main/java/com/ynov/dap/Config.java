@@ -10,10 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:config.properties")
 @Configuration
 public class Config {
-	
+
     /** The data store directory. */
     private String dataStoreDirectory = System.getProperty("user.home");
-	
+
     /** The o auth 2 callback url. */
     @Value("${oAuth2CallbackUrl}")
     private String oAuth2CallbackUrl = "/oAuth2Callback";
@@ -29,25 +29,25 @@ public class Config {
     /** The credentials folder. */
     @Value("${credentials_folder}")
     private String credentialsFolder = dataStoreDirectory + "/google/credential";
-    
+
     /** The credentials folder token. */
     @Value("${credentials_tokens}")
     private String credentialsFolderToken = dataStoreDirectory + "/google/tokens";
-    
+
     /** The authority. */
     @Value("${microsoft_authority}")
     private String authority = "https://login.microsoftonline.com";
-    
-	/** The authorize url. */
-	@Value("${microsoft_authorize_url}")
+
+    /** The authorize url. */
+    @Value("${microsoft_authorize_url}")
     private String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
-    
-    
-	/**
-	 * Instantiates a new config.
-	 */
-	public Config() {}
-    
+
+    /**
+     * Instantiates a new config.
+     */
+    public Config() {
+    }
+
     /**
      * Gets the o auth 2 callback url.
      *
@@ -92,7 +92,7 @@ public class Config {
     public String getCredentialsFolder() {
         return credentialsFolder;
     }
-    
+
     /**
      * Gets the credentials folder token.
      *
@@ -126,34 +126,34 @@ public class Config {
      * @return the authority
      */
     public String getAuthority() {
-		return authority;
-	}
+        return authority;
+    }
 
-	/**
-	 * Sets the authority.
-	 *
-	 * @param authority the new authority
-	 */
-	public void setAuthority(String authority) {
-		this.authority = authority;
-	}
+    /**
+     * Sets the authority.
+     *
+     * @param authority the new authority
+     */
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
 
-	/**
-	 * Gets the authorize url.
-	 *
-	 * @return the authorize url
-	 */
-	public String getAuthorizeUrl() {
-		return authorizeUrl;
-	}
+    /**
+     * Gets the authorize url.
+     *
+     * @return the authorize url
+     */
+    public String getAuthorizeUrl() {
+        return authorizeUrl;
+    }
 
-	/**
-	 * Sets the authorize url.
-	 *
-	 * @param authorizeUrl the new authorize url
-	 */
-	public void setAuthorizeUrl(String authorizeUrl) {
-		this.authorizeUrl = authorizeUrl;
-	}
+    /**
+     * Sets the authorize url.
+     *
+     * @param authorizeUrl the new authorize url
+     */
+    public void setAuthorizeUrl(String authorizeUrl) {
+        this.authorizeUrl = authorizeUrl;
+    }
 
 }

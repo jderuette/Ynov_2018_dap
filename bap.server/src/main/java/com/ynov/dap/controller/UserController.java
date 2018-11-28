@@ -18,7 +18,7 @@ public class UserController extends BaseController {
     /** The app user service. */
     @Autowired
     private AppUserService appUserService;
-	
+
     /**
      * Adds the account.
      *
@@ -28,18 +28,20 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user/add/{userKey}")
     public String addAccount(@PathVariable final String userKey, final HttpServletRequest request) {
-    	
-    	appUserService.createUser(userKey);
-    	
+
+        appUserService.createUser(userKey);
+
         return "index";
     }
-    
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.controller.BaseController#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return UserController.class.getName();
-	}
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return UserController.class.getName();
+    }
 
 }

@@ -16,82 +16,82 @@ import com.ynov.dap.model.microsoft.TokenResponse;
 @Entity
 public class MicrosoftAccount {
 
-	/** The id. */
-	@Id
-	@GeneratedValue
-	private Integer id;
+    /** The id. */
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-	/** The owner. */
-	@ManyToOne
-	private AppUser owner;
-	
-	/** The name. */
-	private String name;
-	
-	/** The token response. */
-	@OneToOne(cascade = CascadeType.ALL)
-	private TokenResponse tokenResponse;
-	
-	/** The tenant id. */
-	private String tenantId;
-	
-	/** The email. */
-	private String email;
-	
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /** The owner. */
+    @ManyToOne
+    private AppUser owner;
 
-	/**
-	 * Sets the name.
-	 *
-	 * @param name the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** The name. */
+    private String name;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
+    /** The token response. */
+    @OneToOne(cascade = CascadeType.ALL)
+    private TokenResponse tokenResponse;
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(final Integer id) {
-		this.id = id;
-	}
+    /** The tenant id. */
+    private String tenantId;
 
-	/**
-	 * Gets the owner.
-	 *
-	 * @return the owner
-	 */
-	public AppUser getOwner() {
-		return owner;
-	}
+    /** The email. */
+    private String email;
 
-	/**
-	 * Sets the owner.
-	 *
-	 * @param owner the new owner
-	 */
-	public void setOwner(final AppUser owner) {
-		this.owner = owner;
-	}
-	
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param name the new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(final Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * Gets the owner.
+     *
+     * @return the owner
+     */
+    public AppUser getOwner() {
+        return owner;
+    }
+
+    /**
+     * Sets the owner.
+     *
+     * @param owner the new owner
+     */
+    public void setOwner(final AppUser owner) {
+        this.owner = owner;
+    }
+
     /**
      * Gets the token response.
      *
@@ -127,7 +127,7 @@ public class MicrosoftAccount {
     public void setTenantId(final String val) {
         this.tenantId = val;
     }
-    
+
     /**
      * Gets the email.
      *
@@ -145,5 +145,4 @@ public class MicrosoftAccount {
     public void setEmail(final String val) {
         this.email = val;
     }
-
 }

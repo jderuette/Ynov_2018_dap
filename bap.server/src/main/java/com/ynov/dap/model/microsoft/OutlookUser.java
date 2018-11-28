@@ -7,67 +7,67 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookUser {
-	
-	/** The id. */
-	private String id;
-	
-	/** The mail. */
-	private String mail;
-	
-	/** The display name. */
-	private String displayName;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+    /** The id. */
+    private String id;
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /** The mail. */
+    private String mail;
 
-	/**
-	 * Gets the mail.
-	 *
-	 * @return the mail
-	 */
-	public String getMail() {
-		return mail;
-	}
+    /** The display name. */
+    private String displayName;
 
-	/**
-	 * Sets the mail.
-	 *
-	 * @param emailAddress the new mail
-	 */
-	public void setMail(String emailAddress) {
-		this.mail = emailAddress;
-	}
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * Gets the display name.
-	 *
-	 * @return the display name
-	 */
-	public String getDisplayName() {
-		return displayName;
-	}
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-	/**
-	 * Sets the display name.
-	 *
-	 * @param displayName the new display name
-	 */
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    /**
+     * Gets the mail.
+     *
+     * @return the mail
+     */
+    public String getMail() {
+        return mail;
+    }
+
+    /**
+     * Sets the mail.
+     *
+     * @param emailAddress the new mail
+     */
+    public void setMail(final String emailAddress) {
+        this.mail = emailAddress;
+    }
+
+    /**
+     * Gets the display name.
+     *
+     * @return the display name
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    /**
+     * Sets the display name.
+     *
+     * @param displayName the new display name
+     */
+    public void setDisplayName(final String displayName) {
+        this.displayName = displayName;
+    }
 }

@@ -1,4 +1,5 @@
 package com.ynov.dap.service.google;
+
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.DateTime;
@@ -35,19 +36,15 @@ public class GoogleCalendarService extends GoogleService {
      * @param account the account
      * @return the event
      * @throws GeneralSecurityException the general security exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      */
     private Event getEvent(final String account) throws GeneralSecurityException, IOException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, getCredentials(account))
-                .setApplicationName(getConfig().getApplicationName())
-                .build();
+                .setApplicationName(getConfig().getApplicationName()).build();
 
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("primary")
-                .setTimeMin(now)
-                .setOrderBy("startTime")
-                .setSingleEvents(true)
+        Events events = service.events().list("primary").setTimeMin(now).setOrderBy("startTime").setSingleEvents(true)
                 .execute();
         List<Event> items = events.getItems();
 
@@ -55,7 +52,7 @@ public class GoogleCalendarService extends GoogleService {
             getLogger().info("No upcoming events found for google account : " + account);
             return null;
         } else {
-        	getLogger().info("Next upcoming events for google account : " + account);
+            getLogger().info("Next upcoming events for google account : " + account);
 
             Event nextEvent = items.get(0);
 
@@ -69,21 +66,21 @@ public class GoogleCalendarService extends GoogleService {
      * @param userKey the user key
      * @return the next event
      * @throws GeneralSecurityException the general security exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      */
     public CalendarModel getNextEvent(final String userKey) throws GeneralSecurityException, IOException {
         AppUser appUser = appUserRepository.findByName(userKey);
 
-		if (appUser == null) {
-			getLogger().error("userKey '" + userKey + "' not found");
-			return new CalendarModel();
-		}
+        if (appUser == null) {
+            getLogger().error("userKey '" + userKey + "' not found");
+            return new CalendarModel();
+        }
 
         List<GoogleAccount> accounts = appUser.getGoogleAccounts();
         List<Event> events = new ArrayList<Event>();
 
         for (GoogleAccount account : accounts) {
-        	events.add(getEvent(account.getName()));
+            events.add(getEvent(account.getName()));
         }
 
         Event finalEvent = null;
@@ -92,33 +89,36 @@ public class GoogleCalendarService extends GoogleService {
             getLogger().info("No upcoming events found for userKey : " + userKey);
             return new CalendarModel();
         } else if (events.size() == 1) {
-        	Event event = events.get(0);
+            Event event = events.get(0);
 
-        	getLogger().info("A next upcoming events was found for userKey : " + userKey);
+            getLogger().info("A next upcoming events was found for userKey : " + userKey);
 
-    		return new CalendarModel(event.getSummary(), new Date(event.getStart().getDateTime().getValue()),
+            return new CalendarModel(event.getSummary(), new Date(event.getStart().getDateTime().getValue()),
                     new Date(event.getEnd().getDateTime().getValue()), event.getStatus());
         } else {
-    		for (int i = 0; i < events.size(); i++) {
-    			Event event = events.get(i);
-    			if (new Date(event.getStart().getDateTime().getValue()).before(new Date(finalEvent.getStart().getDateTime().getValue()))) {
-    				finalEvent = event;
-    			}
-    		}
+            for (int i = 0; i < events.size(); i++) {
+                Event event = events.get(i);
+                if (new Date(event.getStart().getDateTime().getValue())
+                        .before(new Date(finalEvent.getStart().getDateTime().getValue()))) {
+                    finalEvent = event;
+                }
+            }
 
-    		if (finalEvent == null) {
+            if (finalEvent == null) {
                 getLogger().info("No upcoming events found for userKey : " + userKey);
-    			return new CalendarModel();
-    		}
+                return new CalendarModel();
+            }
 
-        	getLogger().info("A next upcoming events was found for userKey : " + userKey);
+            getLogger().info("A next upcoming events was found for userKey : " + userKey);
 
-    		return new CalendarModel(finalEvent.getSummary(), new Date(finalEvent.getStart().getDateTime().getValue()),
+            return new CalendarModel(finalEvent.getSummary(), new Date(finalEvent.getStart().getDateTime().getValue()),
                     new Date(finalEvent.getEnd().getDateTime().getValue()), finalEvent.getStatus());
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.ynov.dap.service.BaseService#getClassName()
      */
     @Override

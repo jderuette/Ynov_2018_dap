@@ -9,11 +9,11 @@ import com.ynov.dap.domain.AppUser;
  */
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
-	/**
-	 * Find by name.
-	 *
-	 * @param name the name
-	 * @return the app user
-	 */
-	AppUser findByName(String name);
+    /**
+     * Find by name.
+     *
+     * @param name the name
+     * @return the app user
+     */
+    AppUser findByName(String name);
 }

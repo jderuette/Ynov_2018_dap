@@ -46,7 +46,7 @@ public abstract class GoogleService extends BaseService {
      *
      * @param userId the user id
      * @return the credentials
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      * @throws GeneralSecurityException the general security exception
      */
     protected Credential getCredentials(final String userId) throws IOException, GeneralSecurityException {
@@ -59,21 +59,21 @@ public abstract class GoogleService extends BaseService {
      *
      * @return the flow
      * @throws GeneralSecurityException the general security exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException              Signals that an I/O exception has occurred.
      */
     public GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-        		new InputStreamReader(new FileInputStream(
-        				getConfig().getCredentialsFolder()
-        				+ "/" + getConfig().getClientSecretFile()), Charset.forName("UTF-8")));
+                new InputStreamReader(
+                        new FileInputStream(
+                                getConfig().getCredentialsFolder() + "/" + getConfig().getClientSecretFile()),
+                        Charset.forName("UTF-8")));
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-        return new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets, ALL_SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(getConfig().getCredentialsFolderToken())))
-                .setAccessType("offline")
-                .build();
+        return new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets, ALL_SCOPES)
+                .setDataStoreFactory(
+                        new FileDataStoreFactory(new java.io.File(getConfig().getCredentialsFolderToken())))
+                .setAccessType("offline").build();
     }
 
 }

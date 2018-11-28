@@ -22,43 +22,46 @@ import com.ynov.dap.service.microsoft.AuthHelper;
 @RequestMapping("account")
 public class MicrosoftAccountController extends BaseController {
 
-	private static final Integer HTTP_REDIRECT_CODE = 302;
-	
-	/**
-	 * Adds the account.
-	 *
-	 * @param accountName the account name
-	 * @param userKey the user key
-	 * @param request the request
-	 * @param response the response
-	 */
-	@GetMapping("/add/microsoft/{accountName}")
-	public void addAccount(@PathVariable final String accountName,
-			@RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
-			final HttpServletResponse response) {
+    /** The Constant HTTP_REDIRECT_CODE. */
+    private static final Integer HTTP_REDIRECT_CODE = 302;
 
-		UUID state = UUID.randomUUID();
-		UUID nonce = UUID.randomUUID();
+    /**
+     * Adds the account.
+     *
+     * @param accountName the account name
+     * @param userKey     the user key
+     * @param request     the request
+     * @param response    the response
+     */
+    @GetMapping("/add/microsoft/{accountName}")
+    public void addAccount(@PathVariable final String accountName,
+            @RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
+            final HttpServletResponse response) {
 
-		HttpSession session = request.getSession();
-		session.setAttribute("expected_state", state);
-		session.setAttribute("expected_nonce", nonce);
+        UUID state = UUID.randomUUID();
+        UUID nonce = UUID.randomUUID();
 
-		session.setAttribute("accountName", accountName);
-		session.setAttribute("userKey", userKey);
+        HttpSession session = request.getSession();
+        session.setAttribute("expected_state", state);
+        session.setAttribute("expected_nonce", nonce);
 
-		final String redirectUri = AuthHelper.getLoginUrl(state, nonce);
+        session.setAttribute("accountName", accountName);
+        session.setAttribute("userKey", userKey);
 
-		response.setHeader("Location", redirectUri);
-		response.setStatus(HTTP_REDIRECT_CODE);
-	}
+        final String redirectUri = AuthHelper.getLoginUrl(state, nonce);
 
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.controller.BaseController#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return MicrosoftAccountController.class.getName();
-	}
-	
+        response.setHeader("Location", redirectUri);
+        response.setStatus(HTTP_REDIRECT_CODE);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
+    @Override
+    public String getClassName() {
+        return MicrosoftAccountController.class.getName();
+    }
+
 }

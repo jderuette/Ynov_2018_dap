@@ -14,25 +14,27 @@ import com.google.api.client.util.store.DataStore;
 @Service
 public class CredentialService extends GoogleService {
 
-	/**
-	 * Return credentials.
-	 *
-	 * @return the data store
-	 * @throws GeneralSecurityException the general security exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public DataStore<StoredCredential> returnCredentials() throws GeneralSecurityException, IOException {
-		DataStore<StoredCredential> credentials = null;
-		credentials = getFlow().getCredentialDataStore();
-		return credentials;
-	}
+    /**
+     * Return credentials.
+     *
+     * @return the data store
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException              Signals that an I/O exception has occurred.
+     */
+    public DataStore<StoredCredential> returnCredentials() throws GeneralSecurityException, IOException {
+        DataStore<StoredCredential> credentials = null;
+        credentials = getFlow().getCredentialDataStore();
+        return credentials;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.service.BaseService#getClassName()
-	 */
-	@Override
-	protected String getClassName() {
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.service.BaseService#getClassName()
+     */
+    @Override
+    protected String getClassName() {
         return GoogleContactService.class.getName();
-	}
+    }
 
 }

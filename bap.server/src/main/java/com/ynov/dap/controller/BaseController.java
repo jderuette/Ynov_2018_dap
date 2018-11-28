@@ -10,12 +10,12 @@ import com.ynov.dap.Config;
  */
 public abstract class BaseController {
 
-	/**
-	 * Gets the class name.
-	 *
-	 * @return the class name
-	 */
-	public abstract String getClassName();
+    /**
+     * Gets the class name.
+     *
+     * @return the class name
+     */
+    public abstract String getClassName();
 
     /** The logger. */
     private Logger logger = LogManager.getLogger(getClassName());
@@ -31,5 +31,14 @@ public abstract class BaseController {
 
     /** The config. */
     @Autowired
-    protected Config config;
+    private Config config;
+
+    /**
+     * Gets the config.
+     *
+     * @return the config
+     */
+    public Config getConfig() {
+        return config;
+    }
 }

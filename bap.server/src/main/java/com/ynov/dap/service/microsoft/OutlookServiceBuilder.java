@@ -15,40 +15,47 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 /**
  * The Class OutlookServiceBuilder.
  */
-public class OutlookServiceBuilder {
+public final class OutlookServiceBuilder {
 
-	/**
-	 * Gets the outlook service.
-	 *
-	 * @param accessToken the access token
-	 * @param userEmail the user email
-	 * @return the outlook service
-	 */
-	public static OutlookService getOutlookService(String accessToken, String userEmail) {
-		Interceptor requestInterceptor = new Interceptor() {
-			@Override
-			public Response intercept(Interceptor.Chain chain) throws IOException {
-				Request original = chain.request();
-				Builder builder = original.newBuilder().header("User-Agent", "java-tutorial")
-						.header("client-request-id", UUID.randomUUID().toString())
-						.header("return-client-request-id", "true")
-						.header("Authorization", String.format("Bearer %s", accessToken))
-						.method(original.method(), original.body());
+    /**
+     * Instantiates a new outlook service builder.
+     */
+    private OutlookServiceBuilder() {
+    }
 
-				Request request = builder.build();
-				return chain.proceed(request);
-			}
-		};
+    /**
+     * Gets the outlook service.
+     *
+     * @param accessToken the access token
+     * @param userEmail   the user email
+     * @return the outlook service
+     */
+    public static OutlookService getOutlookService(final String accessToken, final String userEmail) {
+        Interceptor requestInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(final Interceptor.Chain chain) throws IOException {
+                Request original = chain.request();
+                Builder builder = original.newBuilder().header("User-Agent", "java-tutorial")
+                        .header("client-request-id", UUID.randomUUID().toString())
+                        .header("return-client-request-id", "true")
+                        .header("Authorization", String.format("Bearer %s", accessToken))
+                        .method(original.method(), original.body());
 
-		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                Request request = builder.build();
+                return chain.proceed(request);
+            }
+        };
 
-		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(requestInterceptor)
-				.addInterceptor(loggingInterceptor).build();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("https://graph.microsoft.com").client(client)
-				.addConverterFactory(JacksonConverterFactory.create()).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(requestInterceptor)
+                .addInterceptor(loggingInterceptor).build();
 
-		return retrofit.create(OutlookService.class);
-	}
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://graph.microsoft.com").client(client)
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        return retrofit.create(OutlookService.class);
+    }
+
 }

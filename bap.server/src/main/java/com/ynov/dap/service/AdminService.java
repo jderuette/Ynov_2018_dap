@@ -20,68 +20,70 @@ import com.ynov.dap.service.google.CredentialService;
 @Service
 public class AdminService extends BaseService {
 
-	/** The credential service. */
-	@Autowired
-	private CredentialService credentialService;
+    /** The credential service. */
+    @Autowired
+    private CredentialService credentialService;
 
-	/** The microsoft account repository. */
-	@Autowired
-	private MicrosoftAccountRepository microsoftAccountRepository;
+    /** The microsoft account repository. */
+    @Autowired
+    private MicrosoftAccountRepository microsoftAccountRepository;
 
-	/**
-	 * Gets the google data store.
-	 *
-	 * @return the google data store
-	 * @throws GeneralSecurityException the general security exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public Map<String, Object> getGoogleDataStore() throws GeneralSecurityException, IOException {
+    /**
+     * Gets the google data store.
+     *
+     * @return the google data store
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException              Signals that an I/O exception has occurred.
+     */
+    public Map<String, Object> getGoogleDataStore() throws GeneralSecurityException, IOException {
 
-		Map<String, Object> dataStore = new HashMap<String, Object>();
-		DataStore<StoredCredential> credentials = credentialService.getFlow().getCredentialDataStore();
+        Map<String, Object> dataStore = new HashMap<String, Object>();
+        DataStore<StoredCredential> credentials = credentialService.getFlow().getCredentialDataStore();
 
-		for (String key : credentials.keySet()) {
-			Map<String, Object> userData = new HashMap<String, Object>();
-			StoredCredential values = credentials.get(key);
-			userData.put("accessToken", values.getAccessToken());
-			userData.put("refreshToken", values.getRefreshToken());
-			userData.put("expirationTimeMilliseconds", values.getExpirationTimeMilliseconds());
+        for (String key : credentials.keySet()) {
+            Map<String, Object> userData = new HashMap<String, Object>();
+            StoredCredential values = credentials.get(key);
+            userData.put("accessToken", values.getAccessToken());
+            userData.put("refreshToken", values.getRefreshToken());
+            userData.put("expirationTimeMilliseconds", values.getExpirationTimeMilliseconds());
 
-			dataStore.put(key, userData);
-		}
+            dataStore.put(key, userData);
+        }
 
-		return dataStore;
-	}
+        return dataStore;
+    }
 
-	/**
-	 * Gets the microsoft data store.
-	 *
-	 * @return the microsoft data store
-	 */
-	public Map<Integer, Object> getMicrosoftDataStore() {
-		Map<Integer, Object> dataStore = new HashMap<Integer, Object>();
+    /**
+     * Gets the microsoft data store.
+     *
+     * @return the microsoft data store
+     */
+    public Map<Integer, Object> getMicrosoftDataStore() {
+        Map<Integer, Object> dataStore = new HashMap<Integer, Object>();
 
-		Integer index = 0;
-		for (MicrosoftAccount account : microsoftAccountRepository.findAll()) {
-			Map<String, Object> userData = new HashMap<String, Object>();
+        Integer index = 0;
+        for (MicrosoftAccount account : microsoftAccountRepository.findAll()) {
+            Map<String, Object> userData = new HashMap<String, Object>();
 
-			userData.put("tenantId", account.getTenantId());
-			userData.put("tokenResponse", account.getTokenResponse().getAccessToken());
-			userData.put("name", account.getName());
+            userData.put("tenantId", account.getTenantId());
+            userData.put("tokenResponse", account.getTokenResponse().getAccessToken());
+            userData.put("name", account.getName());
 
-			dataStore.put(index, userData);
-			index++;
-		}
+            dataStore.put(index, userData);
+            index++;
+        }
 
-		return dataStore;
-	}
+        return dataStore;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.ynov.dap.service.BaseService#getClassName()
-	 */
-	@Override
-	protected String getClassName() {
-		return AdminService.class.getName();
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.ynov.dap.service.BaseService#getClassName()
+     */
+    @Override
+    protected String getClassName() {
+        return AdminService.class.getName();
+    }
 
 }
