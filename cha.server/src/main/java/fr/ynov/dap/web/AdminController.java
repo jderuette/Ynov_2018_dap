@@ -7,10 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import fr.ynov.dap.comparator.Sorter;
 import fr.ynov.dap.data.AppUser;
@@ -28,7 +28,7 @@ import fr.ynov.dap.model.GoogleCalendarEvent;
 import fr.ynov.dap.model.MicrosoftCalendarEvent;
 import fr.ynov.dap.repository.MicrosoftAccountRepository;
 
-@Controller
+@RestController
 @RequestMapping("/index")
 public class AdminController extends BaseController {
 	 /**

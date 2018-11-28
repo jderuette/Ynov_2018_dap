@@ -43,7 +43,7 @@ public class MailController extends BaseController {
 
     /**
      * Get number of unread email from every account (ms, google, ...).
-     * @param userId Current user id
+     * @param userKey Current user id
      * @return UnreadMailOutDto instance
      * @throws UserException No user found for this user id
      * @throws NoConfigurationException No configuration available
@@ -52,12 +52,12 @@ public class MailController extends BaseController {
      * @throws GeneralSecurityException Security exception
      * @throws MicrosoftAccountException No microsoft account found for this user
      */
-    @RequestMapping("/nbUnread/{userId}")
-    public final int getNumberOfUnreadMessage(@PathVariable("userId") final String userId)
+    @RequestMapping("/nbUnread/{userKey}")
+    public final int getNumberOfUnreadMessage(@PathVariable("userKey") final String userKey)
             throws UserException, GoogleAccountException, IOException,
             GeneralSecurityException, MicrosoftAccountException {
 
-        AppUser user = getUserById(userId);
+        AppUser user = getUserById(userKey);
 
         int googleNbUnreadMail = gmailService.getNbUnreadMailAllAccount(user);
 
@@ -69,20 +69,20 @@ public class MailController extends BaseController {
 
     /**
      * Endpoint to get this number of unread message.
-     * @param userId User's Id
-     * @return Number of unread mail for user linked by userId. JSON Formatted.
+     * @param userKey User's Id
+     * @return Number of unread mail for user linked by userKey. JSON Formatted.
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when no configuration provided.
      * @throws UserException Thrown when user is not found.
      * @throws GoogleAccountException Thrown when user haven't any google account.
      */
-    @RequestMapping("/google/nbUnread/{userId}")
-    public final int getGoogleNumberOfUnreadMessage(@PathVariable("userId") final String userId)
+    @RequestMapping("/google/nbUnread/{userKey}")
+    public final int getGoogleNumberOfUnreadMessage(@PathVariable("userKey") final String userKey)
             throws IOException, GeneralSecurityException, UserException,
             GoogleAccountException {
 
-        AppUser user = getUserById(userId);
+        AppUser user = getUserById(userKey);
 
         int nbUnreadMail = gmailService.getNbUnreadMailAllAccount(user);
 
@@ -92,20 +92,20 @@ public class MailController extends BaseController {
 
     /**
      * Endpoint to get this number of unread message.
-     * @param userId User's Id
+     * @param userKey User's Id
      * @param  request Http request
-     * @return Number of unread mail for user linked by userId. JSON Formatted.
+     * @return Number of unread mail for user linked by userKey. JSON Formatted.
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws IOException Exception
      * @throws UserException Thrown when user is not found.
      * @throws MicrosoftAccountException Thrown when user haven't any microsoft account.
      * @throws NoConfigurationException Exception
      */
-    @RequestMapping("/microsoft/nbUnread/{userId}")
-    public final int getMicrosoftNumberOfUnreadMessage(@PathVariable("userId") final String userId,
+    @RequestMapping("/microsoft/nbUnread/{userKey}")
+    public final int getMicrosoftNumberOfUnreadMessage(@PathVariable("userKey") final String userKey,
             final HttpServletRequest request) throws UserException, MicrosoftAccountException, IOException, GeneralSecurityException {
 
-        AppUser user = getUserById(userId);
+        AppUser user = getUserById(userKey);
 
         int numberOfUnreadMails = outlookService.getNbUnreadMails(user);
 
