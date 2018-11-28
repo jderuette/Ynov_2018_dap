@@ -1,10 +1,9 @@
 package fr.ynov.dap.helpers;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.auth.oauth2.*;
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -13,32 +12,51 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.*;
 import com.google.api.services.people.v1.*;
 import fr.ynov.dap.*;
-import org.apache.logging.log4j.LogManager;
+import fr.ynov.dap.services.google.GoogleAccountService;
+import org.apache.logging.log4j.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
+/**
+ * GoogleHelper
+ */
+@Component
 public class GoogleHelper {
 
-    //FIXME grj by Djer "New", du coups plus d'injection de possible, et plsu de configuration de possible non plus.
-    // C'est domage d'avoir une classe "Configuration" qui ne se configure pas .....
-    private Configuration    configuration = new Configuration();
-    private JsonFactory      JSON_FACTORY;
-    private List<String>     SCOPES;
-    private NetHttpTransport HTTP_TRANSPORT;
+    /**
+     * Autowired Configuration
+     */
+    @Autowired
+    private Configuration configuration;
 
-    //TODO grj by Djer Le LogManager.getLogger() de Log4J peut être utilisé SANS paramètre (il prendra par defaut le nom, qualifié, de la classe)
-    private org.apache.logging.log4j.Logger LOG = LogManager.getLogger("GoogleHelper");
+    /**
+     * Autowired GoogleAccountService
+     */
+    @Autowired
+    private GoogleAccountService googleAccountService;
 
+    private              JsonFactory      JSON_FACTORY;
+    private              List<String>     SCOPES;
+    private              NetHttpTransport HTTP_TRANSPORT;
+    private static final Logger           LOG = LogManager.getLogger(GoogleHelper.class);
+
+    /**
+     * GoogleHelper default constructor
+     */
     public GoogleHelper() {
         JSON_FACTORY = JacksonFactory.getDefaultInstance();
         SCOPES = Arrays.asList(GmailScopes.GMAIL_LABELS, CalendarScopes.CALENDAR_READONLY, PeopleServiceScopes.CONTACTS_READONLY);
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         } catch (GeneralSecurityException | IOException e) {
-            //TODO grj by Djer Message + contexte
-            LOG.error(e);
+            LOG.error("Error when trying to get HTTP Transport", e);
         }
     }
 
@@ -46,30 +64,29 @@ public class GoogleHelper {
      * @return Google Authorization Code Flow
      * @throws IOException Deal with exception
      */
-    protected final GoogleAuthorizationCodeFlow getFlow() throws IOException {
+    public GoogleAuthorizationCodeFlow getFlow() throws IOException {
 
         InputStream         in            = Launcher.class.getResourceAsStream(configuration.getCredentialFolder());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         return new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new File(configuration.getClientSecretFile())))
+                .setDataStoreFactory(new FileDataStoreFactory(new File(configuration.getClientSecretDir())))
                 .setAccessType("offline")
                 .build();
     }
 
 
     /**
-     * Creates an authorized Credential object.
+     * Creates an authorized AccountCredential object.
      *
-     * @return An authorized Credential object.
+     * @return An authorized AccountCredential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
     private Credential getCredentials(String userKey) throws IOException {
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = getFlow();
-        //TODO grj by Djer En mode "Web" il ne faut plus utiliser le "AuthorizationCodeInstalledApp", renvoie simplement flow.loadCredentials(userKey)
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
+        return flow.loadCredential(userKey);
     }
 
     /**
@@ -80,7 +97,7 @@ public class GoogleHelper {
      * @throws GeneralSecurityException Exception
      * @throws IOException              Exception
      */
-    public final Gmail getGmailService(String userKey) throws GeneralSecurityException, IOException {
+    public Gmail getGmailService(String userKey) throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
@@ -96,7 +113,7 @@ public class GoogleHelper {
      * @throws IOException              Exception
      * @throws GeneralSecurityException Exception
      */
-    public final PeopleService getPeopleService(String userKey) throws IOException, GeneralSecurityException {
+    public PeopleService getPeopleService(String userKey) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
@@ -112,11 +129,82 @@ public class GoogleHelper {
      * @throws GeneralSecurityException Exception
      * @throws IOException              Exception
      */
-    public final com.google.api.services.calendar.Calendar getCalendarService(String userKey) throws GeneralSecurityException, IOException {
+    public com.google.api.services.calendar.Calendar getCalendarService(String userKey) throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         return new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(configuration.getApplicationName())
                 .build();
+    }
+
+    /**
+     * Build a current host (and port) absolute URL.
+     *
+     * @param req         The current HTTP request to extract schema, host, port
+     *                    information
+     * @param destination the "path" to the resource
+     * @return an absolute URI
+     */
+    public final String buildRedirectUri(final HttpServletRequest req, final String destination) {
+        final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
+        url.setRawPath(destination);
+        return url.build();
+    }
+
+    public String loadCredential(final HttpServletRequest request, final HttpSession session, String userName, String googleAccountName) {
+
+        GoogleAuthorizationCodeFlow flow;
+        Credential                  credential;
+        final String                OAUTH_CALLBACK_URL = "/oAuth2Callback";
+        String                      response           = "";
+
+        try {
+            flow = getFlow();
+            credential = flow.loadCredential(googleAccountName);
+            if (credential != null && credential.getAccessToken() != null) {
+                response = "AccountAlreadyAdded";
+            } else {
+                // redirect to the authorization flow
+                final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, OAUTH_CALLBACK_URL));
+                // store userKey in session for CallBack Access
+                session.setAttribute("googleAccount", googleAccountName);
+                session.setAttribute("userName", userName);
+                response = "redirect:" + authorizationUrl.build();
+            }
+        } catch (IOException e) {
+            LOG.error("Error while loading credential (or Google Flow)", e);
+        }
+
+        return response;
+
+    }
+
+    /**
+     * Extract OAuth2 Google code (from URL) and decode it.
+     *
+     * @param request the HTTP request to extract OAuth2 code
+     * @return the decoded code
+     * @throws ServletException if the code cannot be decoded
+     */
+    public final String extractCode(final HttpServletRequest request) throws ServletException {
+        final StringBuffer buf = request.getRequestURL();
+        if (null != request.getQueryString()) {
+            buf.append('?').append(request.getQueryString());
+        }
+        final AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
+        final String                       decodeCode  = responseUrl.getCode();
+
+        if (decodeCode == null) {
+            throw new MissingServletRequestParameterException("code", "String");
+        }
+
+        if (null != responseUrl.getError()) {
+            LOG.error("Error when trying to add Google account : " + responseUrl.getError());
+            throw new ServletException("Error when trying to add Google account");
+            // onError(request, resp, responseUrl);
+        }
+
+        return decodeCode;
     }
 
 

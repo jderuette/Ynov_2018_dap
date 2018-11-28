@@ -1,34 +1,64 @@
 package fr.ynov.dap;
 
-//FIXME grj by Djer Revoirle pricnipe ZeroCOnf, ici c'est du "no Conf".
+/**
+ * Configuration
+ */
 public class Configuration {
 
-    private static final String DEFAULT_USER      = "julien.grandchavin@gmail.com";
-    private static final String CREDENTIAL_FOLDER = "/google/credentials.json";
-    private static final String CLIENT_SECRET_DIR = "tokens";
-    private static final String APPLICATION_NAME  = "Ynov DaP";
-    private static final String CALLBACK_URL      = "http://localhost:8080/oAuth2Callback";
 
-    //TODO grj by Djer Pourquoi Final ?
-    public final String getApplicationName() {
-        return APPLICATION_NAME;
+    private String credentialFolder = "/google/credentials.json";
+    private String clientSecretDir  = "tokens";
+    private String applicationName  = "Ynov DaP";
+    private String callbackUrl      = "http://localhost:8080/oAuth2Callback";
+
+    /**
+     * Default constructor
+     */
+    public Configuration() {
     }
 
-    public final String getCredentialFolder() {
-        return CREDENTIAL_FOLDER;
+    /**
+     * Constructor with credential folder specified
+     *
+     * @param credentialFolder string
+     */
+    public Configuration(final String credentialFolder) {
+        this.credentialFolder = credentialFolder;
     }
 
-    public final String getClientSecretFile() {
-        return CLIENT_SECRET_DIR;
+    /**
+     * Getters / Setters
+     **/
+
+    public String getCredentialFolder() {
+        return credentialFolder;
     }
 
-    public final String getDefaultUser() {
-        return DEFAULT_USER;
+    public void setCredentialFolder(String credentialFolder) {
+        this.credentialFolder = credentialFolder;
     }
 
-    public final String getoAuth2CallbackUrl() {
-        return CALLBACK_URL;
+    public String getClientSecretDir() {
+        return clientSecretDir;
     }
 
+    public void setClientSecretDir(String clientSecretDir) {
+        this.clientSecretDir = clientSecretDir;
+    }
 
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
+    }
 }

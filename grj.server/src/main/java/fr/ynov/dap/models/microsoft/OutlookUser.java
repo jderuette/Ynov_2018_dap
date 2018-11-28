@@ -1,0 +1,54 @@
+package fr.ynov.dap.models.microsoft;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/**
+ * OutlookUser
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class OutlookUser {
+
+    /**
+     * id
+     */
+    private String id;
+
+    /**
+     * mail
+     */
+    private String mail;
+
+    /**
+     * display name
+     */
+    private String displayName;
+
+
+    /*
+    GETTERS AND SETTERS
+     */
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String emailAddress) {
+        this.mail = emailAddress;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+}

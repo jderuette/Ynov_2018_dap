@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://maven.apache.org/FML/1.0.1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <title>Mails</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark" style="margin-bottom: 50px">
+    <h1 style="color: white"><span th:text="${userName}"></span>'s mails</h1>
+</nav>
+
+<div th:each="mails : ${mailsMap}">
+    <h2>Microsoft Account: <span th:text="${mails.key}"></span></h2>
+    <div class="row col-md-12 table-responsive">
+        <table class="table">
+            <thead>
+            <tr class="table">
+                <th>From</th>
+                <th>Subject</th>
+                <th style="max-width: 100px">Content</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="mail : ${mails.value}">
+                <td th:text="${mail.from.emailAddress.address}"></td>
+                <td th:text="${mail.subject}"></td>
+                <td th:text="${mail.bodyPreview}" style="word-wrap: break-word; max-width: 300px"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
