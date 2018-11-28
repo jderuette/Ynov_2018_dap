@@ -3,6 +3,7 @@ package fr.ynov.dap.dap.web;
 import fr.ynov.dap.dap.GMailService;
 import fr.ynov.dap.dap.data.AppUser;
 import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.microsoft.OutlookService;
 import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,11 @@ public class MailController {
     @Autowired
     private GMailService gMailService;
     /**
+     * Instantiate instance of OutlookService.
+     */
+    @Autowired
+    private OutlookService outlookService;
+    /**
      * instantiate userRepository
      */
     @Autowired
@@ -46,12 +52,13 @@ public class MailController {
             throws IOException, GeneralSecurityException {
         AppUser user = userRepository.findByName(userKey);
         Iterator<GoogleAccount> listIteratorGoogle = user.getGoogleAccount().listIterator();
-        int nbEmailUnread = 0;
+        Integer nbEmailUnread = 0;
 
         while(listIteratorGoogle.hasNext()) {
             GoogleAccount currentAccount = listIteratorGoogle.next();
             nbEmailUnread += gMailService.getNbUnreadEmails(currentAccount.getName()).get("Unread");
         }
+        nbEmailUnread += outlookService.unreadMail(userKey);
         Map<String, Integer> response = new HashMap<>();
         response.put("unread", nbEmailUnread);
         return response;

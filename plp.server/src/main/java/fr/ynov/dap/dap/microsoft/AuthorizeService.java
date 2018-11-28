@@ -71,7 +71,7 @@ public class AuthorizeService {
 //                session.setAttribute("userConnected", true);
 //                session.setAttribute("userName", idTokenObj.getName());
 //                // Get user info
-//                OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken());
+//                IOutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken());
 //                OutlookUser user;
 //                try {
 //                    user = outlookService.getCurrentUser().execute().body();

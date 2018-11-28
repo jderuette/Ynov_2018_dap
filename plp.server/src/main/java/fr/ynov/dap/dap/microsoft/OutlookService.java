@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MicrosoftMailService {
+public class OutlookService {
     /**
      * Instantiate logger.
      */
@@ -48,7 +48,7 @@ public class MicrosoftMailService {
 
             outlookAccount.setToken(AuthHelper.ensureTokens(outlookAccount.getToken(), outlookAccount.getTenantId()));
 
-            OutlookService outlookService = OutlookServiceBuilder.getOutlookService(
+            IOutlookService ioutlookService = OutlookServiceBuilder.getOutlookService(
                     outlookAccount.getToken().getAccessToken());
 
             // Retrieve messages from the inbox
@@ -57,17 +57,18 @@ public class MicrosoftMailService {
             String sort = "receivedDateTime DESC";
             // Only return the properties we care about
             String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-            // Return at most 100 messages
-            Integer maxResults = 100;
+            // Return at most 10 messages
+            Integer maxResults = 10;
 
             try {
-                PagedResult<Message> messages = outlookService.getMessages(
+                PagedResult<Message> messages = ioutlookService.getMessages(
                         folder, sort, properties, maxResults)
                         .execute().body();
-
+                OutlookFolder outlookFolder = ioutlookService.getFolder("inbox").execute().body();
                 Map<String, Object> account = new HashMap<>();
                 account.put("name", outlookAccount.getName());
                 account.put("messages", messages.getValue());
+                account.put("nbEmail", outlookFolder.getTotalItemCount());
                 listResponse.add(account);
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -76,5 +77,32 @@ public class MicrosoftMailService {
         }
 
         return listResponse;
+    }
+
+    public Integer unreadMail(final String userKey) {
+
+        AppUser appUser = userRepository.findByName(userKey);
+
+        Integer nbUnread = 0;
+        for (OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
+            if (outlookAccount.getToken() == null) {
+                LOG.error("No token for unread email");
+            }
+
+            outlookAccount.setToken(AuthHelper.ensureTokens(outlookAccount.getToken(), outlookAccount.getTenantId()));
+
+            IOutlookService ioutlookService = OutlookServiceBuilder.getOutlookService(
+                    outlookAccount.getToken().getAccessToken()) ;
+
+            try {
+                OutlookFolder folder = ioutlookService.getFolder("inbox")
+                        .execute().body();
+                nbUnread += folder.getUnreadItemCount();
+            } catch (IOException e) {
+                LOG.error("Can't get messages", e);
+            }
+        }
+
+        return nbUnread;
     }
 }
