@@ -1,9 +1,11 @@
-package fr.ynov.dap.data;
+package fr.ynov.dap.data.google;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import fr.ynov.dap.data.AppUser;
 
 @Entity
 public class GoogleAccount {

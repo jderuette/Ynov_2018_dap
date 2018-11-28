@@ -1,5 +1,6 @@
 package fr.ynov.dap.google;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +13,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.google.GoogleAccount;
 
 /**
  * Calendar service.
@@ -58,22 +59,25 @@ public final class CalendarService extends CommonGoogleService {
      */
     public Event getNextEvent(final AppUser user, final String gUser) throws Exception {
         List<GoogleAccount> accountNames = user.getGoogleAccount();
-        Events listEvent = new Events();
+        List<Event> listEvent = new ArrayList<Event>();
         for (int i = 0; i < accountNames.size(); i++) {
             Calendar service = getService(accountNames.get(i).getName());
             DateTime now = new DateTime(System.currentTimeMillis());
             Events events = service.events().list("primary").setOrderBy("startTime").setMaxResults(1).setTimeMin(now)
                     .setSingleEvents(true).execute();
-            listEvent.putAll(events);
+            listEvent.addAll(events.getItems());
         }
-        List<Event> events = listEvent.getItems();
-        if (events.size() == 0) {
+
+        LOGGER.info(listEvent.size() + " evenements trouvés");
+        if (listEvent.size() == 0) {
             return null;
         }
 
-        Event nextEvent = events.get(0);
-        for (int i = 1; i < events.size(); i++) {
-            Event e = events.get(i);
+        LOGGER.info("Tri des évenements reçus");
+
+        Event nextEvent = listEvent.get(0);
+        for (int i = 1; i < listEvent.size(); i++) {
+            Event e = listEvent.get(i);
             if (e.getStart().getDateTime().getValue() < nextEvent.getStart().getDateTime().getValue()) {
                 nextEvent = e;
             }

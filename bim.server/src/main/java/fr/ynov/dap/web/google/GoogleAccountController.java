@@ -1,4 +1,4 @@
-package fr.ynov.dap.google;
+package fr.ynov.dap.web.google;
 
 import java.io.IOException;
 
@@ -25,7 +25,8 @@ import com.google.api.client.http.GenericUrl;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
-import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.google.CommonGoogleService;
 
 /**
  * Manage google accounts.
@@ -33,7 +34,7 @@ import fr.ynov.dap.data.GoogleAccount;
  *
  */
 @Controller
-public class GoogleAccountService extends CommonGoogleService {
+public class GoogleAccountController extends CommonGoogleService {
     /**
     * Start of substring for token.
     */
@@ -193,7 +194,7 @@ public class GoogleAccountService extends CommonGoogleService {
      * @param session the HTTP session
      * @return the view to Display (on Error)
      */
-    @RequestMapping("/account/add/{accountName}")
+    @RequestMapping("/account/add/google/{accountName}")
     public final String addAccount(@PathVariable final String accountName, @RequestParam final String userKey,
             final HttpServletRequest request, final HttpSession session) {
         String response = "errorOccurs";

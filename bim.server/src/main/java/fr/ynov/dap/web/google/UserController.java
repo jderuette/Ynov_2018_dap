@@ -1,4 +1,4 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

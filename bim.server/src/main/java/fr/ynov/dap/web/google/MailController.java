@@ -1,9 +1,8 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.google;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,19 +33,17 @@ public class MailController {
 
     /**
      * get unread messages.
-     * @param gUser Google user
      * @param userKey Applicative user
      * @return number of unread messages
      * @throws Exception if user not found
      */
-    @RequestMapping("/email/nbUnread/{gUser}")
-    public final Integer getNbUnreadEmails(@PathVariable final String gUser,
-            @RequestParam("userKey") final String userKey) throws Exception {
+    @RequestMapping("/email/google/nbUnread")
+    public final Integer getNbUnreadEmails(@RequestParam("userKey") final String userKey) throws Exception {
         Logger logger = LogManager.getLogger();
-        logger.info("Récupération du nombre d'emails non lu pour l'utilisateur {}...", gUser);
+        logger.info("Récupération du nombre d'emails non lu pour l'utilisateur {}...", "me");
 
         AppUser user = repository.findByName(userKey);
-        return gmailService.getNbUnreadMailForUser(user, gUser);
+        return gmailService.getNbUnreadMailForUser(user, "me");
     }
 
 }

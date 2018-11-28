@@ -10,9 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,30 +49,27 @@ public class Controller {
     /**
      * Print number of contact of actual user.
      * @param userKey key used to request server
-     * @param account gmail account (default 'me')
      */
-    public final void getNbContact(final String userKey, final String account) {
-        String result = getRequestResponse("contact/number/" + account + "?userKey=" + userKey);
+    public final void getNbContact(final String userKey) {
+        String result = getRequestResponse("contact/number?userKey=" + userKey);
         System.out.println("Nombre de contacts : " + result);
     }
 
     /**
      * Print number of unread mails in INBOX gmail.
      * @param userKey key used to request server
-     * @param account gmail account (default 'me')
      */
-    public final void nbUnreadMail(final String userKey, final String account) {
-        String result = getRequestResponse("email/nbUnread/" + account + "?userKey=" + userKey);
+    public final void nbUnreadMail(final String userKey) {
+        String result = getRequestResponse("email/nbUnread?userKey=" + userKey);
         System.out.println("Nombre de messages non lu : " + result);
     }
 
     /**
      * Print next event informations.
      * @param userKey key used to request server
-     * @param account gmail account (default 'me')
      */
-    public final void getNextEvent(final String userKey, final String account) {
-        String result = getRequestResponse("event/next/" + account + "?userKey=" + userKey);
+    public final void getNextEvent(final String userKey) {
+        String result = getRequestResponse("event/next?userKey=" + userKey);
 
         if (result == null || result.equals("")) {
             System.out.println("Aucun évènement programmé");
@@ -83,23 +77,14 @@ public class Controller {
         }
 
         JsonObject json = new JsonParser().parse(result).getAsJsonObject();
-        String eventName = json.get("summary").getAsString();
+        String eventName = json.get("subject").getAsString();
 
-        JsonObject startDate = json.getAsJsonObject("start").getAsJsonObject("date");
-        JsonObject endDate = json.getAsJsonObject("end").getAsJsonObject("date");
-        if (startDate == null) {
-            startDate = json.getAsJsonObject("start").getAsJsonObject("dateTime");
-        }
-        if (endDate == null) {
-            endDate = json.getAsJsonObject("end").getAsJsonObject("dateTime");
-        }
-        Long startDateValue = startDate.get("value").getAsLong();
-        Long endDateValue = endDate.get("value").getAsLong();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRENCH);
-        System.out.println("Le prochain évenement, " + eventName + " commence le "
-                + format.format(new Date(startDateValue)).toString() + " et termine le "
-                + format.format(new Date(endDateValue)).toString() + ". \n" + "Son status actuel est \""
-                + json.get("status").getAsString() + "\"");
+        String startDate = json.getAsJsonObject("start").get("dateTime").getAsString();
+        String endDate = json.getAsJsonObject("end").get("dateTime").getAsString();
+        String organizer = json.getAsJsonObject("organizer").getAsJsonObject("emailAddress").get("name").getAsString();
+
+        System.out.println("Le prochain évenement, " + eventName + " est organisé par " + organizer + ", commence le "
+                + startDate + " et termine le " + endDate + ".");
     }
 
     /**
@@ -107,13 +92,40 @@ public class Controller {
      * @param userKey username
      * @param accountName account name
      */
-    public final void addAccount(final String userKey, final String accountName) {
+    public final void addGoogleAccount(final String userKey, final String accountName) {
         URI uri;
+        if (accountName == null) {
+            LOGGER.error("Nom d'utilisateur non renseigné");
+            return;
+        }
         try {
 
-            uri = new URI(SERVER_URL + "account/add/" + accountName + "?userKey=" + userKey);
-            LOGGER.info("Ouverture du navigateur pour la création du compte {} pour l'utilisateur {}", accountName,
-                    userKey);
+            uri = new URI(SERVER_URL + "account/add/google/" + accountName + "?userKey=" + userKey);
+            LOGGER.info("Ouverture du navigateur pour la création du compte google {} pour l'utilisateur {}",
+                    accountName, userKey);
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException e) {
+            LOGGER.error("Erreur lors de la création du compte " + accountName, e);
+        }
+
+    }
+
+    /**
+     * Add user to microsoft account.
+     * @param userKey username
+     * @param accountName account name
+     */
+    public final void addMicrosoftAccount(final String userKey, final String accountName) {
+        URI uri;
+        if (accountName == null) {
+            LOGGER.error("Nom d'utilisateur non renseigné");
+            return;
+        }
+        try {
+
+            uri = new URI(SERVER_URL + "account/add/microsoft/" + accountName + "?userKey=" + userKey);
+            LOGGER.info("Ouverture du navigateur pour la création du compte microsoft {} pour l'utilisateur {}",
+                    accountName, userKey);
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             LOGGER.error("Erreur lors de la création du compte " + accountName, e);

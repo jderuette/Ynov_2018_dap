@@ -1,10 +1,14 @@
 package fr.ynov.dap;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  * Config file.
  * @author MBILLEMAZ
  *
  */
+@Component
 public class Config {
 
     /**
@@ -49,27 +53,40 @@ public class Config {
     private String rootFolder;
 
     /**
-     * Create config instance.
-     * @param newRootFolder directory where are stocked tokens and credentials.json
-     */
-    public Config(final String newRootFolder) {
-        super();
-        this.applicationName = APPLICATION_NAME;
-        this.credentialsFolder = CREDENTIALS_FOLDER;
-        this.clientSecretDir = CLIENT_SECRET_DIR;
-        this.rootFolder = newRootFolder;
-
-    }
-
-    /**
      * Create config instance with default values.
+     * @param fileApplicationName appName in applcation.properties file
+     * @param fileCredentialsFolder credential folder in applcation.properties file
+     * @param fileClientSecretDir token folder in applcation.properties file
+     * @param fileRootFolder root folder in applcation.properties file
      */
-    public Config() {
+    public Config(@Value("${config.appName:#{null}}") final String fileApplicationName,
+            @Value("${config.credentials:#{null}}") final String fileCredentialsFolder,
+            @Value("${config.token:#{null}}") final String fileClientSecretDir,
+            @Value("${config.root:#{null}}") final String fileRootFolder) {
         super();
-        this.applicationName = APPLICATION_NAME;
-        this.credentialsFolder = CREDENTIALS_FOLDER;
-        this.clientSecretDir = CLIENT_SECRET_DIR;
-        this.rootFolder = ROOT_FOLDER;
+        if (fileApplicationName != null) {
+            this.applicationName = fileApplicationName;
+        } else {
+            this.applicationName = APPLICATION_NAME;
+        }
+
+        if (fileCredentialsFolder != null) {
+            this.credentialsFolder = fileCredentialsFolder;
+        } else {
+            this.credentialsFolder = CREDENTIALS_FOLDER;
+        }
+
+        if (fileClientSecretDir != null) {
+            this.clientSecretDir = fileClientSecretDir;
+        } else {
+            this.clientSecretDir = CLIENT_SECRET_DIR;
+        }
+        if (fileRootFolder != null) {
+            this.rootFolder = fileRootFolder;
+        } else {
+            this.rootFolder = ROOT_FOLDER;
+        }
+
     }
 
     /**

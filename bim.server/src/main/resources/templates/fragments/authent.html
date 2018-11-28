@@ -1,0 +1,8 @@
+
+<div th:fragment="authentBody">
+	<div th:if="${session.error} != null"
+		th:text="${'Error: ' + session.error}" class="alert alert-danger">Error</div>
+	<ul>
+		<li th:text="${'token: ' + session.tokens}"></li>
+	</ul>
+</div>

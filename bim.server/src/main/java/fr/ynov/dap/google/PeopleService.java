@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.google.GoogleAccount;
 
 /**
  * People service.

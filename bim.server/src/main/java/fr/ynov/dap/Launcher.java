@@ -1,5 +1,6 @@
 package fr.ynov.dap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,8 @@ public class Launcher {
     /**
      * Create default config.
      */
-    private Config config = new Config();
+    @Autowired
+    private Config config;
 
     /**
      * Launch application.
@@ -34,16 +36,10 @@ public class Launcher {
      */
     @Bean
     public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
+        System.out.println(config.getApplicationName());
         return args -> {
-            if (args.length > 0) {
-                //TODO bim by Djer attention, l'autre @bean risque d'être appelé avant le commandLineRunner.
-                // Si spring "cache" ton bean, alors le modifier ici ne fonctionnera pas.
-                // tu airait une "petite" de chance plus en MODIFIANT l'instance existante
-                this.config = new Config(args[0]);
-            }
         };
     }
-
     /**
      * Return config file.
      * @return config

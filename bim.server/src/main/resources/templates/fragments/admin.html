@@ -1,0 +1,35 @@
+<div th:fragment="adminBody">
+	<h1>DataStore</h1>
+
+	<div th:unless="${#lists.isEmpty(googleList)}">
+		<h2>Utilisateurs</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="col" th:text="#{account.userName}">Nom d'utilisateur</th>
+					<th class="col" th:text="#{account.type}">type de compte</th>
+					<th class="col" th:text="#{account.tenantId}">tenant id</th>
+					<th class="col" th:text="#{account.token}">token</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="instance : ${googleList}">
+					<td th:text="${instance.key}">username</td>
+					<td th:text="Google">Google</td>
+					<td th:text="Vide">Vide</td>
+					<td th:text="${instance.value.accessToken}">token</td>
+				</tr>
+				<tr th:each="instance,i : ${microsoftList}">
+					<td th:text="${instance.key}">username</td>
+					<td th:text="Microsoft">Microsoft</td>
+					<td th:text="${tenantIdList[i.index]}">Tenant Id</td>
+					<td class="token" th:text="${instance.value.accessToken}">token</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div
+		th:if="${#lists.isEmpty(googleList) && #lists.isEmpty(microsoftList)}">
+		<span>Aucun utilisateur</span>
+	</div>
+</div>

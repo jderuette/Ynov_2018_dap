@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.3.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{index.title}">Titre de la page</title>
+
+</head>
+<body>
+	<div class="container">
+
+		<!-- Static navbar -->
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">Data Access Project</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="${current == 'admin' ? 'active' : '' }"><a
+							href="/admin" th:text="#{nav.admin}">admin</a></li>
+						<li th:classappend="${current == 'mail' ? 'active' : ''}"><a
+							href="/email/microsoft/nextMessages?userKey=toto" th:text="#{nav.mail}">Mail</a></li>
+					</ul>
+					<p th:if="${session.userConnected} == true"
+						class="navbar-text navbar-right"
+						th:text="${'Signed in as ' + session.userName}"></p>
+					<ul th:if="${session.userConnected} == true"
+						class="nav navbar-nav navbar-right">
+						<li><a href="/logout">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div th:include="fragments/__${fragFile}__ :: __${frag}__"></div>
+	</div>
+</body>
+</html>

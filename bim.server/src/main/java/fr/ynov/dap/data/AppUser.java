@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.data.microsoft.MicrosoftAccount;
+
 /**
  * AppUser table.
  * @author MBILLEMAZ
@@ -29,19 +32,28 @@ public class AppUser {
     private String name;
 
     /**
-     * user accounts.
+     * user google accounts.
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private List<GoogleAccount> googleAccount;
+    private List<GoogleAccount> googleAccounts;
+
+    /**
+     * user microsoft accounts.
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<MicrosoftAccount> microsoftAccounts;
 
     /**
      * Constructor.
-     * @param name
+     * @param name name
      */
     public AppUser(String name) {
         this.name = name;
     }
 
+    /**
+     * default constructor.
+     */
     public AppUser() {
 
     }
@@ -53,6 +65,29 @@ public class AppUser {
     public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccount().add(account);
+    }
+
+    /**
+     * @return the microsoftAccount
+     */
+    public List<MicrosoftAccount> getMicrosoftAccounts() {
+        return microsoftAccounts;
+    }
+
+    /**
+     * @param microsoftAccount the microsoftAccount to set
+     */
+    public void setMicrosoftAccounts(List<MicrosoftAccount> microsoftAccount) {
+        this.microsoftAccounts = microsoftAccounts;
+    }
+
+    /**
+     * Add google account to application.
+     * @param account account to add
+     */
+    public void addMicrosoftAccount(final MicrosoftAccount account) {
+        account.setOwner(this);
+        this.getMicrosoftAccounts().add(account);
     }
 
     /**
@@ -87,14 +122,14 @@ public class AppUser {
      * @return the googleAccount
      */
     public List<GoogleAccount> getGoogleAccount() {
-        return googleAccount;
+        return googleAccounts;
     }
 
     /**
      * @param newGoogleAccount the googleAccount to set
      */
     public void setGoogleAccount(final List<GoogleAccount> newGoogleAccount) {
-        this.googleAccount = newGoogleAccount;
+        this.googleAccounts = newGoogleAccount;
     }
 
 }

@@ -10,7 +10,7 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
+import fr.ynov.dap.data.google.GoogleAccount;
 
 /**
  * Gmail service.
@@ -49,7 +49,7 @@ public final class GmailService extends CommonGoogleService {
      * @param user applicative User
      * @param gUser gmail user
      * @return nb unread mails
-     * @throws Exception 
+     * @throws Exception if error
      */
     public int getNbUnreadMailForUser(final AppUser user, final String gUser) throws Exception {
         List<GoogleAccount> accountNames = user.getGoogleAccount();
