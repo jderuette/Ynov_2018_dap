@@ -38,6 +38,7 @@ public class GoogleService {
 	protected Config getConfig() {
 		return conf;
 	}
+	
 
 	protected Logger LOG = LogManager.getLogger(getClass().getName());
 

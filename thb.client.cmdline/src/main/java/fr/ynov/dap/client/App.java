@@ -1,6 +1,9 @@
 package fr.ynov.dap.client;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
 import fr.ynov.dap.client.Services.HttpRequestService;
@@ -18,10 +21,7 @@ public class App
      * @param args the arguments
      */
     public static void main( String[] args )
-    {    	
-        //FIXME thb by Djer Pourquoi récupérer une instance pour ne rien en faire ?
-    	Config.getINSTANCE();
-    	
+    {    	   	
         Scanner scanner = new Scanner(System.in);
         System.out.print("1. Login google account \n");
         System.out.print("2. Check emails \n");
@@ -44,7 +44,15 @@ public class App
 	    case 1:
 			try {
 				System.out.print("Set email : ");
-				new HttpRequestService("/account/add/" + scanner.next());
+				String accountName = scanner.next();
+				System.out.println("User key");
+				String userKey = scanner.next();
+				
+				try {
+					Desktop.getDesktop().browse(new URI("http://localhost:8080/account/add/google/" + accountName + "?userKey=" + userKey));
+				} catch (URISyntaxException e) {
+					
+				}
 				
 				System.out.print("Another action : ");
 				checkChoice(scanner.nextInt(), scanner);
@@ -54,8 +62,9 @@ public class App
 	    	break;
 	    case 2:
 	    	try {
-	    		System.out.print("Set email : ");
-				new HttpRequestService("/mail/getnbemail");
+	    		System.out.println("User key");
+				String userKey = scanner.next();
+				new HttpRequestService("/mail/unread?userKey="+userKey);
 				
 				System.out.print("Another action : ");
 				checkChoice(scanner.nextInt(), scanner);
@@ -65,8 +74,9 @@ public class App
 	    	break;
 	    case 3:
 	    	try {
-	    		System.out.print("Set email : ");
-				new HttpRequestService("/contact/" + scanner.next());
+	    		System.out.println("User key");
+				String userKey = scanner.next();
+				new HttpRequestService("/contact/total?userKey="+userKey);
 				
 				System.out.print("Another action : ");
 				checkChoice(scanner.nextInt(), scanner);
@@ -76,8 +86,9 @@ public class App
 	    	break;
 	    case 4:
 	    	try {
-	    		System.out.print("Set email : ");
-				new HttpRequestService("/calendar/events/" + scanner.next());
+	    		System.out.println("User key");
+				String userKey = scanner.next();
+				new HttpRequestService("/calendar/next?userKey="+userKey);
 				
 				System.out.print("Another action : ");
 				checkChoice(scanner.nextInt(), scanner);

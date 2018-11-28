@@ -17,6 +17,10 @@ public class Launcher {
     
     @Bean
 	Config loadConfig() {
-		return new Config();
+    	Config configuration = new Config();
+    	
+//    	configuration.setTokensPath("\desktop");
+    	
+		return configuration;
 	}
 }
