@@ -85,7 +85,6 @@ public class MicrosoftContactService extends BaseService {
         TokenResponse tokens = account.getTokenResponse();
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
-
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         String sort = "GivenName ASC";

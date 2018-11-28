@@ -46,7 +46,6 @@ public class MicrosoftCalendarService extends BaseService {
         TokenResponse tokens = account.getTokenResponse();
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
-
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         String sort = "start/dateTime ASC";
@@ -118,13 +117,11 @@ public class MicrosoftCalendarService extends BaseService {
      * @throws Exception the exception
      */
     private Event[] getEvents(final MicrosoftAccount account) throws Exception {
-
         String email = account.getEmail();
         String tenantId = account.getTenantId();
         TokenResponse tokens = account.getTokenResponse();
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
-
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         String sort = "start/dateTime DESC";

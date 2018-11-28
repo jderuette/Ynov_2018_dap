@@ -43,7 +43,9 @@ public class MicrosoftMailService extends BaseService {
         }
 
         String email = account.getEmail();
+        String tenantId = account.getTenantId();
         TokenResponse tokens = account.getTokenResponse();
+        tokens = AuthHelper.ensureTokens(tokens, tenantId);
 
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 

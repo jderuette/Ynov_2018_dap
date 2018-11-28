@@ -1,0 +1,15 @@
+com.ynov.dap
+com.ynov.dap.controller
+com.ynov.dap.controller.google
+com.ynov.dap.controller.microsoft
+com.ynov.dap.domain
+com.ynov.dap.domain.google
+com.ynov.dap.domain.microsoft
+com.ynov.dap.model
+com.ynov.dap.model.microsoft
+com.ynov.dap.repository
+com.ynov.dap.repository.google
+com.ynov.dap.repository.microsoft
+com.ynov.dap.service
+com.ynov.dap.service.google
+com.ynov.dap.service.microsoft
