@@ -18,8 +18,8 @@ public class MicrosoftMailController {
 
     @RequestMapping("/mail")
 //    public Map<String, Integer> mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-    public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                       @RequestParam("userKey") final String userKey) {
-        return microsoftMailService.mail(userKey, request, redirectAttributes);
+    public String mail(Model model, RedirectAttributes redirectAttributes, @RequestParam("userKey") final String userKey) {
+        model.addAttribute("accounts", microsoftMailService.mail(userKey, redirectAttributes));
+        return "mail_micro";
     }
 }
