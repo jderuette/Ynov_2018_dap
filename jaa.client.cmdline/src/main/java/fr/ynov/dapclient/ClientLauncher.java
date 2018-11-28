@@ -49,10 +49,11 @@ public final class ClientLauncher {
      * four arguments.
      */
     private static final Integer FOUR_ARGUMENTS = 4;
+
     /**
-     * fourth argument.
+     * Default server url. Used to avoid code duplication in the help text.
      */
-    private static final Integer FOURTH_ARGUMENT = 3;
+    private static final String DEFAULT_SERVER_URL = "http://localhost:8080";
 
     /**
      * prevent default constructor use.
@@ -72,15 +73,24 @@ public final class ClientLauncher {
 
         if (args[0].equalsIgnoreCase("help")) {
             final String help = "Help:\n" + "Register a new user: [add] [userName] "
-                    + "[ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
+
+                    + "Register a new Google Account (you have to add a new user first!!): "
+                    + "[addgoogle] [userName] [googleAccountName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
+
+                    + "Register a new Microsoft Account (you have to add a new user first!!): "
+                    + "[addmicrosoft] [userName] [microsoftAccountName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
                     + "View number of unread mails: [unread] [userName] [user] "
-                    + "(by default, user=me) [ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "(by default, user=me) [ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
                     + "View number of contacts: [contacts] [userName] "
-                    + "[ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
-                    + "View the next event: [event] [userName] [ip:port] (by default, ip:port=http://localhost:8080)";
+                    + "View the next event: [event] [userName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")";
             System.out.println(help);
             return;
         }
@@ -100,7 +110,7 @@ public final class ClientLauncher {
             }
 
             if (args.length == FOUR_ARGUMENTS) {
-                address = args[FOURTH_ARGUMENT];
+                address = args[3];
             }
 
             displayNumberOfMails(userKey, user);
@@ -123,6 +133,22 @@ public final class ClientLauncher {
             return;
         }
 
+        if (action.equals("addgoogle")) {
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[3];
+            }
+            String accountName = args[2];
+            addNewGoogleAccount(userKey, accountName);
+        }
+
+        if (action.equals("addmicrosoft")) {
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[3];
+            }
+            String accountName = args[2];
+            addNewMicrosoftAccount(userKey, accountName);
+        }
+
         if (action.equals("event")) {
             if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
@@ -141,7 +167,7 @@ public final class ClientLauncher {
      */
     private static String getResponse(final String url) {
         HttpURLConnection conn = null;
-        String response = null;
+        String response = "";
         try {
             conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setRequestMethod("GET");
@@ -154,8 +180,9 @@ public final class ClientLauncher {
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
-            while ((response = br.readLine()) != null) {
-                response += response;
+            String r;
+            while ((r = br.readLine()) != null) {
+                response += r;
             }
 
             log.debug("Reponse=" + response);
@@ -207,7 +234,7 @@ public final class ClientLauncher {
     private static void addNewUser(final String userKey) {
         log.debug("addNewUser called. UserKey=" + userKey);
         try {
-            URL url = new URL(address + "/account/add/" + userKey);
+            URL url = new URL(address + "/user/add/" + userKey);
             Desktop.getDesktop().browse(url.toURI());
             log.debug("Browser opened at:" + url);
 
@@ -236,14 +263,12 @@ public final class ClientLauncher {
         log.debug("displayNextEvent called. UserKey=" + userKey);
         String response = getResponse(address + "/calendar/event/next?userKey=" + userKey);
         Gson gson = new Gson();
-        Event[] events = gson.fromJson(response, Event[].class);
+        Event event = gson.fromJson(response, Event.class);
 
-        if (events.length == 0) {
+        if (event == null) {
             System.out.println("Pas de prochain événement.");
             return;
         }
-
-        Event event = events[0];
 
         System.out.println("Sujet : " + event.getSummary() + "\n");
 
@@ -256,8 +281,7 @@ public final class ClientLauncher {
         System.out.println("Date de fin : " + endDate + "\n");
 
         if (event.getAttendees() == null) {
-            System.out.println("Pas de status d'acceptation de l'event.\n"
-        + "Vous devez inviter d'autres personnes à l'événement.\n");
+            System.out.println("Pas de status d'acceptation de l'event.\n");
             System.out.println("Vous êtes l'organisateur : oui");
             return;
         }
@@ -284,4 +308,63 @@ public final class ClientLauncher {
         }
     }
 
+    /**
+     * Create a new Google Account.
+     * @param userKey userkey needed for authentication for other api call.
+     * @param accountName the name of the google account.
+     */
+    private static void addNewGoogleAccount(final String userKey, final String accountName) {
+        StringBuilder st = new StringBuilder().append("Trying to add a Google Account. UserKey=")
+                .append(userKey).append(" accountName=").append(accountName);
+        log.debug(st.toString());
+        try {
+            URL url = new URL(address + "/account/add/google/" + accountName + "?userKey=" + userKey);
+            Desktop.getDesktop().browse(url.toURI());
+            log.debug("Browser opened at:" + url);
+
+        } catch (MalformedURLException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        } catch (IOException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        }  catch (URISyntaxException e) {
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+        }
+    }
+
+    /**
+     * Create a new Microsoft Account.
+     * @param userKey userkey needed for authentication for other api call.
+     * @param accountName the name of the Microsoft account.
+     */
+    private static void addNewMicrosoftAccount(final String userKey, final String accountName) {
+        StringBuilder st = new StringBuilder().append("Trying to add a Google Account. UserKey=")
+                .append(userKey).append(" accountName=").append(accountName);
+        log.debug(st.toString());
+        try {
+            URL url = new URL(address + "/account/add/microsoft/" + accountName + "?userKey=" + userKey);
+            Desktop.getDesktop().browse(url.toURI());
+            log.debug("Browser opened at:" + url);
+
+        } catch (MalformedURLException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        } catch (IOException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        }  catch (URISyntaxException e) {
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+        }
+    }
 }
