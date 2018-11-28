@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+</head>
+<body>
+<span th:text="#{event.next.title}">Prochain event de Toto</span>
+<div th:each="event : ${accountEvents}">
+					<tr>
+						<td th:text="${event.organizer.emailAddress.name}"></td>
+						<td th:text="${event.subject}"></td>
+						<td th:text="${event.start.dateTime}"></td>
+						<td th:text="${event.end.dateTime}"></td>
+					</tr>
+	</div>
+</body>
+</html>

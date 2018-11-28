@@ -1,0 +1,49 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<body>
+<h1 th:text="#{admin.page.title}"> Admin credential</h1>
+<table if="${!credentials.isEmpty()}">
+<tr>
+  <td th:text="#{admin.grid.type}">Account Type</td>
+  <td th:text="#{admin.grid.un}">UserName</td>
+  <td th:text="#{admin.grid.at}">Access Token</td>
+  <td th:text="#{admin.grid.et}">Expiration Time</td>
+  <td th:text="#{admin.grid.rt}">Refresh Token</td>
+  <td th:text="#{admin.grid.ti}">Tenant ID</td>
+</tr>
+ <tr th:each="credential : ${credentials}">
+      <td>Google</td>
+     <td th:text="${credential.key}">1</td>
+     <td th:text="${credential.value.getAccessToken()}">2</td>
+     <td th:text="${credential.value.getExpirationTimeMilliseconds()}">3</td>
+     <td th:text="${credential.value.getRefreshToken()}">4</td>
+  </tr>
+  <tr th:each="otAccount : ${otAccounts}">
+     <td>Microsoft</td>
+      <td th:text="${otAccount.getOwner().getUserKey()}">1</td>
+     <td th:text="${otAccount.getToken().getAccessToken()}">2</td>
+     <td th:text="${otAccount.getToken().getExpiresIn()}">3</td>
+     <td th:text="${otAccount.getToken().getRefreshToken()}">4</td>
+     <td th:text="${otAccount.getTenantId()}">5</td>
+     <td><a th:href="'/mail/microsoft/' + ${otAccount.getOwner().getUserKey()}">Mails</a></td>
+
+
+  <tr>
+</table>
+</body>
+</html>
