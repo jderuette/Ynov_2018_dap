@@ -22,10 +22,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    	<ul class="navbar-nav mr-auto">
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/mails?userKey=loic">Mail</a>
+			        	<a class="nav-link" href="/admin/mails?userKey=">Mail</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/contacts?userKey=loic">Contacts</a>
+			        	<a class="nav-link" href="/admin/contacts?userKey=">Contacts</a>
 			      	</li>
 		   		</ul>
   			</div>
@@ -34,7 +34,7 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th th:text="${message.key}">Nom du compte</th>
+						<th th:text="${message.key}">Email</th>
 						<th th:text="#{mail.from}">From</th>
 						<th th:text="#{mail.subject}">Subject</th>
 						<th th:text="#{mail.received}">Received</th>
@@ -44,9 +44,8 @@
 				<tbody>
 					
 					<tr th:each="email : ${message.value.getValue()}"
-						th:classappend="${email.isRead == true ? '' : 'info'}">
-	
-						<td ><span
+						
+					<td ><span
 							th:if="${email.isRead == false}"
 							class="glyphicon glyphicon-envelope"></span></td>
 						<td th:text="${email.from.emailAddress.name}">sender mail</td>

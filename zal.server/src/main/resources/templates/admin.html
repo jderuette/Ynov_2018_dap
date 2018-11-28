@@ -21,10 +21,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    	<ul class="navbar-nav mr-auto">
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/mails?userKey=loic">Mail</a>
+			        	<a class="nav-link" href="/admin/mails?userKey=">Mail</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/contacts?userKey=loic">Contacts</a>
+			        	<a class="nav-link" href="/admin/contacts?userKey=">Contacts</a>
 			      	</li>
 		   		</ul>
   			</div>
@@ -43,11 +43,11 @@
 	    	</thead>
 	    	<tbody>
 		      	<tr th:each="credential : ${credentials}">
-		        	<td th:text="${{credential.user}}">XXX</td>
-		        	<td th:text="${{credential.type}}">XXX</td>
-		        	<td th:text="${{credential.tenantId}}">XXX</td>
-		        	<td class="break" th:text="${{credential.access_token}}">XXX</td>
-		        	<td class="break" th:text="${{credential.refreshToken}}">XXX</td>
+		        	<td th:text="${{credential.user}}">credential user</td>
+		        	<td th:text="${{credential.type}}">credential type</td>
+		        	<td th:text="${{credential.tenantId}}">credential tenantId</td>
+		        	<td class="break" th:text="${{credential.access_token}}">credential access_token</td>
+		        	<td class="break" th:text="${{credential.refreshToken}}">credential refresh_token</td>
 		      	</tr>
 	    	</tbody>
 	  	</table>
