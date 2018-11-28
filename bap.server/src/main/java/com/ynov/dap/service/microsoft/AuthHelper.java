@@ -23,14 +23,14 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class AuthHelper extends BaseService {
 
     /** The Constant authority. */
-    private static final String authority = "https://login.microsoftonline.com";
+    private static final String AUTHORITY = "https://login.microsoftonline.com";
 
     /** The Constant authorizeUrl. */
-    private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
+    private static final String AUTHORIZEURL = AUTHORITY + "/common/oauth2/v2.0/authorize";
 
     /** The scopes. */
-    private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read",
-            "Calendars.Read", "Contacts.Read" };
+    private static String[] scopes = {"openid", "offline_access", "profile", "User.Read", "Mail.Read",
+            "Calendars.Read", "Contacts.Read"};
 
     /** The app id. */
     private static String appId = null;
@@ -135,7 +135,7 @@ public class AuthHelper extends BaseService {
      */
     public static String getLoginUrl(final UUID state, final UUID nonce) {
 
-        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
+        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZEURL);
         urlBuilder.queryParam("client_id", getAppId());
         urlBuilder.queryParam("redirect_uri", getRedirectUrl());
         urlBuilder.queryParam("response_type", "code id_token");
@@ -160,7 +160,7 @@ public class AuthHelper extends BaseService {
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(authority).client(client)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         TokenService tokenService = retrofit.create(TokenService.class);
@@ -193,7 +193,7 @@ public class AuthHelper extends BaseService {
 
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(authority).client(client)
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                     .addConverterFactory(JacksonConverterFactory.create()).build();
 
             TokenService tokenService = retrofit.create(TokenService.class);
