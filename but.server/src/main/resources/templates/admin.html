@@ -1,0 +1,36 @@
+<h1 th:text="#{admin.title}">Admin</h1>
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th th:text="#{admin.credendtials.user}">User Key</th>
+				<th th:text="#{admin.credendtials.account}">User Key</th>
+				<th th:text="#{admin.credendtials.type}">Type</th>
+				<th th:text="#{admin.credendtials.tenantId}">Tenant ID</th>
+				<th th:text="#{admin.credendtials.token}">Access Token</th>
+				<th th:text="#{admin.credendtials.refreshToken}">Refresh Token</th>
+				<th th:text="#{admin.credendtials.expiration}">Expiration Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="microsoftCred : ${credentialsMicrosoft}">
+				<td th:text="${microsoftCred?.owner?.userKey}">keyvalue</td>
+				<td th:text="${microsoftCred?.accountName}">account name</td>
+				<td>Microsoft</td>
+				<td th:text="${microsoftCred?.tenantId}">tenantId</td>
+				<td th:text="${microsoftCred?.accessToken}" style="word-wrap: break-word; max-width: 200px;">accessToken</td>
+				<td th:text="${microsoftCred?.refreshToken}" style="word-wrap: break-word; max-width: 200px;">accessToken</td>
+				<td th:text="${#dates.format(microsoftCred?.expirationTimeMilliseconds, 'dd-MM-yyyy HH:mm:ss')}">expirationTimeMilliseconds</td>
+			</tr>
+			<tr th:each="googleCred : ${credentialsGoogle}">
+				<td th:text="${googleCred?.owner?.userKey}">keyvalue</td>
+				<td th:text="${googleCred?.accountName}">account name</td>
+				<td>Google</td>
+				<td></td>
+				<td th:text="${googleCred?.accessToken}" style="word-wrap: break-word; max-width: 200px;">accessToken</td>
+				<td th:text="${googleCred?.refreshToken}" style="word-wrap: break-word; max-width: 200px;">accessToken</td>
+				<td th:text="${#dates.format(googleCred?.expirationTimeMilliseconds, 'dd-MM-yyyy HH:mm:ss')}">expirationTimeMilliseconds</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

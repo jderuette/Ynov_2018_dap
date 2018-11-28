@@ -56,7 +56,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fr.ynov.dap.client.App</mainClass>
+                            <mainClass>fr.ynov.dap.client.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -83,7 +83,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>fr.ynov.dap.client.App</mainClass>
+                            <mainClass>fr.ynov.dap.client.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

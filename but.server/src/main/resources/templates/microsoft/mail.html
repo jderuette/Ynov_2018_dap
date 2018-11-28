@@ -1,0 +1,19 @@
+<div th:each="instanceAccount : ${emailAccounts}">
+<h4 style="text-align:center;"><span th:text="${instanceAccount.key.accountName}">Account name</span> ( <span th:text="${instanceAccount.key.email}">Account name</span> )</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th th:text="#{microsoft.mail.sender}">From</th>
+				<th th:text="#{microsoft.mail.subject}">Subject</th>
+				<th th:text="#{microsoft.mail.body}">Message</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="instanceMessage : ${instanceAccount.value}">
+				<td th:text="${instanceMessage.from.emailAddress.address}">from</td>
+				<td th:text="${instanceMessage.subject}">Subject</td>
+				<td th:text="${instanceMessage.bodyPreview}">message</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
