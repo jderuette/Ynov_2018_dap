@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
+@EnableJpaRepositories("fr.ynov.dap.dap.data")
 @SpringBootApplication
 public class Launcher{
 	

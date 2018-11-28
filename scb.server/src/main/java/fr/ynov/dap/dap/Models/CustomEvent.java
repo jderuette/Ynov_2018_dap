@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.Models;
+package fr.ynov.dap.dap.models;
 
 import java.util.Date;
 

@@ -22,6 +22,19 @@
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-web</artifactId>
    </dependency>
+   <dependency>
+	  <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
+	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+   <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -60,6 +73,35 @@
 	    <artifactId>google-api-services-people</artifactId>
 	    <version>v1-rev277-1.23.0</version>
 	  </dependency>
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-core</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>com.squareup.retrofit2</groupId>
+		  <artifactId>retrofit</artifactId>
+		  <version>2.0.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.squareup.retrofit2</groupId>
+		  <artifactId>converter-jackson</artifactId>
+		  <version>2.0.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.squareup.okhttp3</groupId>
+		  <artifactId>logging-interceptor</artifactId>
+		  <version>3.2.0</version>
+		</dependency>
   </dependencies>
   <reporting>
     	<plugins>

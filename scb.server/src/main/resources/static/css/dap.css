@@ -1,0 +1,9 @@
+h1 {color:purple;}
+
+td{
+	border: 1px black solid;
+	padding: 5px;
+}
+table{
+    border-collapse: collapse;	
+}
