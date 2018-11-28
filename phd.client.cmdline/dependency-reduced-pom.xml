@@ -73,10 +73,6 @@
           </dependencies>
         </plugin>
         <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-        <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <executions>
             <execution>
@@ -158,45 +154,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>5.0.7.Final</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>xml-apis</artifactId>
-          <groupId>xml-apis</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
       <version>2.0.5.RELEASE</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api-client</groupId>
-      <artifactId>google-api-client</artifactId>
-      <version>1.25.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.oauth-client</groupId>
-      <artifactId>google-oauth-client-jetty</artifactId>
-      <version>1.25.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.apis</groupId>
-      <artifactId>google-api-services-gmail</artifactId>
-      <version>v1-rev96-1.25.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.apis</groupId>
-      <artifactId>google-api-services-calendar</artifactId>
-      <version>v3-rev350-1.25.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -221,12 +181,6 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-jul</artifactId>
       <version>2.11.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.apis</groupId>
-      <artifactId>google-api-services-people</artifactId>
-      <version>v1-rev356-1.25.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

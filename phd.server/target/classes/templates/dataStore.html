@@ -12,12 +12,12 @@
 
 </head>
 <body>
-<h1> welcome</h1>
-<table>
-<tr th:each="m : ${map}">
-    <td th:text="${m.key}">Name</td>
-    <td th:text="${m.value.getAccessToken()}">Credentials</td>
-    </table>
-</tr>
+	<h1>welcome</h1>
+	<table>
+		<tr th:each="m : ${map}">
+			<td th:text="${m.key}">Name</td>
+			<td th:text="${m.value.getAccessToken()}">Credentials</td>
+	</table>
+	</tr>
 </body>
 </html>

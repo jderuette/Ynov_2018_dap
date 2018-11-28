@@ -30,7 +30,7 @@ public class PeopleGController {
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
-    @RequestMapping("/getPeople")
+    @RequestMapping("/google/getPeople")
     public String getNbContact(@RequestParam("userKey") final String userKey)
             throws IOException, GeneralSecurityException {
         return "Nb contact : " + peopleService.nbContact(userKey);

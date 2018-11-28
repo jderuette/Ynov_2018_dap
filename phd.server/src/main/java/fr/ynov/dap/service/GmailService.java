@@ -45,25 +45,25 @@ public class GmailService extends GoogleService {
 
     /**
      * Return the number of message unread of gmail according the userId param in the format Int.
-     * @param userId .
-     * @return .
-     * @throws IOException .
-     * @throws GeneralSecurityException .
-     */
-    public int nbMessageUnread(final String userId) throws IOException, GeneralSecurityException {
-        return this.getService(userId).users().labels().get("me", "INBOX").execute().getMessagesUnread();
-    }
-
-    /**
-     *
      * @param accountName .
      * @return .
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
-    public int nbMessageUnreadAll(final String accountName) throws IOException, GeneralSecurityException {
+    public int nbMessageUnread(final String accountName) throws IOException, GeneralSecurityException {
+        return this.getService(accountName).users().labels().get("me", "INBOX").execute().getMessagesUnread();
+    }
+
+    /**
+     *
+     * @param userId .
+     * @return .
+     * @throws IOException .
+     * @throws GeneralSecurityException .
+     */
+    public int nbMessageUnreadAll(final String userId) throws IOException, GeneralSecurityException {
         int nbMessageUnreadForAll = 0;
-        AppUser user = userRepository.findByName(accountName);
+        AppUser user = userRepository.findByName(userId);
         List<GoogleAccountData> accounts = user.getGoogleAccounts();
 
         for (GoogleAccountData accountData : accounts) {

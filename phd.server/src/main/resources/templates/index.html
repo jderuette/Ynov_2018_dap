@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:replace="baseHeader :: header"></div>
+	<h1>Bienvenue dans l'application microsoft</h1>
+	<span th:text="${error}"></span>
+	<span th:text="${messageLogout}"></span>
+	<p>
+		<a th:href="${loginUrl}" th:text="#{clickLoginLabel}"></a>
+	</p>
+
+</body>
+</html>

@@ -9,12 +9,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Data Access Project" />
 
-<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
 <title th:text="#{admin.title}">Data Access Project Admin</title>
-<div><span th:text="#{email.nb}">You have&nbsp;:</span><span th:text="${nbEmails}"></span></div>
+<div>
+	<span th:text="#{email.nb}">You have&nbsp;:</span><span
+		th:text="${nbEmails}"></span>
+</div>
 </head>
 <body>
-<h1> welcome</h1>
+	<h1>welcome</h1>
 </body>
 </html>

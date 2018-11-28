@@ -24,7 +24,7 @@ public class Welcome {
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
-    @RequestMapping("/")
+    @RequestMapping("/welcome")
     public String welcome(final ModelMap model) throws IOException, GeneralSecurityException {
         model.addAttribute("nbEmails", NB_MAILS);
         return "welcome";

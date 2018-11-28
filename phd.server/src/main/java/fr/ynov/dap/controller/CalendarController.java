@@ -31,7 +31,7 @@ public class CalendarController {
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
-    @RequestMapping("/getEventUncomming")
+    @RequestMapping("/google/getEventUncomming")
     public Map<String, Object> getEvent(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
         return calendarService.getNextEventFormatMap(userKey);
@@ -45,7 +45,7 @@ public class CalendarController {
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
-    @RequestMapping("/getEventUncommingForAll")
+    @RequestMapping("/google/getEventUncommingForAll")
     public Event getEventForAll(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
         return calendarService.getNextEventForAll(userKey);

@@ -32,7 +32,7 @@ public class GMailController {
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
-    @RequestMapping("/getEmailUnread")
+    @RequestMapping("/google/getEmailUnread")
     public Map<String, Integer> getEmailUnread(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
 
@@ -49,7 +49,7 @@ public class GMailController {
      * @throws IOException .
      */
 
-    @RequestMapping("/getAllEmailUnread")
+    @RequestMapping("/google/getAllEmailUnread")
     public Map<String, Integer> getAllEmailUnread(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {
 

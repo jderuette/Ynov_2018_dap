@@ -101,7 +101,7 @@ public class CalendarService extends GoogleService {
             event = getNextEvent(accountData.getAccountName());
             listEvent.add(event);
         }
-        long dateMillisecondsMostRecent = listEvent.get(0).getStart().getDateTime().getValue();
+        long dateMillisecondsMostRecent = System.currentTimeMillis();
         long dateMilliseconds;
 
         if (listEvent != null) {
@@ -129,7 +129,7 @@ public class CalendarService extends GoogleService {
                 .setOrderBy("startTime").setSingleEvents(true).execute();
         List<Event> items = events.getItems();
         Event event = null;
-        if (items != null) {
+        if (items.size() > 0) {
             event = items.get(0);
         }
         return event;
