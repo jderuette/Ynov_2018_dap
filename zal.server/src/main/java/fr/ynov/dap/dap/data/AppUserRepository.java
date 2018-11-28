@@ -1,8 +1,18 @@
 package fr.ynov.dap.dap.data;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
+/**
+ * The Interface AppUserRepository.
+ */
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
-	public AppUser findByUserkey(String userkey);
+
+	/**
+	 * Find by userkey.
+	 *
+	 * @param userkey
+	 *            the userkey
+	 * @return the app user
+	 */
+	AppUser findByUserkey(String userkey);
 }
