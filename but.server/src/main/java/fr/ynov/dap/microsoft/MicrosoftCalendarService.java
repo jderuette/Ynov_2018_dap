@@ -6,6 +6,8 @@ import java.util.Date;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpResponseException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +33,18 @@ public class MicrosoftCalendarService {
     private MicrosoftAccountRepository repositoryMicrosoftAccount;
 
     /**
+     * Logger for the class.
+     */
+    private static Logger logger = LogManager.getLogger();
+
+    /**
      * Get the next event of one User (all accounts).
      * @param user the app user.
      * @return the EventResponse.
      * @throws IOException if http exception.
      */
     public EventResponse getNextEvent(final AppUser user) throws IOException {
+        logger.info("Get next event Microsoft for user : '" + user.getUserKey() + "'");
         Event event = null;
         Boolean organizer = false;
         for (MicrosoftAccount mAccount : user.getMicrosoftAccounts()) {

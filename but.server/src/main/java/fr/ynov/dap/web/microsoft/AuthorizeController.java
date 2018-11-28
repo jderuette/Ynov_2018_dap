@@ -119,11 +119,11 @@ public class AuthorizeController extends HandlerErrorController {
      * @param request the HTTP request
      * @param model the model to transfer data to view
      * @return the view to Display (on Error)
-     * @throws HttpResponseException if bad request.
+     * @throws IOException if file config not found or bad request
      */
     @RequestMapping("/add/account/microsoft/{accountName}")
     public String addAccount(@PathVariable final String accountName, @RequestParam final String userKey,
-            final Model model, final HttpServletRequest request) throws HttpResponseException {
+            final Model model, final HttpServletRequest request) throws IOException {
         AppUser user = repositoryUser.findByUserKey(userKey);
 
         if (user == null) {

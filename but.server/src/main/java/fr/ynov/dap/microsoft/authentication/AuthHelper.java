@@ -74,14 +74,11 @@ public final class AuthHelper {
     /**
      * Get microsoft application id.
      * @return app id.
+     * @throws IOException if file config not found
      */
-    private static String getAppId() {
+    private static String getAppId() throws IOException {
         if (appId == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
+            loadConfig();
         }
         return appId;
     }
@@ -89,14 +86,11 @@ public final class AuthHelper {
     /**
      * Get microsoft application password.
      * @return password
+     * @throws IOException if file config not found
      */
-    private static String getAppPassword() {
+    private static String getAppPassword() throws IOException {
         if (appPassword == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
+            loadConfig();
         }
         return appPassword;
     }
@@ -104,14 +98,11 @@ public final class AuthHelper {
     /**
      * Get redirect URL of microsoft.
      * @return url
+     * @throws IOException if file config not found
      */
-    private static String getRedirectUrl() {
+    private static String getRedirectUrl() throws IOException {
         if (redirectUrl == null) {
-            try {
-                loadConfig();
-            } catch (Exception e) {
-                return null;
-            }
+            loadConfig();
         }
         return redirectUrl;
     }
@@ -156,8 +147,9 @@ public final class AuthHelper {
      * @param state random state
      * @param nonce random nonce
      * @return login url
+     * @throws IOException if file config not found
      */
-    public static String getLoginUrl(final UUID state, final UUID nonce) {
+    public static String getLoginUrl(final UUID state, final UUID nonce) throws IOException {
         UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
         urlBuilder.queryParam("client_id", getAppId());
         urlBuilder.queryParam("redirect_uri", getRedirectUrl());
