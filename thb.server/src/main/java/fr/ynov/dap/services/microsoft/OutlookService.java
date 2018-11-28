@@ -12,7 +12,6 @@ import fr.ynov.dap.data.PagedResult;
 import fr.ynov.dap.data.TokenResponse;
 import fr.ynov.dap.data.interfaces.AppUserRepository;
 import fr.ynov.dap.data.interfaces.OutlookServiceInterface;
-import fr.ynov.dap.utils.ExtendsUtils;
 
 /**
  * The Class OutlookService.

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.GoogleAccount;
 import fr.ynov.dap.data.IdToken;
 import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.data.OutlookUser;
