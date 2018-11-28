@@ -66,13 +66,13 @@ public class HttpBuilderService {
 			URI uri = new URI(newUrl.toString());
 			con.setRequestProperty("Cookie", cookies);
 			con.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-			con.addRequestProperty("User-Agent", USER_AGENT);
-			con.addRequestProperty("Referer", "sylvainbrunet.fr");
+			con.addRequestProperty("User-Agent", "Mozilla");
+			con.addRequestProperty("Referer", "google.com");
 			Desktop.getDesktop().browse(uri);
+			// System.out.println("Redirect to URL : " + newUrl);
 
 		}
 
-		//TODO brs by Djer Donc tu récupére le contenu de la page de "login" de Google dans le cas d'un redirect ?
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();

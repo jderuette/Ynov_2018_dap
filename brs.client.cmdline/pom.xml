@@ -1,5 +1,4 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <!-- TODO brs by Djer il y a un odre "attendu" pour un pom.xml. Cf mémo Maven -->
   <modelVersion>4.0.0</modelVersion>
   <build>
 		<plugins>
@@ -11,7 +10,6 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<!-- Tu est sure que ton "launcher" est ici ? -->
 							<mainClass>fr.ynov.dap.dap.launcher</mainClass>
 						</manifest>
 					</archive>
@@ -40,7 +38,6 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-						<!-- Tu est sure que ton "launcher" est ici ? -->
 							<mainClass>fr.ynov.dap.dap.launcher</mainClass>
 						</manifest>
 					</archive>
@@ -49,9 +46,9 @@
 		</plugins>
 	</build>
   <groupId>com.brunet.name</groupId>
-  <artifactId>brs.client.cmdline</artifactId>
+  <artifactId>clientDAP</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>brs.client.cmdline</name>
+  <name>Projet client DAP</name>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
