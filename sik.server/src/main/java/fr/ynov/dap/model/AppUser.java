@@ -30,7 +30,7 @@ public class AppUser {
     /**
      * Name column.
      */
-    @Column
+    @Column(unique = true)
     private String userKey;
 
     /**

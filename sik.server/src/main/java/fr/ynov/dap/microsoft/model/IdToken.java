@@ -56,7 +56,6 @@ public class IdToken {
     /**
      * Preferred Username.
      */
-    @JsonProperty("preferred_username")
     private String preferredUsername;
 
     /**
