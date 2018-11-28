@@ -1,0 +1,56 @@
+Manifest-Version: 1.0
+Implementation-Title: dap
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Krynet
+Implementation-Vendor-Id: fr.ynov.dap
+Class-Path: lib/google-api-services-oauth2-v2-rev65-1.17.0-rc.jar lib/
+ google-oauth-client-jetty-1.23.0.jar lib/google-oauth-client-java6-1.
+ 23.0.jar lib/jetty-6.1.26.jar lib/jetty-util-6.1.26.jar lib/servlet-a
+ pi-2.5-20081211.jar lib/retrofit-2.0.2.jar lib/okhttp-3.2.0.jar lib/o
+ kio-1.6.0.jar lib/converter-jackson-2.0.2.jar lib/jackson-databind-2.
+ 9.6.jar lib/jackson-annotations-2.9.0.jar lib/jackson-core-2.9.6.jar 
+ lib/logging-interceptor-3.2.0.jar lib/gson-2.8.5.jar lib/spring-boot-
+ starter-web-2.0.5.RELEASE.jar lib/spring-boot-starter-2.0.5.RELEASE.j
+ ar lib/spring-boot-starter-logging-2.0.5.RELEASE.jar lib/logback-clas
+ sic-1.2.3.jar lib/logback-core-1.2.3.jar lib/log4j-to-slf4j-2.10.0.ja
+ r lib/jul-to-slf4j-1.7.25.jar lib/javax.annotation-api-1.3.2.jar lib/
+ spring-core-5.0.9.RELEASE.jar lib/spring-jcl-5.0.9.RELEASE.jar lib/sn
+ akeyaml-1.19.jar lib/spring-boot-starter-json-2.0.5.RELEASE.jar lib/j
+ ackson-datatype-jdk8-2.9.6.jar lib/jackson-datatype-jsr310-2.9.6.jar 
+ lib/jackson-module-parameter-names-2.9.6.jar lib/spring-boot-starter-
+ tomcat-2.0.5.RELEASE.jar lib/tomcat-embed-core-7.0.52.jar lib/tomcat-
+ embed-el-7.0.52.jar lib/tomcat-embed-websocket-7.0.52.jar lib/hiberna
+ te-validator-6.0.12.Final.jar lib/validation-api-2.0.1.Final.jar lib/
+ jboss-logging-3.3.2.Final.jar lib/classmate-1.3.4.jar lib/spring-web-
+ 5.0.9.RELEASE.jar lib/spring-beans-5.0.9.RELEASE.jar lib/spring-webmv
+ c-5.0.9.RELEASE.jar lib/spring-aop-5.0.9.RELEASE.jar lib/spring-conte
+ xt-5.0.9.RELEASE.jar lib/spring-expression-5.0.9.RELEASE.jar lib/spri
+ ng-boot-starter-thymeleaf-2.0.5.RELEASE.jar lib/thymeleaf-spring5-3.0
+ .9.RELEASE.jar lib/thymeleaf-3.0.9.RELEASE.jar lib/attoparser-2.0.4.R
+ ELEASE.jar lib/unbescape-1.1.5.RELEASE.jar lib/slf4j-api-1.7.25.jar l
+ ib/thymeleaf-extras-java8time-3.0.1.RELEASE.jar lib/spring-boot-devto
+ ols-2.0.5.RELEASE.jar lib/spring-boot-2.0.5.RELEASE.jar lib/spring-bo
+ ot-autoconfigure-2.0.5.RELEASE.jar lib/spring-boot-starter-data-jpa-2
+ .0.5.RELEASE.jar lib/spring-boot-starter-aop-2.0.5.RELEASE.jar lib/as
+ pectjweaver-1.8.13.jar lib/spring-boot-starter-jdbc-2.0.5.RELEASE.jar
+  lib/HikariCP-2.7.9.jar lib/spring-jdbc-5.0.9.RELEASE.jar lib/javax.t
+ ransaction-api-1.2.jar lib/hibernate-core-5.2.17.Final.jar lib/hibern
+ ate-jpa-2.1-api-1.0.2.Final.jar lib/javassist-3.22.0-GA.jar lib/antlr
+ -2.7.7.jar lib/jandex-2.0.3.Final.jar lib/dom4j-1.6.1.jar lib/hiberna
+ te-commons-annotations-5.0.1.Final.jar lib/spring-data-jpa-2.0.10.REL
+ EASE.jar lib/spring-data-commons-2.0.10.RELEASE.jar lib/spring-orm-5.
+ 0.9.RELEASE.jar lib/spring-tx-5.0.9.RELEASE.jar lib/spring-aspects-5.
+ 0.9.RELEASE.jar lib/h2-1.4.197.jar lib/mysql-connector-java-5.1.47.ja
+ r lib/google-api-services-people-v1-rev358-1.25.0.jar lib/google-api-
+ client-1.25.0.jar lib/google-oauth-client-1.25.0.jar lib/google-http-
+ client-1.25.0.jar lib/httpclient-4.5.6.jar lib/httpcore-4.4.10.jar li
+ b/commons-codec-1.11.jar lib/j2objc-annotations-1.1.jar lib/jsr305-3.
+ 0.2.jar lib/google-http-client-jackson2-1.25.0.jar lib/guava-20.0.jar
+  lib/google-api-services-gmail-v1-rev83-1.23.0.jar lib/google-api-ser
+ vices-calendar-v3-rev350-1.25.0.jar lib/log4j-api-2.10.0.jar lib/log4
+ j-core-2.10.0.jar
+Build-Jdk: 1.8.0_161
+Implementation-URL: http://maven.apache.org
+Created-By: Maven Integration for Eclipse
+Main-Class: com.ynov.dap.dap.App
+

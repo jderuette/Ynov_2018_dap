@@ -1,0 +1,5 @@
+<definition name="mail" extends="common">
+  <put-attribute name="title" value="My Mail" />
+  <put-attribute name="body" value="/fr.ynov.dap.web" />
+  <put-attribute name="current" value="mail" />
+</definition>
