@@ -14,7 +14,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class OutlookServiceBuilder {
 
-    public static OutlookService getOutlookService(String accessToken, String userEmail) {
+    public static OutlookService getOutlookService(String accessToken) {
         // Create a request interceptor to add headers that belong on
         // every request
         Interceptor requestInterceptor = new Interceptor() {

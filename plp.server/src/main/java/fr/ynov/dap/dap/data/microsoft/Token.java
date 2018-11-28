@@ -1,23 +1,32 @@
-package fr.ynov.dap.dap.microsoft.models;
-
-import java.util.Calendar;
-import java.util.Date;
+package fr.ynov.dap.dap.data.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
+import java.util.Calendar;
+import java.util.Date;
+
+@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TokenResponse {
+public class Token {
+    @Id
+    @GeneratedValue
+    Integer id;
+
     @JsonProperty("token_type")
     private String tokenType;
     private String scope;
     @JsonProperty("expires_in")
     private int expiresIn;
     @JsonProperty("access_token")
+    @Column(length = 5000)
     private String accessToken;
     @JsonProperty("refresh_token")
+    @Column(length = 5000)
     private String refreshToken;
     @JsonProperty("id_token")
+    @Column(length = 5000)
     private String idToken;
     private String error;
     @JsonProperty("error_description")
@@ -25,6 +34,17 @@ public class TokenResponse {
     @JsonProperty("error_codes")
     private int[] errorCodes;
     private Date expirationTime;
+
+    @OneToOne
+    private OutlookAccount owner;
+
+    public OutlookAccount getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OutlookAccount owner) {
+        this.owner = owner;
+    }
 
     public String getTokenType() {
         return tokenType;

@@ -1,5 +1,7 @@
 package fr.ynov.dap.dap.data;
 
+import fr.ynov.dap.dap.data.microsoft.OutlookAccount;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +16,9 @@ public class AppUser {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<GoogleAccount> googleAccount;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<OutlookAccount> outlookAccount;
+
     public void addGoogleAccount(GoogleAccount account){
         account.setOwner(this);
         this.googleAccount.add(account);
@@ -21,6 +26,15 @@ public class AppUser {
 
     public List<GoogleAccount> getGoogleAccount() {
         return googleAccount;
+    }
+
+    public void addOutlookAccount(OutlookAccount account){
+        account.setOwner(this);
+        this.outlookAccount.add(account);
+    }
+
+    public List<OutlookAccount> getOutlookAccount() {
+        return outlookAccount;
     }
 
     public void setName(String name) {

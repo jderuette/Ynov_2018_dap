@@ -1,6 +1,6 @@
 package fr.ynov.dap.dap.microsoft;
 
-import fr.ynov.dap.dap.microsoft.models.TokenResponse;
+import fr.ynov.dap.dap.data.microsoft.Token;
 import fr.ynov.dap.dap.microsoft.models.TokenService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -116,7 +116,7 @@ public class AuthHelper {
         return urlBuilder.toUriString();
     }
 
-    public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
+    public static Token getTokenFromAuthCode(String authCode, String tenantId) {
         // Create a logging interceptor to log request and responses
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -138,7 +138,7 @@ public class AuthHelper {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(),
                     "authorization_code", authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
-            TokenResponse error = new TokenResponse();
+            Token error = new Token();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
             LOG.error("Error when trying to getTokenFromAuthCode", e);
@@ -146,7 +146,7 @@ public class AuthHelper {
         }
     }
 
-    public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {
+    public static Token ensureTokens(Token tokens, String tenantId) {
         // Are tokens still valid?
         Calendar now = Calendar.getInstance();
         if (now.getTime().before(tokens.getExpirationTime())) {
@@ -176,7 +176,7 @@ public class AuthHelper {
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
             } catch (IOException e) {
-                TokenResponse error = new TokenResponse();
+                Token error = new Token();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());
                 LOG.error("Error when trying to refresh token", e);
