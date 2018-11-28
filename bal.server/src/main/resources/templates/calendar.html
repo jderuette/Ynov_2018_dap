@@ -1,0 +1,21 @@
+<h1 th:text="#{admin.next_event.title}">Title</h1>
+<br />
+<div class="card" style="width: 18rem;" th:if="${event}">
+  	<div class="card-body">
+    	<h5 class="card-title" th:text="${{event.getSubject()}}">Event Subject</h5>
+    	<h6 class="card-subtitle mb-2 text-muted" th:text="${#dates.format(event.getStart(), 'dd/MM/yyyy HH:mm')}">Debut Event Date</h6>
+    	<h6 class="card-subtitle mb-2 text-muted" th:text="${#dates.format(event.getEnd(), 'dd/MM/yyyy HH:mm')}">Fin Event Date</h6>
+    </div>
+  	<ul class="list-group list-group-flush">
+    	<li class="list-group-item"
+   			th:each="guest : ${event.getGuests()}">
+   			<span th:text="${{guest.mail}}"></span>
+   			<span class="badge badge-primary" th:if="${{guest.status}} == 'TENTATIVE'" th:text="#{admin.next_event.status.tentative}">Provisoire</span>
+	  		<span class="badge badge-danger" th:if="${{guest.status}} == 'DECLINED'" th:text="#{admin.next_event.status.declined}">D&eacute;cline</span>
+	  		<span class="badge badge-success" th:if="${{guest.status}} == 'ACCEPTED'" th:text="#{admin.next_event.status.accepted}">Acc&eacute;pt&eacute;</span>
+	  		<span class="badge badge-info" th:if="${{guest.status}} == 'NOT_ANSWERED'" th:text="#{admin.next_event.status.not_answered}">Non r&eacute;pondu</span>
+		</li>
+  	</ul>
+</div>
+
+<br />

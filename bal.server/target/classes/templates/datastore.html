@@ -1,0 +1,29 @@
+<h1 th:text="#{admin.users.list.title}">Users list</h1>
+<div th:unless="${#lists.isEmpty(credentials)}">
+	<p>
+		<span class="badge badge-primary" th:text="#{admin.users.list.number_users(${credentials.size()})}">Nb Users</span>
+	</p>
+	<div class="table-responsive">
+		<table class="table table-striped">
+	    	<thead>
+	      		<tr>
+	      			<th scope="col" th:text="#{admin.users.list.user_id}">Id</th>
+	      			<th scope="col" th:text="#{admin.users.list.type}">Type</th>
+	      			<th scope="col" th:text="#{admin.users.list.tenant_id}">Tenant Id</th>
+	        		<th scope="col" th:text="#{admin.users.list.token}">Token</th>
+	      		</tr>
+	    	</thead>
+	    	<tbody>
+		      	<tr th:each="credential : ${credentials}">
+		        	<td scope="row" th:text="${{credential.userId}}">X</td>
+		        	<td scope="row" th:text="${{credential.type}}">X</td>
+		        	<td scope="row" th:text="${{credential.tenantId}}">XX</td>
+		        	<td scope="row" th:text="${{credential.token}}">X</td>
+		      	</tr>
+	    	</tbody>
+	  	</table>
+  	</div>
+</div>
+<div class="alert alert-warning" role="alert" th:unless="${not #lists.isEmpty(credentials)}">
+	<span th:text="#{admin.user.list.empty}"></span>
+</div>
