@@ -1,5 +1,8 @@
 package fr.ynov.dap.exception;
 
+/**
+ * The Class UserException.
+ */
 public class UserException extends Exception {
 
     /**

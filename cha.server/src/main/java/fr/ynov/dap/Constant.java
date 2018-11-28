@@ -1,5 +1,8 @@
 package fr.ynov.dap;
 
+/**
+ * The Class Constant.
+ */
 public class Constant {
 	/**
      * Represent user id on session attributes.

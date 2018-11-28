@@ -11,6 +11,9 @@ import fr.ynov.dap.data.Guest;
 import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 import fr.ynov.dap.model.enumeration.StatusEventEnum;
 
+/**
+ * The Class GoogleCalendarEvent.
+ */
 public class GoogleCalendarEvent implements EventAllApi{
 	/**
      * Event from Google Calendar API.
@@ -41,6 +44,8 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Gets the subject.
+     *
      * @return the subject of the stored Google's event
      */
     @Override
@@ -49,6 +54,8 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Gets the start.
+     *
      * @return the startDate of the stored Google's event
      */
     @Override
@@ -58,6 +65,8 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Gets the end.
+     *
      * @return the endDate of the stored Google's event
      */
     @Override
@@ -67,6 +76,8 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Gets the status.
+     *
      * @return the status of the stored Google's event
      */
     public StatusEventEnum getStatus() {
@@ -127,6 +138,8 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Gets the current user status.
+     *
      * @return the currentUserStatus
      */
     @Override
@@ -135,12 +148,19 @@ public class GoogleCalendarEvent implements EventAllApi{
     }
 
     /**
+     * Sets the current user status.
+     *
      * @param val the currentUserStatus to set
      */
     public void setCurrentUserStatus(final GuestStatusEventEnum val) {
         this.currentUserStatus = val;
     }
 
+    /**
+     * Gets the guest.
+     *
+     * @return the guest
+     */
     @Override
     public final ArrayList<Guest> getGuest() {
         ArrayList<Guest> res = new ArrayList<Guest>();

@@ -2,6 +2,9 @@ package fr.ynov.dap.model.outlook;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The Class OutlookGuest.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookGuest {
 	 /**
@@ -22,6 +25,8 @@ public class OutlookGuest {
     private EmailAddress emailAddress;
 
     /**
+     * Gets the type.
+     *
      * @return the type
      */
     public String getType() {
@@ -29,6 +34,8 @@ public class OutlookGuest {
     }
 
     /**
+     * Sets the type.
+     *
      * @param val the type to set
      */
     public void setType(final String val) {
@@ -36,6 +43,8 @@ public class OutlookGuest {
     }
 
     /**
+     * Gets the status.
+     *
      * @return the status
      */
     public OutlookGuestStatus getStatus() {
@@ -43,6 +52,8 @@ public class OutlookGuest {
     }
 
     /**
+     * Sets the status.
+     *
      * @param val the status to set
      */
     public void setStatus(final OutlookGuestStatus val) {
@@ -50,6 +61,8 @@ public class OutlookGuest {
     }
 
     /**
+     * Gets the email address.
+     *
      * @return the emailAddress
      */
     public EmailAddress getEmailAddress() {
@@ -57,6 +70,8 @@ public class OutlookGuest {
     }
 
     /**
+     * Sets the email address.
+     *
      * @param val the emailAddress to set
      */
     public void setEmailAddress(final EmailAddress val) {

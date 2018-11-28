@@ -8,6 +8,9 @@ import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 import fr.ynov.dap.model.outlook.OutlookEvent;
 import fr.ynov.dap.model.outlook.OutlookGuest;
 
+/**
+ * The Class MicrosoftCalendarEvent.
+ */
 public class MicrosoftCalendarEvent implements EventAllApi{
 	 /**
      * Event from Microsoft Calendar API.
@@ -44,6 +47,8 @@ public class MicrosoftCalendarEvent implements EventAllApi{
 
     /**
      * Return starting date.
+     *
+     * @return the start
      */
     @Override
     public Date getStart() {
@@ -52,6 +57,8 @@ public class MicrosoftCalendarEvent implements EventAllApi{
 
     /**
      * Return ending date.
+     *
+     * @return the end
      */
     @Override
     public Date getEnd() {
@@ -60,6 +67,8 @@ public class MicrosoftCalendarEvent implements EventAllApi{
 
     /**
      * Return event subject.
+     *
+     * @return the subject
      */
     @Override
     public String getSubject() {
@@ -68,6 +77,8 @@ public class MicrosoftCalendarEvent implements EventAllApi{
 
     /**
      * Return current user status for linked event.
+     *
+     * @return the current user status
      */
     @Override
     public GuestStatusEventEnum getCurrentUserStatus() {
@@ -77,6 +88,12 @@ public class MicrosoftCalendarEvent implements EventAllApi{
         return getStatusForGuest(userMail);
     }
 
+    /**
+     * Gets the status for guest.
+     *
+     * @param mail the mail
+     * @return the status for guest
+     */
     @Override
     public final GuestStatusEventEnum getStatusForGuest(final String mail) {
 
@@ -115,6 +132,11 @@ public class MicrosoftCalendarEvent implements EventAllApi{
 
     }
 
+    /**
+     * Gets the guest.
+     *
+     * @return the guest
+     */
     @Override
     public final ArrayList<Guest> getGuest() {
         ArrayList<Guest> res = new ArrayList<Guest>();

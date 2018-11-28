@@ -1,5 +1,8 @@
 package fr.ynov.dap.model.enumeration;
 
+/**
+ * The Enum StatusEventEnum.
+ */
 public enum StatusEventEnum {
 	 
 	/**

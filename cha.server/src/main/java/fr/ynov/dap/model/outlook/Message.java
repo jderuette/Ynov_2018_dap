@@ -4,6 +4,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The Class Message.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
 

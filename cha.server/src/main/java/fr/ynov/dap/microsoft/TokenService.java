@@ -7,6 +7,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * The Interface TokenService.
+ */
 public interface TokenService {
 	/**
      * Get token.

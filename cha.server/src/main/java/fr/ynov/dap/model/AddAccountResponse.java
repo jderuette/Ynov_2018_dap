@@ -1,5 +1,8 @@
 package fr.ynov.dap.model;
 
+/**
+ * The Class AddAccountResponse.
+ */
 public class AddAccountResponse {
 
     /**
@@ -18,6 +21,8 @@ public class AddAccountResponse {
     private String errorDescription = null;
 
     /**
+     * Gets the redirect url.
+     *
      * @return the redirectUrl
      */
     public String getRedirectUrl() {
@@ -25,6 +30,8 @@ public class AddAccountResponse {
     }
 
     /**
+     * Sets the redirect url.
+     *
      * @param val the redirectUrl to set
      */
     public void setRedirectUrl(final String val) {
@@ -32,6 +39,8 @@ public class AddAccountResponse {
     }
 
     /**
+     * Gets the checks if is success.
+     *
      * @return the isSuccess
      */
     public Boolean getIsSuccess() {
@@ -39,6 +48,8 @@ public class AddAccountResponse {
     }
 
     /**
+     * Sets the checks if is success.
+     *
      * @param val the isSuccess to set
      */
     public void setIsSuccess(final Boolean val) {
@@ -46,6 +57,8 @@ public class AddAccountResponse {
     }
 
     /**
+     * Gets the error description.
+     *
      * @return the errorDescription
      */
     public String getErrorDescription() {
@@ -53,6 +66,8 @@ public class AddAccountResponse {
     }
 
     /**
+     * Sets the error description.
+     *
      * @param val the errorDescription to set
      */
     public void setErrorDescription(final String val) {

@@ -33,16 +33,31 @@ import fr.ynov.dap.model.GoogleCalendarEvent;
 @Service
 public class CalendarService extends GoogleService<Calendar> {
 	
+	/** The o auth service. */
 	@Autowired
 	private OAuthService oAuthService;
 	
+	/** The log. */
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 	
+	/**
+	 * Gets the class name.
+	 *
+	 * @return the class name
+	 */
 	@Override
     protected final String getClassName() {
         return CalendarService.class.getName();
 	}
 	
+	/**
+	 * Gets the google client.
+	 *
+	 * @param credential the credential
+	 * @param httpTransport the http transport
+	 * @param appName the app name
+	 * @return the google client
+	 */
 	@Override
     protected final Calendar getGoogleClient(final Credential credential, final NetHttpTransport httpTransport, 
             final String appName) {
@@ -51,11 +66,12 @@ public class CalendarService extends GoogleService<Calendar> {
 
     /**
      * Get next user's event.
+     *
      * @param accountName Current user id
      * @param userEmail Current user mail
      * @return Next event of user linked by the params userId
-     * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
+     * @throws IOException Exception
      */
     private GoogleCalendarEvent getNextEvent(final String accountName, final String userEmail)
             throws GeneralSecurityException, IOException {

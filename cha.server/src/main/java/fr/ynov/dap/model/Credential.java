@@ -2,6 +2,9 @@ package fr.ynov.dap.model;
 
 import fr.ynov.dap.model.enumeration.CredentialEnum;
 
+/**
+ * The Class Credential.
+ */
 public class Credential {
 
     /**
@@ -35,6 +38,8 @@ public class Credential {
     private String tenantId = "";
 
     /**
+     * Gets the user id.
+     *
      * @return the userId
      */
     public String getUserId() {
@@ -42,6 +47,8 @@ public class Credential {
     }
 
     /**
+     * Sets the user id.
+     *
      * @param val the userId to set
      */
     public void setUserId(final String val) {
@@ -49,6 +56,8 @@ public class Credential {
     }
 
     /**
+     * Gets the token.
+     *
      * @return the token
      */
     public String getToken() {
@@ -56,6 +65,8 @@ public class Credential {
     }
 
     /**
+     * Sets the token.
+     *
      * @param val the token to set
      */
     public void setToken(final String val) {
@@ -63,6 +74,8 @@ public class Credential {
     }
 
     /**
+     * Gets the refresh token.
+     *
      * @return the refreshToken
      */
     public String getRefreshToken() {
@@ -70,6 +83,8 @@ public class Credential {
     }
 
     /**
+     * Sets the refresh token.
+     *
      * @param val the refreshToken to set
      */
     public void setRefreshToken(final String val) {
@@ -77,6 +92,8 @@ public class Credential {
     }
 
     /**
+     * Gets the expiration time.
+     *
      * @return the expirationTime
      */
     public long getExpirationTime() {
@@ -84,6 +101,8 @@ public class Credential {
     }
 
     /**
+     * Sets the expiration time.
+     *
      * @param val the expirationTime to set
      */
     public void setExpirationTime(final long val) {
@@ -91,6 +110,8 @@ public class Credential {
     }
 
     /**
+     * Gets the type.
+     *
      * @return the type
      */
     public CredentialEnum getType() {
@@ -98,6 +119,8 @@ public class Credential {
     }
 
     /**
+     * Sets the type.
+     *
      * @param val the type to set
      */
     public void setType(final CredentialEnum val) {
@@ -105,6 +128,8 @@ public class Credential {
     }
 
     /**
+     * Gets the tenant id.
+     *
      * @return the tenantId
      */
     public String getTenantId() {
@@ -112,6 +137,8 @@ public class Credential {
     }
 
     /**
+     * Sets the tenant id.
+     *
      * @param val the tenantId to set
      */
     public void setTenantId(final String val) {

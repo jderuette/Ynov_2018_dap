@@ -6,6 +6,9 @@ import java.util.Date;
 import fr.ynov.dap.data.Guest;
 import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 
+/**
+ * The Interface EventAllApi.
+ */
 public interface EventAllApi {
 	 /**
      * Current event starting date.
@@ -38,5 +41,10 @@ public interface EventAllApi {
      */
     GuestStatusEventEnum getStatusForGuest(String userMail);
 
+    /**
+     * Gets the guest.
+     *
+     * @return the guest
+     */
     ArrayList<Guest> getGuest();
 }

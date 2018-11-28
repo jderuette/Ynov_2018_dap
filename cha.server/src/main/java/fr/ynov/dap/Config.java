@@ -36,12 +36,15 @@ public class Config {
      */
     private static final String DATASTORE_FOLDER = System.getProperty("user.home");
 
+    /** The Constant GOOGLE_CREDENTIAL_PATH. */
     private static final String GOOGLE_CREDENTIAL_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "credentials.json";
 
+    /** The Constant MICROSOFT_CREDENTIAL_PATH. */
     private static final String MICROSOFT_CREDENTIAL_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "auth.properties";
 
+    /** The Constant GLOBAL_CONFIG_PATH. */
     private static final String GLOBAL_CONFIG_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "application.properties";
 
@@ -65,16 +68,22 @@ public class Config {
      */
     private String datastoreFolder = DATASTORE_FOLDER;
 
+    /** The google credentials path. */
     private String googleCredentialsPath = GOOGLE_CREDENTIAL_PATH;
 
+    /** The microsoft credentials path. */
     private String microsoftCredentialsPath = MICROSOFT_CREDENTIAL_PATH;
 
+    /** The microsoft app id. */
     private String microsoftAppId;
 
+    /** The microsoft redirect url. */
     private String microsoftRedirectUrl;
 
+    /** The microsoft app password. */
     private String microsoftAppPassword;
     
+    /** The microsoft authority url. */
     private String microsoftAuthorityUrl;
 
     /**
@@ -147,6 +156,8 @@ public class Config {
     }
 
     /**
+     * Gets the google credentials path.
+     *
      * @return the googleCredentialsPath
      */
     public String getGoogleCredentialsPath() {
@@ -154,6 +165,8 @@ public class Config {
     }
 
     /**
+     * Sets the google credentials path.
+     *
      * @param val the googleCredentialsPath to set
      */
     public void setGoogleCredentialsPath(final String val) {
@@ -161,6 +174,8 @@ public class Config {
     }
 
     /**
+     * Gets the microsoft credentials path.
+     *
      * @return the microsoftCredentialsPath
      */
     public String getMicrosoftCredentialsPath() {
@@ -168,6 +183,8 @@ public class Config {
     }
 
     /**
+     * Sets the microsoft credentials path.
+     *
      * @param val the microsoftCredentialsPath to set
      */
     public void setMicrosoftCredentialsPath(final String val) {
@@ -175,6 +192,8 @@ public class Config {
     }
 
     /**
+     * Gets the microsoft app id.
+     *
      * @return the microsoftAppId
      */
     public String getMicrosoftAppId() {
@@ -182,6 +201,8 @@ public class Config {
     }
 
     /**
+     * Sets the microsoft app id.
+     *
      * @param val the microsoftAppId to set
      */
     public void setMicrosoftAppId(final String val) {
@@ -189,6 +210,8 @@ public class Config {
     }
 
     /**
+     * Gets the microsoft redirect url.
+     *
      * @return the microsoftRedirectUrl
      */
     public String getMicrosoftRedirectUrl() {
@@ -196,6 +219,8 @@ public class Config {
     }
 
     /**
+     * Sets the microsoft redirect url.
+     *
      * @param val the microsoftRedirectUrl to set
      */
     public void setMicrosoftRedirectUrl(final String val) {
@@ -203,6 +228,8 @@ public class Config {
     }
 
     /**
+     * Gets the microsoft app password.
+     *
      * @return the microsoftAppPassword
      */
     public String getMicrosoftAppPassword() {
@@ -210,20 +237,37 @@ public class Config {
     }
 
     /**
+     * Sets the microsoft app password.
+     *
      * @param val the microsoftAppPassword to set
      */
     public void setMicrosoftAppPassword(final String val) {
         this.microsoftAppPassword = val;
     }
 
+    /**
+     * Gets the microsoft authority url.
+     *
+     * @return the microsoft authority url
+     */
     public String getMicrosoftAuthorityUrl() {
 		return microsoftAuthorityUrl;
 	}
 
+	/**
+	 * Sets the microsoft authority url.
+	 *
+	 * @param microsoftAuthorityUrl the new microsoft authority url
+	 */
 	public void setMicrosoftAuthorityUrl(String microsoftAuthorityUrl) {
 		this.microsoftAuthorityUrl = microsoftAuthorityUrl;
 	}
 
+	/**
+	 * Load config.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void loadConfig() throws IOException {
 
         InputStreamReader isr = loadGlobalConfig();
@@ -287,6 +331,12 @@ public class Config {
         }
     }
 
+    /**
+     * Load global config.
+     *
+     * @return the input stream reader
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private InputStreamReader loadGlobalConfig() throws IOException {
         InputStreamReader file = new InputStreamReader(new FileInputStream(GLOBAL_CONFIG_PATH),
                 Charset.forName("UTF-8"));

@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 
 import fr.ynov.dap.data.AppUser;
 
+/**
+ * The Class MicrosoftAccount.
+ */
 @Entity
 public class MicrosoftAccount {
 
@@ -54,6 +57,8 @@ public class MicrosoftAccount {
     private TokenResponse token;
 
     /**
+     * Gets the id.
+     *
      * @return the id
      */
     public Integer getId() {
@@ -61,6 +66,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the id.
+     *
      * @param val the id to set
      */
     public void setId(final Integer val) {
@@ -68,6 +75,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Gets the owner.
+     *
      * @return the owner
      */
     public AppUser getOwner() {
@@ -75,6 +84,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the owner.
+     *
      * @param val the owner to set
      */
     public void setOwner(final AppUser val) {
@@ -82,6 +93,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Gets the email.
+     *
      * @return the userKey
      */
     public String getEmail() {
@@ -89,6 +102,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the email.
+     *
      * @param val the userKey to set
      */
     public void setEmail(final String val) {
@@ -96,6 +111,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Gets the token.
+     *
      * @return the token
      */
     public TokenResponse getToken() {
@@ -103,6 +120,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the token.
+     *
      * @param val the token to set
      */
     public void setToken(final TokenResponse val) {
@@ -110,6 +129,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Gets the tenant id.
+     *
      * @return the tenant id
      */
     public String getTenantId() {
@@ -117,6 +138,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the tenant id.
+     *
      * @param val the tenant id to set
      */
     public void setTenantId(final String val) {
@@ -124,6 +147,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Gets the account name.
+     *
      * @return the accountName
      */
     public String getAccountName() {
@@ -131,6 +156,8 @@ public class MicrosoftAccount {
     }
 
     /**
+     * Sets the account name.
+     *
      * @param val the accountName to set
      */
     public void setAccountName(final String val) {

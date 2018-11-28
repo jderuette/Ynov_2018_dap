@@ -12,7 +12,18 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * The Class GetOutlookService.
+ */
 public class GetOutlookService {
+	
+	/**
+	 * Gets the outlook service.
+	 *
+	 * @param accessToken the access token
+	 * @param userEmail the user email
+	 * @return the outlook service
+	 */
 	public static OutlookGetService getOutlookService(final String accessToken, final String userEmail) {
 
         Interceptor requestInterceptor = new Interceptor() {

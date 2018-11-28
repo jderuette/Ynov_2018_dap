@@ -2,6 +2,9 @@ package fr.ynov.dap.data;
 
 import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 
+/**
+ * The Class Guest.
+ */
 public class Guest {
 	 /**
      * Store mail.
@@ -14,6 +17,8 @@ public class Guest {
     private GuestStatusEventEnum status;
 
     /**
+     * Gets the mail.
+     *
      * @return the mail
      */
     public String getMail() {
@@ -21,6 +26,8 @@ public class Guest {
     }
 
     /**
+     * Sets the mail.
+     *
      * @param val the mail to set
      */
     public void setMail(final String val) {
@@ -28,6 +35,8 @@ public class Guest {
     }
 
     /**
+     * Gets the status.
+     *
      * @return the status
      */
     public GuestStatusEventEnum getStatus() {
@@ -35,6 +44,8 @@ public class Guest {
     }
 
     /**
+     * Sets the status.
+     *
      * @param val the status to set
      */
     public void setStatus(final GuestStatusEventEnum val) {

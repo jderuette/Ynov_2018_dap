@@ -4,6 +4,9 @@ import java.util.Date;
 
 import fr.ynov.dap.model.EventAllApi;
 
+/**
+ * The Class NextEvent.
+ */
 public class NextEvent {
 	/**
      * Store event summary.
@@ -37,6 +40,8 @@ public class NextEvent {
     }
 
     /**
+     * Gets the summary.
+     *
      * @return the eventSummary
      */
     public String getSummary() {
@@ -44,6 +49,8 @@ public class NextEvent {
     }
 
     /**
+     * Sets the summary.
+     *
      * @param val the eventSummary to set
      */
     public void setSummary(final String val) {
@@ -51,6 +58,8 @@ public class NextEvent {
     }
 
     /**
+     * Gets the starting date.
+     *
      * @return the startingDate
      */
     public Date getStartingDate() {
@@ -58,6 +67,8 @@ public class NextEvent {
     }
 
     /**
+     * Sets the start date.
+     *
      * @param val the startingDate to set
      */
     public void setStartDate(final Date val) {
@@ -65,6 +76,8 @@ public class NextEvent {
     }
 
     /**
+     * Gets the ending date.
+     *
      * @return the endingDate
      */
     public Date getEndingDate() {
@@ -72,6 +85,8 @@ public class NextEvent {
     }
 
     /**
+     * Sets the end date.
+     *
      * @param val the endingDate to set
      */
     public void setEndDate(final Date val) {
@@ -79,6 +94,8 @@ public class NextEvent {
     }
 
     /**
+     * Gets the user status.
+     *
      * @return the userStatus
      */
     public Integer getUserStatus() {
@@ -86,6 +103,8 @@ public class NextEvent {
     }
 
     /**
+     * Sets the user status.
+     *
      * @param val the userStatus to set
      */
     public void setUserStatus(final Integer val) {

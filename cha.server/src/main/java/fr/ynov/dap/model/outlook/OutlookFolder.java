@@ -3,6 +3,9 @@ package fr.ynov.dap.model.outlook;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * The Class OutlookFolder.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookFolder {
 
@@ -31,6 +34,8 @@ public class OutlookFolder {
     private Integer totalItemCount;
 
     /**
+     * Gets the display name.
+     *
      * @return the displayName
      */
     public String getDisplayName() {
@@ -38,6 +43,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Sets the display name.
+     *
      * @param val the displayName to set
      */
     public void setDisplayName(final String val) {
@@ -45,6 +52,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Gets the child folder count.
+     *
      * @return the childFolderCount
      */
     public Integer getChildFolderCount() {
@@ -52,6 +61,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Sets the child folder count.
+     *
      * @param val the childFolderCount to set
      */
     public void setChildFolderCount(final Integer val) {
@@ -59,6 +70,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Gets the unread item count.
+     *
      * @return the unreadItemCount
      */
     public Integer getUnreadItemCount() {
@@ -66,6 +79,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Sets the unread item count.
+     *
      * @param val the unreadItemCount to set
      */
     public void setUnreadItemCount(final Integer val) {
@@ -73,6 +88,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Gets the total item count.
+     *
      * @return the totalItemCount
      */
     public Integer getTotalItemCount() {
@@ -80,6 +97,8 @@ public class OutlookFolder {
     }
 
     /**
+     * Sets the total item count.
+     *
      * @param val the totalItemCount to set
      */
     public void setTotalItemCount(final Integer val) {

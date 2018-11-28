@@ -6,6 +6,11 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * The Class PagedResult.
+ *
+ * @param <T> the generic type
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PagedResult<T> {
 

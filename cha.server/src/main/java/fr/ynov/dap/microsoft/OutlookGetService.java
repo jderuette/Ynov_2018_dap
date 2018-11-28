@@ -11,6 +11,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * The Interface OutlookGetService.
+ */
 public interface OutlookGetService {
 	/**
      * Return current user.

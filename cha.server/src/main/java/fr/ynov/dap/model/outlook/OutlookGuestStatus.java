@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 
+/**
+ * The Class OutlookGuestStatus.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookGuestStatus {
 
+    /** The response. */
     private String response;
 
     /**
@@ -17,6 +21,8 @@ public class OutlookGuestStatus {
     private Date time;
 
     /**
+     * Gets the reponse.
+     *
      * @return the response
      */
     public String getReponse() {
@@ -24,6 +30,8 @@ public class OutlookGuestStatus {
     }
 
     /**
+     * Sets the reponse.
+     *
      * @param val the response to set
      */
     public void setReponse(final String val) {
@@ -31,6 +39,8 @@ public class OutlookGuestStatus {
     }
 
     /**
+     * Gets the time.
+     *
      * @return the time
      */
     public Date getTime() {
@@ -38,6 +48,8 @@ public class OutlookGuestStatus {
     }
 
     /**
+     * Sets the time.
+     *
      * @param val the time to set
      */
     public void setTime(final Date val) {

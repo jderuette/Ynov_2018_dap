@@ -1,5 +1,8 @@
 package fr.ynov.dap.exception;
 
+/**
+ * The Class MicrosoftAccountException.
+ */
 public class MicrosoftAccountException extends Exception {
 
     /**

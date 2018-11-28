@@ -2,6 +2,9 @@ package fr.ynov.dap.model;
 
 import java.util.Date;
 
+/**
+ * The Class EventModel.
+ */
 public class EventModel {
 	/** The start. */
 	private Date start;

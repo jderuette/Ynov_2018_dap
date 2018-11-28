@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ynov.dap.Constant;
 
+/**
+ * The Class Token.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Token {
 
@@ -61,6 +64,8 @@ public class Token {
     private String objectId;
 
     /**
+     * Gets the expiration time.
+     *
      * @return the expirationTime
      */
     public long getExpirationTime() {
@@ -68,6 +73,8 @@ public class Token {
     }
 
     /**
+     * Sets the expiration time.
+     *
      * @param val the expirationTime to set
      */
     public void setExpirationTime(final long val) {
@@ -75,6 +82,8 @@ public class Token {
     }
 
     /**
+     * Gets the not before.
+     *
      * @return the notBefore
      */
     public long getNotBefore() {
@@ -82,6 +91,8 @@ public class Token {
     }
 
     /**
+     * Sets the not before.
+     *
      * @param val the notBefore to set
      */
     public void setNotBefore(final long val) {
@@ -89,6 +100,8 @@ public class Token {
     }
 
     /**
+     * Gets the tenant id.
+     *
      * @return the tenantId
      */
     public String getTenantId() {
@@ -96,6 +109,8 @@ public class Token {
     }
 
     /**
+     * Sets the tenant id.
+     *
      * @param val the tenantId to set
      */
     public void setTenantId(final String val) {
@@ -103,6 +118,8 @@ public class Token {
     }
 
     /**
+     * Gets the nonce.
+     *
      * @return the nonce
      */
     public String getNonce() {
@@ -110,6 +127,8 @@ public class Token {
     }
 
     /**
+     * Sets the nonce.
+     *
      * @param val the nonce to set
      */
     public void setNonce(final String val) {
@@ -117,6 +136,8 @@ public class Token {
     }
 
     /**
+     * Gets the name.
+     *
      * @return the name
      */
     public String getName() {
@@ -124,6 +145,8 @@ public class Token {
     }
 
     /**
+     * Sets the name.
+     *
      * @param val the name to set
      */
     public void setName(final String val) {
@@ -199,6 +222,8 @@ public class Token {
     }
 
     /**
+     * Gets the email.
+     *
      * @return the email
      */
     public String getEmail() {
@@ -206,6 +231,8 @@ public class Token {
     }
 
     /**
+     * Sets the email.
+     *
      * @param val the email to set
      */
     public void setEmail(final String val) {

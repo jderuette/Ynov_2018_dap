@@ -18,11 +18,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class PeopleAPIService extends GoogleService<PeopleService> {
 	
+	/**
+	 * Gets the class name.
+	 *
+	 * @return the class name
+	 */
 	@Override
     protected final String getClassName() {
         return PeopleAPIService.class.getName();
 }
 	
+	/**
+	 * Gets the google client.
+	 *
+	 * @param cdt the cdt
+	 * @param httpTransport the http transport
+	 * @param appName the app name
+	 * @return the google client
+	 */
 	@Override
     protected final PeopleService getGoogleClient(final Credential cdt, final NetHttpTransport httpTransport, 
             final String appName) {
@@ -32,6 +45,7 @@ public class PeopleAPIService extends GoogleService<PeopleService> {
     /**
      * Gets the total people.
      *
+     * @param userKey the user key
      * @return the total people
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws GeneralSecurityException the general security exception
@@ -52,6 +66,14 @@ public class PeopleAPIService extends GoogleService<PeopleService> {
        return totalPeople;
     }
     
+    /**
+     * Gets the total people all account.
+     *
+     * @param user the user
+     * @return the total people all account
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     public int getTotalPeopleAllAccount(final AppUser user) throws IOException, GeneralSecurityException {
 	
 		int nbPeopleAllAccount = 0;

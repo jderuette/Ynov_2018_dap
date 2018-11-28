@@ -1,5 +1,8 @@
 package fr.ynov.dap.exception;
 
+/**
+ * The Class GoogleAccountException.
+ */
 public class GoogleAccountException extends Exception {
 
     /**

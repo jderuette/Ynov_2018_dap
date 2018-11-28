@@ -11,6 +11,9 @@ import fr.ynov.dap.model.Credential;
 import fr.ynov.dap.model.enumeration.CredentialEnum;
 import fr.ynov.dap.repository.MicrosoftAccountRepository;
 
+/**
+ * The Class MicrosoftAccountService.
+ */
 @Service
 public class MicrosoftAccountService extends OutlookAPIService {
 	/**
@@ -36,7 +39,8 @@ public class MicrosoftAccountService extends OutlookAPIService {
 
     /**
      * Get every credentials stored in database.
-     * @param repo token repository
+     *
+     * @param microsoftAccountRepository the microsoft account repository
      * @return List of every Microsoft credential stored in database
      */
     public final ArrayList<Credential> getStoredCredentials(final MicrosoftAccountRepository microsoftAccountRepository) {

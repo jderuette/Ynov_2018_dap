@@ -1,5 +1,8 @@
 package fr.ynov.dap.model.enumeration;
 
+/**
+ * The Enum CredentialEnum.
+ */
 public enum CredentialEnum {
 
     /**

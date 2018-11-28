@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import fr.ynov.dap.model.outlook.Message;
 
+/**
+ * The Class Inbox.
+ */
 public class Inbox {
 	/**
      * Store linked microsoft account.
@@ -17,6 +20,8 @@ public class Inbox {
     private ArrayList<Message> messages;
 
     /**
+     * Gets the account.
+     *
      * @return the account
      */
     public MicrosoftAccount getAccount() {
@@ -24,6 +29,8 @@ public class Inbox {
     }
 
     /**
+     * Sets the account.
+     *
      * @param val the account to set
      */
     public void setAccount(final MicrosoftAccount val) {
@@ -31,6 +38,8 @@ public class Inbox {
     }
 
     /**
+     * Gets the messages.
+     *
      * @return the messages
      */
     public ArrayList<Message> getMessages() {
@@ -38,6 +47,8 @@ public class Inbox {
     }
 
     /**
+     * Sets the messages.
+     *
      * @param val the messages to set
      */
     public void setMessages(final ArrayList<Message> val) {

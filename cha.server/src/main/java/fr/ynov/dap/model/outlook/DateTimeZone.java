@@ -4,6 +4,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The Class DateTimeZone.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DateTimeZone {
 
@@ -18,6 +21,8 @@ public class DateTimeZone {
     private String timeZone;
 
     /**
+     * Gets the date time.
+     *
      * @return the dateTime
      */
     public Date getDateTime() {
@@ -25,6 +30,8 @@ public class DateTimeZone {
     }
 
     /**
+     * Sets the date time.
+     *
      * @param val the dateTime to set
      */
     public void setDateTime(final Date val) {
@@ -32,6 +39,8 @@ public class DateTimeZone {
     }
 
     /**
+     * Gets the time zone.
+     *
      * @return the timeZone
      */
     public String getTimeZone() {
@@ -39,6 +48,8 @@ public class DateTimeZone {
     }
 
     /**
+     * Sets the time zone.
+     *
      * @param val the timeZone to set
      */
     public void setTimeZone(final String val) {

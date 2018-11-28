@@ -13,7 +13,7 @@ import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.exception.UserException;
 import fr.ynov.dap.google.GMailService;
 
-@Controller
+@RestController
 @RequestMapping("/welcome")
 public class WelcomeController extends BaseController {
 

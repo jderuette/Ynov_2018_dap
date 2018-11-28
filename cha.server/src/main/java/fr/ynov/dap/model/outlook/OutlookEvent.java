@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The Class OutlookEvent.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OutlookEvent {
 
@@ -118,6 +121,8 @@ public class OutlookEvent {
     }
 
     /**
+     * Gets the guests.
+     *
      * @return the attendees
      */
     public ArrayList<OutlookGuest> getGuests() {
@@ -125,6 +130,8 @@ public class OutlookEvent {
     }
 
     /**
+     * Sets the attendees.
+     *
      * @param val the attendees to set
      */
     public void setAttendees(final ArrayList<OutlookGuest> val) {

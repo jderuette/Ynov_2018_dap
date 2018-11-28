@@ -13,7 +13,6 @@ import fr.ynov.dap.exception.UserException;
 import fr.ynov.dap.google.PeopleAPIService;
 import fr.ynov.dap.microsoft.OutlookService;
 
-
 @RestController
 @RequestMapping(value="/people")
 public class PeopleController extends BaseController {

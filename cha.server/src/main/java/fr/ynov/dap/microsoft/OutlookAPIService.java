@@ -16,6 +16,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * The Class OutlookAPIService.
+ */
 public class OutlookAPIService {
 	 /**
      * Logger instance.
@@ -55,14 +58,29 @@ public class OutlookAPIService {
 
     }
 
+    /**
+     * Gets the logger.
+     *
+     * @return the logger
+     */
     public Logger getLogger() {
         return logger;
     }
 
+    /**
+     * Gets the config.
+     *
+     * @return the config
+     */
     public Config getConfig() {
         return configuration;
     }
 
+    /**
+     * Gets the authorize url.
+     *
+     * @return the authorize url
+     */
     public String getAuthorizeUrl() {
         return configuration.getMicrosoftAuthorityUrl() + "/common/oauth2/v2.0/authorize";
     }
@@ -149,7 +167,8 @@ public class OutlookAPIService {
 
     /**
      * Get a token. Refresh it if needed and save it on database.
-     * @param microsoftAcc User Microsoft account
+     *
+     * @param microsoftAccount the microsoft account
      * @return New token from Microsoft Graph API
      * @throws IOException Exception
      */
@@ -162,6 +181,11 @@ public class OutlookAPIService {
         return newTokens;
     }
 
+    /**
+     * Creates the token service.
+     *
+     * @return the token service
+     */
     public final TokenService createTokenService() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

@@ -2,6 +2,9 @@ package fr.ynov.dap.model.outlook;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * The Class Recipient.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Recipient {
 

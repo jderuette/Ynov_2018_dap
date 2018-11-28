@@ -9,13 +9,23 @@ import org.springframework.stereotype.Service;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.repository.AppUserRepository;
 
+/**
+ * The Class AppUserService.
+ */
 @Service
 public class AppUserService {
 
+	/** The app user repo. */
 	@Autowired
 	private AppUserRepository appUserRepo;
 	
 	
+	/**
+	 * Adds the app user.
+	 *
+	 * @param userKey the user key
+	 * @return the map
+	 */
 	public Map<String, Object> addAppUser(String userKey) {		
 		Map<String, Object> map = new HashMap<>();
 		
