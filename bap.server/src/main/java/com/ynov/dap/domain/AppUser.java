@@ -36,7 +36,6 @@ public class AppUser {
 	    this.getMicrosoftAccounts().add(account);
 	}
 	
-	
 	public Integer getId() {
 		return id;
 	}

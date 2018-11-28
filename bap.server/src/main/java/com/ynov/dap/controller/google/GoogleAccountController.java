@@ -1,5 +1,8 @@
 package com.ynov.dap.controller.google;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,10 +35,12 @@ public class GoogleAccountController extends BaseController {
      * @param session the session
      * @return the string
      * @throws ServletException the servlet exception
+     * @throws IOException 
+     * @throws GeneralSecurityException 
      */
     @RequestMapping("/oAuth2Callback")
     public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
-            final HttpSession session) throws ServletException {
+            final HttpSession session) throws ServletException, GeneralSecurityException, IOException {
 
         final String decodedCode = extracCode(request);
         final String redirectUri = buildRedirectUri(request, config.getoAuth2CallbackUrl());
@@ -46,7 +51,7 @@ public class GoogleAccountController extends BaseController {
 
     @GetMapping("/account/add/google/{accountName}")
     public String addAccount(@PathVariable final String accountName, @RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
-            final HttpSession session) {
+            final HttpSession session) throws GeneralSecurityException, IOException {
     	final String redirectUri = buildRedirectUri(request, config.getoAuth2CallbackUrl());
 
         return googleAccountService.addAccount(accountName, userKey, redirectUri, session);

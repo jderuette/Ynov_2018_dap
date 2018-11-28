@@ -11,13 +11,13 @@
 	</th:if>
 	<div th:each="accountEvents : ${accounts}">
 		<table class="table">
-			<caption th:text="${events.title}"></caption>
+			<caption th:text="#{events.title}"></caption>
 			<thead>
 				<tr>
-					<th th:text="${events.organizer}"></th>
-					<th th:text="${events.subject}"></th>
-					<th th:text="${events.start}"></th>
-					<th th:text="${events.end}"></th>
+					<th th:text="#{events.organizer}"></th>
+					<th th:text="#{events.subject}"></th>
+					<th th:text="#{events.start}"></th>
+					<th th:text="#{events.end}"></th>
 				</tr>
 			</thead>
 			<tbody>

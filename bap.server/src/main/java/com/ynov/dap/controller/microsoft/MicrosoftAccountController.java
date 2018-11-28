@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ynov.dap.controller.BaseController;
 import com.ynov.dap.service.microsoft.AuthHelper;
 
 @RestController
 @RequestMapping("account")
-public class MicrosoftAccountController {
+public class MicrosoftAccountController extends BaseController {
 
 	@GetMapping("/add/microsoft/{accountName}")
 	public void addAccount(@PathVariable final String accountName,
@@ -39,4 +40,9 @@ public class MicrosoftAccountController {
 		response.setStatus(302);
 	}
 
+	@Override
+	public String getClassName() {
+		return MicrosoftAccountController.class.getName();
+	}
+	
 }

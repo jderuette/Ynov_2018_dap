@@ -10,18 +10,20 @@ import org.springframework.stereotype.Service;
 import com.ynov.dap.domain.AppUser;
 import com.ynov.dap.domain.microsoft.MicrosoftAccount;
 import com.ynov.dap.model.ContactModel;
+import com.ynov.dap.model.MailModel;
 import com.ynov.dap.model.microsoft.Contact;
 import com.ynov.dap.model.microsoft.PagedResult;
 import com.ynov.dap.model.microsoft.TokenResponse;
 import com.ynov.dap.repository.AppUserRepository;
+import com.ynov.dap.service.BaseService;
 
 @Service
-public class MicrosoftContactService {
+public class MicrosoftContactService extends BaseService {
 
 	@Autowired
 	private AppUserRepository appUserRepository;
 
-	public Integer getNbContacts(final MicrosoftAccount account) {
+	public Integer getNbContacts(final MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
 		TokenResponse tokens = account.getTokenResponse();
@@ -29,32 +31,28 @@ public class MicrosoftContactService {
 		tokens = AuthHelper.ensureTokens(tokens, tenantId);
 		OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
-		try {
-			PagedResult<Contact> contacts = outlookService.getNbContacts().execute().body();
+		PagedResult<Contact> contacts = outlookService.getNbContacts().execute().body();
 
-			System.out.println("NB contacts");
-			System.out.println(contacts.getCount());
-			return contacts.getCount();
-		} catch (IOException e) {
-			e.getStackTrace();
-		}
+		return contacts.getCount();
 
-		return 0;
 	}
 
-	public ContactModel getNbContacts(String user) {
-		AppUser appUser = appUserRepository.findByName(user);
-
+	public ContactModel getNbContacts(String userKey) throws IOException {
 		Integer nbContacts = 0;
-		for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
 
+		AppUser appUser = appUserRepository.findByName(userKey);
+		if (appUser == null) {
+			getLogger().error("userKey '" + userKey + "' not found");
+			return new ContactModel(nbContacts);
+		}
+		for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
 			nbContacts += getNbContacts(account);
 		}
 
 		return new ContactModel(nbContacts);
 	}
 
-	public Contact[] getContacts(final MicrosoftAccount account) {
+	public Contact[] getContacts(final MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
 		TokenResponse tokens = account.getTokenResponse();
@@ -67,29 +65,27 @@ public class MicrosoftContactService {
 		String properties = "GivenName,Surname,CompanyName,EmailAddresses";
 		Integer maxResults = 10;
 
-		try {
-			PagedResult<Contact> contacts = outlookService.getContacts(sort, properties, maxResults).execute().body();
+		PagedResult<Contact> contacts = outlookService.getContacts(sort, properties, maxResults).execute().body();
 
-			System.out.println("contacts");
-			System.out.println(contacts.getValue());
+		return contacts.getValue();
 
-			return contacts.getValue();
-		} catch (IOException e) {
-			e.getStackTrace();
-		}
-		return null;
 	}
 
-	public List<Contact[]> getContacts(String user) {
+	public List<Contact[]> getContacts(String user) throws IOException {
 		AppUser appUser = appUserRepository.findByName(user);
 
 		List<Contact[]> contacts = new ArrayList<Contact[]>();
-		
+
 		for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
 			contacts.add(getContacts(account));
 		}
-		
+
 		return contacts;
+	}
+
+	@Override
+	protected String getClassName() {
+		return MicrosoftContactService.class.getName();
 	}
 
 }

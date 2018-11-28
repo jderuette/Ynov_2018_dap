@@ -11,7 +11,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
-import com.ynov.dap.Config;
+import com.ynov.dap.service.BaseService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,29 +21,10 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * The Class GoogleService.
  */
-public abstract class GoogleService {
-
-    protected abstract String getClassName();
-
-    private Logger logger = LogManager.getLogger(getClassName());
-
-    @Autowired
-    private Config config;
-    
-    protected Config getConfig() {
-    	return config;
-    }
-
-    protected Logger getLogger() {
-        return logger;
-    }
+public abstract class GoogleService extends BaseService {
 
     /** The Constant JSON_FACTORY. */
     protected static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -83,14 +64,14 @@ public abstract class GoogleService {
     public GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
         		new InputStreamReader(new FileInputStream(
-        				config.getCredentialsFolder()
-        				+ "/" + config.getClientSecretFile()), Charset.forName("UTF-8")));
+        				getConfig().getCredentialsFolder()
+        				+ "/" + getConfig().getClientSecretFile()), Charset.forName("UTF-8")));
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
         return new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientSecrets, ALL_SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getCredentialsFolderToken())))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(getConfig().getCredentialsFolderToken())))
                 .setAccessType("offline")
                 .build();
     }

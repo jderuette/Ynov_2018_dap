@@ -18,55 +18,46 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMailService extends GoogleService {
 
-    @Autowired
-    private AppUserRepository appUserRepository;
-	
-    /**
-     * Instantiates a new mail service.
-     */
-    public GoogleMailService() {
-        super();
-    }
+	@Autowired
+	private AppUserRepository appUserRepository;
 
-    /**
-     * Gets the nb unread emails.
-     *
-     * @param user the user
-     * @return the nb unread emails
-     * @throws Exception the exception
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public MailModel getNbUnreadEmails(final String user) throws Exception, IOException {
-        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+	/**
+	 * Gets the nb unread emails.
+	 *
+	 * @param user the user
+	 * @return the nb unread emails
+	 * @throws Exception   the exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public MailModel getNbUnreadEmails(final String userKey) throws Exception, IOException {
+		final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+		AppUser appUser = appUserRepository.findByName(userKey);
 
-        AppUser appUser = appUserRepository.findByName(user);
-        List<GoogleAccount> accounts = appUser.getGoogleAccounts();
+		if (appUser == null) {
+			getLogger().error("userKey '" + userKey + "' not found");
+			return new MailModel(0);
+		}
 
-        MailModel mail = new MailModel();
-        Integer nbUnreadMails = 0;
+		List<GoogleAccount> accounts = appUser.getGoogleAccounts();
+		MailModel mail = new MailModel();
+		Integer nbUnreadMails = 0;
 
-        for (GoogleAccount account: accounts) {
-            Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
-                    .setApplicationName(getConfig().getApplicationName())
-                    .build();
-            
-            Label label = service.users().labels().get("me", "INBOX").execute();
-            nbUnreadMails += label.getMessagesUnread();
-        }
-        
-        mail.setUnRead(nbUnreadMails);
+		for (GoogleAccount account : accounts) {
+			Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
+					.setApplicationName(getConfig().getApplicationName()).build();
 
-        getLogger().info("nb messages unread " + mail.getUnRead() + " for user : " + user);
-        
-        System.out.println("getNbUnreadEmails");
-        System.out.println(mail.getUnRead());
-        
-        return mail;
-    }
+			Label label = service.users().labels().get("me", "INBOX").execute();
+			nbUnreadMails += label.getMessagesUnread();
+		}
+		mail.setUnRead(nbUnreadMails);
+		getLogger().info("nb messages unread " + mail.getUnRead() + " for user : " + userKey);
 
-    @Override
-    public String getClassName() {
-        return GoogleMailService.class.getName();
-    }
+		return mail;
+	}
+
+	@Override
+	public String getClassName() {
+		return GoogleMailService.class.getName();
+	}
 
 }

@@ -1,6 +1,5 @@
 # DAP
 
-TODO :
 /admin
 	/ <- Affiche microsoft + google combiné
 	/microsoft <- Affiche l'ensemble des comptes microsoft
@@ -26,3 +25,9 @@ TODO :
 		/google/{user}
 		
 	/microsoft/{user} <- Affiche les premiers contact de microsoft
+	
+/account/add/
+	/microsoft/{user}?userKey={userKey}
+	/google/{user}?userKey={userKey}
+	
+/user/add/{user}

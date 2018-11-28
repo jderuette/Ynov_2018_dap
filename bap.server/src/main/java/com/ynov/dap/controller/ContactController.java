@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dap.model.ContactModel;
-import com.ynov.dap.model.MailModel;
 import com.ynov.dap.service.google.GoogleContactService;
 import com.ynov.dap.service.microsoft.MicrosoftContactService;
 
@@ -32,25 +31,21 @@ public class ContactController extends BaseController {
 	 *
 	 * @param gUser the g user
 	 * @return the nb contacts
+	 * @throws GeneralSecurityException 
+	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/google/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ContactModel> getGoogleNbContacts(@PathVariable final String appUser) {
+	public ResponseEntity<ContactModel> getGoogleNbContacts(@PathVariable final String appUser) throws IOException, GeneralSecurityException {
 		if (appUser == null || appUser.length() <= 0) {
 			return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
 		}
 
-		try {
-			return new ResponseEntity<ContactModel>(googleContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
-		} catch (IOException e) {
-			getLogger().error(e.getMessage());
-		} catch (Exception e) {
-			getLogger().error(e.getMessage());
-		}
-		return new ResponseEntity<ContactModel>(new ContactModel(0), HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<ContactModel>(googleContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
 	}
 
 	@RequestMapping(value = "/microsoft/{appUser}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ContactModel> getMicrosoftNbContacts(@PathVariable final String appUser) {
+	public ResponseEntity<ContactModel> getMicrosoftNbContacts(@PathVariable final String appUser) throws IOException {
 
 		return new ResponseEntity<ContactModel>(microsoftContactService.getNbContacts(appUser), HttpStatus.ACCEPTED);
 	}

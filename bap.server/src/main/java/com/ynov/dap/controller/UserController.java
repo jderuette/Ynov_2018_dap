@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ynov.dap.service.AppUserService;
 
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private AppUserService appUserService;
@@ -22,5 +22,10 @@ public class UserController {
     	
         return "index";
     }
+    
+	@Override
+	public String getClassName() {
+		return UserController.class.getName();
+	}
 
 }

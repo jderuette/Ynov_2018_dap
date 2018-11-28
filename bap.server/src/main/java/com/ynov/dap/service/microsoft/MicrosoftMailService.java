@@ -15,51 +15,42 @@ import com.ynov.dap.model.microsoft.Message;
 import com.ynov.dap.model.microsoft.PagedResult;
 import com.ynov.dap.model.microsoft.TokenResponse;
 import com.ynov.dap.repository.AppUserRepository;
+import com.ynov.dap.service.BaseService;
 
 @Service
-public class MicrosoftMailService {
+public class MicrosoftMailService extends BaseService {
 
 	@Autowired
 	private AppUserRepository appUserRepository;
 
-	private Integer getNbUnreadEmails(final MicrosoftAccount account) {
-
+	private Integer getNbUnreadEmails(final MicrosoftAccount account) throws IOException {
 		if (account == null) {
 			return 0;
 		}
 
 		String email = account.getEmail();
-		String tenantId = account.getTenantId();
 		TokenResponse tokens = account.getTokenResponse();
-
-		System.out.println(email);
-		System.out.println(tenantId);
-		System.out.println(tokens);
-
-		/*
-		 * if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email)
-		 * || tokens == null) { return 0; }
-		 */
-
-		// TokenResponse newTokens = getToken(microsoftAccount);
-
+		
 		OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
-		Folder inboxFolder = null;
-		try {
-			inboxFolder = outlookService.getFolder("inbox").execute().body();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		Folder inboxFolder = outlookService.getFolder("inbox").execute().body();
+		
+		if (inboxFolder == null) {
+			return 0;
 		}
 
+		getLogger().info("Nb messages unread " + inboxFolder.getUnreadItemCount() + " for the account '" + account.getName() + "'");
 		return inboxFolder.getUnreadItemCount();
 	}
 
-	public MailModel getNbUnreadEmails(String user) {
+	public MailModel getNbUnreadEmails(String userKey) throws IOException {
+		AppUser appUser = appUserRepository.findByName(userKey);
 
-		AppUser appUser = appUserRepository.findByName(user);
-
+		if (appUser == null) {
+			getLogger().error("userKey '" + userKey + "' not found");
+			return new MailModel(0);
+		}
+		
 		MailModel mail = new MailModel();
 		Integer nbUnreadMails = 0;
 
@@ -70,15 +61,11 @@ public class MicrosoftMailService {
 		}
 		mail.setUnRead(nbUnreadMails);
 
-		// getLogger().info("nb messages unread " + mail.getUnRead() + " for
-		// user : " + user);
+		getLogger().info("Total nb messages unread " + mail.getUnRead() + " for userKey : " + userKey);
 		return mail;
 	}
 
-	private Message[] getEmails(MicrosoftAccount account) {
-
-		System.out.println(account.getName());
-		
+	private Message[] getEmails(MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
 		TokenResponse tokens = account.getTokenResponse();
@@ -86,45 +73,36 @@ public class MicrosoftMailService {
 
 		OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
-		// Retrieve messages from the inbox
 		String folder = "inbox";
-		// Sort by time received in descending order
 		String sort = "receivedDateTime DESC";
-		// Only return the properties we care about
 		String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-		// Return at most 10 messages
 		Integer maxResults = 10;
 
 		PagedResult<Message> messages = null;
-		try {
-			messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(messages.getValue()[0].getSubject());
+		messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
 
 		return messages.getValue();
 	}
 
-	public List<Message[]> getEmails(String user) {
-		AppUser appUser = appUserRepository.findByName(user);
-
+	public List<Message[]> getEmails(String userKey) throws IOException {
 		List<Message[]> messages = new ArrayList<Message[]>();
-		
+
+		AppUser appUser = appUserRepository.findByName(userKey);
+		if (appUser == null) {
+			getLogger().error("userKey '" + userKey + "' not found");
+			return messages;
+		}
+
 		for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
 			messages.add(getEmails(account));
 		}
-		
-		System.out.println(messages);
-		
-		return messages;
 
+		return messages;
 	}
 
-	/*
-	 * @Override public String getClassName() { return
-	 * GoogleMailService.class.getName(); }
-	 */
+	@Override
+	public String getClassName() {
+		return MicrosoftMailService.class.getName();
+	}
 
 }

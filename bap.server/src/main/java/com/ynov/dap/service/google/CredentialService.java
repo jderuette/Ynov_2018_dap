@@ -11,15 +11,9 @@ import com.google.api.client.util.store.DataStore;
 @Service
 public class CredentialService extends GoogleService {
 
-	public DataStore<StoredCredential> returnCredentials() {
+	public DataStore<StoredCredential> returnCredentials() throws GeneralSecurityException, IOException {
 		DataStore<StoredCredential> credentials = null;
-		try {
-			credentials = getFlow().getCredentialDataStore();
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		credentials = getFlow().getCredentialDataStore();
 		return credentials;
 	}
 

@@ -107,8 +107,11 @@ public class CalendarModel {
         this.endDate = inEndDate;
         this.state = inState;
     }
-
-	public CalendarModel() {
-		// TODO Auto-generated constructor stub
-	}
+    
+    public CalendarModel() {
+       this.subject = "";
+       this.startDate = null;
+       this.endDate = null;
+       this.state = "";
+   }
 }

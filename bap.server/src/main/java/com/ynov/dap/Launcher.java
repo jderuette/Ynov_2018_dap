@@ -2,7 +2,6 @@ package com.ynov.dap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 
 /**
@@ -18,10 +17,5 @@ public class Launcher {
      */
     public static void main(final String[] args) {
         SpringApplication.run(Launcher.class, args);
-    }
-    
-    @Bean
-    public Config loadConfig() {
-        return new Config();
     }
 }

@@ -26,37 +26,20 @@ public class MailController extends BaseController {
     private MicrosoftMailService microsoftMailService;
 
     @GetMapping(value = "/google/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MailModel> getGoogleNbUnread(@PathVariable final String appUser) {
-        try {
-            return new ResponseEntity<MailModel>(googleMailService.getNbUnreadEmails(appUser), HttpStatus.ACCEPTED);
-        } catch (IOException e) {
-            getLogger().error(e.getMessage());
-        } catch (Exception e) {
-            getLogger().error(e.getMessage());
-        }
-        return new ResponseEntity<MailModel>(new MailModel(0), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<MailModel> getGoogleNbUnread(@PathVariable final String appUser) throws IOException, Exception {
+    	
+    	return new ResponseEntity<MailModel>(googleMailService.getNbUnreadEmails(appUser), HttpStatus.ACCEPTED);
     }
     
     @GetMapping(value = "/microsoft/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MailModel> getMicrosoftNbUnread(@PathVariable final String appUser) {
-        try {
-            return new ResponseEntity<MailModel>(microsoftMailService.getNbUnreadEmails(appUser), HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            getLogger().error(e.getMessage());
-        }
-        return new ResponseEntity<MailModel>(new MailModel(0), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<MailModel> getMicrosoftNbUnread(@PathVariable final String appUser) throws IOException {
+        return new ResponseEntity<MailModel>(microsoftMailService.getNbUnreadEmails(appUser), HttpStatus.ACCEPTED);
     }
     
     @GetMapping(value = "/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MailModel> getAllNbUnread(@PathVariable final String appUser) {
-    	MailModel googleMail = new MailModel(0);
-		try {
-			googleMail = googleMailService.getNbUnreadEmails(appUser);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+    public ResponseEntity<MailModel> getAllNbUnread(@PathVariable final String appUser) throws IOException, Exception {
+    	MailModel googleMail = googleMailService.getNbUnreadEmails(appUser);
+
     	MailModel microsoftMail = microsoftMailService.getNbUnreadEmails(appUser);
 
         return new ResponseEntity<MailModel>(new MailModel(googleMail.getUnRead() + microsoftMail.getUnRead()), HttpStatus.ACCEPTED);

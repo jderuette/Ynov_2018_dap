@@ -1,5 +1,8 @@
 package com.ynov.dap.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,21 +27,13 @@ public class CalendarController extends BaseController {
 	private MicrosoftCalendarService microsoftCalendarService;
 
 	@GetMapping(value = "/google/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CalendarModel> getGoogleNextEvent(@PathVariable final String appUser) {
+	public ResponseEntity<CalendarModel> getGoogleNextEvent(@PathVariable final String appUser) throws GeneralSecurityException, IOException {
 
-		try {
-			System.out.println(googleCalendarService.getNextEvent(appUser));
-
-			return new ResponseEntity<CalendarModel>(googleCalendarService.getNextEvent(appUser), HttpStatus.ACCEPTED);
-		} catch (Exception e) {
-			getLogger().error(e.getMessage());
-		}
-
-		return new ResponseEntity<CalendarModel>(new CalendarModel("", null, null, ""), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<CalendarModel>(googleCalendarService.getNextEvent(appUser), HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping(value = "/microsoft/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CalendarModel> getMicrosoftNextEvent(@PathVariable final String appUser) {
+	public ResponseEntity<CalendarModel> getMicrosoftNextEvent(@PathVariable final String appUser) throws Exception {
 
 		microsoftCalendarService.getNextEvent(appUser);
 
@@ -52,9 +47,19 @@ public class CalendarController extends BaseController {
 		CalendarModel googleCalendar = googleCalendarService.getNextEvent(appUser);
 		CalendarModel microsoftCalendar = microsoftCalendarService.getNextEvent(appUser);
 
-		CalendarModel finalCalendar = null;
+		CalendarModel finalCalendar = new CalendarModel();
 
-		if (googleCalendar != null && microsoftCalendar != null) {
+		if (googleCalendar.getStartDate() != null && microsoftCalendar.getStartDate() == null) {
+			finalCalendar = new CalendarModel(googleCalendar.getSubject(), googleCalendar.getStartDate(),
+					googleCalendar.getEndDate(), googleCalendar.getState());
+			return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
+		} else if (googleCalendar.getStartDate() == null && microsoftCalendar.getStartDate() != null) {
+			finalCalendar = new CalendarModel(microsoftCalendar.getSubject(), microsoftCalendar.getStartDate(),
+					microsoftCalendar.getEndDate(), "UNKOWN");
+			return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
+		}
+		
+		if (googleCalendar.getStartDate() != null && microsoftCalendar.getStartDate() != null) {
 			if (googleCalendar.getStartDate().before(microsoftCalendar.getStartDate())) {
 				finalCalendar = new CalendarModel(microsoftCalendar.getSubject(), microsoftCalendar.getStartDate(),
 						microsoftCalendar.getEndDate(), "UNKOWN");
@@ -63,8 +68,8 @@ public class CalendarController extends BaseController {
 						googleCalendar.getEndDate(), googleCalendar.getState());
 			}
 		}
-
-		return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
 	}
 
 	@Override

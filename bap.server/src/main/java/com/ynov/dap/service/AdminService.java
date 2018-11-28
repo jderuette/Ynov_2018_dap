@@ -1,6 +1,7 @@
 package com.ynov.dap.service;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,41 +15,35 @@ import com.ynov.dap.repository.microsoft.MicrosoftAccountRepository;
 import com.ynov.dap.service.google.CredentialService;
 
 @Service
-public class AdminService {
-	
-    @Autowired
-    private CredentialService credentialService;
-    
-    @Autowired
-    private MicrosoftAccountRepository microsoftAccountRepository;
-    
-	public Map<String, Object> getGoogleDataStore() {
-		try {
-			Map<String, Object> dataStore = new HashMap<String, Object>();
-			DataStore<StoredCredential> credentials = credentialService.getFlow().getCredentialDataStore();
+public class AdminService extends BaseService {
 
-			for (String key : credentials.keySet()) {
-				Map<String, Object> userData = new HashMap<String, Object>();
-				StoredCredential values = credentials.get(key);
-				userData.put("accessToken", values.getAccessToken());
-				userData.put("refreshToken", values.getRefreshToken());
-				userData.put("expirationTimeMilliseconds", values.getExpirationTimeMilliseconds());
+	@Autowired
+	private CredentialService credentialService;
 
-				dataStore.put(key, userData);
-			}
+	@Autowired
+	private MicrosoftAccountRepository microsoftAccountRepository;
 
-			return dataStore;
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public Map<String, Object> getGoogleDataStore() throws GeneralSecurityException, IOException {
+
+		Map<String, Object> dataStore = new HashMap<String, Object>();
+		DataStore<StoredCredential> credentials = credentialService.getFlow().getCredentialDataStore();
+
+		for (String key : credentials.keySet()) {
+			Map<String, Object> userData = new HashMap<String, Object>();
+			StoredCredential values = credentials.get(key);
+			userData.put("accessToken", values.getAccessToken());
+			userData.put("refreshToken", values.getRefreshToken());
+			userData.put("expirationTimeMilliseconds", values.getExpirationTimeMilliseconds());
+
+			dataStore.put(key, userData);
 		}
-		return null;
+
+		return dataStore;
 	}
-	
+
 	public Map<Integer, Object> getMicrosoftDataStore() {
 		Map<Integer, Object> dataStore = new HashMap<Integer, Object>();
-		
+
 		Integer index = 0;
 		for (MicrosoftAccount account : microsoftAccountRepository.findAll()) {
 			Map<String, Object> userData = new HashMap<String, Object>();
@@ -60,8 +55,13 @@ public class AdminService {
 			dataStore.put(index, userData);
 			index++;
 		}
-		
+
 		return dataStore;
 	}
-	
+
+	@Override
+	protected String getClassName() {
+		return AdminService.class.getName();
+	}
+
 }

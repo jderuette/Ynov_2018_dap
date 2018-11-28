@@ -1,9 +1,11 @@
 package com.ynov.dap;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("classpath:config.properties")
+@Configuration
 public class Config {
 	
     private String dataStoreDirectory = System.getProperty("user.home");

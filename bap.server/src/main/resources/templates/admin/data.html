@@ -15,6 +15,14 @@
 </head>
 <body>
 	<h1>DataStore</h1>
+	<div th:unless="${dataStore.isEmpty()}">
+		<div th:each="occurence : ${dataStore}" style="margin-bottom: 10px;">
+			<div><span th:text="#{datastore.google.user}"></span><span th:text="${occurence.key}"></span></div>
+			<div><span th:text="#{datastore.google.accessToken}"></span><span th:text="${occurence.value.accessToken}"></span></div>
+			<div><span th:text="#{datastore.google.refreshToken}"></span><span th:text="${occurence.value.refreshToken}"></span></div>
+			<div><span th:text="#{datastore.google.expirationTimeMilliseconds}"></span><span th:text="${occurence.value.expirationTimeMilliseconds}"></span></div>
+		</div>
+	</div>
 	<div th:unless="${tokens.isEmpty()}">
 		<div th:each="occurence : ${tokens}" style="margin-bottom: 10px;">
 			<div><span th:text="#{tokens.microsoft.tenantId}"></span><span th:text="${occurence.value.name}"></span></div>

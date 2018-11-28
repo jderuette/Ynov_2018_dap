@@ -34,7 +34,7 @@ public class GoogleContactService extends GoogleService {
 
         Integer nbPeople = response.getTotalPeople();
         if (nbPeople != null) {
-
+            getLogger().info("Contacts found for user : " + account.getName());
             return nbPeople;
         } else {
             getLogger().error("No contacts found for user : " + account.getName());
@@ -43,13 +43,19 @@ public class GoogleContactService extends GoogleService {
     }
     
     public ContactModel getNbContacts(final String userKey) throws IOException, GeneralSecurityException {
-    	
-		AppUser appUser = appUserRepository.findByName(userKey);
-		
 		Integer nbContacts = 0;
+
+		AppUser appUser = appUserRepository.findByName(userKey);
+		if (appUser == null) {
+			getLogger().error("userKey '" + userKey + "' not found");
+			return new ContactModel(nbContacts);
+		}
+
 		for (GoogleAccount account : appUser.getGoogleAccounts()) {
 			nbContacts += getNbContacts(account);
 		}
+
+        getLogger().info("Total Contacts for userKey : " + userKey);
 
 		return new ContactModel(nbContacts);
     }
