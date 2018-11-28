@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+</head>
+<body>
+	<th:if test="${error ne null}">
+		<span th:text="${error}"></span>
+	</th:if>
+	<div th:each="accountEvents : ${accounts}">
+		<table class="table">
+			<caption th:text="#{events.title}"></caption>
+			<thead>
+				<tr>
+					<th th:text="#{events.organizer}"></th>
+					<th th:text="#{events.subject}"></th>
+					<th th:text="#{events.start}"></th>
+					<th th:text="#{events.end}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<div th:each="event : ${accountEvents}">
+					<tr>
+						<td th:text="${event.organizer.emailAddress.name}"></td>
+						<td th:text="${event.subject}"></td>
+						<td th:text="${event.start.dateTime}"></td>
+						<td th:text="${event.end.dateTime}"></td>
+					</tr>
+				</div>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

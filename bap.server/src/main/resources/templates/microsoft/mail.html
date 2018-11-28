@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+</head>
+<body>
+	<th:if test="${error ne null}">
+		<span th:text="${error}"></span>
+	</th:if>
+	<div th:each="accountMessages : ${accounts}" style="margin-bottom: 10px;">
+		<table class="table">
+			<caption><span th:text="#{emails.title}"></span></caption>
+			<thead>
+				<tr>
+					<th><span class="glyphicon glyphicon-envelope"></span></th>
+					<th><span th:text="#{emails.from}"></span></th>
+					<th th:text="#{emails.subject}"></th>
+					<th th:text="#{emails.received}"></th>
+					<th th:text="#{emails.preview}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<div th:each="message : ${accountMessages}" style="margin-bottom: 10px;">
+					<tr th:classappend="${message.isRead == true ? '' : 'info'}" style="margin-bottom: 10px;">
+						<td><span th:if="${message.isRead == false}" class="glyphicon glyphicon-envelope"></span></td>
+						<td th:text="${message.from.emailAddress.name}"></td>
+						<td th:text="${message.subject}"></td>
+						<td th:text="${message.receivedDateTime}"></td>
+						<td th:text="${message.bodyPreview}"></td>
+					</tr>
+				</div>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
