@@ -15,6 +15,7 @@
 </head>
 <body>
 	<h1>DataStore</h1>
+	<a href="/mail/microsoft/VOTREUSER/view" th:text="#{admin.gotoMail}"></a>
 	<div th:unless="${dataStore.isEmpty()}">
 		<div th:each="occurence : ${dataStore}" style="margin-bottom: 10px;">
 			<div><span th:text="#{datastore.google.user}"></span><span th:text="${occurence.key}"></span></div>
@@ -25,7 +26,7 @@
 	</div>
 	<div th:unless="${tokens.isEmpty()}">
 		<div th:each="occurence : ${tokens}" style="margin-bottom: 10px;">
-			<div><span th:text="#{tokens.microsoft.tenantId}"></span><span th:text="${occurence.value.name}"></span></div>
+			<div><span th:text="#{tokens.microsoft.name}"></span><span th:text="${occurence.value.name}"></span></div>
 			<div><span th:text="#{tokens.microsoft.tenantId}"></span><span th:text="${occurence.value.tenantId}"></span></div>
 			<div style="word-wrap: break-word; max-width: 100%;"><span th:text="#{tokens.microsoft.tokenResponse}"></span><span th:text="${occurence.value.tokenResponse}"></span></div>
 		</div>
