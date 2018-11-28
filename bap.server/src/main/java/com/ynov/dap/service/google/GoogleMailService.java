@@ -10,6 +10,7 @@ import com.ynov.dap.model.MailModel;
 import com.ynov.dap.repository.AppUserRepository;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,34 @@ public class GoogleMailService extends GoogleService {
     /**
      * Gets the nb unread emails.
      *
+     * @param account the account
+     * @return the nb unread emails
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
+    private Integer getNbUnreadEmails(GoogleAccount account) throws IOException, GeneralSecurityException {
+        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
+                .setApplicationName(getConfig().getApplicationName()).build();
+
+        Label label = service.users().labels().get("me", "INBOX").execute();
+
+        if (label == null) {
+            return 0;
+        }
+
+        return label.getMessagesUnread();
+    }
+
+    /**
+     * Gets the nb unread emails.
+     *
      * @param userKey the user key
      * @return the nb unread emails
      * @throws Exception   the exception
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public MailModel getNbUnreadEmails(final String userKey) throws Exception, IOException {
-        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         AppUser appUser = appUserRepository.findByName(userKey);
 
         if (appUser == null) {
@@ -47,11 +69,7 @@ public class GoogleMailService extends GoogleService {
         Integer nbUnreadMails = 0;
 
         for (GoogleAccount account : accounts) {
-            Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
-                    .setApplicationName(getConfig().getApplicationName()).build();
-
-            Label label = service.users().labels().get("me", "INBOX").execute();
-            nbUnreadMails += label.getMessagesUnread();
+            nbUnreadMails += getNbUnreadEmails(account);
         }
         mail.setUnRead(nbUnreadMails);
         getLogger().info("nb messages unread " + mail.getUnRead() + " for user : " + userKey);

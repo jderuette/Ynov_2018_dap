@@ -27,7 +27,7 @@ public class App
     
     private static void usageExplain() {
 		System.out.println("USAGE :");
-		System.out.println("add [google|microsoft] <userId>");
+		System.out.println("add [google|microsoft] <user> <userKey>");
 		System.out.println("view <userId>");
 		System.out.println("email <userId>");
 		System.out.println("calendar <userId>");
@@ -42,11 +42,14 @@ public class App
     public static void checkArgs(String[] args) {
     	if (args == null || args.length == 0) {
     		System.out.println("MISSING PARAMS");
+    		usageExplain();
+    		return;
     	}
     	
-    	if (args.length > 2) {
+    	if (args.length > 4) {
     		System.out.println("TOO MUCH PARAMS");
     		usageExplain();
+    		return;
     	}
         
         switch (args[0]) {
@@ -55,10 +58,10 @@ public class App
 	        	
 	        	switch (args[1]) {
 	        		case "google":
-	        			url = "http://localhost:8080/account/add/google/" + args[2];
+	        			url = "http://localhost:8080/account/add/google/" + args[2] + "?userKey=" + args[3];
 	        			break;
 	        		case "microsoft":
-	        			url = "http://localhost:8080/account/add/microsoft/" + args[2];
+	        			url = "http://localhost:8080/account/add/microsoft/" + args[2] + "?userKey=" + args[3];
 	        			break;
 		        	default:
 			    		usageExplain();
@@ -77,7 +80,7 @@ public class App
 				}
 	            break;
 	        case "email":
-	        	System.out.println(getRequest("http://localhost:8080/mail/unread/final/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/mail/unread/" + args[1]));
 	            break;
 	        case "calendar":
 	        	System.out.println(getRequest("http://localhost:8080/calendar/" + args[1]));
@@ -86,7 +89,7 @@ public class App
 	        	System.out.println(getRequest("http://localhost:8080/contact/nb/" + args[1]));
 	            break;
 	        case "view":
-	        	System.out.println(getRequest("http://localhost:8080/mail/unread/final/" + args[1]));
+	        	System.out.println(getRequest("http://localhost:8080/mail/unread/" + args[1]));
 	        	System.out.println(getRequest("http://localhost:8080/calendar/" + args[1]));
 	        	System.out.println(getRequest("http://localhost:8080/contact/nb/" + args[1]));
 	        	break;
