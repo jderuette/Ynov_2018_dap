@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+</head>
+<body>
+	<h1 th:text="#{login.title}">login_Success</h1>
+	<table>
+		<caption>DataStore</caption>
+
+		<tr>
+			<th th:text="#{login.userName}">UserName</th>
+			<th>Token</th>
+		</tr>
+
+		<tr>
+			<td th:text="${userName}">UserName</td>
+			<td th:text="${tokens}">Token</td>
+		</tr>
+	</table>
+</body>
+</html>

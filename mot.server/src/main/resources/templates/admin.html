@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand">DAP</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/nbMailOfAllAccount} + ${userKey}"><span
+					th:text="#{admin.btnNbEmail}"></span></a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/nextEventOfAllAccount} + ${userKey}"><span
+					th:text="#{admin.btnAllEvent}"></span></a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/nbContactAllAccount} + ${userKey}"><span
+					th:text="#{admin.btnAllContact}"></span></a></li>
+		</ul>
+	</div>
+</nav>
+<h1 th:text="#{adminInterface.title}">Admin Interface</h1>
+<h5 th:text="#{datastore.title}">DataStore Google/Microsoft</h5>
+<body style="margin: 10px 50px 20px">
+	<table class="table table-bordered table-dark">
+		<thead>
+			<tr>
+				<th th:text="#{admin.credential}">Credential Type</th>
+				<th th:text="#{admin.tenantId}">Tenant Id</th>
+				<th th:text="#{admin.userCred}">User Credential</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="element : ${listInfoMicrosoft}">
+				<td style="background: #66a3ff">Microsoft</td>
+				<td th:text="${element.tenantId}">TenantId</td>
+				<td th:text="${element.name}">UserCredential</td>
+				<td><a
+					th:href="@{/listMailByAccountMicrosoft/} + ${element.name} + ${userKey}"
+					class="btn btn-primary btn-primary"><span
+						th:text="#{admin.bouton}"></span></a></td>
+			</tr>
+			<tr th:each="element : ${listInfoGoogle}">
+				<td style="background: #ff9980">Google</td>
+				<td></td>
+				<td th:text="${element.name}">UserCredential</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

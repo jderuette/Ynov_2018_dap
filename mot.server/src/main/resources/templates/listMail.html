@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<body style="margin: 10px 50px 20px">
+	<h1 style="text-align: center" th:text="#{email.title}">List Mail</h1>
+	<a style="margin-bottom: 2em" class="btn btn-primary btn-primary"
+		th:href="@{/admin?userKey=} + ${userKey}"><span
+		th:text="#{email.button}"></span></a>
+	<div>
+		<span>Account Name&nbsp;: </span><span th:text="${name}"></span>
+	</div>
+	<div>
+		<span>User Key&nbsp;: </span><span th:text="${userKey}"></span>
+	</div>
+	<h5 style="text-align: center" th:text="#{email.inbox}">INBOX</h5>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th th:text="#{email.isRead}">Read/Unread</th>
+				<th th:text="#{email.from}">From</th>
+				<th th:text="#{email.subject}">Subject</th>
+				<th th:text="#{email.received}">Received</th>
+				<th th:text="#{email.preview}">Preview</th>
+			</tr>
+		</thead>
+		<tr th:each="element : ${messages}">
+			<td><span style="color: blue; font-weight: bold"
+				th:if="${element.isRead == false}" th:text="#{email.unRead}"></span>
+				<span th:unless="${element.isRead == false}" th:text="#{email.read}"></span></td>
+			<td th:text="${element.from.emailAddress.name}">From</td>
+			<td th:text="${element.subject}">Subject</td>
+			<td th:text="${element.receivedDateTime}">Received</td>
+			<td th:text="${element.bodyPreview}">Preview</td>
+		</tr>
+	</table>
+</body>
+</html>
