@@ -17,17 +17,35 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * The Class AuthHelper.
+ */
 public class AuthHelper extends BaseService {
+
+	/** The Constant authority. */
 	private static final String authority = "https://login.microsoftonline.com";
+
+	/** The Constant authorizeUrl. */
 	private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 
+	/** The scopes. */
 	private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read",
 			"Calendars.Read", "Contacts.Read" };
 
+	/** The app id. */
 	private static String appId = null;
+
+	/** The app password. */
 	private static String appPassword = null;
+
+	/** The redirect url. */
 	private static String redirectUrl = null;
 
+	/**
+	 * Gets the app id.
+	 *
+	 * @return the app id
+	 */
 	private static String getAppId() {
 		if (appId == null) {
 			try {
@@ -39,6 +57,11 @@ public class AuthHelper extends BaseService {
 		return appId;
 	}
 
+	/**
+	 * Gets the app password.
+	 *
+	 * @return the app password
+	 */
 	private static String getAppPassword() {
 		if (appPassword == null) {
 			try {
@@ -50,6 +73,11 @@ public class AuthHelper extends BaseService {
 		return appPassword;
 	}
 
+	/**
+	 * Gets the redirect url.
+	 *
+	 * @return the redirect url
+	 */
 	private static String getRedirectUrl() {
 		if (redirectUrl == null) {
 			try {
@@ -61,6 +89,11 @@ public class AuthHelper extends BaseService {
 		return redirectUrl;
 	}
 
+	/**
+	 * Gets the scopes.
+	 *
+	 * @return the scopes
+	 */
 	private static String getScopes() {
 		StringBuilder sb = new StringBuilder();
 		for (String scope : scopes) {
@@ -69,6 +102,11 @@ public class AuthHelper extends BaseService {
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Load config.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void loadConfig() throws IOException {
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
@@ -88,6 +126,13 @@ public class AuthHelper extends BaseService {
 		}
 	}
 
+	/**
+	 * Gets the login url.
+	 *
+	 * @param state the state
+	 * @param nonce the nonce
+	 * @return the login url
+	 */
 	public static String getLoginUrl(UUID state, UUID nonce) {
 
 		UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
@@ -102,6 +147,13 @@ public class AuthHelper extends BaseService {
 		return urlBuilder.toUriString();
 	}
 
+	/**
+	 * Gets the token from auth code.
+	 *
+	 * @param authCode the auth code
+	 * @param tenantId the tenant id
+	 * @return the token from auth code
+	 */
 	public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
 		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -124,6 +176,13 @@ public class AuthHelper extends BaseService {
 		}
 	}
 
+	/**
+	 * Ensure tokens.
+	 *
+	 * @param tokens the tokens
+	 * @param tenantId the tenant id
+	 * @return the token response
+	 */
 	public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {
 		Calendar now = Calendar.getInstance();
 		if (now.getTime().before(tokens.getExpirationTime())) {
@@ -151,6 +210,9 @@ public class AuthHelper extends BaseService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	protected String getClassName() {
 		return AuthHelper.class.getName();

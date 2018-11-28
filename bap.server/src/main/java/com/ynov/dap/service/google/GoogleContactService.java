@@ -20,11 +20,11 @@ import com.ynov.dap.repository.AppUserRepository;
  */
 @Service
 public class GoogleContactService extends GoogleService {
-	
+
 	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
-	
+
     /**
      * Gets the nb contacts.
      *
@@ -54,7 +54,7 @@ public class GoogleContactService extends GoogleService {
         }
         return 0;
     }
-    
+
     /**
      * Gets the nb contacts.
      *

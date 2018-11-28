@@ -22,6 +22,9 @@ import com.ynov.dap.service.BaseService;
 @Service
 public class MicrosoftContactService extends BaseService {
 
+	/** The Constant MAX_RESULT_EVENTS. */
+	private static final Integer MAX_RESULT_EVENTS = 10;
+
 	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
@@ -87,7 +90,7 @@ public class MicrosoftContactService extends BaseService {
 
 		String sort = "GivenName ASC";
 		String properties = "GivenName,Surname,CompanyName,EmailAddresses";
-		Integer maxResults = 10;
+		Integer maxResults = MAX_RESULT_EVENTS;
 
 		PagedResult<Contact> contacts = outlookService.getContacts(sort, properties, maxResults).execute().body();
 

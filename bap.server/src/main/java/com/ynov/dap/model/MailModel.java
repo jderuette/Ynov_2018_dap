@@ -37,11 +37,9 @@ public class MailModel {
        this.setUnRead(inUnread);
     }
 
-	/**
-	 * Instantiates a new mail model.
-	 */
-	public MailModel() {
-	}
-
+    /**
+     * Instantiates a new mail model.
+     */
+    public MailModel() { }
 
 }

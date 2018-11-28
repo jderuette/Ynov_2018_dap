@@ -106,7 +106,7 @@ public class CalendarModel {
         this.endDate = inEndDate;
         this.state = inState;
     }
-    
+
     /**
      * Instantiates a new calendar model.
      */

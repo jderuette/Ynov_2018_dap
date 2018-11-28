@@ -8,7 +8,7 @@ import com.ynov.dap.domain.AppUser;
  * The Interface AppUserRepository.
  */
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
-	
+
 	/**
 	 * Find by name.
 	 *

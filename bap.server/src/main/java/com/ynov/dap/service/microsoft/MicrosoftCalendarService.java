@@ -23,6 +23,12 @@ import com.ynov.dap.service.BaseService;
 @Service
 public class MicrosoftCalendarService extends BaseService {
 
+	/** The Constant MAX_RESULT_EVENTS. */
+	private static final Integer MAX_RESULT_EVENTS = 10;
+
+	/** The Constant MAX_RESULT_NEXT_EVENT. */
+	private static final Integer MAX_RESULT_NEXT_EVENT = 1;
+
 	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
@@ -46,14 +52,14 @@ public class MicrosoftCalendarService extends BaseService {
 		String sort = "start/dateTime ASC";
 		String filterDate = "start/dateTime ge '" + Instant.now().toString() + "'";
 		String properties = "organizer,subject,start,end";
-		Integer maxResults = 1;
+		Integer maxResults = MAX_RESULT_NEXT_EVENT;
 
 		Event[] events = outlookService.getEvents(sort, filterDate, properties, maxResults).execute().body().getValue();
-		
+
 		if (events == null || events.length != 1) {
 			return null;
 		}
-		
+
 		return events[0];
 	}
 
@@ -66,19 +72,19 @@ public class MicrosoftCalendarService extends BaseService {
 	 */
 	public CalendarModel getNextEvent(String userKey) throws Exception {
 		AppUser appUser = appUserRepository.findByName(userKey);
-		
+
 		if (appUser == null) {
 			getLogger().error("userKey '" + userKey + "' not found");
 			return new CalendarModel();
 		}
-		
+
 		List<Event> events = new ArrayList<Event>();
 
 		for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
 			events.add(getEvent(account));
 		}
 		Event finalEvent = null;
-		
+
         if (events.isEmpty() || events.get(0) == null) {
             getLogger().info("No upcoming events found for userKey : " + userKey);
             return new CalendarModel();
@@ -123,7 +129,7 @@ public class MicrosoftCalendarService extends BaseService {
 
 		String sort = "start/dateTime DESC";
 		String properties = "organizer,subject,start,end";
-		Integer maxResults = 10;
+		Integer maxResults = MAX_RESULT_EVENTS;
 
 		PagedResult<Event> events = outlookService.getEvents(sort, properties, maxResults).execute().body();
 

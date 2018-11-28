@@ -73,12 +73,12 @@ public class GoogleCalendarService extends GoogleService {
      */
     public CalendarModel getNextEvent(final String userKey) throws GeneralSecurityException, IOException {
         AppUser appUser = appUserRepository.findByName(userKey);
-        
+
 		if (appUser == null) {
 			getLogger().error("userKey '" + userKey + "' not found");
 			return new CalendarModel();
 		}
-        
+
         List<GoogleAccount> accounts = appUser.getGoogleAccounts();
         List<Event> events = new ArrayList<Event>();
 
@@ -93,9 +93,9 @@ public class GoogleCalendarService extends GoogleService {
             return new CalendarModel();
         } else if (events.size() == 1) {
         	Event event = events.get(0);
-        	
+
         	getLogger().info("A next upcoming events was found for userKey : " + userKey);
-        	
+
     		return new CalendarModel(event.getSummary(), new Date(event.getStart().getDateTime().getValue()),
                     new Date(event.getEnd().getDateTime().getValue()), event.getStatus());
         } else {
@@ -105,14 +105,14 @@ public class GoogleCalendarService extends GoogleService {
     				finalEvent = event;
     			}
     		}
-    		
+
     		if (finalEvent == null) {
                 getLogger().info("No upcoming events found for userKey : " + userKey);
     			return new CalendarModel();
     		}
-    		
+
         	getLogger().info("A next upcoming events was found for userKey : " + userKey);
-    		
+
     		return new CalendarModel(finalEvent.getSummary(), new Date(finalEvent.getStart().getDateTime().getValue()),
                     new Date(finalEvent.getEnd().getDateTime().getValue()), finalEvent.getStatus());
         }

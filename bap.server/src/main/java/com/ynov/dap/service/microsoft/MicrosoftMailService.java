@@ -23,6 +23,9 @@ import com.ynov.dap.service.BaseService;
 @Service
 public class MicrosoftMailService extends BaseService {
 
+	/** The Constant MAX_RESULT_EVENTS. */
+	private static final Integer MAX_RESULT_EVENTS = 10;
+
 	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
@@ -41,11 +44,11 @@ public class MicrosoftMailService extends BaseService {
 
 		String email = account.getEmail();
 		TokenResponse tokens = account.getTokenResponse();
-		
+
 		OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
 		Folder inboxFolder = outlookService.getFolder("inbox").execute().body();
-		
+
 		if (inboxFolder == null) {
 			return 0;
 		}
@@ -61,14 +64,14 @@ public class MicrosoftMailService extends BaseService {
 	 * @return the nb unread emails
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public MailModel getNbUnreadEmails(String userKey) throws IOException {
+	public MailModel getNbUnreadEmails(final String userKey) throws IOException {
 		AppUser appUser = appUserRepository.findByName(userKey);
 
 		if (appUser == null) {
 			getLogger().error("userKey '" + userKey + "' not found");
 			return new MailModel(0);
 		}
-		
+
 		MailModel mail = new MailModel();
 		Integer nbUnreadMails = 0;
 
@@ -90,7 +93,7 @@ public class MicrosoftMailService extends BaseService {
 	 * @return the emails
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private Message[] getEmails(MicrosoftAccount account) throws IOException {
+	private Message[] getEmails(final MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
 		TokenResponse tokens = account.getTokenResponse();
@@ -101,7 +104,7 @@ public class MicrosoftMailService extends BaseService {
 		String folder = "inbox";
 		String sort = "receivedDateTime DESC";
 		String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-		Integer maxResults = 10;
+		Integer maxResults = MAX_RESULT_EVENTS;
 
 		PagedResult<Message> messages = null;
 		messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();

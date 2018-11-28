@@ -155,4 +155,5 @@ public class Config {
 	public void setAuthorizeUrl(String authorizeUrl) {
 		this.authorizeUrl = authorizeUrl;
 	}
+
 }

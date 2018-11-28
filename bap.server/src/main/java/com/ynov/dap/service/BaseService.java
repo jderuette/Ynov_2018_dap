@@ -10,7 +10,7 @@ import com.ynov.dap.Config;
  * The Class BaseService.
  */
 public abstract class BaseService {
-    
+
     /**
      * Gets the class name.
      *
@@ -24,14 +24,14 @@ public abstract class BaseService {
     /** The config. */
     @Autowired
     private Config config;
-    
+
     /**
      * Gets the config.
      *
      * @return the config
      */
     protected Config getConfig() {
-    	return config;
+        return config;
     }
 
     /**

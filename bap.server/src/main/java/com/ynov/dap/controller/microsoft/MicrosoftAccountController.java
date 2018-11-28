@@ -22,6 +22,8 @@ import com.ynov.dap.service.microsoft.AuthHelper;
 @RequestMapping("account")
 public class MicrosoftAccountController extends BaseController {
 
+	private static final Integer HTTP_REDIRECT_CODE = 302;
+	
 	/**
 	 * Adds the account.
 	 *
@@ -48,7 +50,7 @@ public class MicrosoftAccountController extends BaseController {
 		final String redirectUri = AuthHelper.getLoginUrl(state, nonce);
 
 		response.setHeader("Location", redirectUri);
-		response.setStatus(302);
+		response.setStatus(HTTP_REDIRECT_CODE);
 	}
 
 	/* (non-Javadoc)

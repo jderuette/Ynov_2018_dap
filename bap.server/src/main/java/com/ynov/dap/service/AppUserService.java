@@ -21,7 +21,7 @@ public class AppUserService extends BaseService {
 	 *
 	 * @param userKey the user key
 	 */
-	public void createUser(String userKey) {
+	public void createUser(final String userKey) {
     	AppUser appUser = new AppUser();
     	appUser.setName(userKey);
     	

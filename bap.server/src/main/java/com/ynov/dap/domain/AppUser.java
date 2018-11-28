@@ -38,7 +38,7 @@ public class AppUser {
 	 *
 	 * @param account the account
 	 */
-	public void addGoogleAccount(GoogleAccount account){
+	public void addGoogleAccount(final GoogleAccount account){
 	    account.setOwner(this);
 	    this.getGoogleAccounts().add(account);
 	}
@@ -48,7 +48,7 @@ public class AppUser {
 	 *
 	 * @param account the account
 	 */
-	public void addMicrosoftAccount(MicrosoftAccount account){
+	public void addMicrosoftAccount(final MicrosoftAccount account){
 	    account.setOwner(this);
 	    this.getMicrosoftAccounts().add(account);
 	}
@@ -67,7 +67,7 @@ public class AppUser {
 	 *
 	 * @param id the new id
 	 */
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -85,7 +85,7 @@ public class AppUser {
 	 *
 	 * @param name the new name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -103,7 +103,7 @@ public class AppUser {
 	 *
 	 * @param googleAccounts the new google accounts
 	 */
-	public void setGoogleAccounts(List<GoogleAccount> googleAccounts) {
+	public void setGoogleAccounts(final List<GoogleAccount> googleAccounts) {
 		this.googleAccounts = googleAccounts;
 	}
 	
@@ -121,7 +121,7 @@ public class AppUser {
 	 *
 	 * @param microsoftAccounts the new microsoft accounts
 	 */
-	public void setMicrosoftAccounts(List<MicrosoftAccount> microsoftAccounts) {
+	public void setMicrosoftAccounts(final List<MicrosoftAccount> microsoftAccounts) {
 		this.microsoftAccounts = microsoftAccounts;
 	}
 

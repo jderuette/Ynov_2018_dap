@@ -34,5 +34,5 @@ public class CredentialService extends GoogleService {
 	protected String getClassName() {
         return GoogleContactService.class.getName();
 	}
-	
+
 }
