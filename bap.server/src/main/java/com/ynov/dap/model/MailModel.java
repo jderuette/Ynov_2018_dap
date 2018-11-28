@@ -1,8 +1,8 @@
 package com.ynov.dap.model;
 
+
 /**
- * Model mail.
- * @author POL
+ * The Class MailModel.
  */
 public class MailModel {
 
@@ -37,6 +37,9 @@ public class MailModel {
        this.setUnRead(inUnread);
     }
 
+	/**
+	 * Instantiates a new mail model.
+	 */
 	public MailModel() {
 	}
 

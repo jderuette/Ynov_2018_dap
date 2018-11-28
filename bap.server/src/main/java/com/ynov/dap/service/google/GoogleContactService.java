@@ -15,11 +15,24 @@ import com.ynov.dap.domain.google.GoogleAccount;
 import com.ynov.dap.model.ContactModel;
 import com.ynov.dap.repository.AppUserRepository;
 
+/**
+ * The Class GoogleContactService.
+ */
 @Service
 public class GoogleContactService extends GoogleService {
+	
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 	
+    /**
+     * Gets the nb contacts.
+     *
+     * @param account the account
+     * @return the nb contacts
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     public Integer getNbContacts(final GoogleAccount account) throws IOException, GeneralSecurityException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         PeopleService service = new PeopleService.Builder(httpTransport, JSON_FACTORY, getCredentials(account.getName()))
@@ -42,6 +55,14 @@ public class GoogleContactService extends GoogleService {
         return 0;
     }
     
+    /**
+     * Gets the nb contacts.
+     *
+     * @param userKey the user key
+     * @return the nb contacts
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     public ContactModel getNbContacts(final String userKey) throws IOException, GeneralSecurityException {
 		Integer nbContacts = 0;
 
@@ -60,6 +81,9 @@ public class GoogleContactService extends GoogleService {
 		return new ContactModel(nbContacts);
     }
 
+    /* (non-Javadoc)
+     * @see com.ynov.dap.service.BaseService#getClassName()
+     */
     @Override
     public String getClassName() {
         return GoogleContactService.class.getName();

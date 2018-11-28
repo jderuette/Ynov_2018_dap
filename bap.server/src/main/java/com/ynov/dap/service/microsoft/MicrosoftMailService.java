@@ -17,12 +17,23 @@ import com.ynov.dap.model.microsoft.TokenResponse;
 import com.ynov.dap.repository.AppUserRepository;
 import com.ynov.dap.service.BaseService;
 
+/**
+ * The Class MicrosoftMailService.
+ */
 @Service
 public class MicrosoftMailService extends BaseService {
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
+	/**
+	 * Gets the nb unread emails.
+	 *
+	 * @param account the account
+	 * @return the nb unread emails
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private Integer getNbUnreadEmails(final MicrosoftAccount account) throws IOException {
 		if (account == null) {
 			return 0;
@@ -43,6 +54,13 @@ public class MicrosoftMailService extends BaseService {
 		return inboxFolder.getUnreadItemCount();
 	}
 
+	/**
+	 * Gets the nb unread emails.
+	 *
+	 * @param userKey the user key
+	 * @return the nb unread emails
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public MailModel getNbUnreadEmails(String userKey) throws IOException {
 		AppUser appUser = appUserRepository.findByName(userKey);
 
@@ -65,6 +83,13 @@ public class MicrosoftMailService extends BaseService {
 		return mail;
 	}
 
+	/**
+	 * Gets the emails.
+	 *
+	 * @param account the account
+	 * @return the emails
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private Message[] getEmails(MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
@@ -84,6 +109,13 @@ public class MicrosoftMailService extends BaseService {
 		return messages.getValue();
 	}
 
+	/**
+	 * Gets the emails.
+	 *
+	 * @param userKey the user key
+	 * @return the emails
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public List<Message[]> getEmails(String userKey) throws IOException {
 		List<Message[]> messages = new ArrayList<Message[]>();
 
@@ -100,6 +132,9 @@ public class MicrosoftMailService extends BaseService {
 		return messages;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return MicrosoftMailService.class.getName();

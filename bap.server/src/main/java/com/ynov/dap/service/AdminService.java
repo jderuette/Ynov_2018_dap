@@ -14,15 +14,27 @@ import com.ynov.dap.domain.microsoft.MicrosoftAccount;
 import com.ynov.dap.repository.microsoft.MicrosoftAccountRepository;
 import com.ynov.dap.service.google.CredentialService;
 
+/**
+ * The Class AdminService.
+ */
 @Service
 public class AdminService extends BaseService {
 
+	/** The credential service. */
 	@Autowired
 	private CredentialService credentialService;
 
+	/** The microsoft account repository. */
 	@Autowired
 	private MicrosoftAccountRepository microsoftAccountRepository;
 
+	/**
+	 * Gets the google data store.
+	 *
+	 * @return the google data store
+	 * @throws GeneralSecurityException the general security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public Map<String, Object> getGoogleDataStore() throws GeneralSecurityException, IOException {
 
 		Map<String, Object> dataStore = new HashMap<String, Object>();
@@ -41,6 +53,11 @@ public class AdminService extends BaseService {
 		return dataStore;
 	}
 
+	/**
+	 * Gets the microsoft data store.
+	 *
+	 * @return the microsoft data store
+	 */
 	public Map<Integer, Object> getMicrosoftDataStore() {
 		Map<Integer, Object> dataStore = new HashMap<Integer, Object>();
 
@@ -59,6 +76,9 @@ public class AdminService extends BaseService {
 		return dataStore;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	protected String getClassName() {
 		return AdminService.class.getName();

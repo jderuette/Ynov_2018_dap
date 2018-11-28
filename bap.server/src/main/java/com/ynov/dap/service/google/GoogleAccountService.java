@@ -16,19 +16,37 @@ import com.ynov.dap.domain.google.GoogleAccount;
 import com.ynov.dap.repository.AppUserRepository;
 import com.ynov.dap.repository.google.GoogleAccountRepository;
 
+/**
+ * The Class GoogleAccountService.
+ */
 @Service
 public class GoogleAccountService extends GoogleService {
 
+	/** The Constant SENSIBLE_DATA_FIRST_CHAR. */
 	private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 
+	/** The Constant SENSIBLE_DATA_LAST_CHAR. */
 	private static final int SENSIBLE_DATA_LAST_CHAR = 1;
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
+	/** The google account repository. */
 	@Autowired
 	private GoogleAccountRepository googleAccountRepository;
 
+	/**
+	 * O auth callback.
+	 *
+	 * @param code the code
+	 * @param decodedCode the decoded code
+	 * @param redirectUri the redirect uri
+	 * @param userId the user id
+	 * @return the string
+	 * @throws GeneralSecurityException the general security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public String oAuthCallback(final String code, String decodedCode, String redirectUri, String userId)
 			throws GeneralSecurityException, IOException {
 		GoogleAuthorizationCodeFlow flow = super.getFlow();
@@ -47,6 +65,17 @@ public class GoogleAccountService extends GoogleService {
 		return "redirect:/";
 	}
 
+	/**
+	 * Adds the account.
+	 *
+	 * @param userId the user id
+	 * @param userKey the user key
+	 * @param redirectUri the redirect uri
+	 * @param session the session
+	 * @return the string
+	 * @throws GeneralSecurityException the general security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public String addAccount(final String userId, final String userKey, String redirectUri, HttpSession session)
 			throws GeneralSecurityException, IOException {
 		String response = "errorOccurs";
@@ -59,12 +88,6 @@ public class GoogleAccountService extends GoogleService {
 			getLogger().error("userKey '" + userKey + "' not found");
 			return "index";
 		}
-		
-		GoogleAccount googleAccount = new GoogleAccount();
-		googleAccount.setOwner(appUser);
-		googleAccount.setName(userId);
-		appUser.addGoogleAccount(googleAccount);
-		googleAccountRepository.save(googleAccount);
 
 		flow = super.getFlow();
 		credential = flow.loadCredential(userId);
@@ -73,6 +96,12 @@ public class GoogleAccountService extends GoogleService {
 			response = "AccountAlreadyAdded";
 			getLogger().info("Info AccountAlreadyAdded for userId : " + userId);
 		} else {
+			GoogleAccount googleAccount = new GoogleAccount();
+			googleAccount.setOwner(appUser);
+			googleAccount.setName(userId);
+			appUser.addGoogleAccount(googleAccount);
+			googleAccountRepository.save(googleAccount);
+
 			final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
 			authorizationUrl.setRedirectUri(redirectUri);
 			session.setAttribute("userId", userId);
@@ -81,6 +110,9 @@ public class GoogleAccountService extends GoogleService {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return GoogleAccountService.class.getName();

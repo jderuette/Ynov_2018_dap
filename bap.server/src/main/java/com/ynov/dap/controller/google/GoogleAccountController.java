@@ -20,6 +20,9 @@ import com.google.api.client.http.GenericUrl;
 import com.ynov.dap.controller.BaseController;
 import com.ynov.dap.service.google.GoogleAccountService;
 
+/**
+ * The Class GoogleAccountController.
+ */
 @Controller
 public class GoogleAccountController extends BaseController {
 
@@ -35,8 +38,8 @@ public class GoogleAccountController extends BaseController {
      * @param session the session
      * @return the string
      * @throws ServletException the servlet exception
-     * @throws IOException 
-     * @throws GeneralSecurityException 
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     @RequestMapping("/oAuth2Callback")
     public String oAuthCallback(@RequestParam final String code, final HttpServletRequest request,
@@ -49,6 +52,17 @@ public class GoogleAccountController extends BaseController {
         return googleAccountService.oAuthCallback(code, decodedCode, redirectUri, userId);
     }
 
+    /**
+     * Adds the account.
+     *
+     * @param accountName the account name
+     * @param userKey the user key
+     * @param request the request
+     * @param session the session
+     * @return the string
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @GetMapping("/account/add/google/{accountName}")
     public String addAccount(@PathVariable final String accountName, @RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
             final HttpSession session) throws GeneralSecurityException, IOException {
@@ -57,6 +71,9 @@ public class GoogleAccountController extends BaseController {
         return googleAccountService.addAccount(accountName, userKey, redirectUri, session);
     }
 
+    /* (non-Javadoc)
+     * @see com.ynov.dap.controller.BaseController#getClassName()
+     */
     @Override
     public String getClassName() {
         return GoogleAccountController.class.getName();

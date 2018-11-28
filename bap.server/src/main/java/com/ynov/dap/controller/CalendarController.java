@@ -16,22 +16,42 @@ import com.ynov.dap.model.CalendarModel;
 import com.ynov.dap.service.google.GoogleCalendarService;
 import com.ynov.dap.service.microsoft.MicrosoftCalendarService;
 
+/**
+ * The Class CalendarController.
+ */
 @RestController
 @RequestMapping("calendar")
 public class CalendarController extends BaseController {
 
+	/** The google calendar service. */
 	@Autowired
 	private GoogleCalendarService googleCalendarService;
 
+	/** The microsoft calendar service. */
 	@Autowired
 	private MicrosoftCalendarService microsoftCalendarService;
 
+	/**
+	 * Gets the google next event.
+	 *
+	 * @param appUser the app user
+	 * @return the google next event
+	 * @throws GeneralSecurityException the general security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@GetMapping(value = "/google/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CalendarModel> getGoogleNextEvent(@PathVariable final String appUser) throws GeneralSecurityException, IOException {
 
 		return new ResponseEntity<CalendarModel>(googleCalendarService.getNextEvent(appUser), HttpStatus.ACCEPTED);
 	}
 
+	/**
+	 * Gets the microsoft next event.
+	 *
+	 * @param appUser the app user
+	 * @return the microsoft next event
+	 * @throws Exception the exception
+	 */
 	@GetMapping(value = "/microsoft/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CalendarModel> getMicrosoftNextEvent(@PathVariable final String appUser) throws Exception {
 
@@ -41,6 +61,13 @@ public class CalendarController extends BaseController {
 				HttpStatus.BAD_REQUEST);
 	}
 
+	/**
+	 * Gets the next event.
+	 *
+	 * @param appUser the app user
+	 * @return the next event
+	 * @throws Exception the exception
+	 */
 	@GetMapping(value = "/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CalendarModel> getNextEvent(@PathVariable final String appUser) throws Exception {
 
@@ -72,6 +99,9 @@ public class CalendarController extends BaseController {
 		return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.controller.BaseController#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return CalendarController.class.getName();

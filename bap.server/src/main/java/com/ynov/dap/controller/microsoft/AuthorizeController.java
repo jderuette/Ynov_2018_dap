@@ -23,15 +23,32 @@ import com.ynov.dap.repository.AppUserRepository;
 import com.ynov.dap.repository.microsoft.MicrosoftAccountRepository;
 import com.ynov.dap.service.microsoft.AuthHelper;
 
+/**
+ * The Class AuthorizeController.
+ */
 @Controller
 public class AuthorizeController extends BaseController {
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
+	/** The microsoft account repository. */
 	@Autowired
 	private MicrosoftAccountRepository microsoftAccountRepository;
 
+	/**
+	 * Authorize.
+	 *
+	 * @param code the code
+	 * @param idToken the id token
+	 * @param state the state
+	 * @param request the request
+	 * @return the string
+	 * @throws JsonParseException the json parse exception
+	 * @throws JsonMappingException the json mapping exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
 	public String authorize(@RequestParam("code") String code, @RequestParam("id_token") String idToken,
 			@RequestParam("state") UUID state, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
@@ -66,7 +83,7 @@ public class AuthorizeController extends BaseController {
 				appUser.addMicrosoftAccount(microsoftAccount);
 				microsoftAccountRepository.save(microsoftAccount);
 				
-				
+				session.invalidate();
 			} else {
 				getLogger().error("ID token failed validation.");
 			}
@@ -76,14 +93,10 @@ public class AuthorizeController extends BaseController {
 
 		return "index";
 	}
-
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.invalidate();
-		return "index";
-	}
 	
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.controller.BaseController#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return AuthorizeController.class.getName();

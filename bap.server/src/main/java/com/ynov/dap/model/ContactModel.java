@@ -1,8 +1,7 @@
 package com.ynov.dap.model;
 
 /**
- * Model contact.
- * @author POL
+ * The Class ContactModel.
  */
 public class ContactModel {
 

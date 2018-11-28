@@ -10,19 +10,29 @@ import org.springframework.stereotype.Service;
 import com.ynov.dap.domain.AppUser;
 import com.ynov.dap.domain.microsoft.MicrosoftAccount;
 import com.ynov.dap.model.ContactModel;
-import com.ynov.dap.model.MailModel;
 import com.ynov.dap.model.microsoft.Contact;
 import com.ynov.dap.model.microsoft.PagedResult;
 import com.ynov.dap.model.microsoft.TokenResponse;
 import com.ynov.dap.repository.AppUserRepository;
 import com.ynov.dap.service.BaseService;
 
+/**
+ * The Class MicrosoftContactService.
+ */
 @Service
 public class MicrosoftContactService extends BaseService {
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
+	/**
+	 * Gets the nb contacts.
+	 *
+	 * @param account the account
+	 * @return the nb contacts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public Integer getNbContacts(final MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
@@ -37,6 +47,13 @@ public class MicrosoftContactService extends BaseService {
 
 	}
 
+	/**
+	 * Gets the nb contacts.
+	 *
+	 * @param userKey the user key
+	 * @return the nb contacts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public ContactModel getNbContacts(String userKey) throws IOException {
 		Integer nbContacts = 0;
 
@@ -52,6 +69,13 @@ public class MicrosoftContactService extends BaseService {
 		return new ContactModel(nbContacts);
 	}
 
+	/**
+	 * Gets the contacts.
+	 *
+	 * @param account the account
+	 * @return the contacts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public Contact[] getContacts(final MicrosoftAccount account) throws IOException {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
@@ -71,6 +95,13 @@ public class MicrosoftContactService extends BaseService {
 
 	}
 
+	/**
+	 * Gets the contacts.
+	 *
+	 * @param user the user
+	 * @return the contacts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public List<Contact[]> getContacts(String user) throws IOException {
 		AppUser appUser = appUserRepository.findByName(user);
 
@@ -83,6 +114,9 @@ public class MicrosoftContactService extends BaseService {
 		return contacts;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	protected String getClassName() {
 		return MicrosoftContactService.class.getName();

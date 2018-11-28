@@ -15,16 +15,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class GoogleMailService.
+ */
 @Service
 public class GoogleMailService extends GoogleService {
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
 	/**
 	 * Gets the nb unread emails.
 	 *
-	 * @param user the user
+	 * @param userKey the user key
 	 * @return the nb unread emails
 	 * @throws Exception   the exception
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -55,6 +59,9 @@ public class GoogleMailService extends GoogleService {
 		return mail;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return GoogleMailService.class.getName();

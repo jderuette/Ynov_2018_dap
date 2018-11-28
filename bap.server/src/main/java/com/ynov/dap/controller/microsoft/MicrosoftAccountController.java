@@ -15,10 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dap.controller.BaseController;
 import com.ynov.dap.service.microsoft.AuthHelper;
 
+/**
+ * The Class MicrosoftAccountController.
+ */
 @RestController
 @RequestMapping("account")
 public class MicrosoftAccountController extends BaseController {
 
+	/**
+	 * Adds the account.
+	 *
+	 * @param accountName the account name
+	 * @param userKey the user key
+	 * @param request the request
+	 * @param response the response
+	 */
 	@GetMapping("/add/microsoft/{accountName}")
 	public void addAccount(@PathVariable final String accountName,
 			@RequestParam(value = "userKey", required = true) final String userKey, final HttpServletRequest request,
@@ -40,6 +51,9 @@ public class MicrosoftAccountController extends BaseController {
 		response.setStatus(302);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.controller.BaseController#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return MicrosoftAccountController.class.getName();

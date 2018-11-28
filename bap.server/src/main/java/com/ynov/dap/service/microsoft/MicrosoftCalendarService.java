@@ -17,12 +17,23 @@ import com.ynov.dap.model.microsoft.TokenResponse;
 import com.ynov.dap.repository.AppUserRepository;
 import com.ynov.dap.service.BaseService;
 
+/**
+ * The Class MicrosoftCalendarService.
+ */
 @Service
 public class MicrosoftCalendarService extends BaseService {
 
+	/** The app user repository. */
 	@Autowired
 	private AppUserRepository appUserRepository;
 
+	/**
+	 * Gets the event.
+	 *
+	 * @param account the account
+	 * @return the event
+	 * @throws Exception the exception
+	 */
 	private Event getEvent(final MicrosoftAccount account) throws Exception {
 		String email = account.getEmail();
 		String tenantId = account.getTenantId();
@@ -46,6 +57,13 @@ public class MicrosoftCalendarService extends BaseService {
 		return events[0];
 	}
 
+	/**
+	 * Gets the next event.
+	 *
+	 * @param userKey the user key
+	 * @return the next event
+	 * @throws Exception the exception
+	 */
 	public CalendarModel getNextEvent(String userKey) throws Exception {
 		AppUser appUser = appUserRepository.findByName(userKey);
 		
@@ -86,6 +104,13 @@ public class MicrosoftCalendarService extends BaseService {
 		}
 	}
 
+	/**
+	 * Gets the events.
+	 *
+	 * @param account the account
+	 * @return the events
+	 * @throws Exception the exception
+	 */
 	private Event[] getEvents(final MicrosoftAccount account) throws Exception {
 
 		String email = account.getEmail();
@@ -105,6 +130,13 @@ public class MicrosoftCalendarService extends BaseService {
 		return events.getValue();
 	}
 
+	/**
+	 * Gets the events.
+	 *
+	 * @param user the user
+	 * @return the events
+	 * @throws Exception the exception
+	 */
 	public List<Event[]> getEvents(String user) throws Exception {
 
 		AppUser appUser = appUserRepository.findByName(user);
@@ -119,6 +151,9 @@ public class MicrosoftCalendarService extends BaseService {
 		return events;
 	}
 
+    /* (non-Javadoc)
+     * @see com.ynov.dap.service.BaseService#getClassName()
+     */
     @Override
     public String getClassName() {
         return MicrosoftCalendarService.class.getName();

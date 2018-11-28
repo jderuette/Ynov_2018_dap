@@ -11,13 +11,26 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ynov.dap.controller.BaseController;
 import com.ynov.dap.service.microsoft.MicrosoftCalendarService;
 
+/**
+ * The Class MicrosoftCalendarController.
+ */
 @Controller
 @RequestMapping("calendar")
 public class MicrosoftCalendarController extends BaseController {
 
+    /** The microsoft calendar service. */
     @Autowired
     private MicrosoftCalendarService microsoftCalendarService;
 	
+	/**
+	 * Gets the template microsoft next event.
+	 *
+	 * @param appUser the app user
+	 * @param model the model
+	 * @param redirectAttributes the redirect attributes
+	 * @return the template microsoft next event
+	 * @throws Exception the exception
+	 */
 	@GetMapping("/microsoft/{appUser}/view")
 	public String getTemplateMicrosoftNextEvent(@PathVariable final String appUser, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		model.addAttribute("accounts", microsoftCalendarService.getEvents(appUser));
@@ -25,6 +38,9 @@ public class MicrosoftCalendarController extends BaseController {
 		return "microsoft/events";
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.controller.BaseController#getClassName()
+	 */
 	@Override
 	public String getClassName() {
 		return MicrosoftCalendarController.class.getName();

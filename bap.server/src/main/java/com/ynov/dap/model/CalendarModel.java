@@ -3,8 +3,7 @@ package com.ynov.dap.model;
 import java.util.Date;
 
 /**
- * Model Calendar.
- * @author POL
+ * The Class CalendarModel.
  */
 public class CalendarModel {
 
@@ -108,6 +107,9 @@ public class CalendarModel {
         this.state = inState;
     }
     
+    /**
+     * Instantiates a new calendar model.
+     */
     public CalendarModel() {
        this.subject = "";
        this.startDate = null;

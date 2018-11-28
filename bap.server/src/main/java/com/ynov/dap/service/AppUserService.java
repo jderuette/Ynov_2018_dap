@@ -6,12 +6,21 @@ import org.springframework.stereotype.Service;
 import com.ynov.dap.domain.AppUser;
 import com.ynov.dap.repository.AppUserRepository;
 
+/**
+ * The Class AppUserService.
+ */
 @Service
 public class AppUserService extends BaseService {
 	
+    /** The app user repository. */
     @Autowired
     private AppUserRepository appUserRepository;
 
+	/**
+	 * Creates the user.
+	 *
+	 * @param userKey the user key
+	 */
 	public void createUser(String userKey) {
     	AppUser appUser = new AppUser();
     	appUser.setName(userKey);
@@ -25,6 +34,9 @@ public class AppUserService extends BaseService {
     	}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ynov.dap.service.BaseService#getClassName()
+	 */
 	@Override
 	protected String getClassName() {
 		return AppUserService.class.getName();

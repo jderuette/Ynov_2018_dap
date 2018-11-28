@@ -19,12 +19,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class GoogleCalendarService.
+ */
 @Service
 public class GoogleCalendarService extends GoogleService {
 
+    /** The app user repository. */
     @Autowired
     private AppUserRepository appUserRepository;
 
+    /**
+     * Gets the event.
+     *
+     * @param account the account
+     * @return the event
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private Event getEvent(final String account) throws GeneralSecurityException, IOException {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, getCredentials(account))
@@ -51,6 +63,14 @@ public class GoogleCalendarService extends GoogleService {
         }
     }
 
+    /**
+     * Gets the next event.
+     *
+     * @param userKey the user key
+     * @return the next event
+     * @throws GeneralSecurityException the general security exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public CalendarModel getNextEvent(final String userKey) throws GeneralSecurityException, IOException {
         AppUser appUser = appUserRepository.findByName(userKey);
         
@@ -98,6 +118,9 @@ public class GoogleCalendarService extends GoogleService {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.ynov.dap.service.BaseService#getClassName()
+     */
     @Override
     public String getClassName() {
         return GoogleCalendarService.class.getName();
