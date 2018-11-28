@@ -1,0 +1,16 @@
+fr.ynov.dap.client
+fr.ynov.dap.dap
+fr.ynov.dap.dap.controller
+fr.ynov.dap.dap.controller.google
+fr.ynov.dap.dap.controller.microsoft
+fr.ynov.dap.dap.data
+fr.ynov.dap.dap.data.google
+fr.ynov.dap.dap.data.microsoft
+fr.ynov.dap.dap.data.microsoft.model
+fr.ynov.dap.dap.model
+fr.ynov.dap.dap.service
+fr.ynov.dap.dap.service.google
+fr.ynov.dap.dap.service.microsoft
+fr.ynov.dap.dap.service.microsoft.builder
+fr.ynov.dap.dap.service.microsoft.requestservice
+fr.ynov.dap.dap.utils

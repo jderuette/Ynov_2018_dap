@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/dap.iml" filepath="$PROJECT_DIR$/dap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/zal.server.iml" filepath="$PROJECT_DIR$/.idea/zal.server.iml" />
     </modules>
   </component>
 </project>

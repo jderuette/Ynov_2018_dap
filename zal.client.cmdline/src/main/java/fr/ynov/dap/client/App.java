@@ -12,138 +12,180 @@ import java.net.URL;
 /**
  * The Class App.
  */
-public class App 
-{
-	
-	/** The url. */
-    //TODO zal by Djer Quel "The", au moins quel catégorie. "www.google.com" est une "the url" ...
-    //"BackenServer Url" serait plus parlant ? 
+public class App {
+
+	/** The backendServer url. */
 	private static URI url;
-	
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main( String[] args ) {
-    	if(args.length == 2){
-    		try{
-        		switch(args[0]){
-	                case "add": addAccount(args[1]);
-	                break;
-	                case "mail": showAllMailInbox(args[1]);
-	                break;
-	                case "mail-unread": showMailInboxUnread(args[1]);
-	                break;
-	                case "calendar": showCalendarNextEvent(args[1]);
-	                break;
-	                case "contacts": showNumberOfContacts(args[1]);
-	                break;
-	                case "view": showAll(args[1]);
-	                break;
-	                default : System.out.println("Enter arguments");
-	                break;
-                }
-        	}catch(Exception e){
-        		System.out.println("\n usage: -jar client-0.0.1-SNAPSHOT.jar [options] [userId] \n"
-        				+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"contacts\" loic  \n");
-        	}
-    	}else {
-    		System.out.println("\n  usage: -jar client-0.0.1-SNAPSHOT.jar [options] [userId]  \n"
-    				+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"contacts\" loic \n");
-    	}
-    }
-    
-    /**
-     * Show all.
-     *
-     * @param userId the user id
-     * @throws Exception the exception
-     */
-    private static void showAll(String userId) throws Exception {
-    	showCalendarNextEvent(userId);
-    	showNumberOfContacts(userId);
-    	showAllMailInbox(userId);
-    	showMailInboxUnread(userId);
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
+	public static void main(String[] args) {
+
+		if (args[1] == "help") {
+			System.out.println("\n usage API and add user : -jar client-0.0.1-SNAPSHOT.jar [options] [userKey] \n"
+					+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"contacts\" loic  \n");
+
+			System.out
+					.println("\n usage Add Account: -jar client-0.0.1-SNAPSHOT.jar [options] [userKey] [accountName] \n"
+							+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"add-google-account\" loic personnel  \n");
+		}
+		if (args.length == 2) {
+			try {
+				switch (args[0]) {
+				case "add-user":
+					addUser(args[1]);
+					break;
+				case "mail-unread":
+					showMailInboxUnread(args[1]);
+					break;
+				case "events":
+					showCalendarNextEvent(args[1]);
+					break;
+				case "contacts":
+					showNumberOfContacts(args[1]);
+					break;
+				case "view":
+					showAll(args[1]);
+					break;
+				default:
+					System.out.println("Enter arguments");
+					break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("\n usage: -jar client-0.0.1-SNAPSHOT.jar [options] [userKey] \n"
+						+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"contacts\" loic  \n");
+			}
+		} else if (args.length == 3) {
+			try {
+				switch (args[0]) {
+				case "add-google-account":
+					addAccountGoogle(args[1], args[2]);
+					break;
+				case "add-microsoft-account":
+					addAccountMicrosoft(args[1], args[2]);
+					break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("\n usage: -jar client-0.0.1-SNAPSHOT.jar [options] [userKey] [accountName] \n"
+						+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"add-google-account\" loic personnel  \n");
+			}
+		}
 	}
 
 	/**
-     * Show number of contacts.
-     *
-     * @param userId the user id
-     * @throws Exception the exception
-     */
-    private static void showNumberOfContacts(String userId) throws Exception {
-    	StringBuffer response = sendGet(Constant.getNumberOfContacts + userId);
-    	System.out.println(response.toString());
+	 * Show all.
+	 *
+	 * @param userId
+	 *            the user id
+	 * @throws Exception
+	 *             the exception
+	 */
+	private static void showAll(String userId) throws Exception {
+		showCalendarNextEvent(userId);
+		showNumberOfContacts(userId);
+		showMailInboxUnread(userId);
+	}
+
+	/**
+	 * Show number of contacts.
+	 *
+	 * @param userKey the user key
+	 * @throws Exception             the exception
+	 */
+	private static void showNumberOfContacts(String userKey) throws Exception {
+		StringBuffer response = sendGet(Constant.getNumberOfContacts + userKey);
+		System.out.println(response.toString());
 	}
 
 	/**
 	 * Show calendar next event.
 	 *
-	 * @param userId the user id
-	 * @throws Exception the exception
+	 * @param userKey the user key
+	 * @throws Exception             the exception
 	 */
-	private static void showCalendarNextEvent(String userId) throws Exception {
-    	StringBuffer response = sendGet(Constant.getCalendarNextEvent + userId);
-    	System.out.println(response.toString());
+	private static void showCalendarNextEvent(String userKey) throws Exception {
+		StringBuffer response = sendGet(Constant.getNextEvent + userKey);
+		System.out.println(response.toString());
 	}
 
 	/**
-	 * Adds the account.
+	 * Adds the account google.
 	 *
-	 * @param userId the user id
+	 * @param userKey the user key
+	 * @param accountName the account name
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private static void addAccount(String userId) throws IOException{
-    	try {
-			url = new URI(Constant.urlAddAccount + userId);
+	private static void addAccountGoogle(String userKey, String accountName) throws IOException {
+		try {
+			url = new URI(Constant.urlAddAccountGoogle + accountName + "?userKey=" + userKey);
 			Desktop.getDesktop().browse(url);
 		} catch (URISyntaxException e) {
-		    //TODO zal by Djer "e.printStackTrace()" affiche dans la console, ce qui n'est pas top pour un client ne ligne de commande.
-		    // à minima afficher sur le flux d'erruer, sinon Logger permet de configurer.
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
-    /**
-     * Show all mail inbox.
-     *
-     * @param userId the user id
-     * @throws Exception the exception
-     */
-    private static void showAllMailInbox(String userId) throws Exception {
-    	StringBuffer response = sendGet(Constant.getAllMailInbox + userId);
-    	System.out.println(response.toString());
-    }
-    
-    /**
-     * Show mail inbox unread.
-     *
-     * @param userId the user id
-     * @throws Exception the exception
-     */
-    private static void showMailInboxUnread(String userId) throws Exception {
-    	StringBuffer response = sendGet(Constant.getMailUnreadInbox + userId);
-    	System.out.println(response.toString());
-    }
-    
+	}
+
+	/**
+	 * Adds the account microsoft.
+	 *
+	 * @param userKey the user key
+	 * @param accountName the account name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private static void addAccountMicrosoft(String userKey, String accountName) throws IOException {
+		try {
+			url = new URI(Constant.urlAddAccountMicrosoft + accountName + "?userKey=" + userKey);
+			Desktop.getDesktop().browse(url);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Adds the user.
+	 *
+	 * @param userKey the user key
+	 * @throws Exception the exception
+	 */
+	private static void addUser(String userKey) throws Exception {
+		try {
+			StringBuffer response = sendGet(Constant.urlAddUser + userKey);
+			System.out.println(response.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Show mail inbox unread.
+	 *
+	 * @param userKey the user key
+	 * @throws Exception             the exception
+	 */
+	private static void showMailInboxUnread(String userKey) throws Exception {
+		StringBuffer response = sendGet(Constant.getMailUnreadInbox + userKey);
+		System.out.println(response.toString());
+	}
+
 	/**
 	 * Send get.
 	 *
-	 * @param urlString the url string
+	 * @param urlString
+	 *            the url string
 	 * @return the string buffer
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	private static StringBuffer sendGet(String urlString) throws Exception {
-		
+
 		URL url = new URL(urlString);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		//TODO zal by Djer ton IDE te dit que ce n'est pas utilisé. A supprimer ? Bug ?
-		int responseCode = con.getResponseCode();
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
 		while ((inputLine = in.readLine()) != null) {

@@ -1,0 +1,7 @@
+h1 {color:purple;}
+.break{
+word-wrap: break-word;
+max-width: 350px;
+}
+
+
