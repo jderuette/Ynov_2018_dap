@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<body>
+
+	<div th:replace="fragments/baseHeader :: header"></div>
+
+	<h1>Admin</h1>
+	<table class="tableau">
+		<tr>
+			<th>Type</th>
+			<th>AccountName</th>
+			<th>User_Email</th>
+			<th>User_tenant_Id</th>
+			<th>OwnerName</th>
+			<th>Token</th>
+		</tr>
+		<th:block th:each="credential : ${listCredentials}">
+			<tr>
+				<td th:text="${credential.type}"></td>
+				<td th:text="${credential.accountName}"></td>
+				<td th:text="${credential.userEmail}"></td>
+				<td th:text="${credential.tenantId}"></td>
+				<td th:text="${credential.ownerName}"></td>
+				<td th:text="${credential.token}"></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>

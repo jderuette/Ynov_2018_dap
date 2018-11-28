@@ -36,18 +36,18 @@ public class PeopleController extends GoogleService implements Callback {
     }
 
     /**
-     * @param userId correspond au nom d'utilisateur dont il faut chercher le nombre de contact
-     * userId put parameter
+     * @param userKey correspond au nom d'utilisateur dont il faut chercher le nombre de contact
+     * userKey put parameter
      * @return numbers of contacts to this user
-     * @throws Exception si un problème est survenu lors de l'appel à cette fonction
+     * @throws GeneralSecurityException generalSecurity
      */
-    @RequestMapping("/contact/{userId}")
-    public int getAllContacts(@PathVariable("userId") final String userId) {
+    @RequestMapping("/google/contact/{userKey}")
+    public int getAllContacts(@PathVariable("userKey") final String userKey) throws GeneralSecurityException {
         int nbContact = 0;
         try {
-            nbContact = peopleService.getNbContact(userId);
-        } catch (IOException | GeneralSecurityException e) {
-            LOG.error("Un problème est survenu lors de l'appel du service people", "UserId = " + userId, e);
+            nbContact = peopleService.getNbContact(userKey);
+        } catch (IOException e) {
+            LOG.error("Un problème est survenu lors de l'appel du service people", "UserId = " + userKey, e);
         }
         return nbContact;
     }

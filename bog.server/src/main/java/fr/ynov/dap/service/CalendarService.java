@@ -2,6 +2,7 @@ package fr.ynov.dap.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,30 +66,34 @@ public class CalendarService extends GoogleService {
         AppUser user = repositoryUser.findByName(userKey);
         List<GoogleAccountData> accounts = user.getAccounts();
         Event event = null;
+        List<Event> events = new ArrayList<Event>();
         for (GoogleAccountData accountData : accounts) {
-            event = buildCalendarService(accountData.getAccountName()).events().list("primary").setMaxResults(1)
-                    .setTimeMin(now).setOrderBy("startTime").setSingleEvents(true).execute().getItems().get(0);
-            if (nextEventResult != null) {
+            events = buildCalendarService(accountData.getAccountName()).events().list("primary").setMaxResults(1)
+                    .setTimeMin(now).setOrderBy("startTime").setSingleEvents(true).execute().getItems();
+            if (!events.isEmpty()) {
+                event = events.get(0);
+                if (nextEventResult != null) {
 
-                Date eventDate;
-                if (event.getStart().getDate() != null) {
-                    eventDate = new Date(event.getStart().getDate().getValue());
+                    Date eventDate;
+                    if (event.getStart().getDate() != null) {
+                        eventDate = new Date(event.getStart().getDate().getValue());
+                    } else {
+                        eventDate = new Date(event.getStart().getDateTime().getValue());
+                    }
+                    Date nextEventResulteDate;
+                    if (nextEventResult.getStart().getDate() != null) {
+                        nextEventResulteDate = new Date(nextEventResult.getStart().getDate().getValue());
+                    } else {
+                        nextEventResulteDate = new Date(nextEventResult.getStart().getDateTime().getValue());
+                    }
+                    if (eventDate.before(nextEventResulteDate)) {
+                        nextEventResult = event;
+                    }
                 } else {
-                    eventDate = new Date(event.getStart().getDateTime().getValue());
-                }
-                Date nextEventResulteDate;
-                if (nextEventResult.getStart().getDate() != null) {
-                    nextEventResulteDate = new Date(nextEventResult.getStart().getDate().getValue());
-                } else {
-                    nextEventResulteDate = new Date(nextEventResult.getStart().getDateTime().getValue());
-                }
-                if (eventDate.before(nextEventResulteDate)) {
                     nextEventResult = event;
                 }
-            } else {
-                nextEventResult = event;
             }
         }
-        return event;
+        return nextEventResult;
     }
 }

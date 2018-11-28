@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{admin.title}">Microsoft</title>
+
+</head>
+<body>
+
+	<div th:replace="fragments/baseHeader :: header"></div>
+
+	<p th:text=#{unreadMails}>
+	<p th:text="${unreadMessages}"></p>
+	</p>
+
+	<p>
+		<a th:href="${logout}" th:text="#{clickToDisconnect}" /></a>
+	</p>
+
+	<table class="tableau">
+		<tr>
+			<th th:text=#{from}></th>
+			<th th:text=#{date}></th>
+			<th th:text=#{subject}></th>
+			<th th:text=#{corpse}></th>
+		</tr>
+		<th:block th:each="message : ${messages}">
+
+			<tr>
+				<td th:text="${message.from.emailAddress.name}"></td>
+				<td th:text="${message.receivedDateTime}"></td>
+				<td th:text="${message.subject}"></td>
+				<td th:text="${message.bodyPreview}"></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>

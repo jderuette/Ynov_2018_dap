@@ -3,12 +3,12 @@ h1 {
 }
 table {
     font-family: arial, sans-serif;
-    border-collapse: collapse;
     width: 100%;
 }
 
 .tableau {
 	margin-top:2%;
+
 }
 
 td, th {
