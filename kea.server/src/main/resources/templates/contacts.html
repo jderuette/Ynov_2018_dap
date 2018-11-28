@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<title th:text="#{app.contacts}"></title>
+<div th:replace="~{fragments/ressources :: ressources}"></div>
+</head>
+<body>
+	<div class="header_container" th:insert="~{fragments/header :: header}"></div>
+	<h1>
+		<span th:text="#{contacts.title}"></span>&nbsp;<span
+			th:text="${username}"></span>
+	</h1>
+	<div class="container">
+		<div>
+			<span th:text="#{email.yh}"></span><span th:text="{nbContacts}"></span>
+			<span th:text="#{contacts.contacts}"></span>
+		</div>
+		<div>
+			<!-- Afficher les contacts avec les listes de Thymeleaf -->
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

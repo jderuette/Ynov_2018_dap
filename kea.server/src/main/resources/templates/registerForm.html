@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="#{app.name}"></title>
+<div th:replace="~{fragments/ressources :: ressources}"></div>
+</head>
+<body>
+	<div th:insert="~{fragments/header :: header}"></div>
+	<h1 th:text="#{register.title}"></h1>
+	<h2 th:text="#{account.newdap}"></h2>
+	<div th:text="#{register.description}" class="teacher_message"></div>
+	<a href="/user/add/testuser">Creation du compte "testuser"</a>
+	<!-- 
+		<form action="#" th:action="@{/user/add/${userkey]}"  th:object="${appUser}" method="post">
+			<table>
+				<tr>
+					<td><form:label th:text="#{label.appusername}" path="userKey"></form:label></td>
+					<td><form:input th:value="${userKey}" path="userKey" /></td>
+				</tr>
+				<tr>
+					<td><input type="submit" th:value="#{submit.confirm}" /></td>
+				</tr>
+			</table>
+		</form:form>-->
+		<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+<meta name="description" content="The Dap trainning project admin" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+<title th:text="#{app.name}"></title>
+<div th:replace="~{fragments/ressources :: ressources}"></div>
+</head>
+
+<body>
+	<div th:insert="~{fragments/header :: header}"></div>
+	<h1 th:text="#{registered.connected}"></h1>
+	<div><!-- 
+		<span th:text="#{registered.youconnected}"></span>&nbsp;
+		 <span th:text="${idToken}"></span> -->
+	</div><br>
+	<div class="token_container">
+		<span th:text="#{registered.token}"></span>&nbsp;:<br><span
+			th:text="${idToken}"></span>
+	</div><br>
+	<div class="token_container">
+		<span th:text="#{registered.authCode}"></span>&nbsp;:<br><span
+			th:text="${authCode}"></span>
+	</div>
+	<div class="teacher_message" th:text="${error}"></div>
+	<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
