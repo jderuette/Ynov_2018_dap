@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class App {
@@ -15,43 +16,54 @@ public class App {
  * fonction main du client
  * @param args
  * @throws IOException
+ * @throws URISyntaxException 
  */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, URISyntaxException {
     if(args.length > 0) {
-      if(args[0].equals("addAccount") && args[1] != null) {
+    	if(args[0].equals("addAccount") && args[1] != null)
+    	{
+            URL addAccountURI = new URL(link.ADD_ACCOUNT + args[1]);
+            makeRequest(addAccountURI);
+    	}
+    	else if(args[0].equals("addGoogleAccount") && args[1] != null) {
         System.out.println(args[1]);
-        URI addAccountURI = URI.create(link.ADD_ACCOUNT + args[1]);
+        URI addAccountURI = URI.create(link.ADD_GOOGLE_ACCOUNT + args[1]);
         Desktop.getDesktop().browse(addAccountURI);
       }
       else if(args[0].equals("getLabels") && args[1] != null) {
-        URL addAccountURL = new URL(link.LABEL_NAME + args[1]);
-        makeRequest(addAccountURL);
+        URL labelsURL = new URL(link.LABEL_NAME + args[1]);
+        makeRequest(labelsURL);
       }
       else if(args[0].equals("EmailCount") && args[1] != null) {
-        URL addAccountURL = new URL(link.NB_UNREAD_MAIL + args[1]);
-        makeRequest(addAccountURL);
+        URL emailCountURL = new URL(link.NB_UNREAD_MAIL + args[1]);
+        makeRequest(emailCountURL);
       }
       else if(args[0].equals("nbContact") && args[1] != null) {
-        URL addAccountURL = new URL(link.NB_CONTACT + args[1]);
-        makeRequest(addAccountURL);
+        URL nbContactURL = new URL(link.NB_CONTACT + args[1]);
+        makeRequest(nbContactURL);
       }
       else if(args[0].equals("nextEvent") && args[1] != null) {
-        URL addAccountURL = new URL(link.NEXT_EVENT + args[1]);
-        makeRequest(addAccountURL);
+        URL nextEventURL = new URL(link.NEXT_EVENT + args[1]);
+        makeRequest(nextEventURL);
       }
       else if(args[0].equals("getAll") && args[1] != null) {
-        URL addAccountURL = new URL(link.LABEL_NAME + args[1]);
+        URL labelsURL = new URL(link.LABEL_NAME + args[1]);
         System.out.println("Nom des labels: ");
-        makeRequest(addAccountURL);
-        addAccountURL = new URL(link.NB_UNREAD_MAIL + args[1]);
+        makeRequest(labelsURL);
+        URL emailCountURL = new URL(link.NB_UNREAD_MAIL + args[1]);
         System.out.println("Nombre de mails non-lus: ");
-        makeRequest(addAccountURL);
-        addAccountURL = new URL(link.NB_CONTACT + args[1]);
+        makeRequest(emailCountURL);
+        URL nbContactURL = new URL(link.NB_CONTACT + args[1]);
         System.out.println("Nombre total de contacts: ");
-        makeRequest(addAccountURL);
-        addAccountURL = new URL(link.NEXT_EVENT + args[1]);
+        makeRequest(nbContactURL);
+        URL nextEventURL = new URL(link.NEXT_EVENT + args[1]);
         System.out.println("Prochain evennement de l'agenda: ");
-        makeRequest(addAccountURL);
+        makeRequest(nextEventURL);
+      }
+      else if(args[0].equals("loginMicrosoft") && args[1] != null)
+      {
+    	  URI loginMicrosoftURL = new URI(link.MICROSOFT_LOGIN + args[1]);
+    	  Desktop.getDesktop().browse(loginMicrosoftURL);
       }
       else
       {
