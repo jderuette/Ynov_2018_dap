@@ -6,10 +6,12 @@ import java.security.GeneralSecurityException;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
+
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
 
 /**
  * Class to manage Contact API.
@@ -17,47 +19,61 @@ import com.google.api.services.people.v1.model.ListConnectionsResponse;
  *
  */
 @Service
-public class ContactService extends GoogleAPIService {
+public class ContactService extends GoogleAPIService<PeopleService> {
 
-    /**
-     * Create new Calendar service for user.
-     * @param userId Current user id
-     * @return Instance of calendar services
-     * @throws IOException Exception
-     * @throws GeneralSecurityException Thrown when a security exception occurred.
-     */
-    public PeopleService getService(final String userId) throws GeneralSecurityException, IOException {
-
-        Credential cdt = getCredential(userId);
-
-        if (cdt != null) {
-
-            final String appName = getConfig().getApplicationName();
-            final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-
-            return new PeopleService.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
-
-        }
-
-        return null;
-
+    @Override
+    protected final PeopleService getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
+            final String appName) {
+        return new PeopleService.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
     }
 
     /**
-     * Get next user's event.
-     * @param user Current user id
+     * Get user number of contact.
+     * @param accountName Current user id
      * @return User's number of contacts linked by userId
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      */
-    public Integer getNumberOfContacts(final String user) throws GeneralSecurityException, IOException {
+    private Integer getNumberOfContacts(final String accountName) throws GeneralSecurityException, IOException {
 
-        PeopleService peopleSrv = getService(user);
+        PeopleService peopleSrv = getService(accountName);
 
         ListConnectionsResponse response = peopleSrv.people().connections().list("people/me").setPersonFields("names")
                 .execute();
 
-        return response.getTotalPeople();
+        Integer totalPeople = response.getTotalPeople();
+
+        if (totalPeople != null) {
+
+            return totalPeople;
+
+        }
+
+        return 0;
+
+    }
+
+    /**
+     * Get user number of contact.
+     * @param user DaP user
+     * @return Number of contacts
+     * @throws GeneralSecurityException Security exception
+     * @throws IOException Exception
+     */
+    public Integer getNumberOfContacts(final AppUser user) throws GeneralSecurityException, IOException {
+
+        if (user.getGoogleAccounts().size() == 0) {
+            return 0;
+        }
+
+        Integer nbContacts = 0;
+
+        for (GoogleAccount gAcc : user.getGoogleAccounts()) {
+            String accountName = gAcc.getAccountName();
+            nbContacts += getNumberOfContacts(accountName);
+        }
+
+        return nbContacts;
 
     }
 

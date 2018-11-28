@@ -2,7 +2,7 @@ package fr.ynov.dap.dto.out;
 
 import java.util.Date;
 
-import fr.ynov.dap.model.CalendarEvent;
+import fr.ynov.dap.contract.ApiEvent;
 
 /**
  * Model to describe next event of logged user.
@@ -27,26 +27,19 @@ public class NextEventOutDto {
     private Date endingDate;
 
     /**
-     * Store status.
-     */
-    private Integer status;
-
-    /**
      * Store user's status.
      */
     private Integer userStatus;
 
     /**
      * Default constructors.
-     * @param evnt Next event returned by Google's Calendar API
-     * @param userEmail Current user Id
+     * @param evnt Next event returned by Google or Microsoft Calendar API
      */
-    public NextEventOutDto(final CalendarEvent evnt, final String userEmail) {
+    public NextEventOutDto(final ApiEvent evnt) {
         this.setSummary(evnt.getSubject());
         this.setStartingDate(evnt.getStartDate());
         this.setEndingDate(evnt.getEndDate());
-        this.setStatus(evnt.getStatus().getValue());
-        this.setUserStatus(evnt.getStatusForAttendee(userEmail).getValue());
+        this.setUserStatus(evnt.getCurrentUserStatus().getValue());
     }
 
     /**
@@ -89,20 +82,6 @@ public class NextEventOutDto {
      */
     public void setEndingDate(final Date val) {
         this.endingDate = val;
-    }
-
-    /**
-     * @return the status
-     */
-    public Integer getStatus() {
-        return status;
-    }
-
-    /**
-     * @param val the status to set
-     */
-    public void setStatus(final Integer val) {
-        this.status = val;
     }
 
     /**

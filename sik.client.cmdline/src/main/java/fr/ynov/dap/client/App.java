@@ -1,30 +1,34 @@
 package fr.ynov.dap.client;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.ynov.dap.client.dto.in.LoginResponseInDto;
 import fr.ynov.dap.client.dto.in.NextEventInDto;
 import fr.ynov.dap.client.dto.in.NumberContactInDto;
 import fr.ynov.dap.client.dto.in.UnreadMailInDto;
 import fr.ynov.dap.client.exception.ServerSideException;
 import fr.ynov.dap.client.model.AttendeeEventStatusEnum;
-import fr.ynov.dap.client.model.LoginStatusEnum;
 import fr.ynov.dap.client.service.AccountService;
-import fr.ynov.dap.client.service.CalendarService;
-import fr.ynov.dap.client.service.ContactService;
-import fr.ynov.dap.client.service.GmailService;
+import fr.ynov.dap.client.service.DaPAPIService;
 
 /**
  * Application launcher class.
  * @author Kévin Sibué
  */
 public final class App {
+
+    /**
+     * Index of account type.
+     */
+    private static final Integer PARAMS_ACCOUNT_TYPE_INDEX = 2;
+
+    /**
+     * Index of account name.
+     */
+    private static final Integer PARAMS_ACCOUNT_NAME_INDEX = 3;
 
     /**
      * Default constructor.
@@ -36,14 +40,16 @@ public final class App {
     /**
      * Logger instance.
      */
-    static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Default method called on launched.
      * @param args Argument passed on console / terminal
      * Please use the following pattern to works :
-     * - To add new user : "java -jar ksb-client.jar add userId"
+     * - To create new user : "java -jar ksb-client.jar create userId"
      * - To view user's information : "java -jar ksb-client.jar [view] userId"
+     * - To link google account : "java -jar ksb-client.jar add userId google pro"
+     * - To link microsoft account : "java -jar ksb-client.jar add userId microsoft pro"
      * or "java -jar ksb-client.jar userId"
      */
     public static void main(final String[] args) {
@@ -64,7 +70,22 @@ public final class App {
                 showUserInformations(userId);
                 break;
             case "add":
-                addUserAccount(userId);
+                if (args.length >= PARAMS_ACCOUNT_NAME_INDEX) {
+                    String accountType = args[PARAMS_ACCOUNT_TYPE_INDEX].toLowerCase();
+                    String accountName = args[PARAMS_ACCOUNT_NAME_INDEX];
+                    if (accountType.equals("google")) {
+                        addGoogleAccount(accountName, userId);
+                    } else if (accountType.equals("microsoft")) {
+                        addMicrosoftAccount(accountName, userId);
+                    } else {
+                        showError();
+                    }
+                } else {
+                    showError();
+                }
+                break;
+            case "create":
+                createNewAccount(userId);
                 break;
             default:
                 showError();
@@ -84,11 +105,13 @@ public final class App {
      */
     private static void showUserInformations(final String userId) {
 
-        showNumberOfUnreadMessage(userId);
+        DaPAPIService dapService = new DaPAPIService();
 
-        showNextEvent(userId);
+        showNumberOfUnreadMessage(dapService, userId);
 
-        showNumberOfContact(userId);
+        showNextEvent(dapService, userId);
+
+        showNumberOfContact(dapService, userId);
 
     }
 
@@ -99,56 +122,62 @@ public final class App {
 
         String errorMsg = "Need more argument to run this application.\n"
                 + "Please use the following pattern to works : \n"
-                + "- To add new user : java -jar ksb-client.jar add <userId>\n"
+                + "- To create a new user : java -jar ksb-client.jar create <userId>\n"
                 + "- To view user's information : java -jar ksb-client.jar [view] <userId>\n"
+                + "- To link google account : java -jar ksb-client.jar add userId google pro\n"
+                + "- To link microsoft account : java -jar ksb-client.jar add userId microsoft pro\n"
                 + "\tor java -jar ksb-client.jar <userId>";
 
-        writeErrorLine(errorMsg);
+        writeErrorLine(errorMsg, null);
+
+    }
+
+    /**
+     * Create a new user from userKey parameter.
+     * @param userKey User's key
+     */
+    private static void createNewAccount(final String userKey) {
+
+        AccountService accSrv = new AccountService();
+
+        try {
+
+            accSrv.createAccount(userKey);
+
+            writeLine("You have created a new account !");
+
+        } catch (IOException e) {
+
+            writeErrorLine("An error occurred : %s", e, e.getMessage());
+
+        } catch (ServerSideException e) {
+
+            writeErrorLine("An error occurred : %s", e, e.getMessage());
+
+        }
 
     }
 
     /**
      * Use AccountService to log new user.
      * @param userId User id of user.
+     * @param accountName User account name.
+     * @throws URISyntaxException Exception
      * @throws ServerSideException Exception returned by server
      * @throws IOException Exception
      */
-    private static void addUserAccount(final String userId) {
+    private static void addGoogleAccount(final String accountName, final String userId) {
 
         AccountService accSrv = new AccountService();
 
         try {
 
-            LoginResponseInDto inDto = accSrv.addAccount(userId);
-            LoginStatusEnum currentStatus = LoginStatusEnum.getStatusFromInt(inDto.getStatus());
-
-            if (currentStatus == LoginStatusEnum.ERROR) {
-
-                writeErrorLine("An error occurred during your connection. Please try again later.");
-
-                return;
-
-            }
-
-            if (currentStatus == LoginStatusEnum.ALREADY_ADDED) {
-
-                writeLine("Your account has already been added.");
-
-            } else {
-
-                writeLine("You will be redirect to your web browser. Please log in.");
-
-                URI redirectUrl = new URI(inDto.getUrl());
-
-                Desktop.getDesktop().browse(redirectUrl);
-
-            }
+            accSrv.addGoogleAccount(accountName, userId);
 
         } catch (URISyntaxException e) {
 
-            //TODO sik by Djer Comme tu Log dans writeErrrorLine, la pile de l'excpetion est "perdue".
-            // Surcharge avec une méthode acceptant une exception ?
-            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e.getMessage());
+            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e,
+                    e.getMessage());
 
         } catch (IOException e) {
 
@@ -156,7 +185,41 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
+                    e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * Use AccountService to log new user.
+     * @param userId User id of user.
+     * @param accountName User account name.
+     * @throws URISyntaxException Exception
+     * @throws ServerSideException Exception returned by server
+     * @throws IOException Exception
+     */
+    private static void addMicrosoftAccount(final String accountName, final String userId) {
+
+        AccountService accSrv = new AccountService();
+
+        try {
+
+            accSrv.addMicrosoftAccount(accountName, userId);
+
+        } catch (URISyntaxException e) {
+
+            writeErrorLine("An error occurred. Redirect URI is invalid. Please try again later : %s", e,
+                    e.getMessage());
+
+        } catch (IOException e) {
+
+            writeDefaultError(e.getMessage());
+
+        } catch (ServerSideException e) {
+
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
                     e.getMessage());
 
         }
@@ -166,14 +229,13 @@ public final class App {
     /**
      * Use GmailService to provide number of unread mail for current logged user.
      * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
      */
-    private static void showNumberOfUnreadMessage(final String userId) {
-
-        GmailService gmailSrv = new GmailService();
+    private static void showNumberOfUnreadMessage(final DaPAPIService dapService, final String userId) {
 
         try {
 
-            UnreadMailInDto result = gmailSrv.getUnreadMail(userId);
+            UnreadMailInDto result = dapService.getUnreadMail(userId);
 
             writeLine("You have %d unread messages.", result.getNumberOfUnreadMail());
 
@@ -183,7 +245,7 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", e,
                     e.getMessage());
 
         }
@@ -193,14 +255,13 @@ public final class App {
     /**
      * Use CalendarService to provide next event for current logged user.
      * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
      */
-    private static void showNextEvent(final String userId) {
-
-        CalendarService calendarSrv = new CalendarService();
+    private static void showNextEvent(final DaPAPIService dapService, final String userId) {
 
         try {
 
-            NextEventInDto result = calendarSrv.getNextEvent(userId);
+            NextEventInDto result = dapService.getNextEvent(userId);
 
             writeLine("Next event is %s.", result.getEventSummary());
 
@@ -232,7 +293,8 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : ", e.getMessage());
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : ", e,
+                    e.getMessage());
 
         }
 
@@ -241,14 +303,13 @@ public final class App {
     /**
      * Use ContactService to provide number of contact for current logged user.
      * @param userId User id of current logged user.
+     * @param dapService Dap service to use.
      */
-    private static void showNumberOfContact(final String userId) {
-
-        ContactService contactSrv = new ContactService();
+    private static void showNumberOfContact(final DaPAPIService dapService, final String userId) {
 
         try {
 
-            NumberContactInDto result = contactSrv.getNumberOfContact(userId);
+            NumberContactInDto result = dapService.getNumberOfContact(userId);
 
             writeLine("You have %d contacts.", result.getNumberOfContacts());
 
@@ -258,7 +319,7 @@ public final class App {
 
         } catch (ServerSideException e) {
 
-            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s",
+            writeErrorLine("Server didn't respond or respond with an error. Please try again later : %s", null,
                     e.getMessage());
 
         }
@@ -278,10 +339,15 @@ public final class App {
      * Write error message on console / terminal. Write on log also.
      * @param msg Message to write
      * @param args Arguments for formats
+     * @param exception Exception that occurred
      */
-    private static void writeErrorLine(final String msg, final Object... args) {
+    private static void writeErrorLine(final String msg, final Exception exception, final Object... args) {
 
-        LOGGER.error(msg);
+        if (exception == null) {
+            LOGGER.error(msg);
+        } else {
+            LOGGER.error(msg, exception);
+        }
 
         System.err.format(msg, args);
 
@@ -293,7 +359,7 @@ public final class App {
      */
     private static void writeDefaultError(final String error) {
 
-        writeErrorLine("An error occurred. Please try again later : %s", error);
+        writeErrorLine("An error occurred. Please try again later : %s", null, error);
 
     }
 

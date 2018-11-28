@@ -1,26 +1,31 @@
-package fr.ynov.dap.model;
+package fr.ynov.dap.model.enumeration;
 
 /**
- * Represent login status.
+ * This enumeration represent the status of an event.
  * @author Kévin Sibué
  *
  */
-public enum LoginStatusEnum {
+public enum EventStatusEnum {
 
     /**
-     * User account already added.
+     * Tentative status.
      */
-    ALREADY_ADDED(1),
+    TENTATIVE(1),
 
     /**
-     * Error occurred when user try to login.
+     * Cancelled status.
      */
-    ERROR(2),
+    CANCELLED(2),
 
     /**
-     * User auth success, you must be redirected.
+     * Confirmed status.
      */
-    REDIRECTION(3);
+    CONFIRMED(3),
+
+    /**
+     * Unknow status.
+     */
+    UNKNOW(99);
 
     /**
      * Current value.
@@ -31,7 +36,7 @@ public enum LoginStatusEnum {
      * Default constructor.
      * @param val status value.
      */
-    LoginStatusEnum(final Integer val) {
+    EventStatusEnum(final Integer val) {
         this.value = val;
     }
 

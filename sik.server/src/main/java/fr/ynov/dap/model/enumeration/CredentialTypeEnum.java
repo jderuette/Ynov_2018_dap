@@ -1,31 +1,21 @@
-package fr.ynov.dap.model;
+package fr.ynov.dap.model.enumeration;
 
 /**
- * This enumeration represent the status of an event.
+ * This enum allow to describe a credential.
  * @author Kévin Sibué
  *
  */
-public enum EventStatusEnum {
+public enum CredentialTypeEnum {
 
     /**
-     * Tentative status.
+     * Credential from Google Api.
      */
-    TENTATIVE(1),
+    GOOGLE(1),
 
     /**
-     * Cancelled status.
+     * Credential from Microsoft Api.
      */
-    CANCELLED(2),
-
-    /**
-     * Confirmed status.
-     */
-    CONFIRMED(3),
-
-    /**
-     * Unknow status.
-     */
-    UNKNOW(99);
+    MICROSOFT(2);
 
     /**
      * Current value.
@@ -36,7 +26,7 @@ public enum EventStatusEnum {
      * Default constructor.
      * @param val status value.
      */
-    EventStatusEnum(final Integer val) {
+    CredentialTypeEnum(final Integer val) {
         this.value = val;
     }
 

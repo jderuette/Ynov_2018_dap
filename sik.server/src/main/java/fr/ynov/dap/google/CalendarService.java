@@ -2,19 +2,28 @@ package fr.ynov.dap.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.api.services.oauth2.model.Userinfoplus;
 
-import fr.ynov.dap.model.CalendarEvent;
+import fr.ynov.dap.Constants;
+import fr.ynov.dap.comparator.SortByNearest;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
+import fr.ynov.dap.model.google.GoogleCalendarEvent;
 
 /**
  * Class to manage Calendar API.
@@ -22,25 +31,49 @@ import fr.ynov.dap.model.CalendarEvent;
  *
  */
 @Service
-public class CalendarService extends GoogleAPIService {
+public class CalendarService extends GoogleAPIService<Calendar> {
 
     /**
-     * Create new Calendar service for user.
-     * @param userId Current user
-     * @return Calendar services
+     * Instance of Account service.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private OAuthService accountService;
+
+    @Override
+    protected final Calendar getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
+            final String appName) {
+        return new Calendar.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
+    }
+
+    /**
+     * Get next user's event.
+     * @param accountName Current user id
+     * @param userEmail Current user mail
+     * @return Next event of user linked by the params userId
      * @throws IOException Exception
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      */
-    public Calendar getService(final String userId) throws GeneralSecurityException, IOException {
+    private GoogleCalendarEvent getNextEvent(final String accountName, final String userEmail)
+            throws GeneralSecurityException, IOException {
 
-        Credential cdt = getCredential(userId);
+        Calendar calendarService = getService(accountName);
 
-        if (cdt != null) {
+        OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
+        long epochMillis = utc.toEpochSecond() * Constants.SECOND_TO_MILLISECOND;
 
-            final String appName = getConfig().getApplicationName();
-            final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        Events events = calendarService.events().list("primary").setMaxResults(1).setTimeMin(new DateTime(epochMillis))
+                .setOrderBy("startTime").setSingleEvents(true).execute();
 
-            return new Calendar.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
+        List<Event> items = events.getItems();
+
+        if (items.size() > 0) {
+
+            Event gEvent = items.get(0);
+
+            GoogleCalendarEvent evnt = new GoogleCalendarEvent(gEvent, userEmail);
+
+            return evnt;
 
         }
 
@@ -50,33 +83,40 @@ public class CalendarService extends GoogleAPIService {
 
     /**
      * Get next user's event.
-     * @param user Current user id
-     * @return Next event of user linked by the params userId
+     * @param user DaP User
+     * @return User's next event
+     * @throws GeneralSecurityException Security exception
      * @throws IOException Exception
-     * @throws GeneralSecurityException Thrown when a security exception occurred.
      */
-    public CalendarEvent getNextEvent(final String user) throws GeneralSecurityException, IOException {
+    public GoogleCalendarEvent getNextEvent(final AppUser user) throws GeneralSecurityException, IOException {
 
-        Calendar calendarService = getService(user);
+        if (user.getGoogleAccounts().size() == 0) {
+            return null;
+        }
 
-        DateTime now = new DateTime(System.currentTimeMillis());
+        ArrayList<GoogleCalendarEvent> events = new ArrayList<>();
 
-        Events events = calendarService.events().list("primary").setMaxResults(1).setTimeMin(now)
-                .setOrderBy("startTime").setSingleEvents(true).execute();
+        for (GoogleAccount gAcc : user.getGoogleAccounts()) {
 
-        List<Event> items = events.getItems();
+            String accountName = gAcc.getAccountName();
 
-        if (items.size() > 0) {
+            Userinfoplus userInfo = accountService.getUserInfo(accountName);
 
-            Event gEvent = items.get(0);
+            GoogleCalendarEvent evnt = getNextEvent(accountName, userInfo.getEmail());
 
-            CalendarEvent evnt = new CalendarEvent(gEvent);
-
-            return evnt;
+            if (evnt != null) {
+                events.add(evnt);
+            }
 
         }
 
-        return null;
+        if (events.size() == 0) {
+            return null;
+        }
+
+        Collections.sort(events, new SortByNearest());
+
+        return events.get(0);
 
     }
 

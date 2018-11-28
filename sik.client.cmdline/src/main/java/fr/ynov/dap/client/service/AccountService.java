@@ -1,8 +1,10 @@
 package fr.ynov.dap.client.service;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import fr.ynov.dap.client.dto.in.LoginResponseInDto;
 import fr.ynov.dap.client.exception.ServerSideException;
 
 /**
@@ -13,20 +15,54 @@ import fr.ynov.dap.client.exception.ServerSideException;
 public class AccountService extends HttpService {
 
     /**
+     * Allow client to create a new user.
+     * @param userKey User's key
+     * @throws ServerSideException Exception
+     * @throws IOException Exception
+     */
+    public void createAccount(final String userKey) throws IOException, ServerSideException {
+
+        String url = getUrl() + "/add/" + userKey;
+
+        sendPostRequest(url);
+
+    }
+
+    /**
      * Add new google account to server.
      * @param userId Current user id
-     * @return LoginResponseInDto instance from server
+     * @param accountName Current user account name
      * @throws IOException Exception
      * @throws ServerSideException Exception thrown when server send an error
+     * @throws URISyntaxException Exception thrown when uri is invalid
      */
-    public LoginResponseInDto addAccount(final String userId) throws IOException, ServerSideException {
+    public void addGoogleAccount(final String accountName, final String userId)
+            throws IOException, ServerSideException, URISyntaxException {
 
-        String url = getUrl() + "/add/" + userId;
-        String response = sendPostRequest(url);
+        String url = getUrl() + "/google/add/" + accountName + "/" + userId;
 
-        LoginResponseInDto dto = LoginResponseInDto.fromJSON(response);
+        URI redirectUrl = new URI(url);
 
-        return dto;
+        Desktop.getDesktop().browse(redirectUrl);
+
+    }
+
+    /**
+     * Add new microsoft account to server.
+     * @param userId Current user id
+     * @param accountName Current user account name
+     * @throws IOException Exception
+     * @throws ServerSideException Exception thrown when server send an error
+     * @throws URISyntaxException Exception thrown when uri is invalid
+     */
+    public void addMicrosoftAccount(final String accountName, final String userId)
+            throws IOException, ServerSideException, URISyntaxException {
+
+        String url = getUrl() + "/microsoft/add/" + accountName + "/" + userId;
+
+        URI redirectUrl = new URI(url);
+
+        Desktop.getDesktop().browse(redirectUrl);
 
     }
 

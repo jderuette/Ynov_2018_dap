@@ -1,60 +1,89 @@
 package fr.ynov.dap;
 
-import fr.ynov.dap.utils.StrUtils;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * This class allow developer to configure this application.
  * @author Kévin Sibué
  *
  */
-//TODO sik by Djer Dans la doc tu indique que c'est configurable, mais pas vraiment, il faudrait recompiler/builder.
-// Pour que ca soit parémètrable par un "admin system" il faut que tu lui laisse la possibilité de le modifier.
-// soit via paramètre de ligne de commande (pas idéal sur un "serveur")
-// Tu peux uasis jetter un oeil du coté de "spring properties" : https://www.baeldung.com/properties-with-spring
+@Configuration
+@PropertySource("classpath:dap.properties")
 public class Config {
-    //TODO sik by Djer En general on évite les "chaine magique". On préfère créer des constantes pour "documenter".
+
+    /**
+     * Path where microsoft auth properties files are stored.
+     */
+    private static final String MICROSOFT_AUTH_PROPERTIES_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "auth.properties";
 
     /**
      * Store OAuth2 callback url.
      */
-    private String oAuth2CallbackUrl = "/oAuth2Callback";
+    @Value("${dap.providers.google.callback_url}")
+    private String oAuth2CallbackUrl;
 
     /**
      * Store credentials folder.
      */
-    private String credentialsFolder = "dap";
-
-    /**
-     * Store filename of credentials.
-     */
-    private String clientSecretDir = "/web_credentials.json";
+    @Value("${dap.providers.google.credentials_folder_name}")
+    private String credentialsFolder;
 
     /**
      * Store application name.
      */
-    private String applicationName = "HoC DaP";
+    @Value("${dap.application_name}")
+    private String applicationName;
 
     /**
      * Store datastore directory path.
      */
-    private String datastoreDirectory = System.getProperty("user.home");
+    @Value("${dap.datastore.path}")
+    private String datastoreDirectory;
+
+    /**
+     * Store Google credentials path.
+     */
+    @Value("${dap.providers.google.api.credentials_path}")
+    private String googleCredentialsPath;
+
+    /**
+     * Store Microsoft App Id.
+     */
+    private String microsoftAppId;
+
+    /**
+     * Store Microsoft Redirect Url.
+     */
+    private String microsoftRedirectUrl;
+
+    /**
+     * Store Microsoft App Password.
+     */
+    private String microsoftAppPassword;
+
+    /**
+     * Logger instance.
+     */
+    private Logger logger = LogManager.getLogger();
 
     /**
      * Default constructor.
+     * @throws IOException Exception
      */
-    public Config() {
-
-    }
-
-    /**
-     * Default constructor.
-     * @param dataStoreDirectory Directory path to store credential file
-     */
-    public Config(final String dataStoreDirectory) {
-        if (dataStoreDirectory != null) {
-            String newPath = StrUtils.resolvePath(dataStoreDirectory);
-            datastoreDirectory = newPath;
-        }
+    public Config() throws IOException {
+        loadConfig();
     }
 
     /**
@@ -74,14 +103,6 @@ public class Config {
     }
 
     /**
-     * Set new application name.
-     * @param name Application's name
-     */
-    public void setApplicationName(final String name) {
-        applicationName = name;
-    }
-
-    /**
      * Return credential folder.
      * @return Credential folder
      */
@@ -90,35 +111,79 @@ public class Config {
     }
 
     /**
-     * Set new credential folder.
-     * @param folder Credential folder
-     */
-    public void setCredentialFolder(final String folder) {
-        credentialsFolder = folder;
-    }
-
-    /**
-     * Return client secret file.
-     * @return Client secret file
-     */
-    public String getClientSecretFile() {
-        return clientSecretDir;
-    }
-
-    /**
-     * Set new client secret file.
-     * @param clientSecretFile Client secret file
-     */
-    public void setClientSecretFile(final String clientSecretFile) {
-        clientSecretDir = clientSecretFile;
-    }
-
-    /**
      * Return OAuth2 CallBack Url.
      * @return OAuth2 CallBack Url
      */
     public String getOAuth2CallbackUrl() {
         return oAuth2CallbackUrl;
+    }
+
+    /**
+     * @return the googleCredentialsPath
+     */
+    public String getGoogleCredentialsPath() {
+        return googleCredentialsPath;
+    }
+
+    /**
+     * @return the microsoftAppId
+     */
+    public String getMicrosoftAppId() {
+        return microsoftAppId;
+    }
+
+    /**
+     * @return the microsoftRedirectUrl
+     */
+    public String getMicrosoftRedirectUrl() {
+        return microsoftRedirectUrl;
+    }
+
+    /**
+     * @return the microsoftAppPassword
+     */
+    public String getMicrosoftAppPassword() {
+        return microsoftAppPassword;
+    }
+
+    /**
+     * Load Microsoft configuration from file.
+     * @throws IOException Exception
+     */
+    public void loadConfig() throws IOException {
+
+        InputStreamReader file = new InputStreamReader(new FileInputStream(MICROSOFT_AUTH_PROPERTIES_PATH),
+                Charset.forName("UTF-8"));
+
+        if (file.ready()) {
+
+            Properties msProps = new Properties();
+
+            try {
+
+                msProps.load(file);
+
+                microsoftAppId = msProps.getProperty("appId");
+                microsoftAppPassword = msProps.getProperty("appPassword");
+                microsoftRedirectUrl = msProps.getProperty("redirectUrl");
+
+                logger.info("Microsoft auth properties loaded with success!");
+
+            } finally {
+
+                file.close();
+
+            }
+
+        } else {
+
+            logger.error("Microsoft Auth Properties file not found. Microsoft API will not work fine.");
+
+            throw new FileNotFoundException(
+                    "Property file '" + MICROSOFT_AUTH_PROPERTIES_PATH + "' not found in the classpath.");
+
+        }
+
     }
 
 }

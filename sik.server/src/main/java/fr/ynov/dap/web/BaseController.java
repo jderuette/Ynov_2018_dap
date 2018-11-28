@@ -4,12 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fr.ynov.dap.contract.AppUserRepository;
 import fr.ynov.dap.dto.out.ExceptionOutDto;
+import fr.ynov.dap.exception.UserNotFoundException;
+import fr.ynov.dap.model.AppUser;
 
 /**
  * BaseController.
@@ -19,9 +23,15 @@ import fr.ynov.dap.dto.out.ExceptionOutDto;
 public abstract class BaseController {
 
     /**
+     * Instance of AppUserRepository.
+     * Auto resolved by Autowire.
+     */
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    /**
      * Logger instance.
      */
-  //TODO sik by Djer il serait bien en "static final", même s'il dépend du "className" des enfants.
     private Logger logger = LogManager.getLogger(getClassName());
 
     /**
@@ -30,6 +40,14 @@ public abstract class BaseController {
      */
     public Logger getLogger() {
         return logger;
+    }
+
+    /**
+     * Get current instance of app user repository.
+     * @return App user repository
+     */
+    public AppUserRepository getAppUserRepository() {
+        return appUserRepository;
     }
 
     /**
@@ -50,12 +68,31 @@ public abstract class BaseController {
 
         ExceptionOutDto response = new ExceptionOutDto(ex.getLocalizedMessage());
 
-        //TODO sik by Djer le "LocalizedMessage" est une "fausse bonne idée", à la limite si tu dois
-        // l'afficher à l'utilisateur (et encore)
-        //Dans tous les cas, passe la cause en deuxième paramètre du "error" pour avoir la pile dans la LOG.
-        getLogger().error(ex.getLocalizedMessage());
+        getLogger().error(ex.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    /**
+     * Find a user from database.
+     * @param userId User id
+     * @return User
+     * @throws UserNotFoundException Thrown if no user found
+     */
+    protected AppUser getUserById(final String userId) throws UserNotFoundException {
+
+        AppUser user = appUserRepository.findByUserKey(userId);
+
+        if (user == null) {
+
+            getLogger().error("Try to get undefined user with id : " + userId);
+
+            throw new UserNotFoundException();
+
+        }
+
+        return user;
 
     }
 

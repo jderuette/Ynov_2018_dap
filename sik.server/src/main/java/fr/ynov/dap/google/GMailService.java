@@ -12,6 +12,8 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 
 import fr.ynov.dap.exception.NoConfigurationException;
+import fr.ynov.dap.model.AppUser;
+import fr.ynov.dap.model.google.GoogleAccount;
 
 /**
  * Class to manage Gmail API.
@@ -19,22 +21,21 @@ import fr.ynov.dap.exception.NoConfigurationException;
  *
  */
 @Service
-public class GMailService extends GoogleAPIService {
+public class GMailService extends GoogleAPIService<Gmail> {
 
     /**
      * Create new Gmail service for user.
-     * @param userId Current user
+     * @param accountName Current user
      * @return Instance of gmail services provided by Google API
      * @throws GeneralSecurityException Exception
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when no configuration found
      */
-    public Gmail getService(final String userId)
+    @Override
+    public Gmail getService(final String accountName)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
-        Credential cdt = getCredential(userId);
-        //TODO sik by Djer Pas de check de "nullité comme dans les autres Services ?
-        //TODO sik by Djer Essaye de trovuer un "patern" pour "mutualiser" un maximum de ce code des "getService"
+        Credential cdt = getCredential(accountName);
 
         final String appName = getConfig().getApplicationName();
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -45,16 +46,16 @@ public class GMailService extends GoogleAPIService {
 
     /**
      * Get number of unread email for a user.
-     * @param user id of the targeted user
+     * @param accountName id of the targeted user
      * @return Number of unread email for user linked userId
      * @throws GeneralSecurityException Thrown when a security exception occurred.
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when configuration is missing
      */
-    public Integer getNbUnreadEmails(final String user)
+    private Integer getNbUnreadEmails(final String accountName)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
-        Gmail gmailService = getService(user);
+        Gmail gmailService = getService(accountName);
 
         Label inboxLabel = gmailService.users().labels().get("me", "INBOX").execute();
 
@@ -62,9 +63,40 @@ public class GMailService extends GoogleAPIService {
 
     }
 
+    /**
+     * Number of unread email for a specifc user.
+     * @param user Dap User
+     * @return Number of unread email
+     * @throws NoConfigurationException No configuration found
+     * @throws IOException Exception
+     * @throws GeneralSecurityException Security exception
+     */
+    public Integer getNbUnreadEmails(final AppUser user)
+            throws NoConfigurationException, IOException, GeneralSecurityException {
+
+        if (user.getGoogleAccounts().size() == 0) {
+            return 0;
+        }
+
+        Integer nbUnreadMail = 0;
+
+        for (GoogleAccount gAcc : user.getGoogleAccounts()) {
+            nbUnreadMail += getNbUnreadEmails(gAcc.getAccountName());
+        }
+
+        return nbUnreadMail;
+
+    }
+
     @Override
     protected final String getClassName() {
         return GMailService.class.getName();
+    }
+
+    @Override
+    protected final Gmail getGoogleClient(final NetHttpTransport httpTransport, final Credential cdt,
+            final String appName) {
+        return new Gmail.Builder(httpTransport, getJsonFactory(), cdt).setApplicationName(appName).build();
     }
 
 }

@@ -1,4 +1,4 @@
-package fr.ynov.dap.model;
+package fr.ynov.dap.model.enumeration;
 
 /**
  * This enumeration represent the attendee's status of an event.
@@ -30,6 +30,13 @@ public enum AttendeeEventStatusEnum {
      * The attendee has not responded to the invitation.
      */
     NEEDS_ACTION(4),
+
+    /**
+     * Owner status.
+     * Not provided by Google Api.
+     * Returned when the event own by the user
+     */
+    OWNER(5),
 
     /**
      * Unknown status.
