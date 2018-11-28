@@ -18,7 +18,7 @@ public class AccountService extends HttpClient {
     /**
      * intitiat the connection , to get if you are authorized or ask you to make
      * them.
-     * 
+     *
      * @param typeAccount type of account ( microsoft or google)
      * @param userKey     the user in BDD
      * @param accountName hte alias used to connect in google account
