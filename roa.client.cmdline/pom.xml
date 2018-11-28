@@ -70,7 +70,6 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
-			<version>2.9.1</version>
 			<!-- TODO roa by Djer évite de "mélanger" des version, log4J-JCL étant "proche" de Log4J-core 
 			il vaut mieux utiliser la même version (ou bien savoir ce que tu fais !!)
 			<version>2.11.1</version>
