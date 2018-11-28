@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header"> </head>
+
+ <body>
+ <div th:if="${userKey}">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+	
+   
+  <a class="navbar-brand" href="#"><a class="navbar-brand" th:text="#{admin.title}" th:href="@{/} + ${userKey}"></a></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" th:text="#{admin.home}"> <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:text="#{event.closer}" th:href="@{/calendar/nextEvent} + ${userKey}"></a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" th:text="#{contact.total}" th:href="@{/contact/nbContact} + ${userKey}"></a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" th:text="#{email.total}" th:href="@{/email/nbUnread} + ${userKey}"></a>
+      </li>
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <a class="btn btn-danger" th:text="#{admin.logout}" th:href="@{/logout}"></a>
+    </form>
+  </div>
+
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<div th:unless="${userKey}">
+<a class="navbar-brand" href="#"><a class="navbar-brand" th:text="#{admin.title}" th:href="@{/logout}"></a></a>
+</div>
+
+</nav>
+
+    
+    
+	<div th:replace="@{'views/' + ${content}} :: ${content}"></div>
+    
+  </body>
+  <footer class="page-footer bg-primary fixed-bottom">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3 text-white">© 2018
+    <a class="text-white"> Sylvain B.</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+</html>

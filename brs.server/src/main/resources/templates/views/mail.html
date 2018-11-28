@@ -1,0 +1,46 @@
+<div th:fragment="mail">
+
+<div class="card" style="margin-top:4em; margin-bottom:4em;">
+  <div class="card-body">
+    This is some text within a card body.
+     <h4 th:text="${ez}" class="text-primary text-left"></h4>
+  </div>
+</div>
+<div class="container">
+<div class="row">
+    
+   
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-email">
+                        <tbody>
+                        <tr th:each="message : ${messages}" class="selected">
+                       
+                          
+                            <td>
+                                <a th:if="${message.isRead == false}" href="#" class="star star-checked"><i class="fa fa-star"></i></a>
+                                <a th:unless="${message.isRead == false}" href="#" class="star star-unchecked"><i class="fa fa-star"></i></a>
+                            </td>
+                            <td>
+                                <div class="media">
+                                    <a href="#" class="pull-left">
+                                        <img alt="..." src="https://bootdey.com/img/Content/avatar/avatar5.png" class="media-object">
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 th:text="${message.from.emailAddress.name}" class="text-primary text-left"></h4>
+                                        <div></div>
+                                        <p class="email-summary text-left" th:text="${message.subject}"><strong></strong></p> <p th:text="${message.bodyPreview}" class="text-left"></p>
+                                        <span th:text="${message.receivedDateTime}" class="media-meta text-left"></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+       </div>
+ 
