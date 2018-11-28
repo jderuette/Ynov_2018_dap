@@ -11,40 +11,118 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class Event {
-	//TODO jaa by Djer attributs devraient être privé, avec acesseurs
     /**
      * Attendees.
      */
     @SerializedName("attendees")
     @Expose
-    public List<Attendee> attendees = null;
+    private List<Attendee> attendees = null;
 
     /**
      * End infos of Event.
      */
     @SerializedName("end")
     @Expose
-    public End end;
-
+    private End end;
     /**
      * Start infos of event.
      */
     @SerializedName("start")
     @Expose
-    public Start start;
+    private Start start;
 
     /**
      * Status of the event.
      */
     @SerializedName("status")
     @Expose
-    public String status;
+    private String status;
 
     /**
      * Summary (subject) of the event.
      */
     @SerializedName("summary")
     @Expose
-    public String summary;
+    private String summary;
+
+    /**
+     * attendees getter.
+     * @return attendees.
+     */
+    public List<Attendee> getAttendees() {
+        return attendees;
+    }
+
+    /**
+     * attendees setter.
+     * @param a list of attendees of the event.
+     */
+    public void setAttendees(final List<Attendee> a) {
+        this.attendees = a;
+    }
+
+    /**
+     * end getter.
+     * @return End of the event
+     */
+    public End getEnd() {
+        return end;
+    }
+
+    /**
+     * end setter.
+     * @param e end of the event
+     */
+    public void setEnd(final End e) {
+        this.end = e;
+    }
+
+    /**
+     * start getter.
+     * @return start of the event.
+     */
+    public Start getStart() {
+        return start;
+    }
+
+    /**
+     * start setter.
+     * @param s start of the event
+     */
+    public void setStart(final Start s) {
+        this.start = s;
+    }
+
+    /**
+     * status getter.
+     * @return get the status of the event
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * status setter.
+     * @param s status of the event
+     */
+    public void setStatus(final String s) {
+        this.status = s;
+    }
+
+    /**
+     * summary getter.
+     * @return summary of the event
+     */
+    public String getSummary() {
+        return summary;
+    }
+
+    /**
+     * summary setter.
+     * @param s summary of the event
+     */
+    public void setSummary(final String s) {
+        this.summary = s;
+    }
 
 }

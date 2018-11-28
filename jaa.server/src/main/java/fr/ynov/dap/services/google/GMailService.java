@@ -1,4 +1,6 @@
-package fr.ynov.dap.services;
+package fr.ynov.dap.services.google;
+
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,9 +10,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 
+import fr.ynov.dap.data.AppUser;
+
 /**
- * @author adrij
- *
+ * Google Mail Service.
  */
 @Service
 public final class GMailService extends GoogleService {
@@ -19,8 +22,9 @@ public final class GMailService extends GoogleService {
      */
     private static Logger log = LogManager.getLogger();
 
+
     /**
-     * get gmail service.
+     * Get gmail service.
      * @param userKey user key for authentication
      * @return Gmail.
      * @throws Exception exception
@@ -30,20 +34,21 @@ public final class GMailService extends GoogleService {
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(httpTransport, JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(getConfig().getApplicationName()).build();
+
         return service;
     }
 
     /**
      * Get number of unread email.
      * @param user The user's email address. The special value me can be used to indicate the authenticated user.
-     * @param userKey user key used to authenticate the user
+     * @param accountName user key used to authenticate the user
      * @return The number of unread email.
      * @throws Exception exception
      */
-    public Integer getUnreadEmailsNumber(final String user, final String userKey) throws Exception {
-        log.info("getUnreadEmailNumber called with userKey=" + userKey + "; user=" + user);
+    public Integer getUnreadEmailsNumber(final String user, final String accountName) throws Exception {
+        log.info("getUnreadEmailNumber called with accountName=" + accountName + "; user=" + user);
         String query = "category:primary is:unread";
-        Gmail.Users.Messages.List request = getService(userKey).users().messages().list(user).setQ(query);
+        Gmail.Users.Messages.List request = getService(accountName).users().messages().list(user).setQ(query);
 
         int numberOfUnreadEmail = 0;
 
@@ -61,26 +66,21 @@ public final class GMailService extends GoogleService {
     }
 
     /**
-     * This function is not used. It's comment out to avoid checkStyle alert.
-     * It displays the number of mail in each categories.
-     * @param user username.
-     * @param userKey user key
-     * @throws IOException exception
+     * Get the number of unread emails for all google account of an AppUser account.
+     * @param user user needed for the gmail Service.
+     * @param userKey userKey of the AppUser account.
+     * @return total number of unread google mail for an AppUser.
      * @throws Exception exception
      */
-    /*private void displayEmailNumberForEachCategory(final String user, final String userKey)
-            throws IOException, Exception {
-        ListLabelsResponse listResponse = getService(userKey).users().labels().list(user).execute();
-        List<Label> labels = listResponse.getLabels();
-        if (labels.isEmpty()) {
-            System.out.println("No labels found.");
-        } else {
-            System.out.println("Labels:");
-            for (Label label : labels) {
-                Label unreads = getService(userKey).users().labels().get(user, label.getName()).execute();
-                Integer num = unreads.getMessagesUnread();
-                System.out.printf(label.getName() + " - " + num + "\n");
-            }
+    public Integer getUnreadEmailsNumberOfAllAccount(final String user, final String userKey) throws Exception {
+        AppUser appUser = getRepository().findByUserKey(userKey);
+        List<String> names = appUser.getGoogleAccountNames();
+        Integer totalNumberofUnreadMail = 0;
+
+        for (String name : names) {
+            totalNumberofUnreadMail += getUnreadEmailsNumber(user, name);
         }
-    }*/
+
+        return totalNumberofUnreadMail;
+    }
 }

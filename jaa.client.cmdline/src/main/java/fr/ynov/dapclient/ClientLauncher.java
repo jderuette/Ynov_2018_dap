@@ -23,7 +23,6 @@ import com.google.gson.Gson;
  * Entry point of the client application.
  */
 public final class ClientLauncher {
-	//TODO jaa by Djer une classe de "service" aurait permis de mieu ranger.
     /**
      * Logger used for logs.
      */
@@ -43,6 +42,24 @@ public final class ClientLauncher {
     private static final String ERROR_MESSAGE = "Error occurred: ";
 
     /**
+     * three arguments.
+     */
+    private static final Integer THREE_ARGUMENTS = 3;
+    /**
+     * four arguments.
+     */
+    private static final Integer FOUR_ARGUMENTS = 4;
+    /**
+     * Fourth argument.
+     */
+    private static final Integer FOURTH_ARGUMENT = 3;
+
+    /**
+     * Default server url. Used to avoid code duplication in the help text.
+     */
+    private static final String DEFAULT_SERVER_URL = "http://localhost:8080";
+
+    /**
      * prevent default constructor use.
      */
     private ClientLauncher() {
@@ -60,15 +77,24 @@ public final class ClientLauncher {
 
         if (args[0].equalsIgnoreCase("help")) {
             final String help = "Help:\n" + "Register a new user: [add] [userName] "
-                    + "[ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
+
+                    + "Register a new Google Account (you have to add a new user first!!): "
+                    + "[addgoogle] [userName] [googleAccountName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
+
+                    + "Register a new Microsoft Account (you have to add a new user first!!): "
+                    + "[addmicrosoft] [userName] [microsoftAccountName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
                     + "View number of unread mails: [unread] [userName] [user] "
-                    + "(by default, user=me) [ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "(by default, user=me) [ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
                     + "View number of contacts: [contacts] [userName] "
-                    + "[ip:port] (by default, ip:port=http://localhost:8080)\n"
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
-                    + "View the next event: [event] [userName] [ip:port] (by default, ip:port=http://localhost:8080)";
+                    + "View the next event: [event] [userName] "
+                    + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")";
             System.out.println(help);
             return;
         }
@@ -83,12 +109,12 @@ public final class ClientLauncher {
 
         if (action.equals("unread")) {
             String user = "me";
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 user = args[2];
             }
 
-            if (args.length == 4) {
-                address = args[3];
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[FOURTH_ARGUMENT];
             }
 
             displayNumberOfMails(userKey, user);
@@ -96,7 +122,7 @@ public final class ClientLauncher {
         }
 
         if (action.equals("contacts")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             displayContactNumber(userKey);
@@ -104,22 +130,82 @@ public final class ClientLauncher {
         }
 
         if (action.equals("add")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             addNewUser(userKey);
             return;
         }
 
+        if (action.equals("addgoogle")) {
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[FOURTH_ARGUMENT];
+            }
+            String accountName = args[2];
+            addNewGoogleAccount(userKey, accountName);
+        }
+
+        if (action.equals("addmicrosoft")) {
+            if (args.length == FOUR_ARGUMENTS) {
+                address = args[FOURTH_ARGUMENT];
+            }
+            String accountName = args[2];
+            addNewMicrosoftAccount(userKey, accountName);
+        }
+
         if (action.equals("event")) {
-            if (args.length == 3) {
+            if (args.length == THREE_ARGUMENTS) {
                 address = args[2];
             }
             displayNextEvent(userKey);
             return;
         }
-        
-        //TODO jaa by Djer : que se apsse-t-il si action "non reconnue" ? 
+
+        System.out.println("Unkown parameter. Please, type \"help\" to open the help.");
+    }
+
+    /**
+     * get http response from the server api.
+     * @param url url to http get
+     * @return reponse
+     */
+    private static String getResponse(final String url) {
+        HttpURLConnection conn = null;
+        String response = "";
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                System.out.println("Erreur : " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+            String r;
+            while ((r = br.readLine()) != null) {
+                response += r;
+            }
+
+            log.debug("Reponse=" + response);
+
+        } catch (MalformedURLException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        } catch (IOException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+        return response;
     }
 
     /**
@@ -129,40 +215,9 @@ public final class ClientLauncher {
      */
     private static void displayNumberOfMails(final String userKey, final String user) {
         log.debug("displayNumberofMails called. UserKey=" + userKey);
-        try {
-
-            URL url = new URL(address + "/email/nbUnread?userKey=" + userKey + "&user=" + user);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output;
-            System.out.println("Nombre de mails :");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-            log.debug("Output=" + output);
-
-        } catch (MalformedURLException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
-        } catch (IOException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-        }
+        String response = getResponse(address + "/email/nbUnread?userKey=" + userKey + "&user=" + user);
+        System.out.println("Nombre de mails :");
+        System.out.println(response);
     }
 
     /**
@@ -170,41 +225,10 @@ public final class ClientLauncher {
      * @param userKey useKey used for authentication
      */
     private static void displayContactNumber(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("displayContactNumber called. UserKey=" + userKey);
-        try {
-            URL url = new URL(address + "/people/number?userKey=" + userKey);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String output;
-            System.out.println("Nombre de contacts :");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-            log.debug("Output=" + output);
-
-        } catch (MalformedURLException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-
-        } catch (IOException e) {
-
-            System.out.println(ERROR_MESSAGE + e.getMessage());
-            log.error(e);
-        }
+        String response = getResponse(address + "/people/number?userKey=" + userKey);
+        System.out.println("Nombre de contacts :");
+        System.out.println(response);
     }
 
     /**
@@ -212,10 +236,9 @@ public final class ClientLauncher {
      * @param userKey userkey needed for authentication for other api call.
      */
     private static void addNewUser(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("addNewUser called. UserKey=" + userKey);
         try {
-            URL url = new URL(address + "/account/add/" + userKey);
+            URL url = new URL(address + "/user/add/" + userKey);
             Desktop.getDesktop().browse(url.toURI());
             log.debug("Browser opened at:" + url);
 
@@ -241,75 +264,67 @@ public final class ClientLauncher {
      * @param userKey useKey used for authentication
      */
     private static void displayNextEvent(final String userKey) {
-    	//TODO jaa by Djer une grosse partie de ce code pourrait être mutualiser.
         log.debug("displayNextEvent called. UserKey=" + userKey);
+        String response = getResponse(address + "/calendar/event/next?userKey=" + userKey);
+        Gson gson = new Gson();
+        Event event = gson.fromJson(response, Event.class);
+
+        if (event == null) {
+            System.out.println("Pas de prochain événement.");
+            return;
+        }
+
+        System.out.println("Sujet : " + event.getSummary() + "\n");
+
+        Timestamp tsStart = new Timestamp(event.getStart().getDateTime().getValue());
+        Date startDate = new Date(tsStart.getTime());
+        System.out.println("Date de début : " + startDate + "\n");
+
+        Timestamp tsEnd = new Timestamp(event.getEnd().getDateTime().getValue());
+        Date endDate = new Date(tsEnd.getTime());
+        System.out.println("Date de fin : " + endDate + "\n");
+
+        if (event.getAttendees() == null) {
+            System.out.println("Pas de status d'acceptation de l'event.\n");
+            System.out.println("Vous êtes l'organisateur : oui");
+            return;
+        }
+
+        List<Attendee> attendees = event.getAttendees();
+        for (Attendee attendee : attendees) {
+            if (attendee.getSelf() != null && attendee.getSelf()) {
+                Map<String, String> responseStatusTranslationMap = new HashMap<String, String>();
+                responseStatusTranslationMap.put("accepted", "accepté");
+                responseStatusTranslationMap.put("declined", "refusé");
+                responseStatusTranslationMap.put("tentative", "peut-être");
+                responseStatusTranslationMap.put("needsAction", "Vous devez répondre.");
+
+                Map<Boolean, String> booleanTranslationMap = new HashMap<Boolean, String>();
+                booleanTranslationMap.put(true, "oui");
+                booleanTranslationMap.put(false, "non");
+
+                System.out.println("Événement : "
+                + responseStatusTranslationMap.getOrDefault(attendee.getResponseStatus(), "inconnu"));
+                System.out.println("Vous êtes l'organisateur : "
+                + booleanTranslationMap.getOrDefault(attendee.getOrganizer(), "non"));
+                break;
+            }
+        }
+    }
+
+    /**
+     * Create a new Google Account.
+     * @param userKey userkey needed for authentication for other api call.
+     * @param accountName the name of the google account.
+     */
+    private static void addNewGoogleAccount(final String userKey, final String accountName) {
+        StringBuilder st = new StringBuilder().append("Trying to add a Google Account. UserKey=")
+                .append(userKey).append(" accountName=").append(accountName);
+        log.debug(st.toString());
         try {
-            URL url = new URL(address + "/calendar/event/next?userKey=" + userKey);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("Erreur : " + conn.getResponseCode());
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-            String response = br.readLine();
-
-            conn.disconnect();
-            log.debug("Response=" + response);
-
-            Gson gson = new Gson();
-            Event[] events = gson.fromJson(response, Event[].class);
-
-            if (events.length == 0) {
-                System.out.println("Pas de prochain événement.");
-                return;
-            }
-
-            Event event = events[0];
-
-            System.out.println("Sujet : " + event.summary + "\n");
-
-            Timestamp tsStart = new Timestamp(event.start.dateTime.value);
-            Date startDate = new Date(tsStart.getTime());
-            System.out.println("Date de début : " + startDate + "\n");
-
-            Timestamp tsEnd = new Timestamp(event.end.dateTime.value);
-            Date endDate = new Date(tsEnd.getTime());
-            System.out.println("Date de fin : " + endDate + "\n");
-
-            if (event.attendees == null) {
-                System.out.println("Pas de status d'acceptation de l'event.\n"
-            + "Vous devez inviter d'autres personnes à l'événement.\n");
-                System.out.println("Vous êtes l'organisateur : oui");
-                return;
-            }
-
-            List<Attendee> attendees = event.attendees;
-            for (Attendee attendee : attendees) {
-                if (attendee.self != null && attendee.self) {
-                    Map<String, String> responseStatusTranslationMap = new HashMap<String, String>();
-                    responseStatusTranslationMap.put("accepted", "accepté");
-                    responseStatusTranslationMap.put("declined", "refusé");
-                    responseStatusTranslationMap.put("tentative", "peut-être");
-                    responseStatusTranslationMap.put("needsAction", "Vous devez répondre.");
-
-                    Map<Boolean, String> booleanTranslationMap = new HashMap<Boolean, String>();
-                    booleanTranslationMap.put(true, "oui");
-                    booleanTranslationMap.put(false, "non");
-
-                    System.out.println("Événement : "
-                    + responseStatusTranslationMap.getOrDefault(attendee.responseStatus, "inconnu"));
-                    System.out.println("Vous êtes l'organisateur : "
-                    + booleanTranslationMap.getOrDefault(attendee.organizer, "non"));
-                    break;
-                }
-            }
-
+            URL url = new URL(address + "/account/add/google/" + accountName + "?userKey=" + userKey);
+            Desktop.getDesktop().browse(url.toURI());
+            log.debug("Browser opened at:" + url);
 
         } catch (MalformedURLException e) {
 
@@ -321,7 +336,39 @@ public final class ClientLauncher {
             System.out.println(ERROR_MESSAGE + e.getMessage());
             log.error(e);
 
+        }  catch (URISyntaxException e) {
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
         }
     }
 
+    /**
+     * Create a new Microsoft Account.
+     * @param userKey userkey needed for authentication for other api call.
+     * @param accountName the name of the Microsoft account.
+     */
+    private static void addNewMicrosoftAccount(final String userKey, final String accountName) {
+        StringBuilder st = new StringBuilder().append("Trying to add a Google Account. UserKey=")
+                .append(userKey).append(" accountName=").append(accountName);
+        log.debug(st.toString());
+        try {
+            URL url = new URL(address + "/account/add/microsoft/" + accountName + "?userKey=" + userKey);
+            Desktop.getDesktop().browse(url.toURI());
+            log.debug("Browser opened at:" + url);
+
+        } catch (MalformedURLException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        } catch (IOException e) {
+
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+
+        }  catch (URISyntaxException e) {
+            System.out.println(ERROR_MESSAGE + e.getMessage());
+            log.error(e);
+        }
+    }
 }

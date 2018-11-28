@@ -1,0 +1,6 @@
+h1 {color:purple;}
+.table td, .table th {
+	min-width: 160px;
+	max-width: 160px;
+	word-wrap: break-word;
+}

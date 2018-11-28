@@ -9,13 +9,26 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class Start {
-	//TODO jaa by Djer attributs devraient être privé, avec acesseurs
-
     /**
      * Datetime.
      */
-@SerializedName("dateTime")
-@Expose
-public DateTime dateTime;
+    @SerializedName("dateTime")
+    @Expose
+    private DateTime dateTime;
 
+    /**
+     * dateTime getter.
+     * @return dateTime of the event.
+     */
+    public DateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * dateTime setter.
+     * @param date dateTime of the event.
+     */
+    public void setDateTime(final DateTime date) {
+        this.dateTime = date;
+    }
 }

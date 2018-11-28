@@ -1,0 +1,32 @@
+<h1 th:text="#{microsoftMail.title}"></h1>
+
+<div th:if="${#lists.isEmpty(messagesForAccounts)}">
+	<div th:text="#{microsoftMail.emptyAccount}"></div>
+</div>
+
+<div th:if="${not #lists.isEmpty(messagesForAccounts)}">
+
+	<div th:each="messagesForAccount : ${messagesForAccounts}">
+		<div th:if="${#lists.isEmpty(messagesForAccount)}">
+			<div th:text="#{microsoftMail.emptyMails}"></div>
+		</div>
+		
+		<div th:if="${not #lists.isEmpty(messagesForAccount)}">
+			<table class="table table-striped">
+				<tr>
+					<th scope="col" th:text="#{microsoftMail.senderName}"></th>
+					<th scope="col" th:text="#{microsoftMail.senderMail}"></th>
+					<th scope="col" th:text="#{microsoftMail.subject}"></th>
+					<th scope="col" th:text="#{microsoftMail.content}"></th> 
+				</tr>
+				<tr th:each="message : ${messagesForAccount}">
+					<td scope="row" th:text="${message.from.emailAddress.name}"></td>
+					<td scope="row" th:text="${message.from.emailAddress.address}"></td>
+					<td scope="row" th:text="${message.subject}"></td>
+					<td scope="row" th:text="${message.bodyPreview}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>

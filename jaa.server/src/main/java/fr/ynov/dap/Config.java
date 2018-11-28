@@ -3,11 +3,14 @@ package fr.ynov.dap;
 import java.io.File;
 
 /**
- * Config class. Used by GoogleService.
- * @author adrij
+ * Config class.
  *
  */
 public class Config {
+    /**
+     * Microsoft auth.properties default name.
+     */
+    private static final String MICROSOFT_AUTH_PROPERTIES_FILE_NAME = "auth.properties";
 
     /**
      * Default token directory path that contains the StoredCredential file used by GoogleService.
@@ -34,13 +37,33 @@ public class Config {
     /**
      * token directory path.
      */
-    private String credentialFolder = TOKENS_DIRECTORY_PATH;
+    private String credentialFolder = DEFAULT_ROOT_DIR + File.separator + TOKENS_DIRECTORY_PATH;
     /**
      * credential file path.
      */
-    private String credentialsFilePath = CREDENTIALS_FILE_PATH;
+    private String credentialsFilePath = DEFAULT_ROOT_DIR + File.separator + CREDENTIALS_FILE_PATH;
+    /**
+     * default root directory.
+     */
     private String defaultRootDir = DEFAULT_ROOT_DIR;
+    /**
+     * Default path of the Microsoft auth.properties file.
+     */
+    private String microsoftAuthPropertiesDefaultPath = DEFAULT_ROOT_DIR
+            + File.separator + MICROSOFT_AUTH_PROPERTIES_FILE_NAME;
 
+    /**
+     * @return the microsoftAuthPropertiesDefaultPath
+     */
+    public String getMicrosoftAuthPropertiesDefaultPath() {
+        return microsoftAuthPropertiesDefaultPath;
+    }
+    /**
+     * @param defaultPath the microsoftAuthPropertiesDefaultPath to set
+     */
+    public void setMicrosoftAuthPropertiesDefaultPath(final String defaultPath) {
+        this.microsoftAuthPropertiesDefaultPath = defaultPath;
+    }
     /**
      * @return application name
      */
