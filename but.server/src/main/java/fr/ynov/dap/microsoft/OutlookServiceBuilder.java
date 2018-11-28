@@ -12,14 +12,25 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class OutlookServiceBuilder {
+/**
+ * Class to help for OutlookService construct.
+ * @author thibault
+ *
+ */
+public final class OutlookServiceBuilder {
 
-    public static OutlookService getOutlookService(String accessToken, String userEmail) {
+    /**
+     * Builder of service Outlook.
+     * @param accessToken access token of microsoft
+     * @param userEmail microsoft user email
+     * @return the outlook service.
+     */
+    public static OutlookService getOutlookService(final String accessToken, final String userEmail) {
         // Create a request interceptor to add headers that belong on
         // every request
         Interceptor requestInterceptor = new Interceptor() {
             @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
+            public Response intercept(final Interceptor.Chain chain) throws IOException {
                 Request original = chain.request();
                 Builder builder = original.newBuilder().header("User-Agent", "java-tutorial")
                         .header("client-request-id", UUID.randomUUID().toString())
@@ -45,5 +56,11 @@ public class OutlookServiceBuilder {
 
         // Generate the token service
         return retrofit.create(OutlookService.class);
+    }
+
+    /**
+     * Private constructor of utils class.
+     */
+    private OutlookServiceBuilder() {
     }
 }

@@ -3,30 +3,57 @@ package fr.ynov.dap.microsoft;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Class to help with pagination of microsoft.
+ * @author thibault
+ *
+ * @param <T>
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PagedResult<T> {
+    /**
+     * Next page link.
+     */
     @JsonProperty("@odata.nextLink")
     private String nextPageLink;
 
+    /**
+     * Total count of entities.
+     */
     @JsonProperty("@odata.count")
     private int count;
 
+    /**
+     * List of data.
+     */
     private T[] value;
 
+    /**
+     * @return the nextPageLink
+     */
     public String getNextPageLink() {
         return nextPageLink;
     }
 
-    public void setNextPageLink(String nextPageLink) {
-        this.nextPageLink = nextPageLink;
+    /**
+     * @param nextPageLinkToSet the nextPageLink to set
+     */
+    public void setNextPageLink(final String nextPageLinkToSet) {
+        this.nextPageLink = nextPageLinkToSet;
     }
 
+    /**
+     * @return the value
+     */
     public T[] getValue() {
         return value;
     }
 
-    public void setValue(T[] value) {
-        this.value = value;
+    /**
+     * @param valueToSet the value to set
+     */
+    public void setValue(final T[] valueToSet) {
+        this.value = valueToSet;
     }
 
     /**
@@ -37,9 +64,9 @@ public class PagedResult<T> {
     }
 
     /**
-     * @param count the count to set
+     * @param countToSet the count to set
      */
-    public void setCount(int count) {
-        this.count = count;
+    public void setCount(final int countToSet) {
+        this.count = countToSet;
     }
 }

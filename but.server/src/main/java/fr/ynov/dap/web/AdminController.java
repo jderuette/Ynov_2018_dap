@@ -8,10 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.google.GoogleAccountRepository;
 import fr.ynov.dap.data.microsoft.MicrosoftAccountRepository;
-import fr.ynov.dap.google.AdminService;
 
 /**
  * Controller to manage google service via Admin page.
@@ -37,8 +35,8 @@ public class AdminController extends HandlerErrorController {
      * Route admin page.
      * @param model Model data for View
      * @return template name
-     * @throws GeneralSecurityException 
-     * @throws IOException 
+     * @throws GeneralSecurityException if error with credentials.json (google)
+     * @throws IOException if error http (with api google or microsoft)
      */
     @RequestMapping("/admin")
     public String welcome(final ModelMap model) throws IOException, GeneralSecurityException {

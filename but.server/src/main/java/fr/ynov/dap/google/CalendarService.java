@@ -2,6 +2,7 @@ package fr.ynov.dap.google;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,10 +14,12 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.Events;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.web.EventResponse;
 
 /**
  * Manage Google Calendar Service.
@@ -42,10 +45,8 @@ public class CalendarService extends GoogleService {
             throws IOException, GeneralSecurityException {
         logger.info("Generate service Calendar for user '" + accountName + "'");
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(
-                    httpTransport, this.getJsonFactory(), getCredentials(accountName, owner)
-                )
-                .setApplicationName(this.getConfig().getApplicationName()).build();
+        Calendar service = new Calendar.Builder(httpTransport, this.getJsonFactory(),
+                getCredentials(accountName, owner)).setApplicationName(this.getConfig().getApplicationName()).build();
 
         return service;
     }
@@ -79,11 +80,11 @@ public class CalendarService extends GoogleService {
      * Get the next event in calendar of User (in all accounts).
      * @param calendarId calendarID
      * @param owner Owner of accounts
-     * @return Event
+     * @return EventResponse last event or null
      * @throws IOException Exception produced by failed interrupted I/O operations
      * @throws GeneralSecurityException Google security exception
      */
-    public Event getNextEventOfAllAccounts(final String calendarId, final AppUser owner)
+    public EventResponse getNextEventOfAllAccounts(final String calendarId, final AppUser owner)
             throws IOException, GeneralSecurityException {
         Event event = null;
         DateTime dateEvent = null;
@@ -93,13 +94,38 @@ public class CalendarService extends GoogleService {
             if (dateEventTemp == null) {
                 dateEventTemp = eventTemp.getStart().getDate();
             }
-            if (dateEvent == null
-                    || dateEventTemp.getValue() < dateEvent.getValue()) {
+            if (dateEvent == null || dateEventTemp.getValue() < dateEvent.getValue()) {
                 event = eventTemp;
                 dateEvent = dateEventTemp;
             }
         }
+        EventResponse result = null;
 
-        return event;
+        if (event != null) {
+            DateTime dateEventEnd = event.getEnd().getDateTime();
+            if (dateEventEnd == null) {
+                dateEventEnd = event.getEnd().getDate();
+            }
+            result = new EventResponse();
+            result.setStart(new Timestamp(dateEvent.getValue()));
+            result.setEnd(new Timestamp(dateEventEnd.getValue()));
+            result.setSubject(event.getSummary());
+            result.setOrganizer(false);
+            if (event.getAttendees() != null) {
+                for (EventAttendee attendee : event.getAttendees()) {
+                    if (attendee.getSelf()) {
+                        if (attendee.getOrganizer() != null) {
+                            result.setOrganizer(attendee.getOrganizer());
+                        }
+                        result.setStatus(attendee.getResponseStatus());
+                    }
+                }
+            } else {
+                result.setOrganizer(true);
+                result.setStatus(event.getStatus());
+            }
+        }
+
+        return result;
     }
 }

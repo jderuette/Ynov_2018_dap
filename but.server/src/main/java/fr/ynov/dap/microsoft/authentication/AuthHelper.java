@@ -15,16 +15,53 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class AuthHelper {
-    private static final String authority = "https://login.microsoftonline.com";
-    private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
+/**
+ * Class to help user to login on Microsoft OAuth2.
+ * @author thibault
+ *
+ */
+public final class AuthHelper {
+    /**
+     * Base URL of microsoft login.
+     */
+    private static final String AUTHORITY = "https://login.microsoftonline.com";
 
-    private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read" };
+    /**
+     * Authorize PATH of microsoft oauth.
+     */
+    private static final String AUTHORIZE_URL = AUTHORITY + "/common/oauth2/v2.0/authorize";
 
+    /**
+     * Scopes of microsoft api.
+     */
+    private static final String[] SCOPES = {"openid", "offline_access", "profile", "User.Read", "Mail.Read",
+            "Calendars.Read", "Contacts.Read" };
+
+    /**
+     * Application ID.
+     */
     private static String appId = null;
+
+    /**
+     * Application password.
+     */
     private static String appPassword = null;
+
+    /**
+     * Redirect URL.
+     */
     private static String redirectUrl = null;
 
+    /**
+     * Private constructor, because is utils class.
+     */
+    private AuthHelper() {
+    }
+
+    /**
+     * Get microsoft application id.
+     * @return app id.
+     */
     private static String getAppId() {
         if (appId == null) {
             try {
@@ -36,6 +73,10 @@ public class AuthHelper {
         return appId;
     }
 
+    /**
+     * Get microsoft application password.
+     * @return password
+     */
     private static String getAppPassword() {
         if (appPassword == null) {
             try {
@@ -47,6 +88,10 @@ public class AuthHelper {
         return appPassword;
     }
 
+    /**
+     * Get redirect URL of microsoft.
+     * @return url
+     */
     private static String getRedirectUrl() {
         if (redirectUrl == null) {
             try {
@@ -58,10 +103,14 @@ public class AuthHelper {
         return redirectUrl;
     }
 
+    /**
+     * Get scopes of Microsoft.
+     * @return scopes.
+     */
     private static String getScopes() {
         StringBuilder sb = new StringBuilder();
-        for (String scope : scopes) {
-            sb.append(scope + " ");
+        for (String scope : SCOPES) {
+            sb.append(scope).append(' ');
         }
         return sb.toString().trim();
     }
@@ -89,9 +138,14 @@ public class AuthHelper {
         }
     }
 
-    public static String getLoginUrl(UUID state, UUID nonce) {
-
-        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
+    /**
+     * Get login URL of Microsoft Oauth2.
+     * @param state random state
+     * @param nonce random nonce
+     * @return login url
+     */
+    public static String getLoginUrl(final UUID state, final UUID nonce) {
+        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
         urlBuilder.queryParam("client_id", getAppId());
         urlBuilder.queryParam("redirect_uri", getRedirectUrl());
         urlBuilder.queryParam("response_type", "code id_token");
@@ -103,7 +157,13 @@ public class AuthHelper {
         return urlBuilder.toUriString();
     }
 
-    public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
+    /**
+     * Generate token with Auth code OAuth2 microsoft.
+     * @param authCode code oauth2
+     * @param tenantId tenant ID of microsoft
+     * @return Token response
+     */
+    public static TokenResponse getTokenFromAuthCode(final String authCode, final String tenantId) {
         // Create a logging interceptor to log request and responses
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -111,7 +171,7 @@ public class AuthHelper {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         // Create and configure the Retrofit object
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(authority).client(client)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
         // Generate the token service
@@ -146,7 +206,7 @@ public class AuthHelper {
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
             // Create and configure the Retrofit object
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(authority).client(client)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AUTHORITY).client(client)
                     .addConverterFactory(JacksonConverterFactory.create()).build();
 
             // Generate the token service

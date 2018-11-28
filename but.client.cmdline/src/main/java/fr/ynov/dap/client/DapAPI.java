@@ -7,8 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -83,9 +81,40 @@ public final class DapAPI {
      * @param user user to add .
      */
     public void addUser(final String user) {
+        try {
+            URLConnection connection = this.getConnection("user/add/" + user);
+            InputStream in = connection.getInputStream();
+            in.close();
+            System.out.println("User créé avec succès !");
+        } catch (IOException e) {
+            logger.error("Error when fetching API to add user '" + user + "'", e);
+        }
+    }
+
+    /**
+     * Call API to add google account.
+     * @param account name of google account
+     * @param user user to add .
+     */
+    public void addGoogleAccount(final String account, final String user) {
         URI url;
         try {
-            url = new URI(this.getFullURL("account/add/" + user));
+            url = new URI(this.getFullURL("add/account/google/" + account + "?userKey=" + user));
+            Desktop.getDesktop().browse(url);
+        } catch (URISyntaxException | IOException e) {
+            logger.error("Error when fetching API to add user '" + user + "'", e);
+        }
+    }
+
+    /**
+     * Call API to add microsoft account.
+     * @param account name of microsoft account
+     * @param user user to add .
+     */
+    public void addMicrosoftAccount(final String account, final String user) {
+        URI url;
+        try {
+            url = new URI(this.getFullURL("add/account/microsoft/" + account + "?userKey=" + user));
             Desktop.getDesktop().browse(url);
         } catch (URISyntaxException | IOException e) {
             logger.error("Error when fetching API to add user '" + user + "'", e);
@@ -99,7 +128,7 @@ public final class DapAPI {
      */
     public void showNextEvent(final String user, final String calendar) {
         try {
-            URLConnection connection = this.getConnection("events/next?userId=" + user + "&calendarId=" + calendar);
+            URLConnection connection = this.getConnection("events/next?userKey=" + user + "&calendarId=" + calendar);
             InputStream in = connection.getInputStream();
             Scanner s = new Scanner(in);
             s.useDelimiter("\\A");
@@ -121,28 +150,19 @@ public final class DapAPI {
                         obj.get("errors"));
                 return;
             }
-
-            String name = obj.getString("summary");
-            Date start = new Date(
-                    (new Timestamp(obj.getJSONObject("start").getJSONObject("dateTime").getInt("value"))).getTime());
-            Date end = new Date(
-                    (new Timestamp(obj.getJSONObject("end").getJSONObject("dateTime").getInt("value"))).getTime());
-            String status = "";
-            boolean organizer = false;
-            if (obj.has("attendees")) {
-                for (Object attendee : obj.getJSONArray("attendees")) {
-                    if (attendee instanceof JSONObject) {
-                        JSONObject man = ((JSONObject) attendee);
-                        if (man.has("self")) {
-                            organizer = man.has("organizer") && man.getBoolean("organizer");
-                            status = man.getString("responseStatus");
-                        }
-                    }
+            String name = obj.getString("subject");
+            String start = obj.getString("start");
+            String end = obj.getString("end");
+            String status = obj.getString("status");
+            String organizer = "Inconnu";
+            if (obj.has("organizer") && !obj.isNull("organizer")) {
+                if (obj.getBoolean("organizer")) {
+                    organizer = "Oui";
+                } else {
+                    organizer = "Non";
                 }
-            } else {
-                organizer = true;
-                status = obj.getString("status");
             }
+
             System.out.println("Votre prochain événement : ");
             System.out.println("  Sujet : " + name);
             System.out.println("  Début : " + start);
@@ -160,7 +180,7 @@ public final class DapAPI {
      */
     public void showEmailUnreadCount(final String user) {
         try {
-            URLConnection connection = this.getConnection("emails/unread?userId=" + user);
+            URLConnection connection = this.getConnection("emails/unread?userKey=" + user);
             InputStream in = connection.getInputStream();
             Scanner s = new Scanner(in);
             s.useDelimiter("\\A");
@@ -182,7 +202,7 @@ public final class DapAPI {
      */
     public void showContactCount(final String user) {
         try {
-            URLConnection connection = this.getConnection("contact/count?userId=" + user);
+            URLConnection connection = this.getConnection("contact/count?userKey=" + user);
             InputStream in = connection.getInputStream();
             Scanner s = new Scanner(in);
             s.useDelimiter("\\A");

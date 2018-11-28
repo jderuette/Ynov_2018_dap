@@ -19,6 +19,12 @@ public class App {
      * Name of option User.
      */
     private static final String OPTION_USER = "user";
+
+    /**
+     * Name of option User.
+     */
+    private static final String OPTION_ACCOUNT = "account";
+
     /**
      * Logger for the class.
      */
@@ -35,7 +41,8 @@ public class App {
         // create the Options
         Options options = new Options();
         options.addOption("h", "help", false, "print this message");
-        options.addOption("u", OPTION_USER, true, "specify userID");
+        options.addOption("u", OPTION_USER, true, "specify userKey");
+        options.addOption("a", OPTION_ACCOUNT, true, "specify account name");
         options.addOption("c", "calendar", true, "specify calendarID, default : primary");
 
         try {
@@ -63,8 +70,14 @@ public class App {
             return;
         }
         switch (command) {
-        case "addAccount":
-            this.addAccount(line);
+        case "addUser":
+            this.addUser(line);
+            break;
+        case "addGoogleAccount":
+            this.addGoogleAccount(line);
+            break;
+        case "addMicrosoftAccount":
+            this.addMicrosoftAccount(line);
             break;
         case "showNextEvent":
             this.showNextEvent(line);
@@ -86,25 +99,66 @@ public class App {
      */
     private void printCommands() {
         System.out.println("Commandes disponibles : ");
-        System.out.println("addAccount");
+        System.out.println("addUser");
+        System.out.println("addGoogleAccount");
+        System.out.println("addMicrosoftAccount");
         System.out.println("showNextEvent");
         System.out.println("showEmailUnreadCount");
         System.out.println("showContactCount");
     }
 
     /**
-     * Command add account Google.
+     * Command add user.
      * @param line Command line for options
      */
-    private void addAccount(final CommandLine line) {
+    private void addUser(final CommandLine line) {
         String user = line.getOptionValue(OPTION_USER);
         if (user == null) {
-            logger.error("Command 'addAcount' need args 'user'");
+            logger.error("Command 'addUser' need args 'user'");
             return;
         }
-        logger.info("Run command 'addAcount' for user '" + user + "'");
+        logger.info("Run command 'addUser' for user '" + user + "'");
         DapAPI api = DapAPI.getInstance();
         api.addUser(user);
+    }
+
+    /**
+     * Command to add google account.
+     * @param line Command line for options
+     */
+    private void addGoogleAccount(final CommandLine line) {
+        String user = line.getOptionValue(OPTION_USER);
+        String account = line.getOptionValue(OPTION_ACCOUNT);
+        if (user == null) {
+            logger.error("Command 'addGoogleAccount' need args 'user'");
+            return;
+        }
+        if (account == null) {
+            logger.error("Command 'addGoogleAccount' need args 'account'");
+            return;
+        }
+        logger.info("Run command 'addGoogleAccount' for user '" + user + "' and account '" + account + "'");
+        DapAPI api = DapAPI.getInstance();
+        api.addGoogleAccount(account, user);
+    }
+
+    /**
+     * Command to add google account.
+     * @param line Command line for options
+     */
+    private void addMicrosoftAccount(final CommandLine line) {
+        String user = line.getOptionValue(OPTION_USER);
+        String account = line.getOptionValue(OPTION_ACCOUNT);
+        if (user == null) {
+            logger.error("Command 'addMicrosoftAccount' need args 'user'");
+            return;
+        }
+        if (account == null) {
+            logger.error("Command 'addMicrosoftAccount' need args 'account'");
+        }
+        logger.info("Run command 'addMicrosoftAccount' for user '" + user + "' and account '" + account + "'");
+        DapAPI api = DapAPI.getInstance();
+        api.addMicrosoftAccount(account, user);
     }
 
     /**

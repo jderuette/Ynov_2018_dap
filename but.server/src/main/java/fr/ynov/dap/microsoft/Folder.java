@@ -1,17 +1,39 @@
 package fr.ynov.dap.microsoft;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Entity Folder.
+ * @author thibault
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Folder {
+    /**
+     * Unique ID.
+     */
     private String id;
+    /**
+     * Display name.
+     */
     private String displayName;
+    /**
+     * Parent folder id.
+     */
     private String parentFolderId;
+    /**
+     * Child folder count.
+     */
     private int childFolderCount;
+    /**
+     * Unread item count.
+     */
     private int unreadItemCount;
+    /**
+     * total item count.
+     */
     private int totalItemCount;
+
     /**
      * @return the id
      */

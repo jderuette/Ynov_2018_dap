@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ynov.dap.data.AppUser;
-import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftAccountRepository;
 import fr.ynov.dap.microsoft.authentication.AuthHelper;
 
+/**
+ * Service to manage mail of microsoft.
+ * @author thibault
+ *
+ */
 @Service
 public class MicrosoftMailService {
 
@@ -22,6 +26,12 @@ public class MicrosoftMailService {
     @Autowired
     private MicrosoftAccountRepository repositoryMicrosoftAccount;
 
+    /**
+     * Get emails of one app user (all accounts).
+     * @param user the app user.
+     * @return all emails.
+     * @throws IOException if http erro.
+     */
     public Map<MicrosoftAccount, Message[]> getEmails(final AppUser user) throws IOException {
         Map<MicrosoftAccount, Message[]> result = new HashMap<MicrosoftAccount, Message[]>();
         for (MicrosoftAccount mAccount : user.getMicrosoftAccounts()) {
@@ -48,6 +58,12 @@ public class MicrosoftMailService {
         return result;
     }
 
+    /**
+     * Get number of unread email.
+     * @param user the app user.
+     * @return the count of unread email.
+     * @throws IOException if http error.
+     */
     public int getUnreadEmailCount(final AppUser user) throws IOException {
         int result = 0;
         for (MicrosoftAccount mAccount : user.getMicrosoftAccounts()) {

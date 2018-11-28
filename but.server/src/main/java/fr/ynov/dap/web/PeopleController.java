@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.AppUserRepository;
 import fr.ynov.dap.google.GooglePeopleService;
+import fr.ynov.dap.microsoft.MicrosoftContactService;
 
 /**
  * @author thibault
@@ -21,10 +22,16 @@ import fr.ynov.dap.google.GooglePeopleService;
 @RestController
 public class PeopleController extends HandlerErrorController {
     /**
-     * Calendar Google service.
+     * People Google service.
      */
     @Autowired
     private GooglePeopleService service;
+
+    /**
+     * Contact Microsoft service.
+     */
+    @Autowired
+    private MicrosoftContactService microsoftContactService;
 
     /**
      * Repository of AppUser.
@@ -48,6 +55,6 @@ public class PeopleController extends HandlerErrorController {
             throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "User '" + userKey + "' not found.");
         }
 
-        return service.countContactsOfAllAccounts(user);
+        return service.countContactsOfAllAccounts(user) + microsoftContactService.getContactCount(user);
     }
 }

@@ -1,7 +1,6 @@
 package fr.ynov.dap.web.microsoft;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,17 +51,18 @@ public class AuthorizeController extends HandlerErrorController {
 
     /**
      * CallBack url authorize of microsoft oauth2.
-     * @param code the returned code 
-     * @param idToken
-     * @param state
-     * @param request
-     * @return
-     * @throws HttpResponseException
+     * @param code the returned code
+     * @param idToken microsoft id token
+     * @param state state returned
+     * @param request the request
+     * @param redirectAttributes the redirect attributes for flash messages
+     * @return template
+     * @throws HttpResponseException if bad request.
      */
     @RequestMapping(value = "/authorize", method = RequestMethod.POST)
     public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
             @RequestParam("state") final UUID state, final HttpServletRequest request,
-            RedirectAttributes redirectAttributes) throws HttpResponseException {
+            final RedirectAttributes redirectAttributes) throws HttpResponseException {
         // Get the expected state value from the session
         HttpSession session = request.getSession();
         UUID expectedState = (UUID) session.getAttribute("expected_state");
