@@ -1,4 +1,4 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.account;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ import com.google.api.client.http.GenericUrl;
 import fr.ynov.dap.service.google.GoogleService;
 
 @Controller
-public class GoogleAccount extends GoogleService {
+public class GoogleAccountController extends GoogleService {
 	protected static org.apache.logging.log4j.Logger LOG = LogManager.getLogger();
 
 	/**

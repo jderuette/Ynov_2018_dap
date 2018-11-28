@@ -18,17 +18,45 @@
 </head>
 <body>
 	<div th:replace="~{fragments/header :: header}"></div>
-	
+
 	<div th:if="${error}" class="alert alert-danger">
 		Error: <span th:text="${error}"></span>
 	</div>
+
+	<table class="table">
+		<caption>Inbox</caption>
+		<thead>
+			<tr>
+				<th><span class="glyphicon glyphicon-envelope"></span></th>
+				<th>From</th>
+				<th>Subject</th>
+				<th>Received</th>
+				<th>Preview</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:forEach items="${messages}" var="message">
+				<tr class="${message.isRead == true ? '' : 'info'}">
+					<td><th:if test="${message.isRead == false}">
+							<span class="glyphicon glyphicon-envelope"></span>
+						</th:if></td>
+					<td><th:out value="${message.from.emailAddress.name}" /></td>
+					<td><th:out value="${message.subject}" /></td>
+					<td><th:out value="${message.receivedDateTime}" /></td>
+					<td><th:out value="${message.bodyPreview}" /></td>
+				</tr>
+			</th:forEach>
+		</tbody>
+	</table>
+
 
 	<pre>
 		<code>Auth code: <span th:text="${session.authCode}"></span>
 
 		ID token: <span th:text="${session.idToken}"></span>
 		
-		Access token: <span th:text="${session.accessToken}"></span></code>
+		Access token: <span th:text="${session.accessToken}"></span>
+		</code>
 	</pre>
 	<div th:replace="~{fragments/footer :: footer}"></div>
 </body>

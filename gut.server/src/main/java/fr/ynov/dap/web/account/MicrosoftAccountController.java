@@ -1,5 +1,6 @@
-package fr.ynov.dap.web;
+package fr.ynov.dap.web.account;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import fr.ynov.dap.service.microsoft.MicrosoftService;
+import fr.ynov.dap.service.microsoft.OutlookService;
 import fr.ynov.dap.service.microsoft.auth.IdToken;
 import fr.ynov.dap.service.microsoft.auth.TokenResponse;
+import fr.ynov.dap.service.microsoft.helper.OutlookServiceBuilder;
 
 @Controller
 public class MicrosoftAccountController {
@@ -40,6 +44,15 @@ public class MicrosoftAccountController {
 					session.setAttribute("accessToken", tokenResponse.getAccessToken());
 					session.setAttribute("userConnected", true);
 					session.setAttribute("userName", idTokenObj.getName());
+					// Get user info
+					OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokenResponse.getAccessToken(), null);
+					MicrosoftAccount user;
+					try {
+					  user = outlookService.getCurrentUser().execute().body();
+					  session.setAttribute("userEmail", user.getEmailAddress());
+					} catch (IOException e) {
+					  session.setAttribute("error", e.getMessage());
+					}
 					session.setAttribute("userTenantId", idTokenObj.getTenantId());
 				} else {
 					session.setAttribute("error", "ID token failed validation.");
