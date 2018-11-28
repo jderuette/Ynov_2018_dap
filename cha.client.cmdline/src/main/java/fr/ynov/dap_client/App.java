@@ -9,36 +9,48 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+/**
+ * The Class App.
+ */
 public class App
 {
+  
+  /** The localhost. */
   public static String localhost = "http://localhost:8080";
+  
+  /** The route. */
   public static String route;
 
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
   public static void main(String[] args)
   {
-      if(args[0] == "add"){
-        if(args[1] == "google"){
-          route = localhost + "/account/add/google/" + args[2] + "?userKey=" + args[3];
+      if(args[0] == "account"){
+    	  
+    	if(args[1] == "add") {
+    		route = localhost + "/add/account/add?userKey=" + args[2];
+    	}
+      	}else if(args[1] == "google"){
+          route = localhost + "/account/google/add/" + args[2] + "?userKey=" + args[3];
         }else if(args[1] == "microsoft") {
-          route = localhost + "/account/add/microsoft/" + args[2] + "?userKey=" + args[3];
+          route = localhost + "/account/microsoft/add/" + args[2] + "?userKey=" + args[3];
         }
         URI uri = new URI(route);
         Desktop.getDesktop().browse(uri);
       }else {
         if(args[0] == "mail"){
-          route = localhost + "/mail/unread/" + args[1];
+          route = localhost + "/mail/nbUnread?userKey=" + args[1];
           URL path = new URL(route);
           System.out.println(request(path));
         }else if(args[0] == "calendar"){
-          route = localhost + "/calendar/" + args[1];
-          URL path = new URL(route);
-          System.out.println(request(path));
-        }else if(args[0] == "calendar"){
-          route = localhost + "/calendar/" + args[1];
+          route = localhost + "/calendar/nextEvent?userKey=" + args[1];
           URL path = new URL(route);
           System.out.println(request(path));
         }else if(args[0] == "people"){
-          route = localhost + "/people/nbPeople/" + args[1];
+          route = localhost + "/people/nbPeople?userKey=" + args[1];
           URL path = new URL(route);
           System.out.println(request(path));
         }
