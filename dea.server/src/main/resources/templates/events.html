@@ -1,0 +1,28 @@
+
+<div th:if="${error != null}" class="alert alert-danger">
+	<span th:text="#{dap.error}"></span> <span th:text="${error}"></span>
+</div>
+
+<header th:include="base :: header"></header>
+
+<table class="table">
+  <caption th:text="#{calendar}"></caption>
+  <thead>
+    <tr>
+      <th th:text="#{organizer}"></th>
+      <th th:text="#{subject}"></th>
+      <th th:text="#{start}"></th>
+      <th th:text="#{end}"></th>
+    </tr>
+  </thead>
+  <tbody>
+	<th:block th:each="event : ${events}">
+      <tr>
+        <td th:text="${event.organizer.emailAddress.name}" /></td>
+        <td th:text="${event.subject}" /></td>
+        <td th:text="${event.start.dateTime}" /></td>
+        <td th:text="${event.end.dateTime}" /></td>
+      </tr>
+	</th:block>
+  </tbody>
+</table>

@@ -7,8 +7,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+/**
+ * Classe AccountServiceCaller
+ * 
+ * @author antod
+ *
+ */
 public class AccountServiceCaller extends ServerCaller
 {
+  /**
+   * Variable utilisée pour logger
+   */
   private static Logger logger = LogManager.getLogger();
 
   /**
@@ -22,7 +31,7 @@ public class AccountServiceCaller extends ServerCaller
     try
     {
       uri = new URI(endpoint + "/account/add/" + user);
-    } catch (Exception e) //TODO dea by Djer tu devrais catcher une Exception plus précise.
+    } catch (Exception e)
     {
       logger.error("Une erreur s'est déclenchée lors de la création d'un compte : " + e.getMessage());
       e.printStackTrace();

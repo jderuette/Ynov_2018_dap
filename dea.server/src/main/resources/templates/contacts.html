@@ -1,0 +1,32 @@
+
+<div th:if="${error != null}" class="alert alert-danger">
+	<span th:text="#{dap.error}"></span> <span th:text="${error}"></span>
+</div>
+
+<header th:include="base :: header"></header>
+
+<table class="table">
+  <caption th:text="#{contacts}"></caption>
+  <thead>
+    <tr>
+      <th th:text="#{name}"></th>
+      <th th:text="#{company}"></th>
+      <th th:text="#{email}"></th>
+    </tr>
+  </thead>
+  <tbody>
+	<th:block th:each="contact : ${contacts}">
+      <tr>
+        <td><span th:text="${contact.givenName}"></span> <span th:text="${contact.surname}"></span></td>
+        <td th:text="${contact.companyName}" /></td>
+        <td>
+          <ul class="list-inline">
+			<th:block th:each="address : ${contact.emailAddresses}">
+              <li th:text="${address.address}" /></li>
+			</th:block>
+          </ul>
+        </td>
+      </tr>
+	</th:block>
+  </tbody>
+</table>

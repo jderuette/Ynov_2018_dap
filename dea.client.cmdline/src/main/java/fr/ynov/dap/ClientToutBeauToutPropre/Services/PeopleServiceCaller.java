@@ -2,6 +2,12 @@
 package fr.ynov.dap.ClientToutBeauToutPropre.Services;
 
 
+/**
+ * Classe PeopleServiceCaller
+ * 
+ * @author antod
+ *
+ */
 public class PeopleServiceCaller extends ServerCaller
 {
   /**
@@ -13,7 +19,7 @@ public class PeopleServiceCaller extends ServerCaller
    */
   public static String getNbContacts(String user)
   {
-    String result = callUrl(endpoint + "/people/getNbContacts/me?userKey=" + user);
+    String result = callUrl(endpoint + "/people/getNbContacts?userKey=" + user);
 
     if (result.equals(""))
     {

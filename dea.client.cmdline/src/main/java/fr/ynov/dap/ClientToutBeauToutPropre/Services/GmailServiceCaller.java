@@ -2,6 +2,12 @@
 package fr.ynov.dap.ClientToutBeauToutPropre.Services;
 
 
+/**
+ * Classe GmailServiceCaller
+ * 
+ * @author antod
+ *
+ */
 public class GmailServiceCaller extends ServerCaller
 {
   /**
@@ -12,7 +18,7 @@ public class GmailServiceCaller extends ServerCaller
    */
   public static String getNbUnreadEmail(String user)
   {
-    String result = callUrl(endpoint + "/gmail/getNbUnreadEmail/me?userKey=" + user);
+    String result = callUrl(endpoint + "/email/getNbUnreadEmail?userKey=" + user);
 
     return result;
   }

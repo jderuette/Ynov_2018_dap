@@ -1,0 +1,15 @@
+
+<div th:if="${error != null}" class="alert alert-danger">
+	<span th:text="#{dap.error}"></span> <span th:text="${error}"></span>
+</div>
+
+<header th:include="base :: header"></header>
+
+<div class="jumbotron">
+	<h1>Java Web App Tutorial</h1>
+	<p>This sample uses the Mail API to read messages in your inbox.</p>
+	<p>
+		<!-- <a class="btn btn-lg btn-primary" th:href="${loginUrl}">Click here
+			to login</a> -->
+	</p>
+</div>

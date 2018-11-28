@@ -10,39 +10,50 @@ import fr.ynov.dap.ClientToutBeauToutPropre.Services.GmailServiceCaller;
 import fr.ynov.dap.ClientToutBeauToutPropre.Services.PeopleServiceCaller;
 
 
+/**
+ * Classe du launcher
+ * 
+ * @author antod
+ *
+ */
 public class LauncherClient
 {
 
+  /**
+   * Variable pour logger
+   */
   private static Logger logger = LogManager.getLogger();
 
   /**
    * Envoie une demande au server en tant que client
    * 
    * @param args Les arguments à fournir : [0] Nom du user. [1] Nom du service
-   *             (gmail/calendar/people). [2] Nom de la méthode dépendant du
+   *             (email/calendar/people). [2] Nom de la méthode dépendant du
    *             service (getNbUnreadEmail/getUpcomingEvent/getNbContacts).
    */
   public static void main(String... args)
   {
+    String loggerInfo = "";
+
     if (args.length >= 3 || (args.length == 2 && args[1].equals("addUser")))
     {
       String user = args[0];
-      logger.info("User = '" + user + "'");
+      loggerInfo = "User = '" + user + "'";
 
       String service = args[1];
-      logger.info("Service = '" + service + "'");
+      loggerInfo += "\nService = '" + service + "'";
 
       String method = "";
       if (args.length >= 3)
       {
         method = args[2];
-        logger.info("Method = '" + method + "'");
+        loggerInfo += "\nMethod = '" + method + "'";
       }
-      
-      //TODO dea by Djer tu pourrais faire une seul log avec les 3 paramètres, ca serait surement plus lisible.
 
-      // Si on veut utiliser le service gmail
-      if (service.equals("gmail"))
+      logger.info(loggerInfo);
+
+      // Si on veut utiliser le service email
+      if (service.equals("email"))
       {
 
         // Demande de récupérer le nombre de mails non lu
@@ -87,9 +98,9 @@ public class LauncherClient
       System.out.println("");
       System.out.println("Méthode d'utilisation :");
       System.out.println("Paramètre 1 : Nom de l'utilisateur.");
-      System.out.println("Paramètre 2 : Nom du service (gmail/calendar/people).");
+      System.out.println("Paramètre 2 : Nom du service (email/calendar/people).");
       System.out.println(
-          "Paramètre 3 : Nom de la méthode dépendant du service (getNbUnreadEmail/getUpcomingEvents/getNbContacts).");
+          "Paramètre 3 : Nom de la méthode dépendant du service (getNbUnreadEmail/getUpcomingEvent/getNbContacts).");
       System.out.println("");
     }
   }

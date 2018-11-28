@@ -1,0 +1,46 @@
+
+<div th:if="${error != null}" class="alert alert-danger">
+	<span th:text="#{dap.error}"></span> <span th:text="${error}"></span>
+</div>
+
+<header th:include="base :: header"></header>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{admin.title}"></title>
+
+</head>
+<body>
+	<h1 th:text="#{datastore}"></h1>
+
+	<div>
+		<table>
+			<tr>
+				<th th:text="#{username}"></th>
+				<th th:text="#{credentialtype}"></th>
+				<th th:text="#{token}"></th>
+				<th th:text="#{tenantid}"></th>
+				<th th:text="#{mails}"></th>
+			</tr>
+			<tr th:each="data:${dataStore}">
+				<td th:text="${data.userName}"></td>
+				<td th:text="${data.credentialType}"></td>
+				<td th:text="${data.token}"></td>
+				<td th:text="${data.tenantId}"></td>
+				<td><a th:if ="${data.mailUrl != null}" class="btn btn-lg btn-primary" th:href="${data.mailUrl}" th:text="#{mailurl}"></a><td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

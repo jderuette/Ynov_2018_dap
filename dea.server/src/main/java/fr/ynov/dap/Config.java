@@ -1,112 +1,148 @@
 
 package fr.ynov.dap;
 
-public class Config {
 
-    //TODO dea by Djer Pense à ranger ton code : CONSTANTES, puis attributs, puis Constructeur, puis méthode métier, puis getter/setters
+/**
+ * Classe de configuration
+ * 
+ * @author antod
+ *
+ */
+public class Config
+{
+  /**
+   * Nom du dossier où se trouvent les credentials
+   */
+  private final String CREDENTIALS_FOLDER = "credentials";
+  /**
+   * Nom du chemin des infos du client
+   */
+  private final String CLIENT_SECRET_DIR = "tokens";
+  /**
+   * Nom de l'application
+   */
+  private final String APPLICATION_NAME = "HoC DaP";
+  /**
+   * Chemin vers le dossier source de l'application
+   */
+  private final String APPLICATION_FOLDER = System.getProperty("user.home") + System.getProperty("file.separator");
 
-    private static final String CREDENTIALS_FOLDER = "credentials";
-    private static final String CLIENT_SECRET_DIR = "tokens";
-    private static final String APPLICATION_NAME = "HoC DaP";
+  /**
+   * Attribut pour le nom de l'application
+   */
+  private String applicationName;
+  /**
+   * Attribut pour le chemin des credential
+   */
+  private String credentialFolder;
+  /**
+   * Attribut pour le chemin des infos du client
+   */
+  private String clientSecretFile;
+  /**
+   * Attribut pour le chemin de l'application
+   */
+  private String applicationFolder;
 
-    /**
-     * Récupère le nom de l'application
-     * 
-     * @return
-     */
-    public String getApplicationName() {
-        return applicationName;
-    }
+  /**
+   * Constructeur de la classe de configuration.
+   * 
+   */
+  public Config()
+  {
+    applicationFolder = APPLICATION_FOLDER;
+    applicationName = APPLICATION_NAME;
+    credentialFolder = CREDENTIALS_FOLDER;
+    clientSecretFile = CLIENT_SECRET_DIR;
+  }
 
-    /**
-     * Change le nom de l'application
-     * 
-     * @param applicationName
-     */
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
-    }
+  /**
+   * Renvoie le chemin vers l'adresse de callback
+   * 
+   * @return
+   */
+  public String getoAuth2CallbackUrl()
+  {
+    return "/oAuth2Callback";
+  }
 
-    /**
-     * Récupère le chemin du fichier où est rangé le fichier credential.json
-     * 
-     * @return
-     */
-    public String getCredentialFolder() {
-        return applicationFolder + System.getProperty("file.separator") + credentialFolder;
-    }
+  /**
+   * Récupère le nom de l'application
+   * 
+   * @return
+   */
+  public String getApplicationName()
+  {
+    return applicationName;
+  }
 
-    /**
-     * Change le chemin du fichier dans lequel est rangé le fichier credential.json
-     * 
-     * @param credentialFolder
-     */
-    public void setCredentialFolder(String credentialFolder) {
-        this.credentialFolder = credentialFolder;
-    }
+  /**
+   * Change le nom de l'application
+   * 
+   * @param applicationName
+   */
+  public void setApplicationName(String applicationName)
+  {
+    this.applicationName = applicationName;
+  }
 
-    /**
-     * Récupère le chemin du répertoire tokens
-     * 
-     * @return
-     */
-    public String getClientSecretFile() {
-        return applicationFolder + System.getProperty("file.separator") + clientSecretFile;
-    }
+  /**
+   * Récupère le chemin du fichier où est rangé le fichier credential.json
+   * 
+   * @return
+   */
+  public String getCredentialFolder()
+  {
+    return applicationFolder + System.getProperty("file.separator") + credentialFolder;
+  }
 
-    /**
-     * Change le chemin où est rangé le répertoire tokens
-     * 
-     * @param clientSecretFile
-     */
-    public void setClientSecretFile(String clientSecretFile) {
-        this.clientSecretFile = clientSecretFile;
-    }
+  /**
+   * Change le chemin du fichier dans lequel est rangé le fichier credential.json
+   * 
+   * @param credentialFolder
+   */
+  public void setCredentialFolder(String credentialFolder)
+  {
+    this.credentialFolder = credentialFolder;
+  }
 
-    /**
-     * Change le chemin de la racine du répertoire du projet
-     * 
-     * @param path
-     */
-    public void setRacineFolder(String path) {
-        this.applicationFolder = path;
-    }
+  /**
+   * Récupère le chemin du répertoire tokens
+   * 
+   * @return
+   */
+  public String getClientSecretFile()
+  {
+    return applicationFolder + System.getProperty("file.separator") + clientSecretFile;
+  }
 
-    //TODO dea by Djer commentaire pas vraiment "juste", 
-    //ca serait plutot le dossier de "sauvegarde" et le dossier des "données"
-    /**
-     * Récupère le chemin de la racine du répertoire du projet
-     * 
-     * @return
-     */
-    public String getRacineFolder() {
-        return applicationFolder;
-    }
+  /**
+   * Change le chemin où est rangé le répertoire tokens
+   * 
+   * @param clientSecretFile
+   */
+  public void setClientSecretFile(String clientSecretFile)
+  {
+    this.clientSecretFile = clientSecretFile;
+  }
 
-    private String applicationName;
-    private String credentialFolder;
-    private String clientSecretFile;
-    private String applicationFolder;
+  /**
+   * Change le chemin de la racine du répertoire du projet
+   * 
+   * @param path
+   */
+  public void setRacineFolder(String path)
+  {
+    this.applicationFolder = path;
+  }
 
-    /**
-     * Constructeur de la classe de configuration.
-     * 
-     */
-    public Config() {
-        //TODO dea by Djer on essaye de mettre les "valeur par defaut" dans des constantes, vers le haut de la classe.
-        //Cela facilite la lisibilité du code.
-        applicationFolder = System.getProperty("user.home") + System.getProperty("file.separator");
-        applicationName = APPLICATION_NAME;
-        credentialFolder = CREDENTIALS_FOLDER;
-        clientSecretFile = CLIENT_SECRET_DIR;
-    }
-
-    /**
-     * Renvoie l'url de redirection
-     * 
-     * @return
-     */
-    public String getoAuth2CallbackUrl() {
-        return "/oAuth2Callback";
-    }
+  /**
+   * Récupère le chemin de la racine du répertoire du projet
+   * 
+   * @return
+   */
+  public String getRacineFolder()
+  {
+    return applicationFolder;
+  }
 }

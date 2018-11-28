@@ -1,0 +1,35 @@
+
+<div th:if="${error != null}" class="alert alert-danger">
+	<span th:text="#{dap.error}"></span> <span th:text="${error}"></span>
+</div>
+
+<header th:include="base :: header"></header>
+
+<th:block th:each="messages : ${totalMessages}">
+	<h1><span th:text="#{inbox}"></span> <span th:text="${messages.key}"></span></h1>
+	<table class="table">
+			<thead>
+				<tr>
+					<th><span class="glyphicon glyphicon-envelope"></span></th>
+					<th th:text="#{from}"></th>
+					<th th:text="#{subject}"></th>
+					<th th:text="#{received}"></th>
+					<th th:text="#{preview}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="message : ${messages.value}">
+					<tr class="${message.isRead == true ? '' : 'info'}">
+		
+						<td><span th:if="${message.isRead == false}"
+							class="glyphicon glyphicon-envelope"></span></td>
+		
+						<td th:text="${message.from.emailAddress.name}" /></td>
+						<td th:text="${message.subject}" /></td>
+						<td th:text="${message.receivedDateTime}" /></td>
+						<td th:text="${message.bodyPreview}" /></td>
+					</tr>
+				</th:block>
+			</tbody>
+	</table>
+</th:block>
