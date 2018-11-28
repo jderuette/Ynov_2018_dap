@@ -12,7 +12,7 @@ public class CalendarApi extends BaseApi {
      * default chemin of the CalendarApi
      * To change this, use SetChemin from BaseApi
      */
-    private static String chemin = "/calendar/event/";
+    private static String chemin = "/event/global/";
 
     /**.
      * Constructor of CalendarApi and send attributs "chemin" to BaseApi

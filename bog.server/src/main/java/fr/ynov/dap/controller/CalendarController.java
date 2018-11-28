@@ -39,19 +39,20 @@ public class CalendarController extends GoogleService implements Callback {
     }
 
     /**
-     * @param userKey
-     * userKey put in parameter
-     * @return NextEvent : Correspondant au prochain évènement de l'utilisateur passé en paramètre
-     * @throws IOException si un problème est survenu lors de l'appel à cette fonction
-     * @throws Exception si un problème est survenu lors de l'appel à cette fonction
+     * @param userKey in url
+     * @return nextEvent
+     * @throws GeneralSecurityException generalSecurity
      */
-    @RequestMapping("/calendar/event/{userKey}")
-    public Event getFuturEvents(@PathVariable("userKey") final String userKey) {
+    @RequestMapping("/google/event/{userKey}")
+    public Event getFuturEvents(@PathVariable("userKey") final String userKey) throws GeneralSecurityException {
         Event event = null;
         try {
             event = calendarService.getNextEvent(userKey);
-        } catch (IOException | GeneralSecurityException e) {
+
+        } catch (IOException e) {
             LOG.error("Un problème est survenu lors de l'appel du service calendar", "userKey = " + userKey, e);
+        } finally {
+            event = null;
         }
         return event;
     }

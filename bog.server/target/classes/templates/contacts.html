@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title th:text="#{admin.title}">Microsoft</title>
+
+</head>
+<body>
+
+<div th:replace="fragments/baseHeader :: header"></div>
+
+	<p>
+		<a th:href="${logout}" th:text="#{clickToDisconnect}" /></a>
+	</p>
+
+	<p th:text="#{numberContacts}">
+		<p th:text="${nbContact}"></p>
+	</p>
+
+	<table class="tableau">
+		<tr>
+			<th>GivenName</th>
+			<th>Surname</th>
+			<th>Company</th>
+			<th>Email</th>
+		</tr>
+		<th:block th:each="contact : ${contacts}">
+
+			<tr>
+				<td th:text="${contact.givenName}"></td>
+				<td th:text="${contact.surname}"></td>
+				<td th:text="${contact.companyName}"></td>
+				<td><ul:block th:each="email : ${contact.emailAddresses}">
+						<li th:text="${email.address}"></li>
+					</ul:block></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>

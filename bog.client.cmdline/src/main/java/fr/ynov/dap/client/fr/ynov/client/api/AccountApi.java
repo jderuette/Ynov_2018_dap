@@ -12,7 +12,7 @@ public class AccountApi extends BaseApi {
      * default chemin of the AccountApi
      * To change this, use SetChemin from BaseApi
      */
-    private static String chemin = "/account/add/";
+    private static String chemin = "google/account/add/";
 
     /**.
      * Constructor of AccountApi and send attributs "chemin" to BaseApi

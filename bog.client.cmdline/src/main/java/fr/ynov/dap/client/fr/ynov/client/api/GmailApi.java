@@ -12,7 +12,7 @@ public class GmailApi extends BaseApi {
      * default chemin of the GmailApi
      * To change this, use SetChemin from BaseApi
      */
-    private static String chemin = "/gmail/totalEmail/";
+    private static String chemin = "/mail/global/";
 
     /**.
      * Constructor of GmailApi and send attributs "chemin" to BaseApi

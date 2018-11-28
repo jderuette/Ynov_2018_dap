@@ -12,7 +12,7 @@ public class PeopleApi extends BaseApi {
      * default chemin of the PeopleApi
      * To change this, use SetChemin from BaseApi
      */
-    private static String chemin = "/contact/";
+    private static String chemin = "/contact/global/";
 
     /**.
      * Constructor of PeopleApi and send attributs "chemin" to BaseApi

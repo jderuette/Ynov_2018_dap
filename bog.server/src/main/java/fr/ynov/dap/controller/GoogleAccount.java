@@ -101,7 +101,6 @@ public class GoogleAccount extends GoogleService implements Callback {
                 userExisting.addGoogleAccount(account);
                 repositoryUser.save(userExisting);
             }
-            // onSuccess(request, resp, credential);
         } catch (IOException e) {
             LOG.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
@@ -198,8 +197,8 @@ public class GoogleAccount extends GoogleService implements Callback {
      * @return the view to Display (on Error)
      * @throws GeneralSecurityException addAccount fonction
      */
-    @RequestMapping("/account/add/{accountName}")
-    public String addAccount(@PathVariable final String accountName, @RequestParam final String userKey,
+    @RequestMapping("/google/account/add/{userKey}/{accountName}")
+    public String addAccount(@PathVariable final String accountName, @PathVariable final String userKey,
             final HttpServletRequest request, final HttpSession session) throws GeneralSecurityException {
 
         String response = "errorOccurs";

@@ -39,7 +39,7 @@ public class GmailController extends GoogleService implements Callback {
      * @param userKey nom de l'userKey attaché aux comptes
      * @return total de mails non lus
      */
-    @RequestMapping("/gmail/totalEmail/{userKey}")
+    @RequestMapping("/google/mail/{userKey}")
     public int emailsUnreadsAllAccountUser(@PathVariable("userKey") final String userKey) {
         int unreadEmail = 0;
         try {
