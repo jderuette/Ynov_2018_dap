@@ -1,14 +1,9 @@
 package fr.ynov.dap_client.dap_client;
-//TODO bot by Djer Evite les _ dans les nom de package
 
 import java.net.HttpURLConnection;
-//TODO bot by Djer Configure les "save action" de ton IDE. CF mémo Eclipse
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Scanner;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +13,7 @@ import java.io.InputStreamReader;
  * App.
  */
 public class App {
-	
+
 	/**
 	 * The main method.
 	 *
@@ -27,96 +22,119 @@ public class App {
 	 * @throws URISyntaxException the URI syntax exception
 	 */
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		String url = "http://localhost:8080";
-		String userKey = args[0];
+		choiceRoute(args);
+	}
 
-		if (args[1].equals("addAccount")) {
-			addAccount(url, userKey);
-		} else if (args[1].equals("calendar")) {
-			calendar(url, userKey);
-		} else if (args[1].equals("gmail")) {
-			gmail(url, userKey);
-		}else if (args[1].equals("contact")) {
-			contact(url, userKey);
-		} else {
-			System.out.println("Wrong args !");
+	/**
+	 * Choice route.
+	 *
+	 * @param args the args
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void choiceRoute(String[] args) throws IOException {
+		if (args == null || args.length == 0 || args.length > 4) {
+			System.out.println("Wrong args !!!");
+			help();
+			return;
 		}
-	}
 
-	/**
-	 * Adds the account.
-	 *
-	 * @param url the url
-	 * @param userKey the user key
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws URISyntaxException the URI syntax exception
-	 */
-	public static void addAccount(String url, String userKey) throws IOException, URISyntaxException {
-		String route = url + "/account/add/" + userKey;
-		URI uri = new URI(route);
-		Desktop.getDesktop().browse(uri);
-		
-	}
+		String url = "";
 
-	/**
-	 * Calendar.
-	 *
-	 * @param url the url
-	 * @param userKey the user key
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void calendar(String url, String userKey) throws IOException {
-		String route = url + "/calendar/nextEvent?userKey=" + userKey;
-		URL path = new URL(route);
-		System.out.println(request(path));
-	}
-
-	/**
-	 * Gmail.
-	 *
-	 * @param url the url
-	 * @param userKey the user key
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void gmail(String url, String userKey) throws IOException {
-		String route = url + "/mail/inbox?userKey=" + userKey;
-		URL path = new URL(route);
-		System.out.println(request(path));
-	}
+		switch (args[0]) {
+			case "add":
+				switch (args[1]) {
+				case "google":
+					url = "http://localhost:8080/account/add/google/" + args[2] + "?userKey=" + args[3];
+					break;
+				case "outlook":
+					url = "http://localhost:8080/account/add/outlook/" + args[2] + "?userKey=" + args[3];
+					break;
+				default:
+					help();
+					break;
+				}
+				URI myURI;
+				try {
+					myURI = new URI(url);
+					Desktop.getDesktop().browse(myURI);
 	
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+	
+			case "email":
+				System.out.println(request("http://localhost:8080/mail/inbox?userKey=" + args[1]));
+				break;
+			case "user":
+				System.out.println(request("http://localhost:8080/user/add/" + args[1]));
+				break;
+			case "calendar":
+				System.out.println(request("http://localhost:8080/calendar/nextEvent?userKey=" + args[1]));
+				break;
+			case "contact":
+				System.out.println(request("http://localhost:8080/contact/getContacts?userKey=" + args[1]));
+				break;
+			case "view":
+				try {
+					Desktop.getDesktop().browse(new URI("http://localhost:8080/data"));
+					Desktop.getDesktop().browse(new URI("http://localhost:8080/outlook/mails?userKey=" + args[1]));
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        	break;
+			default:
+				help();
+				break;
+			}
+	}
+
 	/**
-	 * Contact.
-	 *
-	 * @param url the url
-	 * @param userKey the user key
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * Help.
 	 */
-	public static void contact(String url, String userKey) throws IOException {
-		String route = url + "/contact/getContacts?userKey=" + userKey;
-		URL path = new URL(route);
-		System.out.println(request(path));
+	private static void help() {
+		System.out.println("Command :");
+		System.out.println("add [google|microsoft] <account> <userKey>");
+		System.out.println("view <userKey>");
+		System.out.println("email <userKey>");
+		System.out.println("calendar <userKey>");
+		System.out.println("contact <userKey>");
 	}
 
 	/**
 	 * Request.
 	 *
-	 * @param path the path
+	 * @param route the route
 	 * @return the string
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static String request(URL path) throws IOException {
-		HttpURLConnection con = (HttpURLConnection) path.openConnection();
-		con.setRequestMethod("GET");
-		int responseCode = con.getResponseCode();
-		System.out.println("GET Response Code :: " + responseCode);
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
+	public static String request(String route) throws IOException {
+		try {
+			URL path = new URL(route);
+			HttpURLConnection connection = (HttpURLConnection) path.openConnection();
+			try {
+				connection.setRequestMethod("GET");
+				int responseCode = connection.getResponseCode();
+				System.out.println("GET Response Code :: " + responseCode);
+				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+				in.close();
+				return response.toString();
+			} finally {
+				connection.disconnect();
+			}
 
-		in.close();
-		return response.toString();
+		} catch (Exception e) {
+			System.out.println("ERROR : " + e.getMessage());
+			return null;
+		}
 	}
 }

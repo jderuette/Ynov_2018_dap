@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<body>
+	<th:if th:if="${error != null}">
+	  <div>Error: <span th:text=${error}></span></div>
+	</th:if>
+	
+	<div class="table">
+		<h3>Inbox</h3>
+	  	<table>
+		    <tr>
+		      <th><span class="glyphicon glyphicon-envelope"></span></th>
+		      <th>From</th>
+		      <th>Subject</th>
+		      <th>Received</th>
+		      <th>Preview</th>
+		    </tr>
+	  	</table>
+		<table th:each="user, iter : ${users}">
+			<tr th:text="${user}"></tr>
+			<tr th:each="message : ${messages.get(iter.index)}">
+				<td><span th:text="${message.from.emailAddress.name}"></span></td>
+				<td><span th:text="${message.subject}"></span></td>
+				<td><span th:text="${message.receivedDateTime}"></span></td>
+				<td><span th:text="${message.bodyPreview}"></span></td>
+			</tr>
+		</table>
+	</div>
+</body>

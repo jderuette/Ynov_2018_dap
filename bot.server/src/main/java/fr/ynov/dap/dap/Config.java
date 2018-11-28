@@ -1,76 +1,108 @@
 package fr.ynov.dap.dap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Properties;
 
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.people.v1.PeopleServiceScopes;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * The Class Config.
  */
-//TODO bit by Djer Principe "ZeroConf" a Revoir, ici tu as du "NoConf".
+@PropertySource("classpath:config.properties")
 public class Config {
-	
-	/** The credentials folder. */
-    //TODO bot by Djer Si Maujuscule statici final ! 
-	private String CREDENTIALS_FOLDER = "google/credential";
-	
+
 	/** The client secret dir. */
-	private String CLIENT_SECRET_DIR = "google/client";
-	
+	private String clientSecretDir;
+
 	/** The application name. */
-	private String APPLICATION_NAME = "Hoc Dap";
-	
+	private String applicationName;
+
 	/** The tokens directory path. */
-	private String TOKENS_DIRECTORY_PATH = "tokens";
-	
+	private String tokensDirectoryPath;
+
 	/** The credentials file path. */
-	private final String CREDENTIALS_FILE_PATH = "/credentials.json";
-	
-	/** The json factory. */
-	private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-	
-	/** The scopes. */
-	private final List<String> SCOPES = new ArrayList<String>();
-	
+	private String credentialsFilePath;
+
+	/** The redirect url google. */
+	private String redirectUrlGoogle;
+
+	/** The Constant CONFIG_FILE_PATH. */
+	private static final String CONFIG_FILE_PATH = 
+			System.getProperty("user.home") + "\\config.properties";
+
 	/**
 	 * Instantiates a new config.
-	 */
-	public Config() {
-		this.SCOPES.add(CalendarScopes.CALENDAR_READONLY);
-		this.SCOPES.add(GmailScopes.GMAIL_LABELS);
-		this.SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
-	}
-	
-	/**
-	 * Gets the json factory.
 	 *
-	 * @return the json factory
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public JsonFactory getJSON_FACTORY() {
-		return JSON_FACTORY;
-	}
-	
 	/**
-	 * Gets the scopes.
-	 *
-	 * @return the scopes
+	 * @throws IOException 
+	 * 
 	 */
-	public List<String> getSCOPES() {
-		return SCOPES;
+	public Config() throws IOException {
+		InputStreamReader configStream = new InputStreamReader(
+				new FileInputStream(CONFIG_FILE_PATH),
+				Charset.forName("UTF-8"));
+
+		this.clientSecretDir = "google/client";
+		this.applicationName = "Hoc Dap";
+		this.tokensDirectoryPath = "tokens";
+		this.credentialsFilePath = System.getProperty("user.home") + "\\credentials.json";
+		this.redirectUrlGoogle = "/oAuth2Callback";
+		
+		if (null != configStream) {
+			Properties configProps = new Properties();
+			try {
+				configProps.load(configStream);
+				this.clientSecretDir = configProps.getProperty("client_secret_dir");
+				this.applicationName = configProps.getProperty("application_name");
+				this.tokensDirectoryPath = configProps.getProperty("tokens_directory_path");
+				this.credentialsFilePath = System.getProperty("user.home") + 
+						configProps.getProperty("credentials_file_path");
+				this.redirectUrlGoogle = configProps.getProperty("redirect_url");
+			} finally {
+				configStream.close();
+			}
+		}
 	}
 
 	/**
-	 * Gets the credentials folder.
+	 * Sets the client secret dir.
 	 *
-	 * @return the credentials folder
+	 * @param clientSecretDir the new client secret dir
 	 */
-	public String getCREDENTIALS_FOLDER() {
-		return CREDENTIALS_FOLDER;
+	public void setClientSecretDir(String clientSecretDir) {
+		this.clientSecretDir = clientSecretDir;
+	}
+
+	/**
+	 * Sets the application name.
+	 *
+	 * @param applicationName the new application name
+	 */
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
+	}
+
+	/**
+	 * Sets the tokens directory path.
+	 *
+	 * @param tokensDirectoryPath the new tokens directory path
+	 */
+	public void setTokensDirectoryPath(String tokensDirectoryPath) {
+		this.tokensDirectoryPath = tokensDirectoryPath;
+	}
+
+	/**
+	 * Sets the credentials file path.
+	 *
+	 * @param credentialsFilePath the new credentials file path
+	 */
+	public void setCredentialsFilePath(String credentialsFilePath) {
+		this.credentialsFilePath = credentialsFilePath;
 	}
 
 	/**
@@ -78,8 +110,8 @@ public class Config {
 	 *
 	 * @return the client secret dir
 	 */
-	public String getCLIENT_SECRET_DIR() {
-		return CLIENT_SECRET_DIR;
+	public String getClientSecretDir() {
+		return clientSecretDir;
 	}
 
 	/**
@@ -87,17 +119,17 @@ public class Config {
 	 *
 	 * @return the application name
 	 */
-	public String getAPPLICATION_NAME() {
-		return APPLICATION_NAME;
+	public String getApplicationName() {
+		return applicationName;
 	}
-	
+
 	/**
 	 * Gets the tokens directory path.
 	 *
 	 * @return the tokens directory path
 	 */
-	public String getTOKENS_DIRECTORY_PATH() {
-		return TOKENS_DIRECTORY_PATH;
+	public String getTokensDirectoryPath() {
+		return tokensDirectoryPath;
 	}
 
 	/**
@@ -106,16 +138,25 @@ public class Config {
 	 * @return the credentials file path
 	 */
 	public String getCredentialsFilePath() {
-		return CREDENTIALS_FILE_PATH;
+		return credentialsFilePath;
 	}
-	
+
 	/**
 	 * Gets the o auth 2 callback url.
 	 *
 	 * @return the o auth 2 callback url
 	 */
-	public String getoAuth2CallbackUrl() {
-		return "/oAuth2Callback";
+	public String getRedirectUrl() {
+		return redirectUrlGoogle;
 	}
-	
+
+	/**
+	 * Sets the redirect url.
+	 *
+	 * @param redirectUrl the new redirect url
+	 */
+	public void setRedirectUrl(String redirectUrl) {
+		this.redirectUrlGoogle = redirectUrl;
+	}
+
 }

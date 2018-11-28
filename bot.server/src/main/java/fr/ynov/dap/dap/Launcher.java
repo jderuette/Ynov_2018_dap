@@ -1,5 +1,7 @@
 package fr.ynov.dap.dap;
 
+import java.io.IOException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +11,6 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 public class Launcher {
-	
-	/** The default user. */
-    //TODO bot by Djer Evite de laisser trainer ton adresse email ! 
-	public static String defaultUser = "thiba_aaaaaaa_@_aaaa_.com";
 	
 	/**
 	 * The main method.
@@ -27,9 +25,10 @@ public class Launcher {
 	 * Load conf.
 	 *
 	 * @return the config
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Bean
-	public static Config loadConf() {
+	public Config loadConf() throws IOException {
 		return new Config();
 	}
 	
