@@ -5,8 +5,19 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * The Class MicrosoftAccountService.
+ */
 @Service
 public class MicrosoftAccountService extends MicrosoftService {
+
+	/**
+	 * Gets the login url.
+	 *
+	 * @param state the state
+	 * @param nonce the nonce
+	 * @return the login url
+	 */
 	public String getLoginUrl(UUID state, UUID nonce) {
 
 		UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(super.getConf().getAuthorizeUrl());

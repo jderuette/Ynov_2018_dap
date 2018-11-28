@@ -18,21 +18,44 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * The Class MicrosoftService.
+ */
+
 @Service
 public class MicrosoftService extends ExtendsUtils {
+
+	/** The conf. */
 	@Autowired
-    private Config conf;
+	private Config conf;
+
+	/**
+	 * Gets the conf.
+	 *
+	 * @return the conf
+	 */
 	public Config getConf() {
 		return conf;
 	}
 
+	/** The scopes. */
 	private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read",
 			"Calendars.Read", "Contacts.Read" };
 
+	/** The app id. */
 	private static String appId = null;
+
+	/** The app password. */
 	private static String appPassword = null;
+
+	/** The redirect url. */
 	private static String redirectUrl = null;
 
+	/**
+	 * Gets the app id.
+	 *
+	 * @return the app id
+	 */
 	protected String getAppId() {
 		if (appId == null) {
 			try {
@@ -44,6 +67,11 @@ public class MicrosoftService extends ExtendsUtils {
 		return appId;
 	}
 
+	/**
+	 * Gets the app password.
+	 *
+	 * @return the app password
+	 */
 	protected String getAppPassword() {
 		if (appPassword == null) {
 			try {
@@ -55,6 +83,11 @@ public class MicrosoftService extends ExtendsUtils {
 		return appPassword;
 	}
 
+	/**
+	 * Gets the redirect url.
+	 *
+	 * @return the redirect url
+	 */
 	protected String getRedirectUrl() {
 		if (redirectUrl == null) {
 			try {
@@ -66,6 +99,11 @@ public class MicrosoftService extends ExtendsUtils {
 		return redirectUrl;
 	}
 
+	/**
+	 * Gets the scopes.
+	 *
+	 * @return the scopes
+	 */
 	protected String getScopes() {
 		StringBuilder sb = new StringBuilder();
 		for (String scope : scopes) {
@@ -74,6 +112,11 @@ public class MicrosoftService extends ExtendsUtils {
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Load config.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	protected void loadConfig() throws IOException {
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = MicrosoftAccountService.class.getClassLoader()
@@ -94,6 +137,13 @@ public class MicrosoftService extends ExtendsUtils {
 		}
 	}
 
+	/**
+	 * Gets the token from auth code.
+	 *
+	 * @param authCode the auth code
+	 * @param tenantId the tenant id
+	 * @return the token from auth code
+	 */
 	public TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
 		// Create a logging interceptor to log request and responses
 		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -119,6 +169,13 @@ public class MicrosoftService extends ExtendsUtils {
 		}
 	}
 
+	/**
+	 * Ensure tokens.
+	 *
+	 * @param tokens   the tokens
+	 * @param tenantId the tenant id
+	 * @return the token response
+	 */
 	public TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {
 		// Are tokens still valid?
 		Calendar now = Calendar.getInstance();

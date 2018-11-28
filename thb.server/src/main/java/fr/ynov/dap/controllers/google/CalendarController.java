@@ -17,22 +17,40 @@ import fr.ynov.dap.services.microsoft.EventService;
 import fr.ynov.dap.utils.ExtendsUtils;
 import fr.ynov.dap.utils.JSONResponse;
 
+
+/**
+ * The Class CalendarController.
+ */
 @RestController
 @RequestMapping("/calendar")
 public class CalendarController extends ExtendsUtils {
 	
+	/** The google service. */
 	@Autowired
     private CalendarService googleService;
 	
+	/** The microsoft service. */
 	@Autowired
 	EventService microsoftService;
 
+	/**
+	 * Index.
+	 *
+	 * @param user the user
+	 * @return the string
+	 */
 	@RequestMapping("/{user}")
     public @ResponseBody String index(@PathVariable String user)  {
 		JSONObject event = new JSONObject(googleService.getNextEventFromAll(user));
 		return JSONResponse.responseString("event", event.toString());
     }
 	
+	/**
+	 * Next event.
+	 *
+	 * @param userKey the user key
+	 * @return the string
+	 */
 	@RequestMapping("/next")
     public @ResponseBody String nextEvent(@RequestParam(value = "userKey", required = true) String userKey)  {
 		Event nextGoogleEvent = googleService.getNextEventFromAll(userKey);

@@ -13,19 +13,22 @@ import com.google.api.services.people.v1.model.ListConnectionsResponse;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.GoogleAccount;
-import fr.ynov.dap.data.MicrosoftAccount;
 import fr.ynov.dap.data.interfaces.AppUserRepository;
 
+/**
+ * The Class ContactService.
+ */
 @Service
 public class ContactService extends GoogleService {
 
+	/** The app user repo. */
 	@Autowired
 	AppUserRepository appUserRepo;
 
 	/**
 	 * Gets the contacts.
 	 *
-	 * @param user the user
+	 * @param account the account
 	 * @return the contacts
 	 * @throws GeneralSecurityException the general security exception
 	 * @throws IOException              Signals that an I/O exception has occurred.
@@ -46,6 +49,12 @@ public class ContactService extends GoogleService {
 		return null;
 	}
 
+	/**
+	 * Gets the contacts.
+	 *
+	 * @param user the user
+	 * @return the contacts
+	 */
 	public Integer getContacts(String user) {
 		Integer nbUnreadEmails = 0;
 
@@ -63,7 +72,7 @@ public class ContactService extends GoogleService {
 					nbUnreadEmails += getContactByAccount(g).getTotalItems();
 				}
 			} catch (GeneralSecurityException | IOException e) {
-				LOG.error("error for getting contacts : "+ g.getName(), e);
+				LOG.error("error for getting contacts : " + g.getName(), e);
 			}
 		}
 

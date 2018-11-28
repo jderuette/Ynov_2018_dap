@@ -1,14 +1,16 @@
 package fr.ynov.dap;
 
+
 public class Config {
 
 	/**
 	 * Initial config Google
 	 */
-	private String applicationName = "Gmail API Java Quickstart";;
-	private String tokensPath = "tokens";;
-	private String credentialsPath = "/credentials.json";;
-	private String auth2CallbackUrl = "/oAuth2Callback";;
+	
+	private String applicationName = "Gmail API Java Quickstart";
+	private String tokensPath = "tokens";
+	private String credentialsPath = "/credentials.json";
+	private String auth2CallbackUrl = "/oAuth2Callback";
 
 	/**
 	 * Initial config Microsoft
@@ -31,8 +33,8 @@ public class Config {
 	 * @param credentialsPath
 	 * @param auth2CallbackUrl
 	 */
-	public Config(String googleApplicationName, String googleTokensPath, String googleCredentialsPath, String googleAuth2CallbackUrl,
-			String microsoftAuthority, String microsodftAuthorizeUrl) {
+	public Config(String googleApplicationName, String googleTokensPath, String googleCredentialsPath,
+			String googleAuth2CallbackUrl, String microsoftAuthority, String microsodftAuthorizeUrl) {
 		this.applicationName = googleApplicationName;
 		this.tokensPath = googleTokensPath;
 		this.credentialsPath = googleCredentialsPath;

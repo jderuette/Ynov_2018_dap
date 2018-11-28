@@ -10,21 +10,31 @@ import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.interfaces.AppUserRepository;
 import fr.ynov.dap.utils.ExtendsUtils;
 
+/**
+ * The Class UserController.
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController extends ExtendsUtils {
-	
+
+	/** The app user repo. */
 	@Autowired
 	AppUserRepository appUserRepo;
-		
+
+	/**
+	 * Index.
+	 *
+	 * @param userKey the user key
+	 * @return the string
+	 */
 	@RequestMapping("/add/{userKey}")
-    public @ResponseBody String index(@PathVariable String userKey)  {
-		
+	public @ResponseBody String index(@PathVariable String userKey) {
+
 		AppUser appU = new AppUser();
 		appU.setUserKey(userKey);
-		
+
 		appUserRepo.save(appU);
-		
+
 		return appUserRepo.findByUserKey(userKey).getUserKey();
-    }
+	}
 }

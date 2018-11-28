@@ -28,12 +28,26 @@ import fr.ynov.dap.data.interfaces.OutlookServiceInterface;
 import fr.ynov.dap.services.microsoft.MicrosoftAccountService;
 import fr.ynov.dap.services.microsoft.OutlookServiceBuilder;
 
+/**
+ * The Class MicrosoftAccountController.
+ */
 @Controller
 public class MicrosoftAccountController extends MicrosoftAccountService {
 
+	/** The app user repo. */
 	@Autowired
 	AppUserRepository appUserRepo;
 
+	/**
+	 * Adds the account.
+	 *
+	 * @param accountName the account name
+	 * @param userKey     the user key
+	 * @param model       the model
+	 * @param request     the request
+	 * @param response    the response
+	 * @return the string
+	 */
 	@RequestMapping("/account/add/microsoft/{accountName}")
 	public @ResponseBody String addAccount(@PathVariable(value = "accountName") final String accountName,
 			@RequestParam(value = "userKey", required = true) String userKey, Model model, HttpServletRequest request,
@@ -66,6 +80,16 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 		return loginUrl;
 	}
 
+	/**
+	 * Authorize.
+	 *
+	 * @param code    the code
+	 * @param idToken the id token
+	 * @param state   the state
+	 * @param request the request
+	 * @param model   the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/microsoft/authorize", method = RequestMethod.POST)
 	public String authorize(@RequestParam("code") String code, @RequestParam("id_token") String idToken,
 			@RequestParam("state") UUID state, HttpServletRequest request, Model model) {
@@ -140,6 +164,13 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 		}
 	}
 
+	/**
+	 * Logout.
+	 *
+	 * @param model   the model
+	 * @param request the request
+	 * @return the string
+	 */
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();

@@ -31,78 +31,79 @@ import java.util.List;
 
 @Service
 public class GoogleService {
-	
+
 	@Autowired
-    private Config conf;
-	
-    protected Config getConfig() {
+	private Config conf;
+
+	protected Config getConfig() {
 		return conf;
 	}
-    
-    protected Logger LOG = LogManager.getLogger(getClass().getName());
+
+	protected Logger LOG = LogManager.getLogger(getClass().getName());
 
 	/**
-     * Gets the json factory.
-     *
-     * @return the json factory
-     */
-    protected JsonFactory getJSON_FACTORY() {
-        return JSON_FACTORY;
-    }
+	 * Gets the json factory.
+	 *
+	 * @return the json factory
+	 */
+	protected JsonFactory getJSON_FACTORY() {
+		return JSON_FACTORY;
+	}
 
-    /** The json factory. */
-    protected JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+	/** The json factory. */
+	protected JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    /**
-     * Global instance of the scopes required by this quickstart.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
-     */
-    protected List<String> SCOPES = new ArrayList<String>();
+	/**
+	 * Global instance of the scopes required by this quickstart. If modifying these
+	 * scopes, delete your previously saved tokens/ folder.
+	 */
+	protected List<String> SCOPES = new ArrayList<String>();
 
-    /**
-     * Instantiates a new google service.
-     */
-    public GoogleService() {
-        SCOPES.add(GmailScopes.GMAIL_LABELS);
-        SCOPES.add(CalendarScopes.CALENDAR_READONLY);
-        SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
-    }
+	/**
+	 * Instantiates a new google service.
+	 */
+	public GoogleService() {
+		SCOPES.add(GmailScopes.GMAIL_LABELS);
+		SCOPES.add(CalendarScopes.CALENDAR_READONLY);
+		SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+	}
 
-    /**
-     * Creates an authorized Credential object.
-     *
-     * @param HTTP_TRANSPORT The network HTTP Transport.
-     * @param user the user
-     * @return An authorized Credential object.
-     * @throws IOException If the credentials.json file cannot be found.
-     * @throws GeneralSecurityException the general security exception
-     */
-    public Credential getCredentials(NetHttpTransport HTTP_TRANSPORT, String user) throws IOException, GeneralSecurityException { 
+	/**
+	 * Creates an authorized Credential object.
+	 *
+	 * @param HTTP_TRANSPORT The network HTTP Transport.
+	 * @param user           the user
+	 * @return An authorized Credential object.
+	 * @throws IOException              If the credentials.json file cannot be
+	 *                                  found.
+	 * @throws GeneralSecurityException the general security exception
+	 */
+	public Credential getCredentials(NetHttpTransport HTTP_TRANSPORT, String user)
+			throws IOException, GeneralSecurityException {
 //      LocalServerReceiver receier = new LocalServerReceiver.Builder().setPort(8888).build();
 //    	return new AuthorizationCodeInstalledApp(getFlow(), receier).authorize(user);
-    	//lien à donner au client
-    	return getFlow().loadCredential(user);
-    }
-    
-    /**
-     * Gets the flow.
-     *
-     * @return the flow
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws GeneralSecurityException the general security exception
-     */
-    public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
-    	NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    	// Load client secrets.
-        InputStream in = GoogleService.class.getResourceAsStream(getConfig().getCredentialsPath());
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-    	
-    	GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(getConfig().getTokensPath())))
-                .setAccessType("offline")
-                .build();
-    	
-    	return flow;
-    }
+		// lien à donner au client
+		return getFlow().loadCredential(user);
+	}
+
+	/**
+	 * Gets the flow.
+	 *
+	 * @return the flow
+	 * @throws IOException              Signals that an I/O exception has occurred.
+	 * @throws GeneralSecurityException the general security exception
+	 */
+	public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+		NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+		// Load client secrets.
+		InputStream in = GoogleService.class.getResourceAsStream(getConfig().getCredentialsPath());
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+				clientSecrets, SCOPES)
+						.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(getConfig().getTokensPath())))
+						.setAccessType("offline").build();
+
+		return flow;
+	}
 }

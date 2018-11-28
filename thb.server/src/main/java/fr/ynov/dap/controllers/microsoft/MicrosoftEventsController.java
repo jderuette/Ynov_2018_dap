@@ -14,13 +14,26 @@ import fr.ynov.dap.data.Event;
 import fr.ynov.dap.services.microsoft.EventService;
 import fr.ynov.dap.utils.ExtendsUtils;
 
+/**
+ * The Class MicrosoftEventsController.
+ */
 @RequestMapping("/microsoft")
 @Controller
 public class MicrosoftEventsController extends ExtendsUtils {
 
+	/** The event service. */
 	@Autowired
 	EventService eventService;
 
+	/**
+	 * Microsoft events.
+	 *
+	 * @param userKey            the user key
+	 * @param model              the model
+	 * @param request            the request
+	 * @param redirectAttributes the redirect attributes
+	 * @return the string
+	 */
 	@RequestMapping("/events")
 	public String microsoftEvents(@RequestParam(value = "userKey", required = true) String userKey, Model model,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {

@@ -17,7 +17,6 @@ public class Launcher {
     
     @Bean
 	Config loadConfig() {
-		//return new Config("/dekstop");
 		return new Config();
 	}
 }
