@@ -8,19 +8,13 @@
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Data Access Project" />
-
-<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
-
-<title th:text="#{admin.title}">Data Access Project admin</title>
-
+<head>
+<meta charset="ISO-8859-1">
+<title></title>
 </head>
-<body>
-<h1> Welcome on Dap project</h1>
-
-<a th:href="@{'/microsoft/credentials'}" th:text="#{microsoft.credentials}"></a>
-<a th:href="@{'/google/credentials'}" th:text="#{google.credentials}"></a>
-</br>
-</br>
-<a th:href="@{'/microsoft/mail'}" th:text="#{microsoft.mail}"></a>
-</body>
+<Body>
+	<h1 th:text="#{contacts.nb}"></h1>
+	<h2 th:text="${nbOfContacts}"></h2>
+	<a th:href="@{'/'}" th:text="#{accueil}"></a>
+</Body>
 </html>

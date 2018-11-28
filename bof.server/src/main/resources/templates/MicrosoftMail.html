@@ -11,11 +11,33 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
-<title th:text="#{admin.title}">Data Access Project dmin</title>
+<title th:text="#{admin.title}"></title>
 
 </head>
 <body>
-	<h1>Account already added</h1>
+	<h1 th:text="#{microsoft.mailTitle}"></h1>
+	<table>
+		<tr>
+			<th>User</th>
+			<th>Mails</th>
+		</tr>
+		<tr th:each="instance : ${usersMessages}">
+			<td th:text="${instance.key}"></td>
+			<td>
+			<table>
+				<tr>
+					<th>Sender</th>
+					<th>Subject</th>
+				</tr>
+				<tr th:each="message : ${instance.value}">
+					<td th:text="${message.getFrom().getEmailAddress().getAddress()}"></td>
+					<td th:text="${message.getSubject()}"></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+	</br>
 	</br>
 	<a th:href="@{'/'}" th:text="#{accueil}"></a>
 </body>

@@ -8,15 +8,26 @@
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Data Access Project" />
-
-<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
-
-<title th:text="#{admin.title}">Data Access Project dmin</title>
-
+<head>
+<meta charset="ISO-8859-1">
+<title></title>
 </head>
-<body>
-	<h1>Account already added</h1>
+<Body>
+	<h1 th:text="#{event.next}"></h1>
+	<Table>
+		<tr>
+			<th th:text="#{event.summary}"></th>
+			<th th:text="#{event.startDate}"></th>
+			<th th:text="#{event.endDate}"></th>
+		</tr>
+		<tr>
+			<td th:text="${nextEvent.getSummary()}"></td>
+			<td th:text="${nextEvent.getStartDate()}"></td>
+			<td th:text="${nextEvent.getEndDate()}"></td>
+		</tr>
+	</Table>
+	</br>
 	</br>
 	<a th:href="@{'/'}" th:text="#{accueil}"></a>
-</body>
+</Body>
 </html>
