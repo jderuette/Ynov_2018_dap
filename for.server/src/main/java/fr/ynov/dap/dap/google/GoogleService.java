@@ -1,11 +1,29 @@
 package fr.ynov.dap.dap.google;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.util.function.Consumer;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -14,31 +32,20 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
 import fr.ynov.dap.dap.App;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.GoogleAccount;
+import fr.ynov.dap.dap.repository.AppUserRepository;
+import fr.ynov.dap.dap.repository.GoogleUserRepository;
 
 @Controller
 public class GoogleService {
 	
-    //TODO for by Djer Si pas de modifier : celui de la classe, ton LOG est donc public !
-    //TODO for by Djer un Logger est généralement static final
-	Logger LOG = LogManager.getLogger();
+	public static final Logger LOG = LogManager.getLogger();
+	
+	@Autowired
+	AppUserRepository userRepo;
+	@Autowired
+	GoogleUserRepository googleRepo;
 
 	/**
      * Creates an authorized Credential object.
@@ -46,13 +53,11 @@ public class GoogleService {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-	//TODO for by Djer Pourquoi static ?
   static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String userKey) throws IOException {
     //TODO for by Djer Une GROSSE partie de ce code est déja dans le "getFlow".
       // Load client secrets.
-    InputStream in = CalendarService.class.getResourceAsStream(App.config.GetCredentialsFilePath());
-    //TODO for by Djer chargement d'une fichier Externe ?
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(App.config.GetJsonFactory(), new InputStreamReader(in));
+      InputStreamReader inputStrReader = new InputStreamReader(new FileInputStream(App.config.getCredentialsFilePath()), Charset.forName("UTF-8"));
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(App.config.GetJsonFactory(), inputStrReader);
 
         // Build flow and trigger user authorization request.
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -60,8 +65,8 @@ public class GoogleService {
           .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(App.config.GetTokensDirectoryPath())))
           .setAccessType("offline")
           .build();
-    //TODO for by Djer "AuthorizationCodeInstalledApp" pose probleme en mode "web". Utiliser flow.loadCredential(userKey)
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
+    return flow.loadCredential(userKey);
+    
   }
 
 /**
@@ -79,20 +84,32 @@ public String oAuthCallback(@RequestParam final String code, final HttpServletRe
     final String decodedCode = extracCode(request);
 
     final String redirectUri = buildRedirectUri(request, App.config.getoAuth2CallbackUrl());
-
-    final String userId = getUserid(session);
+    final String accountName = getAccountName(session);
+    final String userKey = getUserKey(session);
+	
     try {
         final GoogleAuthorizationCodeFlow flow = getFlow();
         final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
 
-        final Credential credential = flow.createAndStoreCredential(response, userId);
+        final Credential credential = flow.createAndStoreCredential(response, accountName);
         if (null == credential || null == credential.getAccessToken()) {
-            LOG.warn("Trying to store a NULL AccessToken for user : " + userId);
+            LOG.warn("Trying to store a NULL AccessToken for user : " + userKey);
+        }
+        if (null != credential && null != credential.getAccessToken()) {
+
+            AppUser appUser = userRepo.findByUserKey(userKey);
+            GoogleAccount googleAccount = new GoogleAccount();
+            
+            googleAccount.setAccountName(accountName);
+            googleAccount.setToken(credential.getAccessToken());
+
+            appUser.addGoogleAccount(googleAccount);
+            userRepo.save(appUser);
         }
 
         if (LOG.isDebugEnabled()) {
             if (null != credential && null != credential.getAccessToken()) {
-                LOG.debug("New user credential stored with userId : " + userId);
+                LOG.debug("New user credential stored with userKey : " + userKey);
             }
         }
         // onSuccess(request, resp, credential);
@@ -101,7 +118,7 @@ public String oAuthCallback(@RequestParam final String code, final HttpServletRe
         throw new ServletException("Error while trying to connect Google Account");
     }
 
-    return "redirect:/loginSuccessful";
+    return "redirect:/";
 }
 
 /**
@@ -110,17 +127,36 @@ public String oAuthCallback(@RequestParam final String code, final HttpServletRe
  * @return the current User Id in Session
  * @throws ServletException if no User Id in session
  */
-private String getUserid(final HttpSession session) throws ServletException {
+public String getUserKey(final HttpSession session) throws ServletException {
     String userId = null;
-    if (null != session && null != session.getAttribute("userId")) {
-        userId = (String) session.getAttribute("userId");
+    if (null != session && null != session.getAttribute("userKey")) {
+        userId = (String) session.getAttribute("userKey");
     }
 
     if (null == userId) {
-        LOG.error("userId in Session is NULL in Callback");
-        throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
+        LOG.error("userKey in Session is NULL in Callback");
+        throw new ServletException("Error when trying to add Google acocunt : userKey is NULL in User Session");
     }
     return userId;
+}
+
+/**
+ * retrieve the User ID in Session.
+ * @param session the HTTP Session
+ * @return the current User Id in Session
+ * @throws ServletException if no User Id in session
+ */
+private String getAccountName(final HttpSession session) throws ServletException {
+    String accountName = null;
+    if (null != session && null != session.getAttribute("accountName")) {
+    	accountName = (String) session.getAttribute("accountName");
+    }
+
+    if (null == accountName) {
+        LOG.error("userKey in Session is NULL in Callback");
+        throw new ServletException("Error when trying to add Google acocunt : userKey is NULL in User Session");
+    }
+    return accountName;
 }
 
 /**
@@ -142,7 +178,7 @@ private String extracCode(final HttpServletRequest request) throws ServletExcept
     }
 
     if (null != responseUrl.getError()) {
-        LOG.error("Error when trying to add Google acocunt : " + responseUrl.getError());
+        LOG.error("Error when trying to add Google account : " + responseUrl.getError());
         throw new ServletException("Error when trying to add Google acocunt");
         // onError(request, resp, responseUrl);
     }
@@ -157,12 +193,11 @@ private String extracCode(final HttpServletRequest request) throws ServletExcept
  * @param destination the "path" to the resource
  * @return an absolute URI
  */
-protected String buildRedirectUri(final HttpServletRequest req, final String destination) {
+public String buildRedirectUri(final HttpServletRequest req, final String destination) {
     final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
     url.setRawPath(destination);
     return url.build();
 }
-
 
 /**
  * Add a Google account (user will be prompt to connect and accept required
@@ -173,15 +208,17 @@ protected String buildRedirectUri(final HttpServletRequest req, final String des
  * @return the view to Display (on Error)
  * @throws GeneralSecurityException 
  */
-@RequestMapping("/account/add/{userId}")
-public String addAccount(@PathVariable final String userId, final HttpServletRequest request,
+@RequestMapping("/add/account/{accountName}")
+public String addAccount(@PathVariable final String accountName, @RequestParam final String userKey, final HttpServletRequest request,
         final HttpSession session) throws GeneralSecurityException {
     String response = "errorOccurs";
     GoogleAuthorizationCodeFlow flow;
     Credential credential = null;
+	AppUser appUser = userRepo.findByUserKey(userKey);
+	
     try {
         flow = getFlow();
-        credential = flow.loadCredential(userId);
+        credential = flow.loadCredential(accountName);
 
         if (credential != null && credential.getAccessToken() != null) {
             response = "AccountAlreadyAdded";
@@ -190,25 +227,30 @@ public String addAccount(@PathVariable final String userId, final HttpServletReq
             final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
             authorizationUrl.setRedirectUri(buildRedirectUri(request, App.config.getoAuth2CallbackUrl()));
             // store userId in session for CallBack Access
-            session.setAttribute("userId", userId);
+            session.setAttribute("userKey", userKey);
+            if(appUser != null)
+    		{
+                session.setAttribute("accountName", accountName);
+    		}
             response = "redirect:" + authorizationUrl.build();
         }
     } catch (IOException e) {
-        LOG.error("Error while loading credential (or Google Flow)", e);
+    	
     }
     // only when error occurs, else redirected BEFORE
     return response;
 }
+
 /**
  * Obtient le Google Authorization Flow
  * @return
  * @throws IOException
  * @throws GeneralSecurityException
  */
-	private GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+	public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        InputStream in = CalendarService.class.getResourceAsStream(App.config.GetCredentialsFilePath());
-		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(App.config.GetJsonFactory(), new InputStreamReader(in));
+        InputStreamReader inputStrReader = new InputStreamReader(new FileInputStream(App.config.getCredentialsFilePath()), Charset.forName("UTF-8"));
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(App.config.GetJsonFactory(), inputStrReader);
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 	            HTTP_TRANSPORT, App.config.GetJsonFactory(), clientSecrets, App.config.getScopes())
 	            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(App.config.GetTokensDirectoryPath())))
