@@ -1,102 +1,367 @@
 package fr.ynov.dap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Properties;
 
-import org.springframework.stereotype.Controller;
-
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.people.v1.PeopleServiceScopes;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * The Class Config.
  */
-@Controller
+@Configuration
+@PropertySource("classpath:application.properties")
 public class Config {
-	//FIXME cha by DJer les attribut en MAJUSCULE devrait être static final
-	//FIXME cha by Djer Pas de getter/setter sur des "constantes"
 	
-	/** The credentials folder. */
-	private static String CREDENTIALS_FOLDER = "google/credentials" ; 
-	
-	/** The client secret dir. */
-	private String CLIENT_SECRET_DIR = "google/client";
+	/**
+     * Default config for oAuth2Callback.
+     */
+    private static final String OAUTH_2_CALLBACK_URL = "/oAuth2Callback";
+
+    /**
+     * Default config for credentialsFolder.
+     */
+    private static final String CREDENTIALS_FOLDER = "dap";
+
+    /**
+     * Default config for application name.
+     */
+    private static final String APPLICATION_NAME = "HoC DaP";
+
+    /**
+     * Default config for datastore directory.
+     */
+    private static final String DATASTORE_FOLDER = System.getProperty("user.home");
+
+    /** The Constant GOOGLE_CREDENTIAL_PATH. */
+    private static final String GOOGLE_CREDENTIAL_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "credentials.json";
+
+    /** The Constant MICROSOFT_CREDENTIAL_PATH. */
+    private static final String MICROSOFT_CREDENTIAL_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "auth.properties";
+
+    /** The Constant GLOBAL_CONFIG_PATH. */
+    private static final String GLOBAL_CONFIG_PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator") + "application.properties";
+
+    /**
+     * Store OAuth2 callback url.
+     */
+    private String oAuth2CallbackUrl = OAUTH_2_CALLBACK_URL;
+
+    /**
+     * Store credentials folder.
+     */
+    private String credentialsFolder = CREDENTIALS_FOLDER;
+
+    /**
+     * Store application name.
+     */
+    private String applicationName = APPLICATION_NAME;
+
+    /**
+     * Store datastore directory path.
+     */
+    private String datastoreFolder = DATASTORE_FOLDER;
+
+    /** The google credentials path. */
+    private String googleCredentialsPath = GOOGLE_CREDENTIAL_PATH;
+
+    /** The microsoft credentials path. */
+    private String microsoftCredentialsPath = MICROSOFT_CREDENTIAL_PATH;
+
+    /** The microsoft app id. */
+    private String microsoftAppId;
+
+    /** The microsoft redirect url. */
+    private String microsoftRedirectUrl;
+
+    /** The microsoft app password. */
+    private String microsoftAppPassword;
     
-    /** The Constant CREDENTIALS_FILE_PATH. */
-    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-	
-	/** The Constant APPLICATION_NAME. */
-    //TODO cha by Djer devrait être privé. sert à initialiser la variable, qui elle est accesible via un Getter
-	public static final String APPLICATION_NAME = "HoCDap";
-	
-	/** The scopes. */
-	private static List<String> SCOPES = new ArrayList<String>();
+    /** The microsoft authority url. */
+    private String microsoftAuthorityUrl;
 
-	
-	/** The application name. */
-	public String applicationName;
-	
-	/** The credential folder. */
-	public String credentialFolder;
-	
-	/** The client secret file. */
-	public String clientSecretFile;
-	
-	/**
-	 * Instantiates a new config.
-	 */
-	public Config() {
-		//TODO cha by Djer Les varaibles devraient être initialisées avec une valeur par defaut !
-		
-		//TODO cha by Djer mettre les Scope ici n'est pas idéal, mais pourquoi pas.
-		this.SCOPES.add(GmailScopes.GMAIL_LABELS);
-		this.SCOPES.add(CalendarScopes.CALENDAR_EVENTS_READONLY);
-		this.SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+    /**
+     * Default constructor.
+     * @throws IOException Exception
+     */
+    public Config() throws IOException {
+        loadConfig();
+    }
+
+    /**
+     * Default constructor.
+     * @param dataStoreDirectory Directory path to store credential file
+     * @throws IOException Exception
+     */
+    public Config(final String dataStoreDirectory) throws IOException {
+        if (dataStoreDirectory != null) {
+            String newPath = resolvePath(dataStoreDirectory);
+            datastoreFolder = newPath;
+        }
+        loadConfig();
+    }
+
+    /**
+     * Return Datastore directory.
+     * @return Datastore directory
+     */
+    public String getDatastoreFolder() {
+        return datastoreFolder;
+    }
+
+    /**
+     * Return application name.
+     * @return Application name
+     */
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    /**
+     * Set new application name.
+     * @param name Application's name
+     */
+    public void setApplicationName(final String name) {
+        applicationName = name;
+    }
+
+    /**
+     * Return credential folder.
+     * @return Credential folder
+     */
+    public String getCredentialFolder() {
+        return credentialsFolder;
+    }
+
+    /**
+     * Set new credential folder.
+     * @param folder Credential folder
+     */
+    public void setCredentialFolder(final String folder) {
+        credentialsFolder = folder;
+    }
+
+    /**
+     * Return OAuth2 CallBack Url.
+     * @return OAuth2 CallBack Url
+     */
+    public String getOAuth2CallbackUrl() {
+        return oAuth2CallbackUrl;
+    }
+
+    /**
+     * Gets the google credentials path.
+     *
+     * @return the googleCredentialsPath
+     */
+    public String getGoogleCredentialsPath() {
+        return googleCredentialsPath;
+    }
+
+    /**
+     * Sets the google credentials path.
+     *
+     * @param val the googleCredentialsPath to set
+     */
+    public void setGoogleCredentialsPath(final String val) {
+        this.googleCredentialsPath = val;
+    }
+
+    /**
+     * Gets the microsoft credentials path.
+     *
+     * @return the microsoftCredentialsPath
+     */
+    public String getMicrosoftCredentialsPath() {
+        return microsoftCredentialsPath;
+    }
+
+    /**
+     * Sets the microsoft credentials path.
+     *
+     * @param val the microsoftCredentialsPath to set
+     */
+    public void setMicrosoftCredentialsPath(final String val) {
+        this.microsoftCredentialsPath = val;
+    }
+
+    /**
+     * Gets the microsoft app id.
+     *
+     * @return the microsoftAppId
+     */
+    public String getMicrosoftAppId() {
+        return microsoftAppId;
+    }
+
+    /**
+     * Sets the microsoft app id.
+     *
+     * @param val the microsoftAppId to set
+     */
+    public void setMicrosoftAppId(final String val) {
+        this.microsoftAppId = val;
+    }
+
+    /**
+     * Gets the microsoft redirect url.
+     *
+     * @return the microsoftRedirectUrl
+     */
+    public String getMicrosoftRedirectUrl() {
+        return microsoftRedirectUrl;
+    }
+
+    /**
+     * Sets the microsoft redirect url.
+     *
+     * @param val the microsoftRedirectUrl to set
+     */
+    public void setMicrosoftRedirectUrl(final String val) {
+        this.microsoftRedirectUrl = val;
+    }
+
+    /**
+     * Gets the microsoft app password.
+     *
+     * @return the microsoftAppPassword
+     */
+    public String getMicrosoftAppPassword() {
+        return microsoftAppPassword;
+    }
+
+    /**
+     * Sets the microsoft app password.
+     *
+     * @param val the microsoftAppPassword to set
+     */
+    public void setMicrosoftAppPassword(final String val) {
+        this.microsoftAppPassword = val;
+    }
+
+    /**
+     * Gets the microsoft authority url.
+     *
+     * @return the microsoft authority url
+     */
+    public String getMicrosoftAuthorityUrl() {
+		return microsoftAuthorityUrl;
 	}
 
 	/**
-	 * Gets the scopes.
+	 * Sets the microsoft authority url.
 	 *
-	 * @return the scopes
+	 * @param microsoftAuthorityUrl the new microsoft authority url
 	 */
-	public static List<String> getSCOPES() {
-		return SCOPES;
+	public void setMicrosoftAuthorityUrl(String microsoftAuthorityUrl) {
+		this.microsoftAuthorityUrl = microsoftAuthorityUrl;
 	}
 
 	/**
-	 * Sets the scopes.
+	 * Load config.
 	 *
-	 * @param scopes the new scopes
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void setSCOPES(List<String> scopes) {
-		SCOPES = scopes;
-	}
+	private void loadConfig() throws IOException {
 
-	/**
-	 * Gets the credentials folder.
-	 *
-	 * @return the credentials folder
-	 */
-	public static String getCREDENTIALS_FOLDER() {
-		return CREDENTIALS_FOLDER;
-	}
+        InputStreamReader isr = loadGlobalConfig();
 
-	/**
-	 * Sets the credentials folder.
-	 *
-	 * @param credentials_folder the new credentials folder
-	 */
-	public static void setCREDENTIALS_FOLDER(String credentials_folder) {
-		CREDENTIALS_FOLDER = credentials_folder;
-	}
-	
-	/**
-	 * Gets the credentials file path.
-	 *
-	 * @return the credentials file path
-	 */
-	public static String getCredentialsFilePath() {
-		return CREDENTIALS_FILE_PATH;
-	}
+        if (isr != null) {
+
+            Properties authProps = new Properties();
+
+            try {
+
+                authProps.load(isr);
+
+                oAuth2CallbackUrl = authProps.getProperty("google.callback_url");
+                credentialsFolder = authProps.getProperty("google.credentials_folder");
+                googleCredentialsPath = authProps.getProperty("google.api.credentials_path");
+
+                microsoftAppId = authProps.getProperty("microsoft.app_id");
+                microsoftAppPassword = authProps.getProperty("microsoft.app_password");
+                microsoftRedirectUrl = authProps.getProperty("microsoft.redirect_url");
+
+                applicationName = authProps.getProperty("dap.application_name");
+
+            } finally {
+
+                isr.close();
+
+            }
+
+        } else {
+
+            loadMicrosoftConfig();
+
+        }
+
+    }
+
+    /**
+     * Load configuration.
+     * @throws IOException Exception
+     */
+    protected void loadMicrosoftConfig() throws IOException {
+
+        InputStreamReader file = new InputStreamReader(new FileInputStream(getMicrosoftCredentialsPath()),
+                Charset.forName("UTF-8"));
+
+        if (file.ready()) {
+
+            Properties authProps = new Properties();
+
+            try {
+
+                authProps.load(file);
+
+                microsoftAppId = authProps.getProperty("appId");
+                microsoftAppPassword = authProps.getProperty("appPassword");
+                microsoftRedirectUrl = authProps.getProperty("redirectUrl");
+
+            } finally {
+                file.close();
+            }
+        }
+    }
+
+    /**
+     * Load global config.
+     *
+     * @return the input stream reader
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private InputStreamReader loadGlobalConfig() throws IOException {
+        InputStreamReader file = new InputStreamReader(new FileInputStream(GLOBAL_CONFIG_PATH),
+                Charset.forName("UTF-8"));
+        if (file.ready()) {
+            return file;
+        }
+        return null;
+    }
+    
+    /**
+     * Transform string path with write system separator.
+     * IMPORTANT ! Use "/" on your path.
+     * @param val String path
+     * @return New string path with every "/" replaced by file.separator
+     */
+    public static String resolvePath(final String val) {
+        String result = "";
+        String[] parts = val.split("/");
+        for (int i = 0; i < parts.length; i++) {
+            result += parts[i];
+            if (i != parts.length - 1) {
+                result += System.getProperty("file.separator");
+            }
+        }
+        return result;
+    }
+
 }

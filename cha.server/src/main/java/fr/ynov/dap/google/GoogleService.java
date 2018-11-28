@@ -1,24 +1,29 @@
 package fr.ynov.dap.google;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.people.v1.PeopleServiceScopes;
+import com.google.api.services.oauth2.Oauth2Scopes;
 
 import fr.ynov.dap.*;
 
@@ -26,70 +31,120 @@ import fr.ynov.dap.*;
 /**
  * The Class GoogleService.
  */
-public class GoogleService {
-	//TODO cha by Djer Eviter les classe avec "que" du static.
-	//Utiliser un VRAI service en utilisant Singleton. Dans le cas de DAP 
-	//une classe parent aurait aussi fait l'affaire.
+public abstract class GoogleService<T> {
 	
+	/** The configuration. */
+	@Autowired
+	protected Config configuration;
+
 	/** The Constant JSON_FACTORY. */
-	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+	protected static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();;
 	
-	/** The Constant TOKENS_DIRECTORY_PATH. */
-	public static final String TOKENS_DIRECTORY_PATH = "tokens";
-    
-    /** The configuration. */
-	//TODO cha by Djer Eclipse indique "non utilisé", pourquoi ne pas traiter ?
-    @Autowired
-    private Config configuration;
-    
-    /** The scopes. */
-  //TODO cha by Djer Eclipse indique "non utilisé", pourquoi ne pas traiter ?
-    private static List<String> scopes = null;
+	protected static List<String> SCOPES = new ArrayList<String>();
     
     /**
      * Instantiates a new google service.
      */
-    //FIXME cha by Djer Ta principal méthodes est static, pourquoi avoir un constructeur ?
     public GoogleService() {
+    	SCOPES.add(GmailScopes.GMAIL_LABELS);
+		SCOPES.add(CalendarScopes.CALENDAR_EVENTS_READONLY);
+		SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+		SCOPES.add(Oauth2Scopes.USERINFO_EMAIL);
+	
     }
-
-	/**
-	 * Gets the json factory.
+    
+    /**
+	 * Gets the configuration.
 	 *
-	 * @return the json factory
+	 * @return the configuration
 	 */
-	public static JsonFactory getJsonFactory() {
+	public Config getConfiguration() {
+		return configuration;
+	}
+
+	public static JsonFactory getJSON_FACTORY() {
 		return JSON_FACTORY;
 	}
 
-	/**
-	 * Gets the tokens directory path.
-	 *
-	 * @return the tokens directory path
-	 */
-	public static String getTokensDirectoryPath() {
-		return TOKENS_DIRECTORY_PATH;
+	public static List<String> getSCOPES() {
+		return SCOPES;
 	}
+
+	public static void setJSON_FACTORY(JsonFactory jSON_FACTORY) {
+		JSON_FACTORY = jSON_FACTORY;
+	}
+
+	public static void setSCOPES(List<String> sCOPES) {
+		SCOPES = sCOPES;
+	}
+	
+	 protected abstract String getClassName();
 
 	/**
      * Creates an authorized Credential object.
      * @param HTTP_TRANSPORT The network HTTP Transport.
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
+	 * @throws GeneralSecurityException 
      */
-	protected static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        // Load client secrets.
-        InputStream in = GoogleService.class.getResourceAsStream(Config.getCredentialsFilePath());
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
- 
+    public Credential getCredentials(final String googleAccountName) throws IOException, GeneralSecurityException {
+
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, Config.getSCOPES())
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
-                .setAccessType("offline")
-                .build();
-        //FIXME cha by Djer et la version multi-compte ?
-        //FIXME cha by Djer Ne fonctionne pas correctement en mode "web"
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        GoogleAuthorizationCodeFlow flow = getFlow();
+        
+        return flow.loadCredential(googleAccountName);
+        //return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
     }
+	
+	/**
+	 * Gets the flow.
+	 *
+	 * @return the flow
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws GeneralSecurityException 
+	 */
+	protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+		/*InputStream in = GoogleService.class.getResourceAsStream(configuration.getCREDENTIALS_FILE_PATH());
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(getJSON_FACTORY(), new InputStreamReader(in));*/
+
+        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+        InputStreamReader file = new InputStreamReader(new FileInputStream(configuration.getGoogleCredentialsPath()),
+                Charset.forName("UTF-8"));
+
+        
+
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(getJSON_FACTORY(), file);
+
+            final String tokenFile = getConfiguration().getCredentialFolder();
+
+            FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
+                    new File(getConfiguration().getDatastoreFolder() + File.separator + tokenFile));
+
+
+            return new GoogleAuthorizationCodeFlow.Builder(httpTransport, getJSON_FACTORY(), clientSecrets, SCOPES)
+                    .setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
+        
+	}
+	
+	 /**
+     * Create new Gmail service for user.
+     * @param accountName Current user
+     * @return Instance of gmail services provided by Google API
+     * @throws GeneralSecurityException Exception
+     * @throws IOException Exception
+     * @throws NoConfigurationException Thrown when no configuration found
+     */
+    public T getService(final String accountName)
+            throws IOException, GeneralSecurityException {
+
+        Credential credential = getCredentials(accountName);
+
+        final String appName = getConfiguration().getApplicationName();
+        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+        return getGoogleClient(credential, httpTransport, appName);
+    }
+
+	protected abstract T getGoogleClient(Credential credentail, NetHttpTransport httpTransport, String appName);
 }
