@@ -15,15 +15,30 @@ import fr.ynov.dap.models.NbMailResponse;
 
 import org.springframework.ui.ModelMap;
 
+/**
+ * The Class WelcomeController.
+ */
 @Controller
 public class WelcomeController {
 
+	/** The gmail service. */
 	@Autowired 
 	GmailService gmailService;
 	
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
+	/**
+	 * Welcome.
+	 *
+	 * @param model the model
+	 * @param accountName the account name
+	 * @param userKey the user key
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	@RequestMapping("/google/welcome")
 	public String welcome(ModelMap model, @PathVariable final String accountName,
 			@RequestParam final String userKey) throws IOException, Exception {

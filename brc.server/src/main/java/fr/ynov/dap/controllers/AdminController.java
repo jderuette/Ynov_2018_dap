@@ -19,12 +19,25 @@ import fr.ynov.dap.microsoft.data.MicrosoftAccountRepository;
 import fr.ynov.dap.models.AdminModel;
 import fr.ynov.dap.service.AdminService;
 
+/**
+ * The Class AdminController.
+ */
 @Controller
 public class AdminController {
 	
+	/** The admin service. */
 	@Autowired 
 	AdminService adminService;
 	
+	/**
+	 * Google credential.
+	 *
+	 * @param model the model
+	 * @param userKey the user key
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	@RequestMapping("/admin")
 	public String googleCredential(ModelMap model, @RequestParam final String userKey) throws IOException, Exception {
 		ArrayList<AdminModel> accountsCredential = new ArrayList<AdminModel>();

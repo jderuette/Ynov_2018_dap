@@ -1,7 +1,8 @@
 package fr.ynov.dap.models;
 
+
 /**
- * The Class MailResponse.
+ * The Class NbMailResponse.
  */
 public class NbMailResponse {
 
@@ -29,7 +30,6 @@ public class NbMailResponse {
 	/**
 	 * Instantiates a new gmail response.
 	 *
-	 * @param nbMail the nb mail
 	 * @param nbUnreadMail the nb unread mail
 	 */
 	public NbMailResponse(int nbUnreadMail) {

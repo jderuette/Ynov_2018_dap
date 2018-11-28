@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class CalendarResponse {
 
+	/** The organizer. */
 	private String organizer;
 	/** The summary. */
 	private String subject;
@@ -23,10 +24,20 @@ public class CalendarResponse {
 	/** The error. */
 	private String error;
 	
+	/**
+	 * Gets the organizer.
+	 *
+	 * @return the organizer
+	 */
 	public String getOrganizer() {
 		return organizer;
 	}
 
+	/**
+	 * Sets the organizer.
+	 *
+	 * @param organizer the new organizer
+	 */
 	public void setOrganizer(String organizer) {
 		this.organizer = organizer;
 	}
@@ -43,7 +54,7 @@ public class CalendarResponse {
 	/**
 	 * Sets the summary.
 	 *
-	 * @param summary the new summary
+	 * @param subject the new subject
 	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
@@ -130,7 +141,8 @@ public class CalendarResponse {
 	/**
 	 * Instantiates a new calendar response.
 	 *
-	 * @param summary the summary
+	 * @param organizer the organizer
+	 * @param subject the subject
 	 * @param start the start
 	 * @param end the end
 	 * @param status the status

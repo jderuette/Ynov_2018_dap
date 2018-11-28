@@ -19,19 +19,31 @@ import fr.ynov.dap.microsoft.data.MicrosoftAccountRepository;
 import fr.ynov.dap.microsoft.service.OutlookService;
 import fr.ynov.dap.models.AdminModel;
 
+/**
+ * The Class AdminService.
+ */
 @Service
 public class AdminService {
 	
+	/** The google service. */
 	@Autowired 
 	@Qualifier("google")
 	GoogleService googleService;
 	
+	/** The microsoft account repository. */
 	@Autowired
 	MicrosoftAccountRepository microsoftAccountRepository;
 	
 	/** The logger. */
 	private final static Logger logger = LogManager.getLogger(OutlookService.class);
 	
+	/**
+	 * Gets the google credentials.
+	 *
+	 * @return the google credentials
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws GeneralSecurityException the general security exception
+	 */
 	public ArrayList<AdminModel> getGoogleCredentials() throws IOException, GeneralSecurityException{
 		logger.info("get google credentials started");
 		
@@ -51,6 +63,11 @@ public class AdminService {
 		return accountsCredential;
 	}
 	
+	/**
+	 * Gets the ms credentials.
+	 *
+	 * @return the ms credentials
+	 */
 	public ArrayList<AdminModel> getMsCredentials(){
 		logger.info("get Microsoft credentials started");
 

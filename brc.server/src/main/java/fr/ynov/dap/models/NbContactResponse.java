@@ -1,7 +1,8 @@
 package fr.ynov.dap.models;
 
+
 /**
- * The Class ContactResponse.
+ * The Class NbContactResponse.
  */
 public class NbContactResponse {
 

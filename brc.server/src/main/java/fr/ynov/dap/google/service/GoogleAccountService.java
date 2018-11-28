@@ -38,9 +38,9 @@ public class GoogleAccountService extends GoogleService{
 	/**
 	 * Handle the Google response.
 	 *
-	 * @param code    The (encoded) code use by Google (token, expirationDate,...)
-	 * @param request The HTTP Request
-	 * @param session the HTTP Session
+	 * @param decodedCode the decoded code
+	 * @param redirectUri the redirect uri
+	 * @param userId the user id
 	 * @return the view to display
 	 * @throws ServletException When Google account could not be connected to DaP.
 	 */
@@ -142,7 +142,7 @@ public class GoogleAccountService extends GoogleService{
      * Add a Google account (user will be prompt to connect and accept required
      * access).
      *
-     * @param userId  the user to store Data
+     * @param accountName the account name
      * @param request the HTTP request
      * @param session the HTTP session
      * @return the view to Display (on Error)

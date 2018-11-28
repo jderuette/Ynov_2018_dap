@@ -22,17 +22,34 @@ import fr.ynov.dap.microsoft.contract.OutlookApiService;
 import fr.ynov.dap.microsoft.contract.OutlookServiceBuilder;
 
 
+/**
+ * The Class OutlookService.
+ */
 @Service
 public class OutlookService {
 	
 	/** The logger. */
 	private final static Logger logger = LogManager.getLogger(OutlookService.class);
 
+	/** The logger message no ms accounts. */
+	private final String LOGGER_MESSAGE_NO_MS_ACCOUNTS = "no microsoft account found for userkey : ";
 	
+	/** The logger message ms accounts missing. */
+	private final String LOGGER_MESSAGE_MS_ACCOUNTS_MISSING = "one microsoft account account is missing";
 	
+	/** The logger message attribute missing. */
+	private final String LOGGER_MESSAGE_ATTRIBUTE_MISSING = "one account attribute is missing";
+
+	/**
+	 * Gets the inbox mail for account.
+	 *
+	 * @param user the user
+	 * @return the inbox mail for account
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public ArrayList<AccountMailResponse> getInboxMailForAccount(final AppUser user) throws IOException {
 		if (user.getMicrosoftAccounts().size() == 0) {
-        	logger.info("no microsoft account found for userkey : " + user.getUserKey());
+        	logger.info(LOGGER_MESSAGE_NO_MS_ACCOUNTS + user.getUserKey());
             return null;
         }
 		
@@ -53,10 +70,17 @@ public class OutlookService {
 		return AllAccountMessages;
 	}
 	
+    /**
+     * Gets the nb unread emails for account.
+     *
+     * @param user the user
+     * @return the nb unread emails for account
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public final Integer getNbUnreadEmailsForAccount(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-        	logger.info("no microsoft account found for userkey : " + user.getUserKey());
+        	logger.info(LOGGER_MESSAGE_NO_MS_ACCOUNTS + user.getUserKey());
             return 0;
         }
 
@@ -68,10 +92,17 @@ public class OutlookService {
         return numberOfUnreadMails;
     }
     
+    /**
+     * Gets the next events for account.
+     *
+     * @param user the user
+     * @return the next events for account
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public final Event getNextEventsForAccount(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-        	logger.info("no microsoft account found for userkey : " + user.getUserKey());
+        	logger.info(LOGGER_MESSAGE_NO_MS_ACCOUNTS + user.getUserKey());
             return null;
         }
 
@@ -95,10 +126,17 @@ public class OutlookService {
         return MsNextEvent;
     }
     
+    /**
+     * Gets the nb contact for account.
+     *
+     * @param user the user
+     * @return the nb contact for account
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public NbContactResponse getNbContactForAccount(final AppUser user) throws IOException {
     	
     	if (user.getMicrosoftAccounts().size() == 0) {
-        	logger.info("no microsoft account found for userkey : " + user.getUserKey());
+        	logger.info(LOGGER_MESSAGE_NO_MS_ACCOUNTS + user.getUserKey());
             return null;
         }
     	
@@ -111,10 +149,17 @@ public class OutlookService {
     	return new NbContactResponse(totalNbContact);
     }
     
+    /**
+     * Gets the contact for account.
+     *
+     * @param user the user
+     * @return the contact for account
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public ArrayList<Contact> getContactForAccount(final AppUser user) throws IOException {
     	
     	if (user.getMicrosoftAccounts().size() == 0) {
-        	logger.info("no microsoft account found for userkey : " + user.getUserKey());
+        	logger.info(LOGGER_MESSAGE_NO_MS_ACCOUNTS + user.getUserKey());
             return null;
         }
     	    	
@@ -128,10 +173,17 @@ public class OutlookService {
     	return contacts;
     }
     
+    /**
+     * Gets the contact.
+     *
+     * @param msAcc the ms acc
+     * @return the contact
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private PagedResult<Contact> getContact(MicrosoftAccount msAcc) throws IOException{
     	
     	if (msAcc == null) {
-        	logger.info("one microsoft account account is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return null;
         }
     	
@@ -140,7 +192,7 @@ public class OutlookService {
         TokenResponse tokens = msAcc.getToken();
         
         if (tenantId == null || email == null || tokens == null) {
-        	logger.info("one account attribute is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return null;
         }
         
@@ -161,10 +213,17 @@ public class OutlookService {
         return contacts;
     }
     
+    /**
+     * Gets the nb contact.
+     *
+     * @param msAcc the ms acc
+     * @return the nb contact
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private Integer getNbContact(MicrosoftAccount msAcc) throws IOException {
     	
     	if (msAcc == null) {
-        	logger.info("one microsoft account account is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return 0;
         }
     	
@@ -173,7 +232,7 @@ public class OutlookService {
         TokenResponse tokens = msAcc.getToken();
 
         if (tenantId == null || email == null || tokens == null) {
-        	logger.info("one account attribute is missing");
+        	logger.info(LOGGER_MESSAGE_ATTRIBUTE_MISSING);
             return null;
         }
         
@@ -194,10 +253,17 @@ public class OutlookService {
         return contacts.getValue().length;
     }
     
+    /**
+     * Gets the next event.
+     *
+     * @param msAcc the ms acc
+     * @return the next event
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private Event getNextEvent(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
-        	logger.info("one microsoft account account is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return null;
         }
 
@@ -206,7 +272,7 @@ public class OutlookService {
         TokenResponse tokens = msAcc.getToken();
 
         if (tenantId == null || email == null || tokens == null) {
-        	logger.info("one account attribute is missing");
+        	logger.info(LOGGER_MESSAGE_ATTRIBUTE_MISSING);
             return null;
         }
 
@@ -227,10 +293,17 @@ public class OutlookService {
         return events.getValue()[0];
     }
     
+    /**
+     * Gets the nb unread emails.
+     *
+     * @param msAcc the ms acc
+     * @return the nb unread emails
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private Integer getNbUnreadEmails(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
-        	logger.info("one microsoft account account is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return 0;
         }
 
@@ -239,7 +312,7 @@ public class OutlookService {
         TokenResponse tokens = msAcc.getToken();
 
         if (tenantId == null || email == null || tokens == null) {
-        	logger.info("one account attribute is missing");
+        	logger.info(LOGGER_MESSAGE_ATTRIBUTE_MISSING);
             return 0;
         }
 
@@ -256,9 +329,16 @@ public class OutlookService {
 
     }
     
+    /**
+     * Gets the inbox mail.
+     *
+     * @param msAcc the ms acc
+     * @return the inbox mail
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private Message[] getInboxMail(final MicrosoftAccount msAcc) throws IOException {
 		if (msAcc == null) {
-        	logger.info("one microsoft account account is missing");
+        	logger.info(LOGGER_MESSAGE_MS_ACCOUNTS_MISSING);
             return null;
         }
 
@@ -268,7 +348,7 @@ public class OutlookService {
         
 
         if (tenantId == null || email == null || tokens == null) {
-        	logger.info("one account attribute is missing");
+        	logger.info(LOGGER_MESSAGE_ATTRIBUTE_MISSING);
             return null;
         }
         

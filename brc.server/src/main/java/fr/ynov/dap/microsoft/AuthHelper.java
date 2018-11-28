@@ -16,17 +16,35 @@ import org.springframework.web.util.UriComponentsBuilder;
 import fr.ynov.dap.microsoft.contract.TokenService;
 import fr.ynov.dap.microsoft.data.TokenResponse;
 
+/**
+ * The Class AuthHelper.
+ */
 public class AuthHelper {
+  
+  /** The Constant authority. */
   private static final String authority = "https://login.microsoftonline.com";
+  
+  /** The Constant authorizeUrl. */
   private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 
+	/** The scopes. */
 	private static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read",
 			"Calendars.Read", "Contacts.Read" };
 
+  /** The app id. */
   private static String appId = null;
+  
+  /** The app password. */
   private static String appPassword = null;
+  
+  /** The redirect url. */
   private static String redirectUrl = null;
 
+  /**
+   * Gets the app id.
+   *
+   * @return the app id
+   */
   private static String getAppId() {
     if (appId == null) {
       try {
@@ -37,6 +55,12 @@ public class AuthHelper {
     }
     return appId;
   }
+  
+  /**
+   * Gets the app password.
+   *
+   * @return the app password
+   */
   private static String getAppPassword() {
     if (appPassword == null) {
       try {
@@ -48,6 +72,11 @@ public class AuthHelper {
     return appPassword;
   }
 
+  /**
+   * Gets the redirect url.
+   *
+   * @return the redirect url
+   */
   private static String getRedirectUrl() {
     if (redirectUrl == null) {
       try {
@@ -59,6 +88,11 @@ public class AuthHelper {
     return redirectUrl;
   }
 
+  /**
+   * Gets the scopes.
+   *
+   * @return the scopes
+   */
   private static String getScopes() {
     StringBuilder sb = new StringBuilder();
     for (String scope: scopes) {
@@ -67,6 +101,11 @@ public class AuthHelper {
     return sb.toString().trim();
   }
 
+  /**
+   * Load config.
+   *
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private static void loadConfig() throws IOException {
     String authConfigFile = "auth.properties";
     InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
@@ -87,6 +126,13 @@ public class AuthHelper {
     }
   }
 
+  /**
+   * Gets the login url.
+   *
+   * @param state the state
+   * @param nonce the nonce
+   * @return the login url
+   */
   public static String getLoginUrl(UUID state, UUID nonce) {
 
     UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
@@ -101,6 +147,13 @@ public class AuthHelper {
     return urlBuilder.toUriString();
   }
   
+  /**
+   * Gets the token from auth code.
+   *
+   * @param authCode the auth code
+   * @param tenantId the tenant id
+   * @return the token from auth code
+   */
   public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
 	  // Create a logging interceptor to log request and responses
 	  HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -130,6 +183,13 @@ public class AuthHelper {
 	  }
 	}
   
+  /**
+   * Ensure tokens.
+   *
+   * @param tokens the tokens
+   * @param tenantId the tenant id
+   * @return the token response
+   */
   public static TokenResponse ensureTokens(TokenResponse tokens, String tenantId) {
 	  // Are tokens still valid?
 	  Calendar now = Calendar.getInstance();

@@ -36,6 +36,11 @@ public class Config {
 		return applicationName;
 	}
 
+	/**
+	 * Sets the application name.
+	 *
+	 * @param applicationName the new application name
+	 */
 	public void setApplicationName(String applicationName) {
 		this.applicationName = applicationName;
 	}
@@ -49,6 +54,11 @@ public class Config {
 		return tokensDirectoryPath;
 	}
 
+	/**
+	 * Sets the tokens directory path.
+	 *
+	 * @param tokensDirectoryPath the new tokens directory path
+	 */
 	public void setTokensDirectoryPath(String tokensDirectoryPath) {
 		this.tokensDirectoryPath = tokensDirectoryPath;
 	}
@@ -62,6 +72,11 @@ public class Config {
 		return credentialsFilePath;
 	}
 
+	/**
+	 * Sets the credentials file path.
+	 *
+	 * @param credentialsFilePath the new credentials file path
+	 */
 	public void setCredentialsFilePath(String credentialsFilePath) {
 		this.credentialsFilePath = credentialsFilePath;
 	}

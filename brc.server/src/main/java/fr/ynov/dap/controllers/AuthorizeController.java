@@ -20,12 +20,27 @@ import fr.ynov.dap.microsoft.data.TokenResponse;
 import fr.ynov.dap.microsoft.models.IdToken;
 
 
+/**
+ * The Class AuthorizeController.
+ */
 @Controller
 public class AuthorizeController {
 		
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 
+	/**
+	 * Authorize.
+	 *
+	 * @param model the model
+	 * @param code the code
+	 * @param idToken the id token
+	 * @param state the state
+	 * @param request the request
+	 * @return the string
+	 * @throws Exception the exception
+	 */
 	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
 	public String authorize(Model model,@RequestParam("code") String code, @RequestParam("id_token") String idToken,
 			@RequestParam("state") UUID state, HttpServletRequest request) throws Exception{
@@ -74,6 +89,12 @@ public class AuthorizeController {
 		return "index";
 	}
 
+	/**
+	 * Logout.
+	 *
+	 * @param request the request
+	 * @return the string
+	 */
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();

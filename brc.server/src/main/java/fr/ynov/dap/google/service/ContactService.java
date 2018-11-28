@@ -54,6 +54,14 @@ public class ContactService extends GoogleService{
 
     }
 	
+	/**
+	 * Gets the nb contact from account.
+	 *
+	 * @param user the user
+	 * @return the nb contact from account
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws GeneralSecurityException the general security exception
+	 */
 	public NbContactResponse getNbContactFromAccount(final AppUser user) throws IOException, GeneralSecurityException {
 		
 		if (user.getGoogleAccounts().size() == 0) {

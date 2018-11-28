@@ -19,12 +19,17 @@ import fr.ynov.dap.google.service.ContactService;
 import fr.ynov.dap.microsoft.service.OutlookService;
 import fr.ynov.dap.models.NbContactResponse;
 
+/**
+ * The Class ContactRestController.
+ */
 @RestController
 public class ContactRestController {
 
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 
+	/** The outlook service. */
 	@Autowired
 	OutlookService outlookService;
 	
@@ -32,6 +37,17 @@ public class ContactRestController {
 	@Autowired 
 	ContactService contactService;
 	
+	/**
+	 * Contacts.
+	 *
+	 * @param model the model
+	 * @param request the request
+	 * @param redirectAttributes the redirect attributes
+	 * @param userKey the user key
+	 * @return the nb contact response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws GeneralSecurityException the general security exception
+	 */
 	@RequestMapping("/nbContact")
 	 public NbContactResponse contacts(Model model, HttpServletRequest request,
 			 RedirectAttributes redirectAttributes, @RequestParam final String userKey) throws IOException, GeneralSecurityException {
@@ -51,7 +67,7 @@ public class ContactRestController {
 	/**
 	 * Gets the last event.
 	 *
-	 * @param userId the user id
+	 * @param userKey the user key
 	 * @return the contact response
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws Exception the exception
@@ -65,6 +81,14 @@ public class ContactRestController {
 	}
 	
 	
+	/**
+	 * Gets the ms nb contact.
+	 *
+	 * @param userKey the user key
+	 * @return the nb contact response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	@RequestMapping("/microsoft/nbContact")
 	public NbContactResponse GetMsNbContact (@RequestParam final String userKey) throws IOException, Exception {
 		

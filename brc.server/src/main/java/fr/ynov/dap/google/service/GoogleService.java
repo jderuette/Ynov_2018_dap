@@ -49,9 +49,13 @@ public class GoogleService {
     /** The scopes. */
     protected List<String> scopes;
 	
+	/** The Constant logger. */
 	private final static Logger logger = LogManager.getLogger(GoogleService.class);
 
 
+	/**
+	 * Instantiates a new google service.
+	 */
 	public GoogleService() {
     	this.jsonFactory = JacksonFactory.getDefaultInstance();
     	this.scopes = new ArrayList<String>();
@@ -65,7 +69,7 @@ public class GoogleService {
 	 *
 	 * @param HTTP_TRANSPORT the http transport
 	 * @param path the path
-	 * @param userId the user id
+	 * @param accountName the account name
 	 * @return the credentials
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -102,6 +106,13 @@ public class GoogleService {
                 .build();
 	}
 	
+	/**
+	 * Gets the credential data store.
+	 *
+	 * @return the credential data store
+	 * @throws GeneralSecurityException the general security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public DataStore<StoredCredential> getCredentialDataStore() throws GeneralSecurityException, IOException {
 		GoogleAuthorizationCodeFlow flow = getFlow();
 		return flow.getCredentialDataStore();

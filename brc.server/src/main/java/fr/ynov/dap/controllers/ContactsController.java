@@ -22,16 +22,31 @@ import fr.ynov.dap.microsoft.contract.OutlookServiceBuilder;
 import fr.ynov.dap.microsoft.models.*;
 import fr.ynov.dap.microsoft.service.OutlookService;
 
+/**
+ * The Class ContactsController.
+ */
 @Controller
 public class ContactsController {
 	
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
+	/** The outlook service. */
 	@Autowired
 	OutlookService outlookService;
 	
 	
+	/**
+	 * Contacts.
+	 *
+	 * @param model the model
+	 * @param request the request
+	 * @param redirectAttributes the redirect attributes
+	 * @param userKey the user key
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping("/microsoft/contacts")
 	public String contacts(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@RequestParam final String userKey) throws IOException {

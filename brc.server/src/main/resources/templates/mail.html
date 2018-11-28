@@ -19,37 +19,28 @@
         <a class="nav-link" th:href="@{'/microsoft/contacts?userKey=' + ${userKey}}">Contacts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}">Events</a>
+        <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}" th:text="#{event}"></a>
       </li>  
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}">Admin</a>
+        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}}">Admin</a>
       </li>   
     </ul>
   </div>
 </nav>
 </head>
 <body>
- <th:if test="${error ne null}">
-  <span th:text="${error}"></span>
-</th:if>
- <div>
-<p> AuthCode :  </p> <span th:text="${authCode}"></span>
-<p> IdToken :  </p> <span th:text="${idToken}"></span>
-<p> AccessToken :  </p> <span th:text="${accessToken}"></span>
-</div>
-
 <h1 th:text="${userKey}"></h1>
-
+<h3 th:text="#{page.mail.title}"></h3>
 <div th:each="account : ${response}">
 	<h2 th:text="${account.name}"></h2>
 	<table class="table">
 	  <thead>
 	    <tr>
 	      <th><span class="glyphicon glyphicon-envelope"></span></th>
-	      <th>From</th>
-	      <th>Subject</th>
-	      <th>Received</th>
-	      <th>Preview</th>
+	      <th th:text="#{mail.from}"></th>
+	      <th th:text="#{mail.subject}"></th>
+	      <th th:text="#{mail.received}"></th>
+	      <th th:text="#{mail.preview}"></th>
 	    </tr>
 	  </thead>
 	  <tbody>

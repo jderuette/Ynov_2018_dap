@@ -20,13 +20,18 @@ import fr.ynov.dap.google.service.GmailService;
 import fr.ynov.dap.microsoft.service.OutlookService;
 import fr.ynov.dap.models.NbMailResponse;
 
+/**
+ * The Class MailRestController.
+ */
 @RestController
 public class MailRestController {
 
 
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
+	/** The outlook service. */
 	@Autowired
 	OutlookService outlookService;
 	
@@ -36,7 +41,17 @@ public class MailRestController {
 	
 
 	
-	@RequestMapping("/microsoft/unreadMails")
+	/**
+	 * Mail.
+	 *
+	 * @param model the model
+	 * @param request the request
+	 * @param redirectAttributes the redirect attributes
+	 * @param userKey the user key
+	 * @return the nb mail response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@RequestMapping("/microsoft/nbUnreadMails")
 	public NbMailResponse mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@RequestParam final String userKey) throws IOException {
 		
@@ -47,6 +62,14 @@ public class MailRestController {
 		return new NbMailResponse(nbUnreadMails);
 	}
 	
+	/**
+	 * Gets the number of unread message.
+	 *
+	 * @param userKey the user key
+	 * @return the number of unread message
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	@RequestMapping("/mail/nbUnread")
     public final NbMailResponse getNumberOfUnreadMessage(@RequestParam final String userKey) throws IOException, Exception{
 
@@ -62,7 +85,8 @@ public class MailRestController {
 	/**
 	 * Gets the unread mail.
 	 *
-	 * @param userId the user id
+	 * @param model the model
+	 * @param userKey the user key
 	 * @return the gmail response
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws Exception the exception

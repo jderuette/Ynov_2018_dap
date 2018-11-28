@@ -25,16 +25,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class CalendarService extends GoogleService {
 
+	/**
+	 * Instantiates a new calendar service.
+	 */
 	private CalendarService(){
 		super();
 	}
 	
+	/** The Constant logger. */
 	private final static Logger logger = LogManager.getLogger(CalendarService.class);
 	
     /**
      * Result calendar.
      *
-     * @param userId the user id
+     * @param accountName the account name
      * @return the calendar response
      * @throws Exception the exception
      */
@@ -78,6 +82,13 @@ public class CalendarService extends GoogleService {
         }
     }
     
+    /**
+     * Gets the google next event from account.
+     *
+     * @param appUser the app user
+     * @return the google next event from account
+     * @throws Exception the exception
+     */
     public CalendarResponse getGoogleNextEventFromAccount(final AppUser appUser) throws Exception {
     	
     	if (appUser.getGoogleAccounts().size() == 0) {

@@ -28,7 +28,7 @@ public class GmailService extends GoogleService{
     /**
      * Result mail inbox.
      *
-     * @param userId the user id
+     * @param accountName the account name
      * @return the gmail response
      * @throws Exception the exception
      * @throws IOException Signals that an I/O exception has occurred.
@@ -47,6 +47,14 @@ public class GmailService extends GoogleService{
         return new NbMailResponse(label.getMessagesUnread());
     }
 	
+	/**
+	 * Gets the nb unread mail for account.
+	 *
+	 * @param appUser the app user
+	 * @return the nb unread mail for account
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public Integer getNbUnreadMailForAccount(AppUser appUser) throws IOException, Exception {
 		
 		if (appUser.getGoogleAccounts().size() == 0) {

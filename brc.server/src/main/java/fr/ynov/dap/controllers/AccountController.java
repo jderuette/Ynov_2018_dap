@@ -22,8 +22,9 @@ import fr.ynov.dap.google.data.GoogleAccountRepository;
 import fr.ynov.dap.google.service.GoogleAccountService;
 import fr.ynov.dap.microsoft.AuthHelper;
 
+
 /**
- * The Class GoogleAccountController.
+ * The Class AccountController.
  */
 @Controller
 public class AccountController {
@@ -32,9 +33,11 @@ public class AccountController {
 	@Autowired 
 	GoogleAccountService googleAccountService;
 	
+	/** The app user repository. */
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
+	/** The google account repository. */
 	@Autowired
 	GoogleAccountRepository googleAccountRepository;
 	
@@ -63,9 +66,10 @@ public class AccountController {
 	}
 	
 	/**
-	 * Adds the account.
+	 * Adds the google account.
 	 *
-	 * @param userId the user id
+	 * @param accountName the account name
+	 * @param userKey the user key
 	 * @param request the request
 	 * @param session the session
 	 * @return the string
@@ -92,6 +96,14 @@ public class AccountController {
 		return response;
 	}
 	
+	/**
+	 * Adds the microsoft account.
+	 *
+	 * @param accountName the account name
+	 * @param userKey the user key
+	 * @param response the response
+	 * @param session the session
+	 */
 	@RequestMapping("/microsoft/account/add/{accountName}")
 	public void addMicrosoftAccount (@PathVariable final String accountName, 
 			@RequestParam final String userKey, final HttpServletResponse response, final HttpSession session) {

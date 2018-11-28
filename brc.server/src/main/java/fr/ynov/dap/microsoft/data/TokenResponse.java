@@ -14,6 +14,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+/**
+ * The Class TokenResponse.
+ */
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse {
@@ -97,6 +100,8 @@ public class TokenResponse {
     private Date expirationTime;
 
     /**
+     * Gets the id.
+     *
      * @return the id
      */
     public Integer getId() {
@@ -104,6 +109,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the token type.
+     *
      * @return the tokenType
      */
     public String getTokenType() {
@@ -111,6 +118,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the token type.
+     *
      * @param val the tokenType to set
      */
     public void setTokenType(final String val) {
@@ -118,6 +127,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the expires in.
+     *
      * @return the expiresIn
      */
     public int getExpiresIn() {
@@ -125,6 +136,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the expires in.
+     *
      * @param val the expiresIn to set
      */
     public void setExpiresIn(final int val) {
@@ -132,6 +145,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the access token.
+     *
      * @return the accessToken
      */
     public String getAccessToken() {
@@ -139,6 +154,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the access token.
+     *
      * @param val the accessToken to set
      */
     public void setAccessToken(final String val) {
@@ -146,6 +163,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the refresh token.
+     *
      * @return the refreshToken
      */
     public String getRefreshToken() {
@@ -153,6 +172,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the refresh token.
+     *
      * @param val the refreshToken to set
      */
     public void setRefreshToken(final String val) {
@@ -160,6 +181,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the id token.
+     *
      * @return the idToken
      */
     public String getIdToken() {
@@ -167,6 +190,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the id token.
+     *
      * @param val the idToken to set
      */
     public void setIdToken(final String val) {
@@ -174,6 +199,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the error.
+     *
      * @return the error
      */
     public String getError() {
@@ -181,6 +208,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the error.
+     *
      * @param val the error to set
      */
     public void setError(final String val) {
@@ -188,6 +217,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the error description.
+     *
      * @return the errorDescription
      */
     public String getErrorDescription() {
@@ -195,6 +226,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the error description.
+     *
      * @param val the errorDescription to set
      */
     public void setErrorDescription(final String val) {
@@ -202,6 +235,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the error codes.
+     *
      * @return the errorCodes
      */
     public int[] getErrorCodes() {
@@ -209,6 +244,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the error codes.
+     *
      * @param val the errorCodes to set
      */
     public void setErrorCodes(final int[] val) {
@@ -216,6 +253,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the expiration time.
+     *
      * @return the expirationTime
      */
     public Date getExpirationTime() {
@@ -223,6 +262,8 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the expiration time.
+     *
      * @param val the expirationTime to set
      */
     public void setExpirationTime(final Date val) {
@@ -230,6 +271,8 @@ public class TokenResponse {
     }
 
     /**
+     * Gets the account.
+     *
      * @return the account
      */
     public MicrosoftAccount getAccount() {
@@ -237,10 +280,32 @@ public class TokenResponse {
     }
 
     /**
+     * Sets the account.
+     *
      * @param val the account to set
      */
     public void setAccount(final MicrosoftAccount val) {
         this.account = val;
     }
+
+	/**
+	 * Gets the scope.
+	 *
+	 * @return the scope
+	 */
+	public String getScope() {
+		return scope;
+	}
+
+	/**
+	 * Sets the scope.
+	 *
+	 * @param scope the new scope
+	 */
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+    
+    
 
 }
