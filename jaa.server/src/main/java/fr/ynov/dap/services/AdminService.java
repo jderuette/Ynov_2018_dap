@@ -51,8 +51,6 @@ public class AdminService {
      * Display accounts informations.
      * @return Several Account informations inside the AccountData model.
      * @throws ServiceException exception
-     * @throws GeneralSecurityException exception.
-     * @throws IOException exception.
      */
     public List<AccountData> getAccountsInformations() throws ServiceException {
         log.info("Accounts informations requested by the admin.");
