@@ -49,8 +49,8 @@ public class Config {
     /**
      * Default path of the Microsoft auth.properties file.
      */
-    private String microsoftAuthPropertiesDefaultPath = DEFAULT_ROOT_DIR +
-            File.separator + MICROSOFT_AUTH_PROPERTIES_FILE_NAME;
+    private String microsoftAuthPropertiesDefaultPath = DEFAULT_ROOT_DIR
+            + File.separator + MICROSOFT_AUTH_PROPERTIES_FILE_NAME;
 
     /**
      * @return the microsoftAuthPropertiesDefaultPath

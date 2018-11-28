@@ -11,6 +11,16 @@ import retrofit2.http.Path;
  */
 public interface TokenService {
 
+    /**
+     * Token service Interface.
+     * @param tenantId tenant id.
+     * @param clientId client id
+     * @param clientSecret client secret
+     * @param grantType grant type
+     * @param code code
+     * @param redirectUrl redirect url
+     * @return form url
+     */
   @FormUrlEncoded
   @POST("/{tenantid}/oauth2/v2.0/token")
   Call<TokenResponse> getAccessTokenFromAuthCode(
@@ -22,6 +32,16 @@ public interface TokenService {
     @Field("redirect_uri") String redirectUrl
   );
 
+  /**
+   * Token service Interface.
+   * @param tenantId tenant id.
+   * @param clientId client id
+   * @param clientSecret client secret
+   * @param grantType grant type
+   * @param code code
+   * @param redirectUrl redirect url
+   * @return form url
+   */
   @FormUrlEncoded
   @POST("/{tenantid}/oauth2/v2.0/token")
   Call<TokenResponse> getAccessTokenFromRefreshToken(

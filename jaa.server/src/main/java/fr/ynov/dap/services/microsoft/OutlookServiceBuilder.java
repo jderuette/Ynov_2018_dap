@@ -15,7 +15,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 /**
  * OutlookServiceBuilder, used to create the OutlookService.
  */
-public class OutlookServiceBuilder {
+public final class OutlookServiceBuilder {
+    /**
+     * private constructor because this is a utility class.
+     */
+    private OutlookServiceBuilder() {
+    }
+
     /**
      * Create the Outlook service.
      * @param accessToken access token.

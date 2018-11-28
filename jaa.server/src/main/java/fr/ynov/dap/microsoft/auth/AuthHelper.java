@@ -33,7 +33,7 @@ public final class AuthHelper {
      * @param conf config file.
      */
     @Autowired
-    public AuthHelper(final Config conf) {
+    private AuthHelper(final Config conf) {
         config = conf;
     }
 
@@ -156,8 +156,8 @@ public final class AuthHelper {
                 authConfigStream.close();
             }
         } else {
-            throw new FileNotFoundException("Property file '" +
-        authPropertiesFilePath + "' not found in the classpath.");
+            throw new FileNotFoundException("Property file '"
+                + authPropertiesFilePath + "' not found in the classpath.");
         }
     }
 

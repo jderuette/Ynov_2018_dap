@@ -49,6 +49,10 @@ public final class ClientLauncher {
      * four arguments.
      */
     private static final Integer FOUR_ARGUMENTS = 4;
+    /**
+     * Fourth argument.
+     */
+    private static final Integer FOURTH_ARGUMENT = 3;
 
     /**
      * Default server url. Used to avoid code duplication in the help text.
@@ -110,7 +114,7 @@ public final class ClientLauncher {
             }
 
             if (args.length == FOUR_ARGUMENTS) {
-                address = args[3];
+                address = args[FOURTH_ARGUMENT];
             }
 
             displayNumberOfMails(userKey, user);
@@ -135,7 +139,7 @@ public final class ClientLauncher {
 
         if (action.equals("addgoogle")) {
             if (args.length == FOUR_ARGUMENTS) {
-                address = args[3];
+                address = args[FOURTH_ARGUMENT];
             }
             String accountName = args[2];
             addNewGoogleAccount(userKey, accountName);
@@ -143,7 +147,7 @@ public final class ClientLauncher {
 
         if (action.equals("addmicrosoft")) {
             if (args.length == FOUR_ARGUMENTS) {
-                address = args[3];
+                address = args[FOURTH_ARGUMENT];
             }
             String accountName = args[2];
             addNewMicrosoftAccount(userKey, accountName);
