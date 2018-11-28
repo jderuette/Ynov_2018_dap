@@ -1,5 +1,6 @@
 package fr.ynov.dap.microsoft.authentication;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +8,11 @@ import java.util.Calendar;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import fr.ynov.dap.Config;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,6 +24,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * @author thibault
  *
  */
+@Component
 public final class AuthHelper {
     /**
      * Base URL of microsoft login.
@@ -53,9 +58,17 @@ public final class AuthHelper {
     private static String redirectUrl = null;
 
     /**
-     * Private constructor, because is utils class.
+     * Redirect URL.
      */
-    private AuthHelper() {
+    private static Config config;
+
+    /**
+     * Private constructor, because is utils class.
+     * @param configToSet Configuration of app
+     */
+    @Autowired
+    private AuthHelper(final Config configToSet) {
+        AuthHelper.config = configToSet;
     }
 
     /**
@@ -121,7 +134,7 @@ public final class AuthHelper {
      */
     private static void loadConfig() throws IOException {
         String authConfigFile = "auth.properties";
-        InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
+        InputStream authConfigStream = new FileInputStream(config.getAuthPropertiesPath());
 
         if (authConfigStream != null) {
             Properties authProps = new Properties();

@@ -13,9 +13,9 @@ public class Config {
      */
     private static final String CREDENTIALS_FILE_PATH = "credentials.json";
     /**
-     * Default path of directory that contains tokens.
+     * Default path of auth.properties that contains config microsoft.
      */
-    private static final String TOKEN_DIR_PATH = "tokens";
+    private static final String AUTH_PROPERTIES_PATH = "auth.properties";
     /**
      * Default application name.
      */
@@ -29,9 +29,9 @@ public class Config {
      */
     private String credentialsFilePath;
     /**
-     * Path of directory that contains tokens.
+     * Path of auth.properties that contains tokens.
      */
-    private String tokenDirPath;
+    private String authPropertiesPath;
     /**
      * My application name.
      */
@@ -47,7 +47,7 @@ public class Config {
      */
     public Config() {
         this.credentialsFilePath    = CREDENTIALS_FILE_PATH;
-        this.tokenDirPath           = TOKEN_DIR_PATH;
+        this.authPropertiesPath     = AUTH_PROPERTIES_PATH;
         this.applicationName        = APPLICATION_NAME;
         this.rootDir                = ROOT_DIR;
     }
@@ -69,18 +69,18 @@ public class Config {
     }
 
     /**
-     * @return the tokenDirPath
+     * @return the authPropertiesPath
      */
-    public String getTokenDirPath() {
-        return Paths.get(rootDir, tokenDirPath).toString();
+    public String getAuthPropertiesPath() {
+        return Paths.get(rootDir, authPropertiesPath).toString();
     }
 
     /**
-     * @param path the tokenDirPath to set
+     * @param path the authPropertiesPath to set
      * @return this
      */
-    public Config setTokenDirPath(final String path) {
-        this.tokenDirPath = path;
+    public Config setAuthPropertiesPath(final String path) {
+        this.authPropertiesPath = path;
         return this;
     }
 
