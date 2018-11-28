@@ -54,6 +54,9 @@ public class AdminController extends BaseController {
      */
     private static final String FRAGMENT_ATTRIBUTE = "fragment";
 
+    /**
+     * Path parameter name for userId.
+     */
     private static final String USER_ID_PATH_VARIABLE = "userId";
 
     /**

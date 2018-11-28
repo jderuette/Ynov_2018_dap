@@ -40,6 +40,16 @@ public class OutlookService extends OutlookAPIService {
     public static final String INBOX_FOLDER_NAME = "inbox";
 
     /**
+     * Default error message when a microsoft account instance is null.
+     */
+    private static final String ERROR_MICROSOFT_ACCOUNT_NULL = "MicrosoftAccount is null";
+
+    /**
+     * Default error message when microsoft information are empty or null.
+     */
+    private static final String ERROR_MICROSOFT_INFO_EMPTY = "MicrosoftAccount information are empty or null";
+
+    /**
      * Get number of unread email for a user.
      * @param msAcc User's microsoft account
      * @return Number of unread email for user linked userId
@@ -52,7 +62,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (msAcc == null) {
 
-            getLogger().warn("MicrosoftAccount is null");
+            getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return 0;
 
@@ -64,7 +74,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
 
-            getLogger().warn("MicrosoftAccount information are empty or null");
+            getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return 0;
 
@@ -129,7 +139,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (msAcc == null) {
 
-            getLogger().warn("MicrosoftAccount is null");
+            getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return null;
 
@@ -141,7 +151,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
 
-            getLogger().warn("MicrosoftAccount information are empty or null");
+            getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return null;
 
@@ -233,7 +243,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (msAcc == null) {
 
-            getLogger().warn("MicrosoftAccount is null");
+            getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return 0;
 
@@ -245,7 +255,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
 
-            getLogger().warn("MicrosoftAccount information are empty or null");
+            getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return null;
 
@@ -312,7 +322,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (msAcc == null) {
 
-            getLogger().warn("MicrosoftAccount is null");
+            getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return new ArrayList<Message>();
 
@@ -324,7 +334,7 @@ public class OutlookService extends OutlookAPIService {
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
 
-            getLogger().warn("MicrosoftAccount information are empty or null");
+            getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return null;
 

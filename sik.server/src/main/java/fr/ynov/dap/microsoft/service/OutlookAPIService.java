@@ -57,9 +57,9 @@ public class OutlookAPIService {
     /**
      * Every scopes needed.
      */
-    protected static String[] scopes = { MicrosoftScopes.OPEN_ID, MicrosoftScopes.OFFLINE_ACCESS,
-            MicrosoftScopes.PROFILE, MicrosoftScopes.USER_READ, MicrosoftScopes.MAIL_READ,
-            MicrosoftScopes.MAIL_READ_WRITE, MicrosoftScopes.CALENDARS_READ, MicrosoftScopes.CONTACTS_READ };
+    private static String[] scopes = { MicrosoftScopes.OPEN_ID, MicrosoftScopes.OFFLINE_ACCESS, MicrosoftScopes.PROFILE,
+            MicrosoftScopes.USER_READ, MicrosoftScopes.MAIL_READ, MicrosoftScopes.MAIL_READ_WRITE,
+            MicrosoftScopes.CALENDARS_READ, MicrosoftScopes.CONTACTS_READ };
 
     /**
      * Default constructor.
@@ -90,9 +90,10 @@ public class OutlookAPIService {
      */
     protected static String getScopes() {
         StringBuilder sb = new StringBuilder();
+        String space = " ";
         for (String scope : scopes) {
             sb.append(scope);
-            sb.append(" ");
+            sb.append(space);
         }
         return sb.toString().trim();
     }

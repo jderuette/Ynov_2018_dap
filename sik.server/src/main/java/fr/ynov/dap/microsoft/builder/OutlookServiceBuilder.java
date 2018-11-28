@@ -31,7 +31,7 @@ public final class OutlookServiceBuilder {
      * Todo.
      * @param accessToken Access token
      * @param userEmail User email
-     * @return .
+     * @return Instance of OutlookApiService
      */
     public static OutlookApiService getOutlookService(final String accessToken, final String userEmail) {
 

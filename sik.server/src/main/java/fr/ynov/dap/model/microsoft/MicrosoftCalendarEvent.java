@@ -94,10 +94,8 @@ public class MicrosoftCalendarEvent implements ApiEvent {
 
         if (getEvent().getOrganizer() != null && getEvent().getOrganizer().getEmailAddress() != null) {
             String outlookMail = getEvent().getOrganizer().getEmailAddress().getAddress();
-            if (outlookMail != null) {
-                if (outlookMail.equals(mail)) {
-                    return AttendeeEventStatusEnum.OWNER;
-                }
+            if (outlookMail != null && outlookMail.equals(mail)) {
+                return AttendeeEventStatusEnum.OWNER;
             }
         }
 

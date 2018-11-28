@@ -102,10 +102,8 @@ public class GoogleCalendarEvent implements ApiEvent {
             return AttendeeEventStatusEnum.UNKNOWN;
         }
 
-        if (event.getCreator() != null) {
-            if (event.getCreator().getEmail().equals(userMail)) {
-                return AttendeeEventStatusEnum.OWNER;
-            }
+        if (event.getCreator() != null && event.getCreator().getEmail().equals(userMail)) {
+            return AttendeeEventStatusEnum.OWNER;
         }
 
         if (event.getAttendees() == null) {
