@@ -40,7 +40,7 @@ public class MailController {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@RequestMapping("/microsoft/mail")
-	public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+	public String getMsMail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@RequestParam final String userKey) throws IOException {
 		
         AppUser currentUser = appUserRepository.findByUserkey(userKey);

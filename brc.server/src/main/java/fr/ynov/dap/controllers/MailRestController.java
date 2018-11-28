@@ -42,7 +42,7 @@ public class MailRestController {
 
 	
 	/**
-	 * Mail.
+	 * get number of microsoft unread mail.
 	 *
 	 * @param model the model
 	 * @param request the request
@@ -52,14 +52,16 @@ public class MailRestController {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@RequestMapping("/microsoft/nbUnreadMails")
-	public NbMailResponse mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+	public NbMailResponse getNbMicrosoftUnreadMail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@RequestParam final String userKey) throws IOException {
-		
+		NbMailResponse response = new NbMailResponse(0);
+
         AppUser currentUser = appUserRepository.findByUserkey(userKey);
-        
-        Integer nbUnreadMails = outlookService.getNbUnreadEmailsForAccount(currentUser);
-        
-		return new NbMailResponse(nbUnreadMails);
+        if(currentUser != null) {
+        	Integer nbUnreadMails = outlookService.getNbUnreadEmailsForAccount(currentUser);
+        	response.setNbUnreadMail(nbUnreadMails);
+        }
+		return response;
 	}
 	
 	/**
@@ -71,19 +73,23 @@ public class MailRestController {
 	 * @throws Exception the exception
 	 */
 	@RequestMapping("/mail/nbUnread")
-    public final NbMailResponse getNumberOfUnreadMessage(@RequestParam final String userKey) throws IOException, Exception{
+    public final NbMailResponse getNumberOfUnreadMail(@RequestParam final String userKey) throws IOException, Exception{
 
-		AppUser appUser = appUserRepository.findByUserkey(userKey);
+		NbMailResponse response = new NbMailResponse(0);
 
-        Integer googleNbUnreadMail = gmailService.getNbUnreadMailForAccount(appUser);
+		AppUser currentUser = appUserRepository.findByUserkey(userKey);
+		if(currentUser != null) {
+	        Integer googleNbUnreadMail = gmailService.getNbUnreadMailForAccount(currentUser);
+	
+	        Integer microsoftNbUnreadMail = outlookService.getNbUnreadEmailsForAccount(currentUser);
+	        response.setNbUnreadMail(googleNbUnreadMail + microsoftNbUnreadMail);
+		}
 
-        Integer microsoftNbUnreadMail = outlookService.getNbUnreadEmailsForAccount(appUser);
-
-        return new NbMailResponse(googleNbUnreadMail + microsoftNbUnreadMail);
+        return response;
     }
 	
 	/**
-	 * Gets the unread mail.
+	 * Gets the number of google unread mail.
 	 *
 	 * @param model the model
 	 * @param userKey the user key
@@ -92,12 +98,12 @@ public class MailRestController {
 	 * @throws Exception the exception
 	 */
 	@RequestMapping("/google/nbUnreadMails")
-	public NbMailResponse GetUnreadMail (ModelMap model, @RequestParam final String userKey) throws IOException, Exception {
+	public NbMailResponse GetGoogleUnreadMail (ModelMap model, @RequestParam final String userKey) throws IOException, Exception {
 		
 		NbMailResponse response = new NbMailResponse(0);
-		AppUser appUser = appUserRepository.findByUserkey(userKey);
-		if(appUser != null) {
-			Integer nbUnreadMail = gmailService.getNbUnreadMailForAccount(appUser);
+		AppUser currentUser = appUserRepository.findByUserkey(userKey);
+		if(currentUser != null) {
+			Integer nbUnreadMail = gmailService.getNbUnreadMailForAccount(currentUser);
 			response.setNbUnreadMail(nbUnreadMail);
 		}	
 		return response;

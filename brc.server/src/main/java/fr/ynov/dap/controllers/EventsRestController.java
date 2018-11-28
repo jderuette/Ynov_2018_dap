@@ -42,7 +42,7 @@ public class EventsRestController {
 	OutlookService outlookService;
 	
 	/**
-	 * Gets the last event.
+	 * Gets the google next event.
 	 *
 	 * @param userKey the user key
 	 * @return the calendar response
@@ -50,7 +50,7 @@ public class EventsRestController {
 	 * @throws Exception the exception
 	 */
 	@RequestMapping("/google/calendar")
-	public CalendarResponse GetLastEvent (@RequestParam final String userKey) throws IOException, Exception {
+	public CalendarResponse GetGoogleNextEvent (@RequestParam final String userKey) throws IOException, Exception {
 		
 		AppUser appUser = appUserRepository.findByUserkey(userKey);
 		CalendarResponse response = calendarService.getGoogleNextEventFromAccount(appUser);

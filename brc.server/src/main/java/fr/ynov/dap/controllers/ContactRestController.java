@@ -38,7 +38,7 @@ public class ContactRestController {
 	ContactService contactService;
 	
 	/**
-	 * Contacts.
+	 * get number of contacts.
 	 *
 	 * @param model the model
 	 * @param request the request
@@ -49,7 +49,7 @@ public class ContactRestController {
 	 * @throws GeneralSecurityException the general security exception
 	 */
 	@RequestMapping("/nbContact")
-	 public NbContactResponse contacts(Model model, HttpServletRequest request,
+	 public NbContactResponse getNbContacts(Model model, HttpServletRequest request,
 			 RedirectAttributes redirectAttributes, @RequestParam final String userKey) throws IOException, GeneralSecurityException {
 		
 		AppUser currentUser = appUserRepository.findByUserkey(userKey);
@@ -65,7 +65,7 @@ public class ContactRestController {
 	}
 	
 	/**
-	 * Gets the last event.
+	 * Gets the number of google contact.
 	 *
 	 * @param userKey the user key
 	 * @return the contact response
