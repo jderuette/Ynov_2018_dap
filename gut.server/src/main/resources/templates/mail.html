@@ -18,20 +18,18 @@
 </head>
 <body>
 	<div th:replace="~{fragments/header :: header}"></div>
-	<div class="jumbotron">
-		<h1>Java Web App Tutorial</h1>
-		<p>This sample uses the Mail API to read messages in your inbox.</p>
-		<p>
-			<a class="btn btn-lg btn-primary" th:href="${loginUrl}">Click
-				here to login</a>
-		</p>
+	
+	<div th:if="${error}" class="alert alert-danger">
+		Error: <span th:text="${error}"></span>
 	</div>
 
-	<h1>welcome</h1>
-	<div>
-		<span th:text="#{email.nb}">You have&nbsp;:</span> <span
-			th:text="${nbEmails}"></span>
-	</div>
+	<pre>
+		<code>Auth code: <span th:text="${session.authCode}"></span>
+
+		ID token: <span th:text="${session.idToken}"></span>
+		
+		Access token: <span th:text="${session.accessToken}"></span></code>
+	</pre>
 	<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
