@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MailController {
 
     @RequestMapping("/mails")
-    public String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public final String mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse)session.getAttribute("tokens");
         if (tokens == null) {
@@ -44,16 +44,14 @@ public class MailController {
         // Only return the properties we care about
         String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
         // Return at most 10 messages
-        Integer maxResults = 10;
 
         try {
             PagedResult<Message> messages = outlookService.getMessages(
-                    folder, sort, properties, maxResults)
+                    folder, sort, properties, 10)
                     .execute().body();
             model.addAttribute("messages", messages.getValue());
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            System.out.println(e.getMessage());
             return "redirect:/home";
         }
 

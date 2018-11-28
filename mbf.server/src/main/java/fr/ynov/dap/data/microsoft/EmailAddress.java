@@ -7,16 +7,16 @@ public class EmailAddress {
     private String name;
     private String address;
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public final void setName(String userName) {
+        this.name = userName;
     }
-    public String getAddress() {
+    public final String getAddress() {
         return address;
     }
-    public void setAddress(String address) {
-        this.address = address;
+    public final void setAddress(String userAddress) {
+        this.address = userAddress;
     }
 }

@@ -9,16 +9,16 @@ public class PagedResult<T> {
     private String nextPageLink;
     private T[] value;
 
-    public String getNextPageLink() {
+    public final String getNextPageLink() {
         return nextPageLink;
     }
-    public void setNextPageLink(String nextPageLink) {
+    public final void setNextPageLink(String nextPageLink) {
         this.nextPageLink = nextPageLink;
     }
-    public T[] getValue() {
+    public final T[] getValue() {
         return value;
     }
-    public void setValue(T[] value) {
+    public final void setValue(T[] value) {
         this.value = value;
     }
 }

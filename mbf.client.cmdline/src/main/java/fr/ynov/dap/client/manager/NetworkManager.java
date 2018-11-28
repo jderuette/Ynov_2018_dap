@@ -68,7 +68,6 @@ public class NetworkManager {
                 if (json.has(messageKey)) {
                     System.out.println(json.getString(messageKey));
                 } else {
-
                     Date endDate = new Date(json.getJSONObject("end").getJSONObject("date").getInt("value"));
                     Date startingDate = new Date(json.getJSONObject("originalStartTime").getJSONObject("date").getInt("value"));
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");

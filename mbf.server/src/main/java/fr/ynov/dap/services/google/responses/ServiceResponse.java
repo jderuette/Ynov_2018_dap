@@ -18,14 +18,14 @@ public class ServiceResponse<T> {
      *  This methods returns the data of the request
      * @return The data of the request.
      */
-    public T getData() {
+    public final T getData() {
         return data;
     }
 
     /**
      *  This methods sets the data of the request to the data attribute of the class.
 =     */
-    public void setData(T data) {
+    public final void setData(T data) {
         this.data = data;
     }
 
@@ -33,14 +33,14 @@ public class ServiceResponse<T> {
      *  This methods returns the message of the request.
      * @return The message of the request.
      */
-    public String getMessage() {
+    public final String getMessage() {
         return message;
     }
 
     /**
      *  This methods sets the message of the request to the message attribute of the class.
      */
-    public void setMessage(String msg) {
+    public final void setMessage(String msg) {
         this.message = msg;
     }
 

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AppUserController {
 
     @Autowired
-    AppUserRepository userRepository;
+    private AppUserRepository userRepository;
 
     @Autowired
-    GoogleAccountRepository gAccountRepository;
+    private GoogleAccountRepository gAccountRepository;
+
     @RequestMapping("/user/add")
-    public String createNewUser(@RequestParam("userKey") final String userKey, ModelMap model) {
+    public final String createNewUser(@RequestParam("userKey") final String userKey, ModelMap model) {
         AppUser newUser = new AppUser();
         newUser.setName(userKey);
         userRepository.save(newUser);

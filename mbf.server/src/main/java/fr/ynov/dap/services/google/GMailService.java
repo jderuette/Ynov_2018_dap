@@ -53,10 +53,6 @@ public class GMailService extends GoogleService {
 
         AppUser appUser = appUserRepository.findByName(userKey);
 
-    for (GoogleAccount googleAccount: appUser.getAccounts()) {
-        System.out.println(googleAccount);
-        }
-
         try {
             Label label = getService(userKey).users().labels().get("me", "INBOX").execute();
             response.setData(label);

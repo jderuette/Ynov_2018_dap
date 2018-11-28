@@ -9,16 +9,16 @@ public class DateTimeTimeZone {
     private Date dateTime;
     private String timeZone;
 
-    public Date getDateTime() {
+    public final Date getDateTime() {
         return dateTime;
     }
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public final void setDateTime(Date date) {
+        this.dateTime = date;
     }
-    public String getTimeZone() {
+    public final String getTimeZone() {
         return timeZone;
     }
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
+    public final void setTimeZone(String time) {
+        this.timeZone = time;
     }
 }

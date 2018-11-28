@@ -18,7 +18,7 @@ public class GDataStoreController {
     private GDataStoreService service;
 
     @RequestMapping("/datastore")
-    public String datastore(ModelMap model) throws IOException {
+    public final String datastore(ModelMap model) throws IOException {
         HashMap mappedCredentials = new HashMap();
         DataStore<StoredCredential> credentials = service.getDataStoreCredential();
 

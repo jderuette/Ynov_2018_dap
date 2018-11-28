@@ -2,6 +2,7 @@ package fr.ynov.dap.data.microsoft;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,6 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IdToken {
+
+    /**
+     * The logger of the GMailService class.
+     */
+    private static Logger logger  = Logger.getLogger(IdToken.class.getName());
+
     // NOTE: This is just a subset of the claims returned in the
     // ID token. For a full listing, see:
     // https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#idtokens
@@ -43,72 +50,72 @@ public class IdToken {
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.severe(e.getMessage());
         }
         return newToken;
     }
 
-    public long getExpirationTime() {
+    public final long getExpirationTime() {
         return expirationTime;
     }
 
-    public void setExpirationTime(long expirationTime) {
-        this.expirationTime = expirationTime;
+    public final void setExpirationTime(long time) {
+        this.expirationTime = time;
     }
 
-    public long getNotBefore() {
+    public final long getNotBefore() {
         return notBefore;
     }
 
-    public void setNotBefore(long notBefore) {
+    public final void setNotBefore(long notBefore) {
         this.notBefore = notBefore;
     }
 
-    public String getTenantId() {
+    public final String getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public final void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getNonce() {
+    public final String getNonce() {
         return nonce;
     }
 
-    public void setNonce(String nonce) {
+    public final void setNonce(String nonce) {
         this.nonce = nonce;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPreferredUsername() {
+    public final String getPreferredUsername() {
         return preferredUsername;
     }
 
-    public void setPreferredUsername(String preferredUsername) {
+    public final void setPreferredUsername(String preferredUsername) {
         this.preferredUsername = preferredUsername;
     }
 
-    public String getObjectId() {
+    public final String getObjectId() {
         return objectId;
     }
 
-    public void setObjectId(String objectId) {
+    public final void setObjectId(String objectId) {
         this.objectId = objectId;
     }
 

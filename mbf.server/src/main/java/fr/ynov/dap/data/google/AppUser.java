@@ -15,32 +15,32 @@ public class AppUser {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="owner")
     private List<GoogleAccount> googleAccounts;
 
-    public void addGoogleAccount(GoogleAccount account){
+    public final void addGoogleAccount(GoogleAccount account){
         account.setOwner(this);
         this.getAccounts().add(account);
     }
 
-    public Integer getId() {
+    public final Integer getId() {
         return id;
     }
 
-    public void setId(Integer userId) {
+    public final void setId(Integer userId) {
         this.id = userId;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String userName) {
+    public final void setName(String userName) {
         this.name = userName;
     }
 
-    public List<GoogleAccount> getAccounts() {
+    public final List<GoogleAccount> getAccounts() {
         return googleAccounts;
     }
 
-    public void setAccounts(List<GoogleAccount> accounts) {
+    public final void setAccounts(List<GoogleAccount> accounts) {
         this.googleAccounts = accounts;
     }
 }

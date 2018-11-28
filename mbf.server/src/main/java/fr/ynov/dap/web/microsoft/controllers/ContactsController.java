@@ -18,8 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ContactsController {
+
     @RequestMapping("/contacts")
-    public String contacts(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public final String contacts(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse)session.getAttribute("tokens");
         if (tokens == null) {
@@ -40,12 +41,10 @@ public class ContactsController {
         String sort = "GivenName ASC";
         // Only return the properties we care about
         String properties = "GivenName,Surname,CompanyName,EmailAddresses";
-        // Return at most 10 contacts
-        Integer maxResults = 10;
 
         try {
             PagedResult<Contact> contacts = outlookService.getContacts(
-                    sort, properties, maxResults)
+                    sort, properties, 10)
                     .execute().body();
             model.addAttribute("contacts", contacts.getValue());
         } catch (IOException e) {

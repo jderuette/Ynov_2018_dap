@@ -10,34 +10,34 @@ public class Contact {
     private String companyName;
     private EmailAddress[] emailAddresses;
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
-    public void setId(String id) {
-        this.id = id;
+    public final void setId(String identifier) {
+        this.id = identifier;
     }
-    public String getGivenName() {
+    public final String getGivenName() {
         return givenName;
     }
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
+    public final void setGivenName(String name) {
+        this.givenName = name;
     }
-    public String getSurname() {
+    public final String getSurname() {
         return surname;
     }
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public final void setSurname(String name) {
+        this.surname = name;
     }
-    public String getCompanyName() {
+    public final String getCompanyName() {
         return companyName;
     }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public final void setCompanyName(String name) {
+        this.companyName = name;
     }
-    public EmailAddress[] getEmailAddresses() {
+    public final EmailAddress[] getEmailAddresses() {
         return emailAddresses;
     }
-    public void setEmailAddresses(EmailAddress[] emailAddresses) {
-        this.emailAddresses = emailAddresses;
+    public final void setEmailAddresses(EmailAddress[] addresses) {
+        this.emailAddresses = addresses;
     }
 }

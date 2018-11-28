@@ -1,8 +1,6 @@
 package fr.ynov.dap.web.microsoft.controllers;
 
 import java.io.IOException;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class EventsController {
 
     @RequestMapping("/events")
-    public String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public final String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse)session.getAttribute("tokens");
         if (tokens == null) {
@@ -43,12 +41,10 @@ public class EventsController {
         String sort = "start/dateTime DESC";
         // Only return the properties we care about
         String properties = "organizer,subject,start,end";
-        // Return at most 10 events
-        Integer maxResults = 10;
 
         try {
             PagedResult<Event> events = outlookService.getEvents(
-                    sort, properties, maxResults)
+                    sort, properties, 10)
                     .execute().body();
             model.addAttribute("events", events.getValue());
         } catch (IOException e) {

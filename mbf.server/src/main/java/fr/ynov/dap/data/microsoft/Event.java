@@ -1,7 +1,6 @@
 package fr.ynov.dap.data.microsoft;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
@@ -11,34 +10,34 @@ public class Event {
     private DateTimeTimeZone start;
     private DateTimeTimeZone end;
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
-    public void setId(String id) {
-        this.id = id;
+    public final void setId(String identifier) {
+        this.id = identifier;
     }
-    public String getSubject() {
+    public final String getSubject() {
         return subject;
     }
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public final void setSubject(String eventSubject) {
+        this.subject = eventSubject;
     }
-    public Recipient getOrganizer() {
+    public final Recipient getOrganizer() {
         return organizer;
     }
-    public void setOrganizer(Recipient organizer) {
-        this.organizer = organizer;
+    public final void setOrganizer(Recipient eventOrganizer) {
+        this.organizer = eventOrganizer;
     }
-    public DateTimeTimeZone getStart() {
+    public final DateTimeTimeZone getStart() {
         return start;
     }
-    public void setStart(DateTimeTimeZone start) {
-        this.start = start;
+    public final void setStart(DateTimeTimeZone startDateTime) {
+        this.start = startDateTime;
     }
-    public DateTimeTimeZone getEnd() {
+    public final DateTimeTimeZone getEnd() {
         return end;
     }
-    public void setEnd(DateTimeTimeZone end) {
-        this.end = end;
+    public final void setEnd(DateTimeTimeZone endDateTime) {
+        this.end = endDateTime;
     }
 }

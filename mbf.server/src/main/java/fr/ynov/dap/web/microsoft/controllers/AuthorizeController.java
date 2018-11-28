@@ -19,7 +19,7 @@ import java.util.UUID;
 public class AuthorizeController {
 
     @RequestMapping(value="/authorize", method= RequestMethod.POST)
-    public String authorize(
+    public final String authorize(
             @RequestParam("code") String code,
             @RequestParam("id_token") String idToken,
             @RequestParam("state") UUID state,
@@ -59,7 +59,7 @@ public class AuthorizeController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public final String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
         return "redirect:/home";

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 public class GDataStoreService extends GoogleService {
 
 
-    public DataStore<StoredCredential> getDataStoreCredential() {
-        DataStore<StoredCredential> storedCredentials = getFlow().getCredentialDataStore();
-        return storedCredentials;
+    public final DataStore<StoredCredential> getDataStoreCredential() {
+        return getFlow().getCredentialDataStore();
     }
 }

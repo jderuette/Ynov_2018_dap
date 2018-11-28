@@ -13,7 +13,7 @@ import java.util.UUID;
 public class HomeController {
 
     @RequestMapping("/")
-    public String login(ModelMap model, HttpServletRequest request) {
+    public final String login(ModelMap model, HttpServletRequest request) {
 
         model.addAttribute("current","");
         model.addAttribute("userConnected",false);

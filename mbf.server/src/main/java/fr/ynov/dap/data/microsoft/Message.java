@@ -13,40 +13,40 @@ public class Message {
     private String subject;
     private String bodyPreview;
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
-    public void setId(String id) {
+    public final void setId(String id) {
         this.id = id;
     }
-    public Date getReceivedDateTime() {
+    public final Date getReceivedDateTime() {
         return receivedDateTime;
     }
-    public void setReceivedDateTime(Date receivedDateTime) {
+    public final void setReceivedDateTime(Date receivedDateTime) {
         this.receivedDateTime = receivedDateTime;
     }
-    public Recipient getFrom() {
+    public final Recipient getFrom() {
         return from;
     }
-    public void setFrom(Recipient from) {
+    public final void setFrom(Recipient from) {
         this.from = from;
     }
-    public Boolean getIsRead() {
+    public final Boolean getIsRead() {
         return isRead;
     }
-    public void setIsRead(Boolean isRead) {
+    public final void setIsRead(Boolean isRead) {
         this.isRead = isRead;
     }
-    public String getSubject() {
+    public final String getSubject() {
         return subject;
     }
-    public void setSubject(String subject) {
+    public final void setSubject(String subject) {
         this.subject = subject;
     }
-    public String getBodyPreview() {
+    public final String getBodyPreview() {
         return bodyPreview;
     }
-    public void setBodyPreview(String bodyPreview) {
+    public final void setBodyPreview(String bodyPreview) {
         this.bodyPreview = bodyPreview;
     }
 }

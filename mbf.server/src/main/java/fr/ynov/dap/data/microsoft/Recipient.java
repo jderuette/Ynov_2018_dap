@@ -7,11 +7,11 @@ import com.google.api.services.people.v1.model.EmailAddress;
 public class Recipient {
     private EmailAddress emailAddress;
 
-    public EmailAddress getEmailAddress() {
+    public final EmailAddress getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(EmailAddress emailAddress) {
+    public final void setEmailAddress(EmailAddress emailAddress) {
         this.emailAddress = emailAddress;
     }
 }

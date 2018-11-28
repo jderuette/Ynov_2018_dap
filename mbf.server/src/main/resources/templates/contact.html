@@ -14,20 +14,18 @@
     <caption>My Events</caption>
     <thead>
     <tr>
-        <th>Name</th>
+        <th>GivenName</th>
+        <th>SurName</th>
         <th>Company</th>
         <th>Email</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="contact : ${contacts}">
-        <td th:text="${contact.givenName} ${contact.surname}"></td>
+        <td th:text="${contact.givenName}"></td>
+        <td th:text="${contact.surname}"></td>
         <td th:text="${contact.companyName}"></td>
-        <td>
-            <ul class="list-inline" th:each="address : ${contact.emailAddresses}">
-                <li th:text="${address.address}"/></li>
-            </ul>
-        </td>
+        <td th:text="${contact.emailAddresses}"></td>
     </tr>
     </tbody>
 </table>

@@ -13,8 +13,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class MicrosoftHelper {
-    private static final String authority = "https://login.microsoftonline.com";
-    private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
+    private static final String AUTHORITY = "https://login.microsoftonline.com";
+    private static final String AUTHORIZE_URL = AUTHORITY + "/common/oauth2/v2.0/authorize";
 
     private static String[] scopes = {
             "openid",
@@ -65,7 +65,7 @@ public class MicrosoftHelper {
     private static String getScopes() {
         StringBuilder sb = new StringBuilder();
         for (String scope: scopes) {
-            sb.append(scope + " ");
+            sb.append(scope).append(" ");
         }
         return sb.toString().trim();
     }
@@ -88,7 +88,7 @@ public class MicrosoftHelper {
 
             // Create and configure the Retrofit object
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(authority)
+                    .baseUrl(AUTHORITY)
                     .client(client)
                     .addConverterFactory(JacksonConverterFactory.create())
                     .build();
@@ -118,7 +118,7 @@ public class MicrosoftHelper {
 
         // Create and configure the Retrofit object
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(authority)
+                .baseUrl(AUTHORITY)
                 .client(client)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
@@ -159,7 +159,7 @@ public class MicrosoftHelper {
 
     public static String getLoginUrl(UUID state, UUID nonce) {
 
-        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
+        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(AUTHORIZE_URL);
         urlBuilder.queryParam("client_id", getAppId());
         urlBuilder.queryParam("redirect_uri", getRedirectUrl());
         urlBuilder.queryParam("response_type", "code id_token");

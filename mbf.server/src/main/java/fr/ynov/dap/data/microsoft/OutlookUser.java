@@ -8,22 +8,22 @@ public class OutlookUser {
     private String mail;
     private String displayName;
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
-    public void setId(String id) {
+    public final void setId(String id) {
         this.id = id;
     }
-    public String getMail() {
+    public final String getMail() {
         return mail;
     }
-    public void setMail(String emailAddress) {
+    public final void setMail(String emailAddress) {
         this.mail = emailAddress;
     }
-    public String getDisplayName() {
+    public final String getDisplayName() {
         return displayName;
     }
-    public void setDisplayName(String displayName) {
+    public final void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 }

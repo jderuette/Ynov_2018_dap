@@ -26,64 +26,64 @@ public class TokenResponse {
     private int[] errorCodes;
     private Date expirationTime;
 
-    public String getTokenType() {
+    public final String getTokenType() {
         return tokenType;
     }
-    public void setTokenType(String tokenType) {
+    public final void setTokenType(String tokenType) {
         this.tokenType = tokenType;
     }
-    public String getScope() {
+    public final String getScope() {
         return scope;
     }
-    public void setScope(String scope) {
+    public final void setScope(String scope) {
         this.scope = scope;
     }
-    public int getExpiresIn() {
+    public final int getExpiresIn() {
         return expiresIn;
     }
-    public void setExpiresIn(int expiresIn) {
+    public final void setExpiresIn(int expiresIn) {
         this.expiresIn = expiresIn;
         Calendar now = Calendar.getInstance();
         now.add(Calendar.SECOND, expiresIn);
         this.expirationTime = now.getTime();
     }
-    public String getAccessToken() {
+    public final String getAccessToken() {
         return accessToken;
     }
-    public void setAccessToken(String accessToken) {
+    public final void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
-    public String getRefreshToken() {
+    public final String getRefreshToken() {
         return refreshToken;
     }
-    public void setRefreshToken(String refreshToken) {
+    public final void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
-    public String getIdToken() {
+    public final String getIdToken() {
         return idToken;
     }
-    public void setIdToken(String idToken) {
+    public final void setIdToken(String idToken) {
         this.idToken = idToken;
     }
-    public String getError() {
+    public final String getError() {
         return error;
     }
-    public void setError(String error) {
+    public final void setError(String error) {
         this.error = error;
     }
-    public String getErrorDescription() {
+    public final String getErrorDescription() {
         return errorDescription;
     }
-    public void setErrorDescription(String errorDescription) {
+    public final void setErrorDescription(String errorDescription) {
         this.errorDescription = errorDescription;
     }
-    public int[] getErrorCodes() {
+    public final int[] getErrorCodes() {
         return errorCodes;
     }
-    public void setErrorCodes(int[] errorCodes) {
+    public final void setErrorCodes(int[] errorCodes) {
         this.errorCodes = errorCodes;
     }
-    public Date getExpirationTime() {
+    public final Date getExpirationTime() {
         return expirationTime;
     }
 }

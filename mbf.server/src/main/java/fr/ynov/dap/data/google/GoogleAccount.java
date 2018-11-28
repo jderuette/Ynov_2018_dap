@@ -18,27 +18,27 @@ public class GoogleAccount {
 
     private String accountName;
 
-    public Integer getId() {
+    public final Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public final void setId(Integer identifier) {
+        this.id = identifier;
     }
 
-    public AppUser getOwner() {
+    public final AppUser getOwner() {
         return owner;
     }
 
-    public void setOwner(AppUser owner) {
-        this.owner = owner;
+    public final void setOwner(AppUser appUser) {
+        this.owner = appUser;
     }
 
-    public String getAccountName() {
+    public final String getAccountName() {
         return accountName;
     }
 
-    public void setAccountName(String name) {
-        this.accountName = accountName;
+    public final void setAccountName(String name) {
+        this.accountName = name;
     }
 }

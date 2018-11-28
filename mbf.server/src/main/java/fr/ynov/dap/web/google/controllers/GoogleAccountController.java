@@ -8,7 +8,6 @@ import com.google.api.client.http.GenericUrl;
 import fr.ynov.dap.data.google.AppUser;
 import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.repositories.AppUserRepository;
-import fr.ynov.dap.repositories.GoogleAccountRepository;
 import fr.ynov.dap.services.google.GoogleService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,14 @@ public class GoogleAccountController extends GoogleService {
      * The endpoint to hit in order to redirect the user on the authentication page.
      */
     private static final String OAUTH_2_CALLBACK_URL = "/oAuth2Callback";
+    /**
+     * The userKey used inside all the API request calls.
+     */
+    private static final String USER_KEY = "userKey";
+    /**
+     * The accountName used inside all the API request calls.
+     */
+    private static final String ACCOUNT_NAME_KEY = "accountName";
 
     /**
      * The logger of the GoogleAccount class.
@@ -50,9 +57,6 @@ public class GoogleAccountController extends GoogleService {
 
     @Autowired
     private AppUserRepository appUserRepository;
-
-    @Autowired
-    private GoogleAccountRepository googleAccountRepository;
 
     /**
      * Handle the google response.
@@ -95,7 +99,7 @@ public class GoogleAccountController extends GoogleService {
             logger.severe("Failed to run the user account authentication with the following message: " + e.getMessage());
         }
 
-        return "Vous êtes bien connecté(e). Le compte " + accountName + " est bien lié avec l'utilisateur: "
+        return "Vous êtes bien connecté(e). Le compte " + accountName + " est bien liée avec l'utilisateur: "
                 + userKey;
     }
 
@@ -107,38 +111,29 @@ public class GoogleAccountController extends GoogleService {
      * @param session the HTTP session
      * @return the view to Display (on Error)
      */
-    @RequestMapping("/add/account/{accountName}")
-    public final String addAccount(@PathVariable final String accountName, @RequestParam("userKey") final String userKey, final HttpServletRequest request,
+    @RequestMapping("/account/add/google/{accountName}")
+    public final String addAccount(@PathVariable final String accountName, @RequestParam(USER_KEY) final String userKey, final HttpServletRequest request,
                                    final HttpSession session) {
         String response = "errorOccurs";
         GoogleAuthorizationCodeFlow flow;
         Credential credential = null;
 
         try {
+            flow = super.getFlow();
+            credential = flow.loadCredential(accountName);
 
-            if (appUserRepository.findByName(userKey) == null) {
-                return "The account " + userKey + " doesn't exist";
-            }
-
-            if (googleAccountRepository.findByAccountName(accountName) != null) {
-                return "The account " + accountName + " doesn't exist";
+            if (credential != null && credential.getAccessToken() != null) {
+                response = "AccountAlreadyAdded";
             } else {
-
-                flow = super.getFlow();
-                credential = flow.loadCredential(accountName);
-
-                if (credential != null && credential.getAccessToken() != null) {
-                    response = "AccountAlreadyAdded";
-                } else {
-                    // redirect to the authorization flow
-                    final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-                    authorizationUrl.setRedirectUri(buildRedirectUri(request, OAUTH_2_CALLBACK_URL));
-                    // store userId in session for CallBack Access
-                    session.setAttribute("accountName", accountName);
-                    session.setAttribute("userKey", userKey);
-                    response = "redirect:" + authorizationUrl.build();
-                }
+                // redirect to the authorization flow
+                final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, OAUTH_2_CALLBACK_URL));
+                // store userId in session for CallBack Access
+                session.setAttribute(ACCOUNT_NAME_KEY, accountName);
+                session.setAttribute(USER_KEY, userKey);
+                response = "redirect:" + authorizationUrl.build();
             }
+
         } catch (IOException e) {
             logger.severe("Error while loading credential (or google Flow) " + e.getMessage());
         }
@@ -154,13 +149,13 @@ public class GoogleAccountController extends GoogleService {
      */
     private String getUserKey(final HttpSession session) throws ServletException {
         String userKey = null;
-        if (null != session && null != session.getAttribute("userKey")) {
-            userKey = (String) session.getAttribute("userKey");
+        if (null != session && null != session.getAttribute(USER_KEY)) {
+            userKey = (String) session.getAttribute(USER_KEY);
         }
 
         if (null == userKey) {
             logger.severe("userId in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add google acocunt : userId is NULL is User Session");
+            throw new ServletException("Error when trying to add google account : userId is NULL is User Session");
         }
         return userKey;
     }
@@ -173,13 +168,13 @@ public class GoogleAccountController extends GoogleService {
      */
     private String getAccountName(final HttpSession session) throws ServletException {
         String accountName = null;
-        if (null != session && null != session.getAttribute("accountName")) {
-            accountName = (String) session.getAttribute("accountName");
+        if (null != session && null != session.getAttribute(ACCOUNT_NAME_KEY)) {
+            accountName = (String) session.getAttribute(ACCOUNT_NAME_KEY);
         }
 
         if (null == accountName) {
             logger.severe("userId in Session is NULL in Callback");
-            throw new ServletException("Error when trying to add google acocunt : userId is NULL is User Session");
+            throw new ServletException("Error when trying to add google account : userId is NULL is User Session");
         }
         return accountName;
     }
@@ -190,17 +185,13 @@ public class GoogleAccountController extends GoogleService {
      * @return the decoded code
      * @throws ServletException if the code cannot be decoded
      */
-    private String extracCode(final  HttpServletRequest request) throws MissingServletRequestParameterException {
+    private String extracCode(final  HttpServletRequest request) {
         final StringBuffer buf = request.getRequestURL();
         if (null != request.getQueryString()) {
             buf.append('?').append(request.getQueryString());
         }
         final AuthorizationCodeResponseUrl responseUrl = new AuthorizationCodeResponseUrl(buf.toString());
         final String decodeCode = responseUrl.getCode();
-
-        if (decodeCode == null) {
-            throw new MissingServletRequestParameterException("code", "String");
-        }
 
         if (null != responseUrl.getError()) {
             logger.severe("Error when trying to add google account : " + responseUrl.getError());
