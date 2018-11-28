@@ -15,7 +15,6 @@ public class MicrosoftMailController {
     OutlookService outlookService;
 
     @RequestMapping("/mail")
-//    public Map<String, Integer> mail(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     public String mail(Model model, RedirectAttributes redirectAttributes, @RequestParam("userKey") final String userKey) {
         model.addAttribute("accounts", outlookService.mail(userKey, redirectAttributes));
         return "mail_micro";

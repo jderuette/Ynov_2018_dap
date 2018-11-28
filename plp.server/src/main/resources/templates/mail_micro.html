@@ -1,26 +1,43 @@
-<div xmlns:th="http://www.thymeleaf.org" th:each="account : ${accounts}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+
+    <meta name="description" content="The Dap trainning project admin"/>
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Data Access Project"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+
+    <title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<body>
+<div th:each="account : ${accounts}">
 
     <div th:text="${account.name}"></div>
     <div>Nb email : <span th:text="${account.nbEmail}"></span></div>
     <table>
         <tr>
-            <th>Id</th>
-            <!--<th>Received at </th>-->
-            <!--&lt;!&ndash;<th>From address </th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>From name </th>&ndash;&gt;-->
-            <!--<th>Is read</th>-->
-            <!--<th>Subject</th>-->
-            <!--<th>Body</th>-->
+            <th>Received at</th>
+            <th>From address</th>
+            <th>From name</th>
+            <th>Is read</th>
+            <th>Subject</th>
+            <th>Body</th>
         </tr>
         <tr th:each="message : ${account.messages}">
-            <!--<td th:text="${message.id}"></td>-->
-            <!--<td th:text="${message.receivedDateTime}"></td>-->
-            <!--&lt;!&ndash;<td th:text="${message.fromAddress}"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td th:text="${message.fromName}"></td>&ndash;&gt;-->
-            <!--<td th:text="${message.isRead}"></td>-->
-            <!--<td th:text="${message.subject}"></td>-->
-            <!--<td th:text="${message.bodyPreview}"></td>-->
+            <td th:text="${message.getReceivedDateTime()}"></td>
+            <td th:text="${message.getFrom().getEmailAddress().getAddress()}"></td>
             <td th:text="${message.getFrom().getEmailAddress().getName()}"></td>
+            <td th:text="${message.getIsRead()}"></td>
+            <td th:text="${message.getSubject()}"></td>
+            <td th:text="${message.getBodyPreview()}"></td>
         </tr>
     </table>
 </div>
+</body>
+</html>

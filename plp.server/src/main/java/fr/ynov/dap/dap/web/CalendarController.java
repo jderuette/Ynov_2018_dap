@@ -56,10 +56,10 @@ public class CalendarController {
 
     private Map<String, Object> formatEventOutlook(final EventMicrosoft outlook) {
         Map<String, Object> response = new HashMap<>();
-        response.put("organizer", outlook.getOrganizer().getEmailAddress());
+        response.put("organizer", outlook.getOrganizer().getEmailAddress().getName());
         response.put("subject", outlook.getSubject());
-        response.put("start", outlook.getStart());
-        response.put("finish", outlook.getEnd());
+        response.put("start", outlook.getStart().getDateTime());
+        response.put("finish", outlook.getEnd().getDateTime());
         return response;
     }
 

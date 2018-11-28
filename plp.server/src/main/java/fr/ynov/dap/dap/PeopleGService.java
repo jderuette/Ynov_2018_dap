@@ -45,7 +45,7 @@ public class PeopleGService extends GoogleService {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         } catch (Exception e) {
-            log.error("Error when trying to get Service for user : " + userId ,e);
+            log.error("Error when trying to get Service for user : " + userId, e);
             throw e;
         }
         return new PeopleService.Builder(httpTransport, getJsonFactory(), getCredentials(userId))
@@ -63,11 +63,15 @@ public class PeopleGService extends GoogleService {
     public Integer getNbContacts(final String userKey) throws IOException, GeneralSecurityException {
         AppUser userApp = userRepository.findByName(userKey);
         Integer nbContacts = 0;
-        for (GoogleAccount googleAccount: userApp.getGoogleAccount()) {
+        for (GoogleAccount googleAccount : userApp.getGoogleAccount()) {
             ListConnectionsResponse connectionsResponse = getService(googleAccount.getName()).people()
                     .connections().list("people/me").setPersonFields("names,emailAddresses").execute();
-            Map<String, Integer> response = new HashMap<>();
-            nbContacts += connectionsResponse.getTotalPeople();
+
+            Integer fo = connectionsResponse.getTotalPeople();
+            if (fo != null) {
+                nbContacts = nbContacts + fo;
+            }
+
         }
 
         return nbContacts;

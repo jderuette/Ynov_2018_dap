@@ -1,10 +1,47 @@
-<table xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+
+    <meta name="description" content="The Dap trainning project admin"/>
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Data Access Project"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
+
+    <title th:text="#{admin.title}">Data Access Project Admin</title>
+
+</head>
+<body>
+<table >
     <tr>
-        <th>Key</th>
-        <th>Value</th>
+        <th>UserKey</th>
+        <th>Accounts</th>
     </tr>
-    <tr th:each="data : ${dataMap}">
-        <td th:text="${data.key}"></td>
-        <td th:text="${data.value}"></td>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userKey}"></td>
+        <td>
+            <table>
+                <tr>
+                    <th>Account Name</th>
+                    <th>Type</th>
+                    <th>TenandId</th>
+                    <th>Mail</th>
+                </tr>
+                <tr th:each="account : ${user.accounts}">
+                    <td th:text="${account.name}"></td>
+                    <td th:text="${account.type}"></td>
+                    <td th:text="${account.tenantId}"></td>
+                </tr>
+            </table>
+        </td>
+        <td><a th:href="'/microsoft/mail?userKey='+${user.userKey}">
+            <div>Mail</div>
+        </a></td>
     </tr>
 </table>
+</body>
+</html>
