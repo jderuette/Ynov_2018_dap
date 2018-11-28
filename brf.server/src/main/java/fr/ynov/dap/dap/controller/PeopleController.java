@@ -13,33 +13,36 @@ import fr.ynov.dap.dap.service.GoogleService;
 import fr.ynov.dap.dap.service.PeopleServiceAPI;
 
 /**
- * 
  * @author Florian BRANCHEREAU
  *
  */
 @RestController
 public class PeopleController extends GoogleService implements Callback {
-	
-	@Autowired
-	private PeopleServiceAPI peopleservice;
-	
-	public PeopleController() throws Exception, IOException
-	{
-	    //TODO brf by Djer Appeller Super ?
-	}
-	
-	/**
-	 * 
-	 * @param userKey
-	 * @return Le nombre de contact
-	 * @throws Exception
-	 */
-	@RequestMapping("/contact")
-    public String GetAllContacts(@RequestParam("userKey") final String userKey) throws Exception
-    {
-    	int nbContact = 0;
-    	nbContact = peopleservice.GetNbContact(userKey);
-    	String response = "Nombre de contacts : " + nbContact;
-    	return response;
+
+    /**.
+     * declaration de peopleservice
+     */
+    @Autowired
+    private PeopleServiceAPI peopleservice;
+
+    /**
+     * @throws Exception constructeur
+     * @throws IOException constructeur
+     */
+    public PeopleController() throws Exception, IOException {
+        super();
+    }
+
+    /**
+     * @param userKey Nom du compte
+     * @return Le nombre de contact
+     * @throws Exception fonction
+     */
+    @RequestMapping("/contact")
+    public String getAllContacts(@RequestParam("userKey") final String userKey) throws Exception {
+        int nbContact = 0;
+        nbContact = peopleservice.getNbContact(userKey);
+        String response = "Nombre de contacts : " + nbContact;
+        return response;
     }
 }

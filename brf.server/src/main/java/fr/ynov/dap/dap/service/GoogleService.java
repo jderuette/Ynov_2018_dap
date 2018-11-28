@@ -1,8 +1,10 @@
 package fr.ynov.dap.dap.service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,113 +30,136 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
 import fr.ynov.dap.dap.config.Config;
 
 /**
- * 
  * @author Florian BRANCHEREAU
  *
  */
 public abstract class GoogleService {
-	private static NetHttpTransport HTTP_TRANSPORT;
-    private static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static List<String> SCOPES = new ArrayList<String>();
-    protected final static Logger LOG = LogManager.getLogger();
-    @Autowired
-    protected Config configuration;
-    
-    /**
-     * Constructor class MainService
-     * @throws Exception
-     * @throws IOException
+
+    /**.
+     * LOG
      */
-    public GoogleService() throws Exception, IOException
-    {
-    	HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    	Init();
+    protected static final Logger LOG = LogManager.getLogger();
+
+    /**.
+     * httpTransport
+     */
+    private NetHttpTransport httpTransport;
+    /**.
+     * jsonFactory
+     */
+    private JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+    /**.
+     * scope
+     */
+    private List<String> scope = new ArrayList<String>();
+
+    /**.
+     * declaration de configuration
+     */
+    @Autowired
+    private Config configuration;
+
+    /**.
+     * Constructor class MainService
+     * @throws Exception fonction
+     * @throws IOException fonction
+     */
+    public GoogleService() throws Exception, IOException {
+        httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        init();
     }
-    
+
     /**
-     * 
      * @return HTTP_TRANSPORT
      */
-    public NetHttpTransport GetHttpTransport()
-    {
-    	return HTTP_TRANSPORT;
-    }
-    
-    /**
-     * 
-     * @param configuration
-     */
-    public void setConfig(Config config)
-    {
-    	configuration = config;
-    }
-    
-
-    /**
-     * 
-     * @return SCOPES
-     */
-    protected List<String> GetScopes()
-    {
-    	return SCOPES;
+    public NetHttpTransport getHttpTransport() {
+        return httpTransport;
     }
 
     /**
-     * 
+     * @param config recuperation de la vaeleur de config
+     */
+    public void setConfig(final Config config) {
+        configuration = config;
+    }
+
+    /**
+     * @return configuration
+     */
+    protected Config getConfiguration() {
+        return configuration;
+    }
+
+    /**
+     * @return scope
+     */
+    protected List<String> getScopes() {
+        return scope;
+    }
+
+    /**
      * @return JSON_FACTORY
      */
-    protected  JsonFactory GetJsonFactory()
-    {
-    	return JSON_FACTORY;
+    protected JsonFactory getJsonFactory() {
+        return jsonFactory;
     }
+
     /**
-     * 
-     * @param jsonFactory
+     * @param theJsonFactory recuperation de la valeur de jsonFactory
      */
-    protected void SetJsonFactory(JsonFactory jsonFactory)
-    {
-    	JSON_FACTORY = jsonFactory;
+    protected void setJsonFactory(final JsonFactory theJsonFactory) {
+        jsonFactory = theJsonFactory;
     }
-    /**
+
+    /**.
      * Initialisation de SCOPES
      * Appel le constructeur et la classe
      */
-    private void Init()
-    {
-    	SCOPES.add(GmailScopes.GMAIL_LABELS);
-    	SCOPES.add(CalendarScopes.CALENDAR_READONLY);
-    	SCOPES.add(PeopleServiceScopes.CONTACTS_READONLY);
+    private void init() {
+        scope.add(GmailScopes.GMAIL_LABELS);
+        scope.add(CalendarScopes.CALENDAR_READONLY);
+        scope.add(PeopleServiceScopes.CONTACTS_READONLY);
     }
+
     /**
-     * 
+     * @param userKey nom du compte
      * @param HTTP_TRANSPORT
      * @return AuthorizationCodeInstalledApp
-     * @throws IOException
-     * @throws GeneralSecurityException 
+     * @throws IOException fonction
+     * @throws GeneralSecurityException fonction
      */
-    protected Credential getCredentials(String userKey) throws IOException, GeneralSecurityException
-    {
+    protected Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
         GoogleAuthorizationCodeFlow flow = getFlow();
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
     }
-    
+
     /**
-     * 
      * @return flow
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * @throws IOException fonction
+     * @throws GeneralSecurityException fonction
      */
-	protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException
-	{
-        InputStream in = GoogleService.class.getResourceAsStream(configuration.getCredentialsFilePath());
-        //TODO brf by Djer chargement d'un credential Externe au jar ?
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+    protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
+
+        LOG.debug("Chargement du fichier credential : " + configuration.getCredentialsFilePath());
+        InputStreamReader file = new InputStreamReader(new FileInputStream(configuration.getCredentialsFilePath()),
+                Charset.forName("UTF-8"));
+
+        GoogleClientSecrets clientSecrets = null;
+
+        if (file.ready()) {
+            clientSecrets = GoogleClientSecrets.load(jsonFactory, file);
+        } else {
+            InputStream fileInterne = GoogleService.class.getResourceAsStream(configuration.getCredentialsFilePath());
+            clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(fileInterne));
+        }
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(configuration.getTokensDirectoryPath())))
-                .setAccessType("offline")
-                .build();
+                httpTransport, jsonFactory, clientSecrets, scope)
+                        .setDataStoreFactory(
+                                new FileDataStoreFactory(new java.io.File(configuration.getTokensDirectoryPath())))
+                        .setAccessType("offline")
+                        .build();
         return flow;
-	}
+    }
+
 }

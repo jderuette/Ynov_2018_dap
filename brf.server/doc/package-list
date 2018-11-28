@@ -1,0 +1,10 @@
+fr.ynov.dap.dap
+fr.ynov.dap.dap.config
+fr.ynov.dap.dap.controller
+fr.ynov.dap.dap.data
+fr.ynov.dap.dap.microsoft.auth
+fr.ynov.dap.dap.microsoft.controller
+fr.ynov.dap.dap.microsoft.data
+fr.ynov.dap.dap.microsoft.service
+fr.ynov.dap.dap.service
+fr.ynov.dap.dap.web

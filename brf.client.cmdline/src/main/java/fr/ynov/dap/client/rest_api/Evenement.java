@@ -4,34 +4,33 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 /**
- * 
  * @author Florian BRANCHEREAU
  *
  */
-public class Evenement extends Connexion_Rest_API {
+public class Evenement extends ConnexionRestAPI {
 
-	private static String chemin = "/calendarNextEvent?userKey=";
-	
-	/**
-	 * 
-	 * @throws URISyntaxException
-	 * @throws IOException
-	 */
-    public Evenement() throws URISyntaxException, IOException{
-    super(chemin);
-	}
-    
-    /**
-     * 
-     * @param userKey
-     * @return Le prochain évènement
-     * @throws URISyntaxException
-     * @throws IOException
+    /**.
+     * declaration du chemin
      */
-    public String GetNextEvent(String userKey) throws URISyntaxException, IOException
-    {
-		setParam(userKey);
-		String response = RecupInfo();
-		return response;
+    private static String chemin = "/calendarNextEvent?userKey=";
+
+    /**
+     * @throws URISyntaxException fonction
+     * @throws IOException fonction
+     */
+    public Evenement() throws URISyntaxException, IOException {
+        super(chemin);
+    }
+
+    /**
+     * @param userKey Nom du compte
+     * @return Le prochain évènement
+     * @throws URISyntaxException fonction
+     * @throws IOException fonction
+     */
+    public String getNextEvent(final String userKey) throws URISyntaxException, IOException {
+        setParam(userKey);
+        String response = recupInfo();
+        return response;
     }
 }
