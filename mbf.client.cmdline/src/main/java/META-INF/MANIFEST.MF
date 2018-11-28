@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: okio-1.6.0.jar okhttp-2.7.5.jar json-20180813.jar
+Main-Class: fr.ynov.dap.client.Launcher
+

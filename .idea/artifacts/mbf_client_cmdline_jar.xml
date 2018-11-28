@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="mbf.client.cmdline:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mbf_client_cmdline_jar</output-path>
+    <root id="root">
+      <element id="archive" name="mbf.client.cmdline.jar">
+        <element id="module-output" name="mbf.client.cmdline" />
+      </element>
+      <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
+      <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
+      <element id="library" level="project" name="Maven: org.json:json:20180813" />
+    </root>
+  </artifact>
+</component>

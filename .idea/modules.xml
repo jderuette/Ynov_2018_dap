@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Ynov_dap_2018.iml" filepath="$PROJECT_DIR$/.idea/Ynov_dap_2018.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mbf.client.cmdline/mbf.client.cmdline.iml" filepath="$PROJECT_DIR$/mbf.client.cmdline/mbf.client.cmdline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mbf.server/mbf.server.iml" filepath="$PROJECT_DIR$/mbf.server/mbf.server.iml" />
+    </modules>
+  </component>
+</project>

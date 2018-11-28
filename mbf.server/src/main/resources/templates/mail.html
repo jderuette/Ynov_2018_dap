@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <title>My mails</title>
+    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<table class="table">
+    <caption>Inbox</caption>
+    <thead>
+    <tr>
+        <th><span class="glyphicon glyphicon-envelope"></span></th>
+        <th>From</th>
+        <th>Subject</th>
+        <th>Received</th>
+        <th>Preview</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="message : ${messages}">
+            <td>
+                <div th:if="${message.isRead == false}">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </div>
+            </td>
+            <td th:text="${message.from.emailAddress.name}"></td>
+            <td th:text="${message.subject}"></td>
+            <td th:text="${message.receivedDateTime}"></td>
+            <td th:text="${message.bodyPreview}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

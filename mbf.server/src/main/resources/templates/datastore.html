@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Store Credentials</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr th:each="credential : ${credentials}">
+        <td th:text="${credential.key}">urlPath</td>
+        <td th:text="${credential.value}">sj32yu2vfjhv24f</td>
+    </tr>
+</table>
+
+</body>
+</html>
