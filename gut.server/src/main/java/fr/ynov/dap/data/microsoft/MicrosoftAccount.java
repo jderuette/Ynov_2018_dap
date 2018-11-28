@@ -8,74 +8,76 @@ import javax.persistence.ManyToOne;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import fr.ynov.dap.data.AppUser;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class MicrosoftAccount {
 
 	private static final Logger logger = LogManager.getLogger();
-	
+
 	@Id
-	@JsonProperty("Id")
-	private String id;
-	@JsonProperty("EmailAddress")
-	private String emailAddress;
-	@JsonProperty("DisplayName")
-	private String displayName;
-	@JsonProperty("Alias")
-	private String alias;
-	@JsonProperty("MailboxGuid")
-	private String mailboxGuid;
+	@GeneratedValue
+	private Integer id;
 	
-	@JsonProperty("AccessToken")
 	private String accessToken;
-	@JsonProperty("Username")
-	private String username;
-	@JsonProperty("UserTenantID")
+
+	private String accountName;
+
 	private String userTenantID;
-	
+
 	@ManyToOne
 	AppUser appUser;
-	
-	public String getId() {
+
+	public MicrosoftAccount(String name, String accessToken, String tenantId) {
+		// TODO Auto-generated constructor stub
+		this.accountName = name;
+		this.accessToken = accessToken;
+		this.userTenantID = tenantId;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
+	public String getUserTenantID() {
+		return userTenantID;
+	}
+
+	public void setUserTenantID(String userTenantID) {
+		this.userTenantID = userTenantID;
+	}
+
+	public AppUser getAppUser() {
+		return appUser;
+	}
+
+	public void setAppUser(AppUser appUser) {
+		this.appUser = appUser;
+	}
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-	public String getAlias() {
-		return alias;
-	}
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-	public String getMailboxGuid() {
-		return mailboxGuid;
-	}
-	public void setMailboxGuid(String mailboxGuid) {
-		this.mailboxGuid = mailboxGuid;
-	}
+
 	public void setOwner(AppUser appUser) {
-		logger.debug("Binding AppUser <-> GoogleAccount");
-        this.appUser = appUser;        
-        if (!appUser.getMicrosoftAccounts().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-        	appUser.getMicrosoftAccounts().add(this);
-        }		
+		logger.debug("Binding AppUser <-> MicrosoftAccount");
+		this.appUser = appUser;
+		if (!appUser.getMicrosoftAccounts().contains(this)) { // warning this may cause performance issues if you have a
+																// large data set since this operation is O(n)
+			appUser.getMicrosoftAccounts().add(this);
+		}
 	}
+
 }

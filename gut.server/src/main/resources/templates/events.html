@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
-<title th:text="#{admin.title}">Data Access Project Admin</title>
+<title th:text="#{admin.title}"></title>
 
 
 
@@ -20,18 +20,18 @@
 	<div th:replace="~{fragments/header :: header}"></div>
 
 	<div th:if="${error}" class="alert alert-danger">
-	Error: <span th:text="${error}"></span>
+		<span th:text="${error}"></span>
 	</div>
 
 
 	<table class="table">
-		<caption>Calendar</caption>
+		<caption th:text="#{calendar}"></caption>
 		<thead>
 			<tr>
-				<th>Organizer</th>
-				<th>Subject</th>
-				<th>Start</th>
-				<th>End</th>
+				<th th:text="#{organizer}"></th>
+				<th th:text="#{subject}"></th>
+				<th th:text="#{start}"></th>
+				<th th:text="#{end}"></th>
 			</tr>
 		</thead>
 		<tbody>

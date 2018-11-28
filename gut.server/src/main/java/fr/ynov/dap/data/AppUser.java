@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
+import fr.ynov.dap.data.microsoft.MicrosoftUser;
 
 
 @Entity(name = "appUsers")

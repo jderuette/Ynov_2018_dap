@@ -20,6 +20,7 @@ import com.google.api.services.gmail.model.Message;
 
 import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.data.google.GoogleAccount;
+import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftMessage;
 import fr.ynov.dap.repository.AppUserRepository;
 import fr.ynov.dap.service.google.GmailService;
@@ -38,6 +39,7 @@ public class MailController extends BaseController {
 	@Autowired GmailService gmailService;
 
 	@Autowired AppUserRepository appUserRepository;
+	
 	
 	/**
 	 * @param userId
@@ -98,6 +100,21 @@ public class MailController extends BaseController {
 				unreadMessageCount++;
 			}
 		}
+		
+//		for(MicrosoftAccount microsoftAccount : myUser.getMicrosoftAccounts()) {
+//			OutlookService outlookService = OutlookServiceBuilder.getOutlookService(microsoftAccount.getAccessToken(), microsoftAccount.getAccountName());
+//		
+//			PagedResult<MicrosoftMessage> messages =  
+//					outlookService.getMessagesUnread( )
+//					.execute()
+//					.body();
+//					
+//			for (Message message : messages) {
+//				unreadMessageCount++;
+//			}
+//		}
+		
+		
 		
 	
 		return "{'mailCount':'" + unreadMessageCount + "'}";
