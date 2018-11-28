@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,15 +57,14 @@ public class OutlookService extends MicrosoftService {
         return inboxFolder.getUnreadItemCount();
     }
 
-    public Map<String, Object> getMailForAllAccounts(String userKey) {
-        Map<String, Object> response = new HashMap<String, Object>();
-        List<String> users = new ArrayList<>();
-        List<Message[]> messages = new ArrayList<>();
+    public List<PagedResult<Message>> getMailForAllAccounts(String userKey) {
+
+        List<PagedResult<Message>> messages = new ArrayList<PagedResult<Message>>();
         AppUser appUser = appUserRepository.findByUserKey(userKey);
         String folder = "inbox";
         String sort = "receivedDateTime DESC";
         String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
-        Integer maxResults = 50;
+        Integer maxResults = 10;
 
         for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
             TokenResponse tokens = MicrosoftService.ensureTokens(account.getToken(), account.getTenantId());
@@ -75,16 +72,12 @@ public class OutlookService extends MicrosoftService {
             try {
                 PagedResult<Message> emails = outlookService.getMessages(folder, sort, properties, maxResults).execute()
                         .body();
-                users.add(account.getEmail());
-                messages.add(emails.getValue());
+                messages.add(emails);
             } catch (IOException e) {
                 LOGGER.error("Error when trying get mail for all accounts.", e);
             }
         }
-        response.put("users", users);
-        response.put("messages", messages);
-
-        return response;
+        return messages;
     }
 
     public final Integer getNbUnreadEmails(final AppUser user)

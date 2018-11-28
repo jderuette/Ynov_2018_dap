@@ -10,30 +10,24 @@
 	<th:if test="${error ne null}">
 		<span th:text="${error}"></span>
 	</th:if>
-	<div th:each="accountMessages : ${accounts}" style="margin-bottom: 10px;">
-		<table class="table">
-			<caption><span th:text="#{emails.title}"></span></caption>
-			<thead>
-				<tr>
-					<th><span class="glyphicon glyphicon-envelope"></span></th>
-					<th><span th:text="#{emails.from}"></span></th>
-					<th th:text="#{emails.subject}"></th>
-					<th th:text="#{emails.received}"></th>
-					<th th:text="#{emails.preview}"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<div th:each="message : ${accountMessages}" style="margin-bottom: 10px;">
-					<tr th:classappend="${message.isRead == true ? '' : 'info'}" style="margin-bottom: 10px;">
-						<td><span th:if="${message.isRead == false}"></span></td>
-						<td th:text="${message.from.emailAddress.name}"></td>
-						<td th:text="${message.subject}"></td>
-						<td th:text="${message.receivedDateTime}"></td>
-						<td th:text="${message.bodyPreview}"></td>
-					</tr>
-				</div>
-			</tbody>
-		</table>
-	</div>
+<div th:each="pagedResult : ${messages}">
+	<table if="${!messages}">
+	<tr>
+	  <td th:text="#{email.datereceived}"></td>
+	  <td th:text="#{email.from}"></td>
+	  <td th:text="#{email.subject}"></td>
+	  <td th:text="#{email.body}"></td>
+	</tr>
+	 <tr th:each="message : ${pagedResult.value}">
+	     <td th:text="${message.receivedDateTime}"></td>
+	     <td th:text="${message.from.emailAddress.address}"></td>
+	
+	     <td th:text="${message.subject}"></td>
+	
+	     <td th:text="${message.bodyPreview}"></td>
+	     
+	  </tr>
+	</table>
+</div>
 </body>
 </html>

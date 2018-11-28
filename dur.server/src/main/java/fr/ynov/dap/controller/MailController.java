@@ -144,10 +144,10 @@ public class MailController extends BaseController {
     }
 
     @RequestMapping("/microsoft/{userKey}")
-    public String microsoftMails(@PathVariable("userKey") final String userKey, ModelMap model) {
+    public String microsoftMails(@PathVariable("userKey") final String userKey, ModelMap model,
+            HttpServletRequest request) {
         
-        model.put("users", microsoftMailService.getMailForAllAccounts(userKey).get("users"));
-        model.put("messages", microsoftMailService.getMailForAllAccounts(userKey).get("messages"));
+        model.put("messages", microsoftMailService.getMailForAllAccounts(userKey));
 
         return "mail";
 
