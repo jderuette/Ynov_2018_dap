@@ -70,6 +70,9 @@ public class CalendarService extends GoogleService {
         List<Event> events = new ArrayList<>();
         Event nextEvent = new Event();
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        if (appUser.getGoogleAccount() == null) {
+            return nextEvent;
+        }
 
         for (GoogleAccount googleAccount : appUser.getGoogleAccount()) {
             DateTime now = new DateTime(System.currentTimeMillis());
