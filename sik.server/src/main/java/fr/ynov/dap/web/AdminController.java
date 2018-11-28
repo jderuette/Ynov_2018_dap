@@ -54,6 +54,8 @@ public class AdminController extends BaseController {
      */
     private static final String FRAGMENT_ATTRIBUTE = "fragment";
 
+    private static final String USER_ID_PATH_VARIABLE = "userId";
+
     /**
      * Auto inject on GoogleAccountService.
      */
@@ -139,7 +141,7 @@ public class AdminController extends BaseController {
      * @throws NoNextEventException No next event found for current user
      */
     @RequestMapping("/nextEvent/{userId}")
-    public String calendar(final ModelMap model, @PathVariable("userId") final String userId)
+    public String calendar(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException, UserNotFoundException,
             NoNextEventException {
 
@@ -191,7 +193,7 @@ public class AdminController extends BaseController {
      * @throws GeneralSecurityException Security Exception
      */
     @RequestMapping("/mails/{userId}")
-    public String mail(final ModelMap model, @PathVariable("userId") final String userId)
+    public String mail(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         AppUser user = getAppUserRepository().findByUserKey(userId);
@@ -225,7 +227,7 @@ public class AdminController extends BaseController {
      * @throws GeneralSecurityException Security exception
      */
     @RequestMapping("/contacts/{userId}")
-    public String contacts(final ModelMap model, @PathVariable("userId") final String userId)
+    public String contacts(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws IOException, GeneralSecurityException {
 
         AppUser user = getAppUserRepository().findByUserKey(userId);
@@ -259,7 +261,7 @@ public class AdminController extends BaseController {
      * @throws GeneralSecurityException Security Exception
      */
     @RequestMapping("/mails/list/{userId}")
-    public String mailsList(final ModelMap model, @PathVariable("userId") final String userId)
+    public String mailsList(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws IOException, GeneralSecurityException {
 
         AppUser user = getAppUserRepository().findByUserKey(userId);
