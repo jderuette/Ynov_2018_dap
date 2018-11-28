@@ -1,24 +1,42 @@
 package fr.ynov.dap.microsoft.auth;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import fr.ynov.dap.Config;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
- * @author adrij
- *
+ * Auth Helper used for the Microsoft authentication.
  */
+@Component
 public final class AuthHelper {
+    /**
+     * Config.
+     */
+    private static Config config;
+    /**
+     * Config instantiate thanks to the dependency injection.
+     * @param conf config file.
+     */
+    @Autowired
+    public AuthHelper(final Config conf) {
+        config = conf;
+    }
+
     /**
      * Authority.
      */
@@ -123,8 +141,9 @@ public final class AuthHelper {
      * @throws IOException exception.
      */
     private static void loadConfig() throws IOException {
-        String authConfigFile = "auth.properties";
-        InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
+        String authPropertiesFilePath = config.getMicrosoftAuthPropertiesDefaultPath();
+        InputStreamReader authConfigStream = new InputStreamReader(
+                new FileInputStream(authPropertiesFilePath), Charset.forName("UTF-8"));
 
         if (authConfigStream != null) {
             Properties authProps = new Properties();
@@ -137,7 +156,8 @@ public final class AuthHelper {
                 authConfigStream.close();
             }
         } else {
-            throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
+            throw new FileNotFoundException("Property file '" +
+        authPropertiesFilePath + "' not found in the classpath.");
         }
     }
 

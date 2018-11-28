@@ -1,8 +1,10 @@
 package fr.ynov.dap.services.google;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,15 +113,16 @@ public abstract class GoogleService {
         scopes.add(PeopleServiceScopes.PLUS_LOGIN);
         logger.info("get flow - Scopes :" + scopes.toString());
 
-        //TODO Get credential outside of the jar
-        InputStream in = GoogleService.class.getResourceAsStream(config.getCredentialsFilePath());
+        String credentialFile = config.getCredentialsFilePath();
+        InputStreamReader authConfigStream = new InputStreamReader(
+                new FileInputStream(credentialFile), Charset.forName("UTF-8"));
+
         GoogleClientSecrets clientSecrets = null;
         try {
-            clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+            clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, authConfigStream);
         } catch (IOException ioe) {
             logger.error("failed to get client secrets", ioe);
         }
-        //TODO jaa by Djer si pas de conf "interne" charger la conf "externe" au jar.
 
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
@@ -127,7 +130,6 @@ public abstract class GoogleService {
         try {
             flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets, scopes)
-                    //TODO jaa by Djer si dossier "token" à l'extérieur du Jar ?
                     .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(config.getCredentialFolder())))
                     .setAccessType("offline")
                     .build();
