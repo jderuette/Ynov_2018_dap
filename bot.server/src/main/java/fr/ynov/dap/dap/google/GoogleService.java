@@ -1,22 +1,25 @@
 package fr.ynov.dap.dap.google;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.people.v1.PeopleServiceScopes;
 
 import fr.ynov.dap.dap.Config;
-
 
 /**
  * The Class GoogleService.
@@ -27,6 +30,29 @@ public class GoogleService {
 	@Autowired
 	protected Config configuration;
 	
+	/** The json factory. */ 
+	protected static final JacksonFactory JACKSON_FACTORY = JacksonFactory.getDefaultInstance();
+	
+	/** The scopes. */
+	protected final List<String> scopes = new ArrayList<String>();
+	
+	/**
+	 * Instantiates a new google service.
+	 */
+	public GoogleService() {
+		this.scopes.add(CalendarScopes.CALENDAR_READONLY);
+		this.scopes.add(GmailScopes.GMAIL_LABELS);
+		this.scopes.add(PeopleServiceScopes.CONTACTS_READONLY);
+	}
+
+	/**
+	 * Gets the scopes.
+	 *
+	 * @return the scopes
+	 */
+	public List<String> getScopes() {
+		return scopes;
+	}
 
 	/**
 	 * Gets the credentials.
@@ -37,19 +63,8 @@ public class GoogleService {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	protected Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String userId) throws IOException {
-        //Une grosse partie de code est celui de "getFLow()"
-	    // Load client secrets.
-        InputStream in = GoogleService.class.getResourceAsStream(configuration.getCredentialsFilePath());
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(configuration.getJSON_FACTORY(), new InputStreamReader(in));
-
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, configuration.getJSON_FACTORY(), clientSecrets, configuration.getSCOPES())
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(configuration.getTOKENS_DIRECTORY_PATH())))
-                .setAccessType("offline")
-                .build();
-        //TODO bot by Djer AuthorizationCodeInstalledApp ne fonctionen pas ne mode "web". Utiliser flow.loadCredential(userId);
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
+        GoogleAuthorizationCodeFlow flow = this.getFlow();        
+        return flow.loadCredential(userId);
     }
 	
 	/**
@@ -58,14 +73,12 @@ public class GoogleService {
 	 * @return the flow
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	protected GoogleAuthorizationCodeFlow getFlow() throws IOException {
-		InputStream in = GoogleService.class.getResourceAsStream(configuration.getCredentialsFilePath());
-		//TODO bot by Djer Chargement d'un fichier externe ?
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(configuration.getJSON_FACTORY(), new InputStreamReader(in));
-
+	public GoogleAuthorizationCodeFlow getFlow() throws IOException {
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JACKSON_FACTORY,
+        		new InputStreamReader(new FileInputStream(configuration.getCredentialsFilePath()), Charset.forName("UTF-8")));
 		return new GoogleAuthorizationCodeFlow.Builder(
-		        new NetHttpTransport(), configuration.getJSON_FACTORY(), clientSecrets, configuration.getSCOPES())
-				.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(configuration.getTOKENS_DIRECTORY_PATH())))
+		        new NetHttpTransport(), JACKSON_FACTORY, clientSecrets, getScopes())
+				.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(configuration.getTokensDirectoryPath())))
 				.setAccessType("offline").build();
 	}
 	
@@ -74,7 +87,7 @@ public class GoogleService {
 	 *
 	 * @return the configuration
 	 */
-	protected Config getConfiguration() {
+	public Config getConfiguration() {
 		return configuration;
 	}
 	
