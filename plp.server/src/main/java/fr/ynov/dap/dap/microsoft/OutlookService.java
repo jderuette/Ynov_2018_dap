@@ -1,20 +1,15 @@
 package fr.ynov.dap.dap.microsoft;
 
-import fr.ynov.dap.dap.GMailService;
 import fr.ynov.dap.dap.data.AppUser;
 import fr.ynov.dap.dap.data.microsoft.OutlookAccount;
-import fr.ynov.dap.dap.data.microsoft.Token;
 import fr.ynov.dap.dap.microsoft.models.*;
 import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +21,7 @@ public class OutlookService {
     /**
      * Instantiate logger.
      */
-    private static final Logger LOG = LogManager.getLogger(GMailService.class);
+    private static final Logger LOG = LogManager.getLogger(OutlookService.class);
 
     /**
      * instantiate userRepository
@@ -104,5 +99,84 @@ public class OutlookService {
         }
 
         return nbUnread;
+    }
+
+    public EventMicrosoft events(final String userKey) {
+        AppUser appUser = userRepository.findByName(userKey);
+
+        List<EventMicrosoft> listLastEvents = new ArrayList<>();
+        EventMicrosoft lastEvent = null;
+        for(OutlookAccount outlookAccount: appUser.getOutlookAccount()) {
+
+            if (outlookAccount.getToken() == null) {
+                LOG.warn("No token for account Microsoft : " + outlookAccount.getName());
+            }
+
+            outlookAccount.setToken(AuthHelper.ensureTokens(outlookAccount.getToken(), outlookAccount.getTenantId()));
+
+            IOutlookService outlookService = OutlookServiceBuilder.getOutlookService(
+                    outlookAccount.getToken().getAccessToken());
+
+            // Sort by start time in descending order
+            String sort = "start/dateTime ASC";
+            // Only return the properties we care about
+            String properties = "organizer,subject,start,end";
+            // Return at most 1 events
+            Integer maxResults = 1;
+
+            try {
+                EventMicrosoft event = outlookService.getEvents(
+                        sort, properties, maxResults)
+                        .execute().body().getValue()[0];
+                listLastEvents.add(event);
+                if (lastEvent == null) {
+                    lastEvent = event;
+                }
+                else {
+                    if(lastEvent.getStart().getDateTime().after(event.getStart().getDateTime())) {
+                        lastEvent = event;
+                    }
+                }
+            } catch (IOException e) {
+                LOG.error("Can't get next event of : " + outlookAccount.getName(), e);
+            }
+        }
+
+        return lastEvent;
+    }
+
+    public Integer contacts(final String userKey) {
+        AppUser appUser = userRepository.findByName(userKey);
+
+        Integer nbContacts = 0;
+        for(OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
+            if (outlookAccount.getToken() == null) {
+                LOG.warn("No token for account Microsoft : " + outlookAccount.getName());
+            }
+
+            outlookAccount.setToken(AuthHelper.ensureTokens(outlookAccount.getToken(), outlookAccount.getTenantId()));
+
+            IOutlookService outlookService = OutlookServiceBuilder.getOutlookService(
+                    outlookAccount.getToken().getAccessToken());
+
+            // Sort by given name in ascending order (A-Z)
+            String sort = "GivenName ASC";
+            // Only return the properties we care about
+            String properties = "GivenName,Surname,CompanyName,EmailAddresses";
+
+            try {
+                PagedResult<Contact> contacts = outlookService.getContacts(
+                        sort, properties)
+                        .execute().body();
+
+                if (contacts != null && contacts.getValue() != null) {
+                    nbContacts += contacts.getValue().length;
+                }
+            } catch (IOException e) {
+                LOG.error("Can't get contact for account Microsoft : " + outlookAccount.getName(), e);
+            }
+        }
+
+        return nbContacts;
     }
 }

@@ -21,4 +21,18 @@ public interface IOutlookService {
             @Query("$select") String select,
             @Query("$top") Integer maxResults
     );
+
+    @GET("/v1.0/me/events")
+    Call<PagedResult<EventMicrosoft>> getEvents(
+            @Query("$orderby") String orderBy,
+            @Query("$select") String select,
+            @Query("$top") Integer maxResults
+    );
+
+    @GET("/v1.0/me/contacts")
+    Call<PagedResult<Contact>> getContacts(
+            @Query("$orderby") String orderBy,
+            @Query("$select") String select
+    );
+
 }

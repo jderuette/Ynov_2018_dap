@@ -4,6 +4,8 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.GoogleAccount;
 import fr.ynov.dap.dap.repositories.AppUserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +26,11 @@ public class GMailService extends GoogleService {
      * Instantiate logger.
      */
     private static final Logger log = LogManager.getLogger(GMailService.class);
+    /**
+     * instantiate userRepository
+     */
+    @Autowired
+    AppUserRepository userRepository;
 
     /**
      * get service.
@@ -48,17 +55,20 @@ public class GMailService extends GoogleService {
     /**
      * Find the email's number who haven't read.
      *
-     * @param userId : default user
+     * @param userKey : default user
      * @return Map
      * @throws IOException              : throws exception
      * @throws GeneralSecurityException : throws exception
      */
-    public final Map<String, Integer> getNbUnreadEmails(final String userId)
-            throws IOException, GeneralSecurityException {
-        Label label = getService(userId).users().labels().get("me", "UNREAD").execute();
-        Map<String, Integer> response = new HashMap<>();
-        response.put("Unread", label.getMessagesUnread());
-        return response;
+    public final Integer getNbUnreadEmails(final String userKey) throws IOException, GeneralSecurityException {
+        AppUser appUser = userRepository.findByName(userKey);
+        Integer nbUnread = 0;
+        for (GoogleAccount googleAccount : appUser.getGoogleAccount()) {
+            Label label = getService(googleAccount.getName()).users().labels().get("me", "UNREAD").execute();
+            nbUnread += label.getMessagesUnread();
+        }
+
+        return nbUnread;
     }
 
 }

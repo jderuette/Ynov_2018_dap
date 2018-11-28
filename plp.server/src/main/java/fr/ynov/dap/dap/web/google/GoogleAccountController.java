@@ -1,4 +1,4 @@
-package fr.ynov.dap.dap.web;
+package fr.ynov.dap.dap.web.google;
 
 import fr.ynov.dap.dap.GoogleAccountService;
 import org.apache.logging.log4j.LogManager;
