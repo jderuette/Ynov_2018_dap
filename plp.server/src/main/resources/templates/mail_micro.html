@@ -12,22 +12,22 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
 
-    <title th:text="#{admin.title}">Data Access Project Admin</title>
+    <title th:text="#{app.title.mail}">Data Access Project Admin</title>
 
 </head>
 <body>
 <div th:each="account : ${accounts}">
 
     <div th:text="${account.name}"></div>
-    <div>Nb email : <span th:text="${account.nbEmail}"></span></div>
+    <div th:text="#{mail.nbEmail}">Nb email : <span th:text="${account.nbEmail}"></span></div>
     <table>
         <tr>
-            <th>Received at</th>
-            <th>From address</th>
-            <th>From name</th>
-            <th>Is read</th>
-            <th>Subject</th>
-            <th>Body</th>
+            <th th:text="#{mail.received}">Received at</th>
+            <th th:text="#{mail.fromAddress}">From address</th>
+            <th th:text="#{mail.fromName}">From name</th>
+            <th th:text="#{mail.isRead}">Is read</th>
+            <th th:text="#{mail.subject}">Subject</th>
+            <th th:text="#{mail.body}">Body</th>
         </tr>
         <tr th:each="message : ${account.messages}">
             <td th:text="${message.getReceivedDateTime()}"></td>

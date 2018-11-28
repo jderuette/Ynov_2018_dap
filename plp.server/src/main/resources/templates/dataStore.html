@@ -18,18 +18,18 @@
 <body>
 <table >
     <tr>
-        <th>UserKey</th>
-        <th>Accounts</th>
+        <th th:text="#{admin.userKey}">UserKey</th>
+        <th th:text="#{admin.accounts}">Accounts</th>
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.userKey}"></td>
         <td>
             <table>
                 <tr>
-                    <th>Account Name</th>
-                    <th>Type</th>
-                    <th>TenandId</th>
-                    <th>Mail</th>
+                    <th th:text="#{admin.accountName}">Account Name</th>
+                    <th th:text="#{admin.type}">Type</th>
+                    <th th:text="#{admin.tenantId}">TenandId</th>
+                    <th th:text="#{mail}">Mail</th>
                 </tr>
                 <tr th:each="account : ${user.accounts}">
                     <td th:text="${account.name}"></td>
@@ -39,7 +39,7 @@
             </table>
         </td>
         <td><a th:href="'/microsoft/mail?userKey='+${user.userKey}">
-            <div>Mail</div>
+            <div th:text="#{mail}">Mail</div>
         </a></td>
     </tr>
 </table>

@@ -31,28 +31,28 @@ public class App {
 
         switch (args.length) {
         case 1:
-            sendGet(path, "/email/unread");
-            sendGet(path, "/calendar/nextEvent");
-            sendGet(path, "/people/total");
+            sendGet(path, "/google/email/unread");
+            sendGet(path, "/google/calendar/nextEvent");
+            sendGet(path, "/google/people/total");
             break;
         case 2:
             if (path.equals("nextEvent")) {
-                sendGet("/calendar/" + path, userKey);
+                sendGet("/google/calendar/" + path, userKey);
                 return;
             }
 
             if (path.equals("unread")) {
-                sendGet("/email/" + path, userKey);
+                sendGet("/google/email/" + path, userKey);
                 return;
             }
 
             if (path.equals("total")) {
-                sendGet("/contact/" + path, userKey);
+                sendGet("/google/contact/" + path, userKey);
                 return;
             }
 
             if (path.equals("add")) {
-                sendGet("/account/add/" + userKey, null);
+                sendGet("/add/account/" + userKey, null);
                 return;
             }
 
