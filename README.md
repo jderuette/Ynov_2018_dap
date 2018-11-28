@@ -51,6 +51,8 @@ Retourne le résultat :
  - Nombre de mails non lus Google + Microsoft
  - Le prochain événement dans le calendrier Google + Microsoft
 
+.
+
     java -jar .\baron_paul_client.jar email <user>
 
 Retourne le nombre de mails non lus Google + Microsoft
