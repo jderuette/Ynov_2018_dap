@@ -1,3 +1,12 @@
+fr.ynov.dap
+fr.ynov.dap.controllers
 fr.ynov.dap.dap
-fr.ynov.dap.dap.controllers
-fr.ynov.dap.dap.models
+fr.ynov.dap.google.data
+fr.ynov.dap.google.service
+fr.ynov.dap.microsoft
+fr.ynov.dap.microsoft.contract
+fr.ynov.dap.microsoft.data
+fr.ynov.dap.microsoft.models
+fr.ynov.dap.microsoft.service
+fr.ynov.dap.models
+fr.ynov.dap.service
