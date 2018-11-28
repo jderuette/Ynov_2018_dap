@@ -11,6 +11,7 @@
 /calendar
 - /{user} <-- Affiche le prochain événement entre google et microsoft
 - /microsoft/{user}
+-- /view <-- Affiche les prochains événements Microsoft avec une VUE
 - /google/{user}
 	
 /mail
@@ -19,16 +20,16 @@
 -- /microsoft/{user}
 - /google/{user}
 		
-- /microsoft/{user} <-- Affiche les premiers mail de microsoft
-	
+- /microsoft/{user}/view <-- Affiche les premiers mail de microsoft
+
 /contact/
 - /nb
 -- /{user} <-- Affiche le nombre total de contact google et microsoft
 -- /microsoft/{user}
 -- /google/{user}
 		
-- /microsoft/{user} <-- Affiche les premiers contact de microsoft
-	
+- /microsoft/{user}/view <-- Affiche les premiers contact de microsoft avec une VUE
+
 /account/add/
 - /microsoft/{user}?userKey={userKey} <-- Permet d'ajouter un compte Microsoft au userKey
 - /google/{user}?userKey={userKey} <-- Permet d'ajouter un compte Google au userKey

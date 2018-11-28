@@ -145,5 +145,4 @@ public class MicrosoftMailService extends BaseService {
     public String getClassName() {
         return MicrosoftMailService.class.getName();
     }
-
 }

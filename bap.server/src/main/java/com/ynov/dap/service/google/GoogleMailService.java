@@ -42,9 +42,11 @@ public class GoogleMailService extends GoogleService {
         Label label = service.users().labels().get("me", "INBOX").execute();
 
         if (label == null) {
+            getLogger().info("no message unread for account : " + account.getName());
             return 0;
         }
-
+        
+        getLogger().info("nb messages unread " + label.getMessagesUnread() + " for account : " + account.getName());
         return label.getMessagesUnread();
     }
 
