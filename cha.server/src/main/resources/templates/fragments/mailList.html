@@ -1,0 +1,27 @@
+<h1 th:text="#{admin.mails_list.title}">Title</h1>
+<br />
+<table th:each="inbox : ${inboxs}" class="table table-striped">
+	<h2>
+		[<span th:text="${{inbox.account.accountName}}"></span>]
+		-
+		<span th:text="${{inbox.account.email}}"></span>
+	</h2>
+	<thead>
+		<tr>
+	      	<th th:text="#{admin.mails_list.table.from}">From</th>
+	      	<th th:text="#{admin.mails_list.table.subject}">Subject</th>
+	      	<th th:text="#{admin.mails_list.table.received_at}">Received</th>
+	      	<th th:text="#{admin.mails_list.table.preview}">Preview</th>
+	    </tr>
+	</thead>
+	<tbody>
+		<tr th:each="message : ${inbox.messages}">
+        	<td scope="row" th:text="${{message.from.emailAddress.address}}">XXX</td>
+        	<td scope="row" th:text="${{message.subject}}">XXX</td>
+        	<td scope="row" th:text="${#dates.format(message.receivedDateTime, 'dd/MM/yyyy HH:mm')}">XXX</td>
+        	<td scope="row" th:text="${{message.bodyPreview}}">XXX</td>
+      	</tr>
+	</tbody>
+</table>
+<br />
+<span class="badge badge-secondary" th:text="#{admin.navigation.info}">Info</span>
