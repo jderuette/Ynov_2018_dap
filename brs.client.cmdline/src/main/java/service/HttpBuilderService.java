@@ -66,16 +66,13 @@ public class HttpBuilderService {
 			URI uri = new URI(newUrl.toString());
 			con.setRequestProperty("Cookie", cookies);
 			con.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-			//TODO brs by Djer Tu as créer une constante, pourquoi ne pas l'utiliser ici ?
 			con.addRequestProperty("User-Agent", "Mozilla");
-			//TODO brs by Djer A bon, nous somme Google maintenant ?
 			con.addRequestProperty("Referer", "google.com");
 			Desktop.getDesktop().browse(uri);
 			// System.out.println("Redirect to URL : " + newUrl);
 
 		}
 
-		//TODO brs by Djer Donc tu récupére le contenu de la page de "login" de Google dans le cas d'un redirect ?
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();

@@ -1,0 +1,35 @@
+
+<div th:fragment="welcomeViews">
+    
+<div class="container" style="margin-top:5em">
+          <table class="table">
+          	<thead >
+				<tr>
+					<th scope="col" th:text="#{admin.type}"</th>
+					<th scope="col" th:text="#{admin.accountName}"></th>
+					<th scope="col" th:text="#{admin.tenant}"></th>
+					<th>Action</td>
+				</tr>
+			</thead>
+			
+            <tr th:each="elementM : ${microsoftAccount}">
+             	<td>
+             		<button type="button" class="btn btn-outline-primary">Microsoft</button>
+             	</td>
+                <td th:text="${elementM.name}"></td>
+                <td th:text="${elementM.tenantId}"></td>
+                <td><a class="btn btn-primary" th:href="@{/microsoft/mail/} + ${elementM.name} + ${userKey}" role="button" th:text="#{admin.mail}"></a>
+            </tr>
+            
+            <tr th:each="elementG : ${googleAccount}">
+             	<td>
+             	<button type="button" class="btn btn-outline-danger">Google</button></td>
+                <td th:text="${elementG.accountName}"></td>
+                <td>null</td>
+                <td></td>
+            </tr>
+          </table>
+        </main>
+      </div>
+    </div>
+    </div>

@@ -1,5 +1,4 @@
 
-//TODO brs by Djer Let des classes dans des packages !
 import service.HttpBuilderService;
 
 import java.util.Scanner;
@@ -25,36 +24,53 @@ public class launcher {
 			System.out.println("(1) - Gmail");
 			System.out.println("(2) - Calendar");
 			System.out.println("(3) - Contact");
-			System.out.println("(4) - AddUser");
+			System.out.println("(4) - Add Microsoft account");
+			System.out.println("(5) - Add Google account");
 
 			System.out.print("Please enter your selection:\t");
 			int selection = scanner.nextInt();
 
-			if (user.equalsIgnoreCase("")) {
-				System.out.print("Please enter your user:\t");
-				user = scanner.next();
-			}
+		
 
-			//TOD brs by Djer un petit switch aurait été pas mal ici
 			if (selection == 1) {
-				String url = "http://localhost:8080/getEmails/getLabel/userKey=" + user;
+				System.out.println("User Key = ");
+				String userKey = scanner.next();
+				String url = "http://localhost:8080/email/nbUnread?userKey=" + userKey;
 				HttpBuilderService httpBuilder = new HttpBuilderService();
 				String result = httpBuilder.sendGet(url);
 				System.out.println(result);
 
 			} else if (selection == 2) {
-				String url = "http://localhost:8080/getCalendar/GetLastEvent/userKey=" + user;
+				System.out.println("User Key = ");
+				String userKey = scanner.next();
+				String url = "http://localhost:8080/calendar/nextEvent?userKey=" + userKey;
 				HttpBuilderService httpBuilder = new HttpBuilderService();
 				String result = httpBuilder.sendGet(url);
 				System.out.println(result);
 			} else if (selection == 3) {
-				String url = "http://localhost:8080/getContact/GetNbCOntact/userKey=" + user;
+				System.out.println("User Key = ");
+				String userKey = scanner.next();
+				String url = "http://localhost:8080/contact/nbContact?userKey=" + userKey;
 				HttpBuilderService httpBuilder = new HttpBuilderService();
 				String result = httpBuilder.sendGet(url);
 				System.out.println(result);
 			} else if (selection == 4) {
+				System.out.println("User Key = ");
+				String userKey = scanner.next();
+				System.out.println("AccountName = ");
+				String accountName = scanner.next();
+				String url = "http://localhost:8080/account/add/microsoft/"+accountName+"?userKey=" + userKey;
+				HttpBuilderService httpBuilder = new HttpBuilderService();
+				String result = httpBuilder.sendGet(url);
+				System.out.println(result);
 
-				String url = "http://localhost:8080/account/add/userKey=" + user;
+			}
+			else if (selection == 5) {
+				System.out.println("User Key = ");
+				String userKey = scanner.next();
+				System.out.println("AccountName = ");
+				String accountName = scanner.next();
+				String url = "http://localhost:8080/add/account/"+accountName+"?userKey=" + userKey;
 				HttpBuilderService httpBuilder = new HttpBuilderService();
 				String result = httpBuilder.sendGet(url);
 				System.out.println(result);
