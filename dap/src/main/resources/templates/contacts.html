@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:th="http://www.thymeleaf.org">
+   <head th:replace="fragments/header :: header"></head>
+  <table class="table">
+	<thead>
+		<tr>
+			<th th:text="#{contact.name}"></th>
+			<th th:text="#{contact.company}"></th>
+			<th th:text="#{contact.mail}"></th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr th:each="contact : ${contacts}">
+				<td th:text="${contact.givenName} + ${contact.surname}"></td>
+				<td th:text="${contact.companyName}"></td>
+				<td>
+					<ul th:each="address : ${contact.emailAddresses}" class="list-inline">
+							<li th:text="${address.address}"></li>
+					</ul>
+				</td>
+			</tr>
+	</tbody>
+</table>

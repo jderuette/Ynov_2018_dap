@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:th="http://www.thymeleaf.org" >
+  <head th:replace="fragments/header :: header"></head>
+  <table class="table">
+	<thead>
+		<tr>
+			<th><span class="glyphicon glyphicon-envelope"></span></th>
+			<th th:text="#{mail.from}"></th>
+			<th th:text="#{mail.subject}"></th>
+			<th th:text="#{mail.reveive}"></th>
+			<th th:text="#{mail.preview}"></th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr th:each="message : ${messages}">
+				<td>
+					<span th:if="${message.isRead == false}"></span>
+				</td>
+				<td th:text="${message.from.emailAddress.name}"></td>
+				<td th:text="${message.subject}"></td>
+				<td th:text="${message.receivedDateTime}"></td>
+				<td th:text="${message.bodyPreview}"></td>
+			</tr>
+	</tbody>
+</table>
+</html>
+</th:block>
