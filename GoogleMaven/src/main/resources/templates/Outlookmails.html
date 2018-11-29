@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title>Data Access Project Admin</title>
+
+</head>
+<body>
+	<h1>Interface de mails Outlook</h1>
+	
+	<div class="panel-body">
+		<table id="data" class="table" th:if="${messages}">
+			<caption>Inbox</caption>
+			<thead>
+				<tr>
+					<th><span class="glyphicon glyphicon-envelope"></span></th>
+					<th>From</th>
+					<th>Subject</th>
+					<th>Received</th>
+					<th>Preview</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="message:${messages}"
+					class="${message.isRead == true ? '' : 'info'}">
+					<td></td>
+					<td th:text="${message.from.emailAddress.name}" /></td>
+					<td th:text="${message.subject}" /></td>
+					<td th:text="${message.receivedDateTime}" /></td>
+					<td th:text="${message.bodyPreview}" /></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+</body>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#data').after('<div id="nav"></div>');
+    var rowsShown = 4;
+    var rowsTotal = $('#data tbody tr').length;
+    var numPages = rowsTotal/rowsShown;
+    for(i = 0;i < numPages;i++) {
+        var pageNum = i + 1;
+        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+    }
+    $('#data tbody tr').hide();
+    $('#data tbody tr').slice(0, rowsShown).show();
+    $('#nav a:first').addClass('active');
+    $('#nav a').bind('click', function(){
+
+        $('#nav a').removeClass('active');
+        $(this).addClass('active');
+        var currPage = $(this).attr('rel');
+        var startItem = currPage * rowsShown;
+        var endItem = startItem + rowsShown;
+        $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+        css('display','table-row').animate({opacity:1}, 300);
+    });
+});
+</script>
+</html>
