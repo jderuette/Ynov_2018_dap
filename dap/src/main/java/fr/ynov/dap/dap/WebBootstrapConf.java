@@ -32,24 +32,4 @@ public class WebBootstrapConf implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/bootstrap/4.1.1/");
 
     }
-    
-    @Bean
-    public LocaleResolver localeResolver() {
-        CookieLocaleResolver clr = new CookieLocaleResolver();
-        clr.setDefaultLocale(Locale.US);
-        return clr;
-    }
-
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
-        return lci;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/*");
-    }
-
 }
