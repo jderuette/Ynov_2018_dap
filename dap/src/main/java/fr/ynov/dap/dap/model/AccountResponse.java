@@ -5,6 +5,7 @@ package fr.ynov.dap.dap.model;
  * @author David_tepoche
  *
  */
+//TODO duv by Djer |POO| Code mort ? Ne semble plus être utilisé ... 
 public class AccountResponse {
     /**
      * the redirection for the auth.

@@ -22,6 +22,8 @@ public class UserResponse {
      * all the account related of the userKey.
      */
     private List<GoogleAccountResponse> accounts;
+    
+    //FIXME duv by Djer |API Microsoft| Ou sont les MicrosoftAccount ? 
 
     /**
      * @return the id

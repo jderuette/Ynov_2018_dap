@@ -47,6 +47,7 @@ public class CalendarService extends GoogleBaseService {
      * @throws IOException              throw by the getService
      * @throws GeneralSecurityException throw by the getService
      */
+    //FIXME duv by Djer |JavaDoc| Ce n'est toujours PAS le "last" mais le "next" !!!!!!
     public List<Event> getLastEvent(final Integer nbrOfResult, final String user)
             throws IOException, GeneralSecurityException {
 

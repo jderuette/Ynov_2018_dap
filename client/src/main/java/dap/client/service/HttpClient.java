@@ -26,6 +26,7 @@ public abstract class HttpClient {
     /**
      *
      * @param url            the end of the url
+     * TODO duv by Djer |JavaDoc| La "fin" d'une URL s'appel le "path" en général. Dans la Javadoc de java.net.URL (que tu utilises) : <scheme>://<authority><path>?<query>#<fragment
      * @param requestMethode If the request is a "POST" "GET"
      * @return inputStream of the response
      * @throws IOException throws if the construction of the call fail

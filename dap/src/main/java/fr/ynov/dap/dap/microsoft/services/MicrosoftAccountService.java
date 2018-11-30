@@ -63,6 +63,7 @@ public class MicrosoftAccountService extends MicrosoftBaseService {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
                     authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
+            //TODO duv by Djer |Log4J| Contexte ? Au moins le tenant ID (et le nombre de caractères dans le "authCode", ou juste quelques caractères)
             getLogger().error("Probleme lors de la recuperation du token", e);
             TokenResponse error = new TokenResponse();
             return error;
@@ -169,11 +170,13 @@ public class MicrosoftAccountService extends MicrosoftBaseService {
         if (microsoftAccount != null) {
             getLogger().warn("Ajout d'un utilistaeur deja present en Bdd: " + microsoftAccount.getAccountName());
         } else {
+            //TODO duv by Djer |MVC| Tien ? Le même code pour "google". Devrait etre dans le controller. De plus gérer la HTTP session c'est bien du travail de controller !
             session.setAttribute("accountName", accountName);
             session.setAttribute("userKey", userKey);
 
             String loginUrl = null;
             loginUrl = getLoginUrl(state, nonce);
+            //TODO duv by Djer |MVC| Renvoyer l'URL de redirection, et laisser le controller gérer l'intéraction avec l'utilisateur
             response.sendRedirect(loginUrl);
         }
     }

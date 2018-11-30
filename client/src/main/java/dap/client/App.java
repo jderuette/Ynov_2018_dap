@@ -18,6 +18,7 @@ import dap.client.service.UserService;
 import dap.client.utils.DisplayHelp;
 
 /**
+ * TODO duv by Djer |JavaDoc| Ce commentaire est-il toujours juste ?
  * Hello world!
  *
  */
@@ -117,6 +118,7 @@ public final class App {
      * @param args gien parameter
      */
     private static void commandAdd(final String[] args) {
+        //TODO duv by Djer |POO| Tu devrais inverser "HELP" est toujour valide alors que args[1] peut ne pas exister (d'ou le ArrayOutOfBoundExcception)
         if (args[1].equalsIgnoreCase(HELP)) {
             DisplayHelp.callHelp("contact", "userKey");
         } else {
@@ -171,6 +173,7 @@ public final class App {
             eventResponses = new CalendarService().getNextEvent(args[1], nbEventToDisplay);
         } catch (final IOException e) {
             System.err.println("erreur lors de la recuperation des evenement");
+            //TODO duv by Djer |Log4J| Ajoutes du contexte (le arg[1])
             LOGGER.error("erreur launchCalendar : ", e);
         }
         for (final EventResponse eventResponse : eventResponses) {
@@ -188,6 +191,7 @@ public final class App {
             System.out.println(new ContactService().getNbrContact(args[1]));
         } catch (final IOException e) {
             System.err.println("erreur lors de l'appel des contacts");
+          //TODO duv by Djer |Log4J| Ajoutes du contexte (le arg[1])
             LOGGER.error("erreur launchContact : ", e);
         }
     }
@@ -201,6 +205,7 @@ public final class App {
         try {
             System.out.println(new GmailService().getNbrEmailUnread(args[1]));
         } catch (final IOException e) {
+          //TODO duv by Djer |Log4J| Ajoutes du contexte (le arg[1])
             LOGGER.error("erreur launchEmail : ", e);
             System.err.println("Erreur lors de la recuperation des emails");
         }
@@ -216,6 +221,7 @@ public final class App {
         try {
             new AccountService().connexionGoogleAccount(args[1], args[2], args[3]);
         } catch (final IOException e) {
+            //TODO duv by Djer |Log4J| e.printStackTrace() ecris dans la console, pas top pour ton utilisateur.
             e.printStackTrace();
         } catch (final URISyntaxException e) {
             e.printStackTrace();
@@ -237,6 +243,7 @@ public final class App {
             System.out.println("Utilisateur crée");
             System.out.println(addUser);
         } catch (NumberFormatException | IOException e) {
+          //TODO duv by Djer |Log4J| Ajoutes du contexte (le arg[1])
             LOGGER.error("Error lors de l'ajout de l'utilisateur en BDD", e);
         }
     }

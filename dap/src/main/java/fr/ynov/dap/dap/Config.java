@@ -14,6 +14,16 @@ import org.springframework.context.annotation.PropertySource;
 public class Config {
     /**
      * store the oAuth2CallbackUrl.
+     * TODO duv by Djer |JavaDoc| Dire à quoi ca sert, plutot que ce que c'est (déja assez bien indiqué par le nom de la variable).
+     * 
+     * Exemple : je suis Jérémie, mais aussi "Monsieur" (dans les salle de cours c'est comme cela qu'on m'appel). 
+     * Mon nom évolue en fonction du context (comme un paramète de méthode qui n'a pas exactement le nom de la variable dans lequel il sera injecté).
+     * Je sert à : ensiegner le Java dans le cadre de ynov Campus. Et à pliens d'autre choses "hors sujet".
+     * 
+     * Si tu me croise en salle de cour et que tu me demande "Que fais-tu là ?" et que je te répond "Jérémie ! " 
+     * c'est aussi utile que si je t'avais répondu "je s'appel Root".
+     * 
+     * 
      */
     @Value("${google.root.url.redirect}")
     private String googleRootUrlCallBack;
@@ -28,16 +38,19 @@ public class Config {
      */
     @Value("${microsoft.authority.url}")
     private String microsoftAuthorityUrl;
+    //TODO duv by Djer |JavaDoc| Prendre en compte le warning indiquant qu'il manque la Javadoc ? 
     /**
-    *
+    * Djer : mais a quoi ca peut bien servir ? 
     */
     @Value("${google.secret.file.name}")
     private String googleClientSecretFile;
+    //TODO duv by Djer |JavaDoc| Prendre en compte le warning indiquant qu'il manque la Javadoc ? 
     /**
     *
     */
     @Value("${microsoft.secret.file.name}")
     private String microsoftClientSecretFile;
+    //TODO duv by Djer |JavaDoc| Prendre en compte le warning indiquant qu'il manque la Javadoc ? 
     /**
     *
     */
@@ -51,6 +64,7 @@ public class Config {
     /**
      * get the directory of the dataStore default = the home directory of the user.
      */
+    //TODO duv by Djer |Design Patern| Mince ! J'aurais bien aimé chioisr un sous dossier dans mon "user home". Pourquoi cet attribut n'est pas mappé sur une entrée du fichier de config ?
     private String dataStoreDirectory = System.getProperty("user.home");
 
     /**

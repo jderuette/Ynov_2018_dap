@@ -25,6 +25,7 @@ public class MicrosoftMailService extends MicrosoftBaseService {
      * @throws SecretFileAccesException throw
      */
     public int nbrMailUnread(final MicrosoftAccount microsoftAccount) throws IOException, SecretFileAccesException {
+        //TODO duv by Djer |JavaDoc| Est-ce que le commentaire ci-dessous est juste ?
         // Generate the token service
         return getMicrosoftService(microsoftAccount).getFolder("inbox").execute().body().getUnreadItemCount();
     }
@@ -33,11 +34,13 @@ public class MicrosoftMailService extends MicrosoftBaseService {
      * get mails to display.
      *
      * @param account          the msAccount
+     * TODO duv by Djer |JavaDoc| Plutot que de (re) dir ce que c'est, dire ce que ca represente : "X premiers mails dans la boite principal (inBox)"
      * @param nbrMailToDisplay nbr of mail to display.
      * @return array of microsoftMail
      * @throws IOException              throw
      * @throws SecretFileAccesException throw
      */
+    //TODO duv by Djer |Audit Code| Nomage de la méthode, comme renvoie un "tableau" (berk !), un "s" à la fin de la méthode serait plus claire.
     public MicrosoftMail[] getMail(final MicrosoftAccount account, final int nbrMailToDisplay)
             throws IOException, SecretFileAccesException {
 

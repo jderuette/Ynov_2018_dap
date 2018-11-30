@@ -16,7 +16,7 @@ public class Launcher {
      */
     public static void main(final String... args) {
         SpringApplication.run(Launcher.class, args);
-
+        //TODO duv by Djer |Log4J| Pas de Sysout ! Utilise un log.info
         System.out.println(" - - - - - - - - - - - - SERVEUR LAUNCH !!!! - - - - - - - - - - - -");
     }
 

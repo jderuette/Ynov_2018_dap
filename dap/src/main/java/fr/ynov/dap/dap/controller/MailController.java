@@ -54,6 +54,7 @@ public class MailController extends BaseController {
      * @throws SecretFileAccesException throw if you can't get the info from the
      *                                  properties
      */
+    //TODO duv by Djer |Rest API| Le sufixe "mail" n'est pas très utile, car déja au début du path (via le RequestMapping de la Class).
     @RequestMapping("/nbrunreadmail/{userKey}")
     public @ResponseBody Object getNbrUnreadMail(@PathVariable("userKey") final String userKey)
             throws GeneralSecurityException, IOException, SecretFileAccesException {

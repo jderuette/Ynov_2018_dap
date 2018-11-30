@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+//TODO duv by Djer |IDE| Configure tes "save Action" dans eclipse, Et les plugin de qualité de code au passage !!!! Ca t'évitera de laisser des Imports inutilisés (et pleisn d'autre "petites" erreurs)
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
@@ -49,6 +50,7 @@ public class WebController {
 	/**
 	 * link the appUserRepository.
 	 */
+	//TODO duv by Djer |SOA| Pas top d'acceder directement au repository depuis un Controller. un DapUserService aurait été bienvenu.
 	@Autowired
 	private AppUserRepostory appUSerRepository;
 
@@ -61,6 +63,7 @@ public class WebController {
 	 * @throws IOException              throw when fail to get the credential
 	 * @throws GeneralSecurityException throw when fail to get the credential
 	 */
+	//TODO duv by Djer |Spring| Le modelMap est en général nomée "model", "map" est beaucoup trop générique...
 	@GetMapping("/admin/{userKey}")
 	public String getAdminPage(@PathVariable(value = "userKey") final String userKey, final ModelMap map)
 			throws IOException, GeneralSecurityException {
@@ -71,6 +74,7 @@ public class WebController {
 		}
 		List<StoredCredentialsResponse> storedCredentialsResponses = new ArrayList<>();
 		List<MicrosoftAccount> mAccounts = new ArrayList<>();
+		//TODO duv by Djer |POO| A gagner des caractères dans les noms d'attributs, on se retrouve à ne plus respecter le camelCase ...
 		mAccounts = appUser.getmAccounts();
 		List<GoogleAccount> gAccounts = new ArrayList<>();
 		gAccounts = appUser.getgAccounts();
@@ -79,6 +83,7 @@ public class WebController {
 			storedCredentialsResponses.add(new StoredCredentialsResponse(microsoftAccount));
 
 		}
+		//TODO duv by Djer |POO| Pourquoi la classe pleinenment qualifiée et pas un import ? 
 		com.google.api.client.util.store.DataStore<StoredCredential> s = userInfoService.getCredentialDataStore();
 
 		for (GoogleAccount googleAccount : gAccounts) {
@@ -116,6 +121,7 @@ public class WebController {
 		HashMap<String, MicrosoftMail[]> emails = new HashMap<>();
 		for (MicrosoftAccount microsoftAccount : mAccounts) {
 
+		    //TODO duv by Djer |Audit Code| Ho ?! Un Magic Number ! Mais que font PMD et CheckStyle ? 
 			MicrosoftMail[] mails = microsoftMailService.getMail(microsoftAccount, 5);
 			emails.put(microsoftAccount.getAccountName(), mails);
 

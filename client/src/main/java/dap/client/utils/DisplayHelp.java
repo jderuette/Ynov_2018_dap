@@ -18,6 +18,7 @@ public final class DisplayHelp {
      * used to write an error in your console.
      *
      * @param level 1 determine if your error is in your command or parameter
+     * TODO duv by Djer |POO| Tu pourrais utiliser une Enum ici pour etre plus "claire"
      */
     public static void callError(final Integer level) {
         if (level == 1) {

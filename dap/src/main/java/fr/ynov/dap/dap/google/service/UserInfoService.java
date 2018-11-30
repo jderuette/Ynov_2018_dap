@@ -44,6 +44,7 @@ public class UserInfoService extends GoogleBaseService {
      * @throws IOException              when retrieve the token fail.
      * @throws GeneralSecurityException error while you try to authenticated
      */
+    //TODO duv by Djer |Audit Code| Ce "userId" est un AccountName je supose ? 
     public String getEmail(final String userId) throws IOException, GeneralSecurityException {
         return getService(userId).userinfo().get().execute().getEmail().toString();
     }

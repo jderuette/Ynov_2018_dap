@@ -42,6 +42,7 @@ public class UserController extends BaseController {
             appUserInBdd = appUserRepository.save(appUser);
 
         }
+        //TODO duv by Djer |log4J| Else une petite log ? Un message à l'appelant ? 
         return appUserInBdd;
     }
 
@@ -54,6 +55,7 @@ public class UserController extends BaseController {
      * @exception NullPointerException if the user in bdd is missing.
      */
     @GetMapping("/link/{userKey}/{accountName}")
+    //TODO duv by Djer |POO| Déja fait par AccountController.addAccount(...) Il me semble ? 
     public AppUser addUserKey(@PathVariable("userKey") final String userKey,
             @PathVariable("accountName") final String accountName) throws NullPointerException {
 
@@ -70,6 +72,8 @@ public class UserController extends BaseController {
         AppUser appuserSaved = appUserRepository.save(appUserInBdd);
         return appuserSaved;
     }
+
+    //TODO duv by Djer |API Microsoft| Et le "link" pour un compte Microsoft ? 
 
     @Override
     public final String getClassName() {

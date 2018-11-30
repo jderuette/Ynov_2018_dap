@@ -25,7 +25,9 @@ public interface MicrosoftService {
      * @param orderBy    order the response
      * @param filter     filter the result
      * @param select     the field wanted in the response
+     * TODO duv by Djer |API Microsoft| A quoi sert le "top" ? Le seul exemple le met à "null" ... 
      * @param maxResults max result reponsed in single call
+     * TODO duv by Djer |JavaDoc| Commentaire faux ! Cette méthode ne renvoie pas du tout cela.
      * @return a nomber off event for the account
      */
     @GET("/v1.0/me/events")
@@ -39,6 +41,7 @@ public interface MicrosoftService {
      * @param select  Which information to retrieve.
      * @return List of contacts
      */
+    //TODO duv by Djer |POO| Cette méthode est appelée nullpart ... 
     @GET("/v1.0/me/contacts")
     Call<PagedResult<MicrosoftContact>> getContacts(@Query("$orderby") String orderBy, @Query("$select") String select);
 
@@ -57,6 +60,7 @@ public interface MicrosoftService {
      * @param folderId   Folder id
      * @param orderBy    Order By
      * @param select     Select
+     * TODO duv by Djer |API Microsoft| Mais a quoi sert ce top !! ?
      * @param maxResults Max results
      * @return Messages
      */
@@ -69,6 +73,7 @@ public interface MicrosoftService {
      *
      * @return the body of the call. ms return the number without any formating
      */
+    //FIXME duv by Djer |API Microsoft| Ne fonctionne pas, cf la documentation (https://docs.microsoft.com/en-us/graph/api/resources/mailfolder?view=graph-rest-1.0#properties), en plus c'est "non recommandé". Utilise UnreadItemCount sur le folder.
     @GET("/v1.0/me/contacts/$count")
     Call<ResponseBody> getNbrContact();
 

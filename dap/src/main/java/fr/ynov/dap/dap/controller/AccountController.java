@@ -73,8 +73,11 @@ public class AccountController extends BaseController {
             session.setAttribute("expected_state", state);
             session.setAttribute("expected_nonce", nonce);
 
+            //TODO duv by Djer |MVC| Evite que ton service dépende d'objet "Web". La request n'est pas utilisé, la réponse peut facilement être remplacée en renvoyant l'URL de redirection et en laissant le controller prendre les actions nécéssaires.
+
             microsoftAccountService.addAccount(accountName, userKey, request, session, response, state, nonce);
         }
+        //TODO duv by Djer |MVC| Le fait que ce soit le Service qui fasse la redirection, rend cette méthode "étrange", elle semble ne pas avoir de traitement commun Google/Microsoft".
     }
 
     /**
@@ -133,9 +136,12 @@ public class AccountController extends BaseController {
                 microsoftAccountService.saveNewAccountNameInUserKey(tokenResponse, userKey, accountName,
                         idTokenObj.getTenantId());
             } else {
+                //TODO duv by Djer |Log4J| Une petite log en error pour le suivi applicatif serait bienvenu en plus dans la log on peu ajouter du contexte "technique" (userid, accountname).
+                //TODO duv by Djer |Thymleaf| Je ne vois pas ou tu utilises cette variable de session ? Pourrais être affichée dans la vue, mais serait pas top en mode "API"
                 session.setAttribute("error", "ID token failed validation.");
             }
         } else {
+            //TODO duv by Djer |Log4J|Une petite log en error pour le suivi applicatif serait bienvenu en plus dans la log on peu ajouter du contexte "technique" (userid, accountname).
             session.setAttribute("error", "Unexpected state returned from authority.");
         }
         response.sendRedirect("admin/" + userKey);

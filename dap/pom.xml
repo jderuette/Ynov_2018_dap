@@ -87,6 +87,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO duv by Djer |Maven| Cette dépendance n'est plus utile (en mode "serveur web")-->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>

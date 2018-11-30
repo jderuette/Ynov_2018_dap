@@ -38,7 +38,7 @@ import fr.ynov.dap.dap.model.MicrosoftEvent;
 @RequestMapping("/calendar")
 public class CalendarController extends BaseController {
     /**
-     * linkg config.
+     * linkg config. //TODO duv by Djer |JavaDoc| "Config" ? Tu voulais écrire "Google calendar Service" ? 
      */
     @Autowired
     private CalendarService calendarService;
@@ -88,8 +88,10 @@ public class CalendarController extends BaseController {
         AppUser appUser = appUserRepository.findByUserKey(userKey);
         if (appUser == null) {
             getLogger().warn("Utilisateur non present en bdd: " + userKey);
+            //TODO duv by Djer |POO| Lever un "NullPointerException" exprès ! C'est du sadisme ! Une vrai excception (java-documenté) aurait été mieu du tupe UnknowUserException.
             throw new NullPointerException("Utilisateur non present en base de donnée");
         }
+        //TODO duv by Djer |POO| Tu pourrais faire ce controle avant l'appel en BDD (qui est un peu plus "couteux")
         Integer nbEventToDisplay = Integer.valueOf(nbrEvent);
         List<CalendarEvent> calendarEvents = new ArrayList<>();
         for (GoogleAccount account : appUser.getgAccounts()) {
@@ -103,6 +105,7 @@ public class CalendarController extends BaseController {
             }
         }
 
+        //TODO duv by Djer |API Microsoft| Le service "Google" prend en comtpe l'heur. Un détails car on cherche uniquement "le suivant" mais il faudra recoder, si un jour on utilise ce service dans un autre contexte.
         String dateNowFormatedAndUTC = getUTCDateNowformated();
         for (MicrosoftAccount account : appUser.getmAccounts()) {
 

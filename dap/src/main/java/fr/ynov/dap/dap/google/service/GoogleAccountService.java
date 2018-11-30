@@ -163,6 +163,8 @@ public class GoogleAccountService extends GoogleBaseService {
             Boolean accountAlreadyAdd = appUser.getgAccounts().stream()
                     .anyMatch(a -> a.getAccountName().equalsIgnoreCase(accountName));
             if (!accountAlreadyAdd) {
+                //TODO duv by Djer |POO| Ton ancien service "GoogleAccount" a été renomé, plus besoin du nom pleinnement qualifié de la classe !
+                //FIXME duv by Djer |API Google| Si l'utilisateur décide ne pas "accepter de partager ces données" tu auras un "googleAcocunt fantome". Ajoute le mapping du compte lors de la confirmation que l'utilsiateur à accepté (dans le callback).
                 fr.ynov.dap.dap.data.GoogleAccount gAccount = new fr.ynov.dap.dap.data.GoogleAccount();
                 gAccount.setAccountName(accountName);
 
@@ -176,6 +178,7 @@ public class GoogleAccountService extends GoogleBaseService {
             authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfig().getoAuth2CallbackUrl()));
 
             // store userKey and accountName in session for CallBack Access
+            //TODO duv by Djer |MVC| La session devrait être gérée dans le controller (si le controller renvoie une "chaine non vide", alors le controller alimente la session)
             httpSession.setAttribute("accountName", accountName);
             httpSession.setAttribute("userKey", userKey);
 

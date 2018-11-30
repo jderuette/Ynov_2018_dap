@@ -77,6 +77,7 @@ public abstract class GoogleBaseService {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JACKSON_FACTORY,
                 new InputStreamReader(istreamClientSecretFile, Charset.forName("UTF-8")));
 
+        //TODO duv by Djer |POO| CamelCase, il faut une majuscule à "Name"
         String pathname = config.getDataStoreDirectory() + File.separator + tokenFile;
 
         FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(pathname));
@@ -86,6 +87,7 @@ public abstract class GoogleBaseService {
     }
 
     /**
+     * TODO duv by Djer |JavaDoc| "userId" vraiment ? Le userKey plutot ?
      * get the credential from the userId.
      *
      * @param accountName alias for googleAccount
