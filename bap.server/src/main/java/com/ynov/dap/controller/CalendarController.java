@@ -56,9 +56,11 @@ public class CalendarController extends BaseController {
     @GetMapping(value = "/microsoft/{appUser}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalendarModel> getMicrosoftNextEvent(@PathVariable final String appUser) throws Exception {
 
+        //TODO bap by Djer |POO| Pourquoi appeler une fois le service ici sans récupérer la réponse ?
         microsoftCalendarService.getNextEvent(appUser);
 
         return new ResponseEntity<CalendarModel>(microsoftCalendarService.getNextEvent(appUser),
+                //TODO bap by Djer |Spring| Pourquoi un "BAD_REQUEST" ?
                 HttpStatus.BAD_REQUEST);
     }
 
@@ -80,14 +82,18 @@ public class CalendarController extends BaseController {
         if (googleCalendar.getStartDate() != null && microsoftCalendar.getStartDate() == null) {
             finalCalendar = new CalendarModel(googleCalendar.getSubject(), googleCalendar.getStartDate(),
                     googleCalendar.getEndDate(), googleCalendar.getState());
+          //TODO bap by Djer |POO| Evite les multiples return dans une même méthode
             return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
         } else if (googleCalendar.getStartDate() == null && microsoftCalendar.getStartDate() != null) {
+            //TODO bap by Djer |POO| googleCalendar et microsoftCalendar sont déja des CalendarModel, pourquoi les re-créer un nouveau CalendarModel ?
             finalCalendar = new CalendarModel(microsoftCalendar.getSubject(), microsoftCalendar.getStartDate(),
                     microsoftCalendar.getEndDate(), "UNKOWN");
+          //TODO bap by Djer |POO| Evite les multiples return dans une même méthode
             return new ResponseEntity<CalendarModel>(finalCalendar, HttpStatus.ACCEPTED);
         }
 
         if (googleCalendar.getStartDate() != null && microsoftCalendar.getStartDate() != null) {
+            //FIXME bap by Djer |POO| Si "google" AVANT "microsoft" => finalEvent = Microsoft ? (tu as inversé je pense)
             if (googleCalendar.getStartDate().before(microsoftCalendar.getStartDate())) {
                 finalCalendar = new CalendarModel(microsoftCalendar.getSubject(), microsoftCalendar.getStartDate(),
                         microsoftCalendar.getEndDate(), "UNKOWN");

@@ -128,6 +128,7 @@ public class MicrosoftMailService extends BaseService {
         AppUser appUser = appUserRepository.findByName(userKey);
         if (appUser == null) {
             getLogger().error("userKey '" + userKey + "' not found");
+          //TODO bap by Djer |POO| Evite les multiples return dans une même méthode
             return messages;
         }
 

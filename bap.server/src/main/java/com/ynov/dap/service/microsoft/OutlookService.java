@@ -23,6 +23,7 @@ public interface OutlookService {
      * @return the current user
      */
     @GET("/v1.0/me")
+    //TODO bap by Djer |POO| Pourquoi as-tu passer du temps à créer cette méthode vue que tu l'utilises nullpart ? 
     Call<OutlookUser> getCurrentUser();
 
     /**

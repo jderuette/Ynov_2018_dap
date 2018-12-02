@@ -53,6 +53,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO bap by Djer |Maven| N'est plus utile depuis que Google est en mode "serveur Web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -98,9 +99,11 @@
           <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         
+        <!-- TODO bap by Djer |Maven| Inutile si tu utilise MySQL -->
         <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
+          <!-- TODO bap by Djer |IDE| Prend en comtpe la remarques, inutile de dupliquer la version ici -->
           <version>1.4.197</version>
         </dependency>
         
@@ -285,6 +288,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
+				<!-- TODO dap by Djer |Maven| Il n'y a pas de fichier à cette emplacement -->
 					<configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
 				</configuration>
 				<reportSets>

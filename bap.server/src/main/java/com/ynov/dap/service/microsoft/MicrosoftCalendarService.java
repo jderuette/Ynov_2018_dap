@@ -89,6 +89,8 @@ public class MicrosoftCalendarService extends BaseService {
             return new CalendarModel();
         } else if (events.size() == 1) {
             Event event = events.get(0);
+            //TODO bap by Djer |POO| Evite les multiples return dans une même méthode
+            //FIXME bap by Djer |API Microsoft| Rechercher "mon" status sur l'évènnement ? 
             return new CalendarModel(event.getSubject(), new Date(event.getStart().getDateTime().getTime()),
                     new Date(event.getEnd().getDateTime().getTime()), "UNKNOWN");
         } else {
@@ -119,6 +121,7 @@ public class MicrosoftCalendarService extends BaseService {
     private Event[] getEvents(final MicrosoftAccount account) throws Exception {
         String email = account.getEmail();
         String tenantId = account.getTenantId();
+        //TODO bap by Djer |POO| Pourquoi un "s" à Token, tu as un lien "OneToOne", ton "s" à la fin de la variables est ambigue.
         TokenResponse tokens = account.getTokenResponse();
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
@@ -143,10 +146,10 @@ public class MicrosoftCalendarService extends BaseService {
     public List<Event[]> getEvents(final String user) throws Exception {
 
         AppUser appUser = appUserRepository.findByName(user);
+        //TODO bap by Djer |POO| Une liste de tableau, pas top, tu pourrais "mettre à plats" les tableaux pour contruire une unique liste de "Event"
         List<Event[]> events = new ArrayList<Event[]>();
 
         for (MicrosoftAccount account : appUser.getMicrosoftAccounts()) {
-
             events.add(getEvents(account));
 
         }

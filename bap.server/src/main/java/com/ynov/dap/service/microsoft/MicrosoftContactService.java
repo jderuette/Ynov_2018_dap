@@ -36,6 +36,7 @@ public class MicrosoftContactService extends BaseService {
      * @return the nb contacts
      * @throws IOException Signals that an I/O exception has occurred.
      */
+    //TODO bap by Djer |POO| Devrait être en privé.
     public Integer getNbContacts(final MicrosoftAccount account) throws IOException {
         String email = account.getEmail();
         String tenantId = account.getTenantId();
@@ -79,6 +80,7 @@ public class MicrosoftContactService extends BaseService {
      * @return the contacts
      * @throws IOException Signals that an I/O exception has occurred.
      */
+    //TODO bap by Djer |POO| Devrait être en privé.
     public Contact[] getContacts(final MicrosoftAccount account) throws IOException {
         String email = account.getEmail();
         String tenantId = account.getTenantId();
@@ -92,7 +94,7 @@ public class MicrosoftContactService extends BaseService {
         Integer maxResults = MAX_RESULT_EVENTS;
 
         PagedResult<Contact> contacts = outlookService.getContacts(sort, properties, maxResults).execute().body();
-
+        //TODO bap by Djer |POO| Attention NullpointerException si pas de contacts (pas de compte Microsoft par exemple)
         return contacts.getValue();
 
     }

@@ -21,6 +21,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<!-- TODO bap by Djer |Thymleaf| Pas autorisé les "div" dans les "tbody". Avec tymeleaf tu peux mettre ton "th:each" directement sur le "tr" -->
 				<div th:each="contact: ${accountContacts}">
 					<tr>
 						<td th:text="${contact.givenName}"></td>
@@ -28,6 +29,7 @@
 						<td th:text="${contact.companyName}"></td>
 						<td>
 							<ul class="list-inline">
+							<!-- TODO bap by Djer |Thymleaf| Pas autorisé les "div" dans les "ul". Avec tymeleaf tu peux mettre ton "th:each" directement sur le "li" -->
 								<div th:each="address : ${contact.emailAddresses}">
 									<li th:text="${address.address}"></li>
 								</div>

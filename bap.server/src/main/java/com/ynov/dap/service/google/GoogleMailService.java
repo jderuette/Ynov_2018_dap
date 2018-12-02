@@ -67,6 +67,7 @@ public class GoogleMailService extends GoogleService {
         }
 
         List<GoogleAccount> accounts = appUser.getGoogleAccounts();
+        //TODO bap by Djer |POO| Nom de méthode pas très bien choisi ("nbEmail" ?)
         MailModel mail = new MailModel();
         Integer nbUnreadMails = 0;
 

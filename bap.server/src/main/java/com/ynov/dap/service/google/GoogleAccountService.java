@@ -96,10 +96,12 @@ public class GoogleAccountService extends GoogleService {
             response = "AccountAlreadyAdded";
             getLogger().info("Info AccountAlreadyAdded for userId : " + userId);
         } else {
+            //FIXE bap by Djer |POO| Si tu sauvegarde ici et que l'utilisateur refuse de "partager l'accès a ses données" tu auras un "Google Account fantome". Sauvegarde dans le callBack
             GoogleAccount googleAccount = new GoogleAccount();
             googleAccount.setOwner(appUser);
             googleAccount.setName(userId);
             appUser.addGoogleAccount(googleAccount);
+            //FIXME bap by Djer |JPA| Ne sauvegarde pas l'entité "fille", sauvegarde la "parente" (AppUser) et JPA s'occupera de mettre à jour/créer les entités filles.
             googleAccountRepository.save(googleAccount);
 
             final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();

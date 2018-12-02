@@ -51,6 +51,7 @@ public class AuthHelper extends BaseService {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO bap by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -67,6 +68,7 @@ public class AuthHelper extends BaseService {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO bap by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -83,6 +85,7 @@ public class AuthHelper extends BaseService {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO bap by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -97,6 +100,7 @@ public class AuthHelper extends BaseService {
     private static String getScopes() {
         StringBuilder sb = new StringBuilder();
         for (String scope : scopes) {
+          //TODO bap by Djer |IDE| Prendre en compte le warnng de PMD ? Comme tu utilises un StringBuilder, c'est dommage de coller un "+" en pleins milieu
             sb.append(scope + " ");
         }
         return sb.toString().trim();
@@ -109,6 +113,7 @@ public class AuthHelper extends BaseService {
      */
     private static void loadConfig() throws IOException {
         String authConfigFile = "auth.properties";
+        //TODO bap by Djer |Design Patern| ZeroConf ? Configurable à l'extérieur ? Ne pas mettre le Mdp dans le code source ? 
         InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
         if (authConfigStream != null) {

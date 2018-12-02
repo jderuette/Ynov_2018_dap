@@ -82,13 +82,16 @@ public class AuthorizeController extends BaseController {
 
                 microsoftAccount.setEmail(idTokenObj.getName());
                 appUser.addMicrosoftAccount(microsoftAccount);
+              //FIXME bap by Djer |JPA| Ne sauvegarde pas l'entité "fille", sauvegarde la "parente" (AppUser) et JPA s'occupera de mettre à jour/créer les entités filles.
                 microsoftAccountRepository.save(microsoftAccount);
 
                 session.invalidate();
             } else {
+                //TODO bap by Djer |Log4J| Contextualise tes logs ("for account : " + accountName + " and userKey : " + userKey)
                 getLogger().error("ID token failed validation.");
             }
         } else {
+          //TODO bap by Djer |Log4J| Contextualise tes logs ("for account : " + accountName + " and userKey : " + userKey)
             getLogger().error("Unexpected state returned from authority.");
         }
 

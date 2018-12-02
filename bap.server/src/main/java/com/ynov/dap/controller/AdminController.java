@@ -30,6 +30,7 @@ public class AdminController extends BaseController {
 	 * @throws GeneralSecurityException the general security exception
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
+    //TODO bap by Djer |POO| Toutes les méthodes "return" quelquechose (éventuellement "void") donc ne préfix pas tes méthodes par "return". Si tu souhaites éviter le "getXxxxxx" (qui serait un "faux getter") tu peux utiliser "load", "retrieve" ou "search" (suivant les cas)
 	@GetMapping("/google")
 	public String returnGoogleDataStore(final ModelMap model) throws GeneralSecurityException, IOException {
 		model.addAttribute("dataStore", adminService.getGoogleDataStore());

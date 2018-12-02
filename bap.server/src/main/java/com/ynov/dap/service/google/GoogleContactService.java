@@ -47,6 +47,7 @@ public class GoogleContactService extends GoogleService {
         Integer nbPeople = response.getTotalPeople();
         if (nbPeople != null) {
             getLogger().info("Contacts found for user : " + account.getName());
+          //TODO bap by Djer |POO| Evite les multiples return dans une même méthode
             return nbPeople;
         } else {
             getLogger().error("No contacts found for user : " + account.getName());

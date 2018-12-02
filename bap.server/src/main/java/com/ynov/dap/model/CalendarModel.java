@@ -2,6 +2,7 @@ package com.ynov.dap.model;
 
 import java.util.Date;
 
+//TODO bap by Djer |JavaDoc| Si tu avais "essyé" de remplir la Javadoc tu te serais peut-être rendu compte que cette class représente ne fait une "Event" et non un "calendar" ...
 /**
  * The Class CalendarModel.
  */

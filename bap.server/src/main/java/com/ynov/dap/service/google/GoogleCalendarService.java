@@ -93,6 +93,7 @@ public class GoogleCalendarService extends GoogleService {
 
             getLogger().info("A next upcoming events was found for userKey : " + userKey);
 
+            //TODO bap by Djer |API Google| event.getStatus() est le status de l'evennement, pas MON status sur cette évènnement
             return new CalendarModel(event.getSummary(), new Date(event.getStart().getDateTime().getValue()),
                     new Date(event.getEnd().getDateTime().getValue()), event.getStatus());
         } else {

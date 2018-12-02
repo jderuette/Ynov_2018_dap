@@ -22,6 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<!-- TODO bap by Djer |Thymleaf| Pas autorisé les "div" dans les "tbody". Avec tymeleaf tu peux mettre ton "th:each" directement sur le "tr" -->
 				<div th:each="message : ${accountMessages}" style="margin-bottom: 10px;">
 					<tr th:classappend="${message.isRead == true ? '' : 'info'}" style="margin-bottom: 10px;">
 						<td><span th:if="${message.isRead == false}" class="glyphicon glyphicon-envelope"></span></td>

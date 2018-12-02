@@ -21,6 +21,7 @@ public class CredentialService extends GoogleService {
      * @throws GeneralSecurityException the general security exception
      * @throws IOException              Signals that an I/O exception has occurred.
      */
+    //TODO bap by Djer |POO| Ne prefixe pas tes méthode par "return".
     public DataStore<StoredCredential> returnCredentials() throws GeneralSecurityException, IOException {
         DataStore<StoredCredential> credentials = null;
         credentials = getFlow().getCredentialDataStore();

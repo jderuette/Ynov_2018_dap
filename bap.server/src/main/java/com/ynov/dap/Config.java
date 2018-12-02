@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 public class Config {
 
     /** The data store directory. */
+    //FIXME bal by Djer |Design Patern| Presque tous les paramères sont relatifs à se dossier, et il n'est PAS configurable 
     private String dataStoreDirectory = System.getProperty("user.home");
 
     /** The o auth 2 callback url. */
@@ -27,6 +28,7 @@ public class Config {
     private String applicationName = "HoCDaP";
 
     /** The credentials folder. */
+    //TODO bap by Djer |Design Patern| Je n'arrive pas modifier la valeur par defaut (en utilisant en apramètre de ligne de commande "-Dspring-boot.run.arguments=--credentials_folder="C:\Users\djer1\dap\bap",--credentials_tokens="C:\Users\djer1\dap\bap"". Comment as-tu fait pour changer des paramètres ?
     @Value("${credentials_folder}")
     private String credentialsFolder = dataStoreDirectory + "/google/credential";
 
