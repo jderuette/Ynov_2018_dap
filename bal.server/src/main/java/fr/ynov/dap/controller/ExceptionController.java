@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 
 @ControllerAdvice
+//TODO bal by Djer |Gestion Exception| A implementer ? ou a supprimer (le nom de la classe est mal choisi, cette clase est un Advice, pas un Controller)
 public class ExceptionController {
 	
 	/**

@@ -1,18 +1,19 @@
-
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+  <!-- TODO bal by Djer |IDE| Un fichier XML peut tout à fait être formaté !  -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.ynov.dap</groupId>
-  <artifactId>dap</artifactId>
+  <artifactId>bal.server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>dap</name>
+  <name>bal.server</name>
   <url>http://maven.apache.org</url> 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyleVersion>6.18</checkstyleVersion>
-        <tomcat.version>7.0.52</tomcat.version>
+    <!-- FIXME bal by Djer |Spring| Pourquoi ?  Spécifier cette version empeche ton serveur Web de corectement démarer !!-->
+       <!--  <tomcat.version>7.0.52</tomcat.version> -->
     
   </properties>
   <parent>
@@ -29,11 +30,13 @@
         <version>v2-rev65-1.17.0-rc</version>
 	</dependency>
 	
-  	<dependency>
+	<!-- TODO bal by Djer |Maven| Plus utilie depuis que Google est en mode "serveur Web" -->
+	<!-- FIXME bal by Djer |Maven| Attention cette dépendance AVANT celle de SpringBoot empeche le server de démarer ! -->
+  	<!-- <dependency>
         <groupId>com.google.oauth-client</groupId>
         <artifactId>google-oauth-client-jetty</artifactId>
         <version>1.23.0</version>
-	</dependency>
+	</dependency> -->
   
   	<dependency>
         <groupId>com.squareup.retrofit2</groupId>
@@ -78,6 +81,8 @@
   		<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-data-jpa</artifactId>
 	</dependency>
+	
+	<!-- TODO bal by Djer |Maven| Plus utile si tu passe par MySQL -->
 	<dependency>
 	  <groupId>com.h2database</groupId>
 	  <artifactId>h2</artifactId>
@@ -143,6 +148,7 @@
            <manifest>
              <addClasspath>true</addClasspath>
              <classpathPrefix>lib/</classpathPrefix>
+             <!-- FIXME bal by Djer |Maven| Plus à jour ! Ton jar ne peu pas s'auto-executer ! -->
              <mainClass>com.ynov.dap.dap.App</mainClass>
            </manifest>
          </archive>
@@ -175,6 +181,7 @@
          </descriptorRefs>
          <archive>
            <manifest>
+           <!-- FIXME bal by Djer |Maven| Plus à jour ! Ton jar ne peu pas s'auto-executer ! -->
              <mainClass>com.ynov.dap.dap.App</mainClass>
            </manifest>
          </archive>
@@ -220,6 +227,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
+        <!-- FIXME bal by Djer |Maven| Il n'y a pas de fichier à cette emplacement -->
                          <configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
         </configuration>
          <reportSets>

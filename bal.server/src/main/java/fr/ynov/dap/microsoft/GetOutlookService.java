@@ -12,7 +12,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+
+//TODO bal by Djer |JavaDoc| Expliquer l'objectif de cette classe serait bienvenu.
 public class GetOutlookService {
+    //TODO bal by Djer |POO| Pourquoi static ?
 	public static OutlookGetService getOutlookService(final String accessToken, final String userEmail) {
 
         Interceptor requestInterceptor = new Interceptor() {

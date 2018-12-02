@@ -38,6 +38,7 @@ public class CalendarService extends GoogleService<Calendar> {
 	private OAuthService oAuthService;
 	
 	/** The log. */
+	//TODO bal by Djer |IDE| Ton IDE t'indique que cette constante n'est pas utilisée. Utilise là ou sppirme la.
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 	
 	/* (non-Javadoc)
@@ -71,6 +72,7 @@ public class CalendarService extends GoogleService<Calendar> {
 
         Calendar calendarService = getService(accountName);
 
+      //TODO bal by Djer |IDE| Ton IDE t'indique que cette constante n'est pas utilisée. Bug ? Remplacé 3 lignes plus bas ?
         DateTime now = new DateTime(System.currentTimeMillis());
 
         OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
@@ -87,6 +89,7 @@ public class CalendarService extends GoogleService<Calendar> {
             return evnt;
         }
 
+        //TODO bal by Djer |POO| Evite les multiples returns dans une même méthode
         return null;
 
     }
@@ -118,6 +121,7 @@ public class CalendarService extends GoogleService<Calendar> {
         }
 
         if (events.size() == 0) {
+          //TODO bal by Djer |POO| Evite les multiples returns dans une même méthode
             return null;
         }
 

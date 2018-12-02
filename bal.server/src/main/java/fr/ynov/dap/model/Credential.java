@@ -2,6 +2,9 @@ package fr.ynov.dap.model;
 
 import fr.ynov.dap.model.enumeration.CredentialEnum;
 
+
+//TODO bal by Djer |POO| Bonne idée de créer un "DTO" pour regrouper Microsoft et Google. Tu aurais pu utiliser ton entité TokenResponse ? (il ne manque que le type Google/Microsoft) 
+//TODO bal by Djer |JavaDoc| Documenter t'aurais peut-être aider à voir que cette classe ressemble enormement à ta TokenResponse ...
 public class Credential {
 
 
@@ -15,6 +18,7 @@ public class Credential {
 
     private CredentialEnum type;
 
+    //TODO bal by Djer |JavaDoc| Indiquer ici pourquoi il y a une valeur par defaut serait utile ("default to empty String for GoogleAccount compliance")
     private String tenantId = "";
 
     public String getUserId() {

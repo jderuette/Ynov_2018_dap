@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value="/mail")
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class GoogleGmailController {
 	/*
 	 * @Autowired private GmailService mailService;

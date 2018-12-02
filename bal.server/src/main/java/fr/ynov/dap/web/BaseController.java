@@ -12,6 +12,7 @@ public abstract class BaseController {
 
 
     @Autowired
+    //TODO bal by Djer |SOA| Pas top. Tu pourrais utilisé ton "AppUserService" au lieu de Repository directement à partir d'un controller
     private AppUserRepository appUserRepository;
     private Logger logger = LogManager.getLogger(getClassName());
 

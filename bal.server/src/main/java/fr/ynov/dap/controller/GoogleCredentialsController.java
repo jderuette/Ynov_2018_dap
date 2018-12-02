@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/credentials")
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class GoogleCredentialsController  {
 
 	/*

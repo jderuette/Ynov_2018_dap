@@ -37,20 +37,23 @@ public class OutlookService extends OutlookAPIService {
 
         String email = microsoftAccount.getEmail();
         String tenantId = microsoftAccount.getTenantId();
+        //TODO bal by Djer |POO| Ton "Token" dans la classe MicrosoftAccount est un oneToOne (ce qui est bien) donc pas de "s" à ta variable c'est ambigüe.
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (tenantId.isEmpty() || email.isEmpty() || tokens == null) {
+            //TODO bal by Djer |Log4J| Il faut contextualiser les logs (" for Microsoft accountName : " + microsoftAccount)");
             getLogger().warn("MicrosoftAccount information are empty or null");
             return 0;
 
         }
 
+        //TODO bal by Djer |POO| Le nom de cette méthode laisse croire qu'un nouveau token est créé à chaque fois, ce qui n'est pas vrai (heureusement !)
         TokenResponse newTokens = getToken(microsoftAccount);
         OutlookGetService outlookService = GetOutlookService.getOutlookService(newTokens.getAccessToken(), email);
         OutlookFolder inboxFolder = outlookService.getOutlookFolder(INBOX_FOLDER_NAME).execute().body();
 
         if (inboxFolder == null) {
-
+            //TODO bal by Djer |Log4J| Il faut contextualiser les logs (" for Microsoft accountName : " + microsoftAccount + " while searching for folder named : " + INBOX_FOLDER_NAME)");
             getLogger().warn("Graph API respond with empty or malformed JSON");
             return 0;
 
@@ -60,9 +63,8 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
-
-    public final Integer getNbUnreadMails(final AppUser user)
-            throws IOException, GeneralSecurityException {
+    //TODO bal by Djer |JavaDoc| Javadoc ?
+    public final Integer getNbUnreadMails(final AppUser user) throws IOException, GeneralSecurityException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
             getLogger().warn("No MicrosoftAccount found for this DaP user");
@@ -80,6 +82,7 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
+    //TODO bal by Djer |POO| Une grosse partie de ce code est du "copier/colelr" de la méthode getNbUnreadMails. Peut être factorisé.
     private MicrosoftCalendarEvent getNextEvent(final MicrosoftAccount microsoftAccount) throws IOException {
 
         if (microsoftAccount == null) {
@@ -89,10 +92,12 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+        //TODO bal by Djer |IDE| Ton IDE t'indique que cette variable n'est pas utilsée. Bug ? A supprimer ? 
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (email.isEmpty() || tokens == null) {
+            //TODO bal by Djer |Log4J| Il faut contextualiser les logs (" for Microsoft accountName : " + microsoftAccount)");
             getLogger().warn("MicrosoftAccount information are empty or null");
             return null;
 
@@ -125,9 +130,11 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
+    //TODO bal by Djer |JavaDoc| Javadoc ?
     public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
+            //TODO bal by Djer |Log4J| Le "id" est un identifiant "interne", ajoute en plus le "userKey" qui est un identifiant "public"
             getLogger().warn("Current user " + user.getId() + " haven't any MicrosoftAccount");
             return null;
 
@@ -143,6 +150,7 @@ public class OutlookService extends OutlookAPIService {
         }
 
         if (events.size() == 0) {
+            //TODO bal by Djer |Log4J| Ce cas peut se produire de façon "normal" (si je n'ai que des comtpes Google), un level Info serait plus approprié.
             getLogger().warn("No next event found for current user : " + user.getId());
             return null;
 
@@ -163,6 +171,7 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+      //TODO bal by Djer |IDE| Ton IDE t'indique que cette variable n'est pas utilsée. Bug ? A supprimer ?
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
@@ -180,6 +189,7 @@ public class OutlookService extends OutlookAPIService {
         PagedResult<OutlookContact> contacts = response.body();
 
         if (contacts != null && contacts.getValue() != null) {
+            //TODO bal by Djer |POO| Evite les multiples return. Dans tes autres méthodes "simillaires" tu utilisais des "return au milieu" pour les cas d'erreur ce qui est pas top mais "acceptable". Là tu change de phylosophie !
             return contacts.getValue().length;
         }
 
@@ -188,7 +198,7 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
-
+    //TODO bal by Djer |JavaDoc| Javadoc ?
     public final Integer getNumberOfPeoples(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
@@ -218,6 +228,7 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+      //TODO bal by Djer |IDE| Ton IDE t'indique que cette variable n'est pas utilsée. Bug ? A supprimer ?
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
@@ -239,7 +250,7 @@ public class OutlookService extends OutlookAPIService {
 
     }
 
-
+    //TODO bal by Djer |JavaDoc| Javadoc ?
     public final ArrayList<Inbox> getMessages(final AppUser user) throws IOException {
 
         if (user == null) {

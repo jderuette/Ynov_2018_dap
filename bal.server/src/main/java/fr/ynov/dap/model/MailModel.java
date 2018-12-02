@@ -1,5 +1,6 @@
 package fr.ynov.dap.model;
 
+//TODO bal by Djer |POO| Code mort ? A supprimer ? 
 public class MailModel extends MasterModel {
 
 	/*

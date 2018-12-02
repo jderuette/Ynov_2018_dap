@@ -6,17 +6,17 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
  * The Class Config.
  */
-@Configuration
+//FIXME bal by Djer |IOC| Si tu met un "@Configuration" Spring créra un Singleton, ce qui créé "deux configuration", une par CE singleton, et une pour la méthode "loadConfig" de ta class launcher
+//@Configuration
 @PropertySource("classpath:application.properties")
 public class Config {
-	
-	/**
+
+    /**
      * Default config for oAuth2Callback.
      */
     private static final String OAUTH_2_CALLBACK_URL = "/oAuth2Callback";
@@ -36,15 +36,16 @@ public class Config {
      */
     private static final String DATASTORE_FOLDER = System.getProperty("user.home");
 
-	/** The Constant GOOGLE_CREDENTIAL_PATH. */
+    /** The Constant GOOGLE_CREDENTIAL_PATH. */
     private static final String GOOGLE_CREDENTIAL_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "credentials.json";
 
-	/** The Constant MICROSOFT_CREDENTIAL_PATH. */
+    /** The Constant MICROSOFT_CREDENTIAL_PATH. */
     private static final String MICROSOFT_CREDENTIAL_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "auth.properties";
 
-	/** The Constant GLOBAL_CONFIG_PATH. */
+    //TODO bal by Djer |JavaDoc| Dire à quoi ca sert plutot que ce que c'est ! (Dans ton dictionnaire si tu trouves à "chien" la definition "le mot chien" change de dictionnaire !)
+    /** The Constant GLOBAL_CONFIG_PATH. */
     private static final String GLOBAL_CONFIG_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "dap_global_config.properties";
 
@@ -66,24 +67,25 @@ public class Config {
     /**
      * Store datastore directory path.
      */
+    //TODO bal by Djer |Design Patern| Domage qu'on ne puisse pas modifier cette config de l'extérieur.
     private String datastoreFolder = DATASTORE_FOLDER;
 
-	/** The google credentials path. */
+    /** The google credentials path. */
     private String googleCredentialsPath = GOOGLE_CREDENTIAL_PATH;
 
-	/** The microsoft credentials path. */
+    /** The microsoft credentials path. */
     private String microsoftCredentialsPath = MICROSOFT_CREDENTIAL_PATH;
 
-	/** The microsoft app id. */
+    /** The microsoft app id. */
     private String microsoftAppId;
 
-	/** The microsoft redirect url. */
+    /** The microsoft redirect url. */
     private String microsoftRedirectUrl;
 
-	/** The microsoft app password. */
+    /** The microsoft app password. */
     private String microsoftAppPassword;
-    
-	/** The microsoft authority url. */
+
+    /** The microsoft authority url. */
     private String microsoftAuthorityUrl;
 
     /**
@@ -156,119 +158,119 @@ public class Config {
     }
 
     /**
-	 * Gets the google credentials path.
-	 *
-	 * @return the googleCredentialsPath
-	 */
+     * Gets the google credentials path.
+     *
+     * @return the googleCredentialsPath
+     */
     public String getGoogleCredentialsPath() {
         return googleCredentialsPath;
     }
 
     /**
-	 * Sets the google credentials path.
-	 *
-	 * @param val the googleCredentialsPath to set
-	 */
+     * Sets the google credentials path.
+     *
+     * @param val the googleCredentialsPath to set
+     */
     public void setGoogleCredentialsPath(final String val) {
         this.googleCredentialsPath = val;
     }
 
     /**
-	 * Gets the microsoft credentials path.
-	 *
-	 * @return the microsoftCredentialsPath
-	 */
+     * Gets the microsoft credentials path.
+     *
+     * @return the microsoftCredentialsPath
+     */
     public String getMicrosoftCredentialsPath() {
         return microsoftCredentialsPath;
     }
 
     /**
-	 * Sets the microsoft credentials path.
-	 *
-	 * @param val the microsoftCredentialsPath to set
-	 */
+     * Sets the microsoft credentials path.
+     *
+     * @param val the microsoftCredentialsPath to set
+     */
     public void setMicrosoftCredentialsPath(final String val) {
         this.microsoftCredentialsPath = val;
     }
 
     /**
-	 * Gets the microsoft app id.
-	 *
-	 * @return the microsoftAppId
-	 */
+     * Gets the microsoft app id.
+     *
+     * @return the microsoftAppId
+     */
     public String getMicrosoftAppId() {
         return microsoftAppId;
     }
 
     /**
-	 * Sets the microsoft app id.
-	 *
-	 * @param val the microsoftAppId to set
-	 */
+     * Sets the microsoft app id.
+     *
+     * @param val the microsoftAppId to set
+     */
     public void setMicrosoftAppId(final String val) {
         this.microsoftAppId = val;
     }
 
     /**
-	 * Gets the microsoft redirect url.
-	 *
-	 * @return the microsoftRedirectUrl
-	 */
+     * Gets the microsoft redirect url.
+     *
+     * @return the microsoftRedirectUrl
+     */
     public String getMicrosoftRedirectUrl() {
         return microsoftRedirectUrl;
     }
 
     /**
-	 * Sets the microsoft redirect url.
-	 *
-	 * @param val the microsoftRedirectUrl to set
-	 */
+     * Sets the microsoft redirect url.
+     *
+     * @param val the microsoftRedirectUrl to set
+     */
     public void setMicrosoftRedirectUrl(final String val) {
         this.microsoftRedirectUrl = val;
     }
 
     /**
-	 * Gets the microsoft app password.
-	 *
-	 * @return the microsoftAppPassword
-	 */
+     * Gets the microsoft app password.
+     *
+     * @return the microsoftAppPassword
+     */
     public String getMicrosoftAppPassword() {
         return microsoftAppPassword;
     }
 
     /**
-	 * Sets the microsoft app password.
-	 *
-	 * @param val the microsoftAppPassword to set
-	 */
+     * Sets the microsoft app password.
+     *
+     * @param val the microsoftAppPassword to set
+     */
     public void setMicrosoftAppPassword(final String val) {
         this.microsoftAppPassword = val;
     }
 
-	/**
-	 * Gets the microsoft authority url.
-	 *
-	 * @return the microsoft authority url
-	 */
+    /**
+     * Gets the microsoft authority url.
+     *
+     * @return the microsoft authority url
+     */
     public String getMicrosoftAuthorityUrl() {
-		return microsoftAuthorityUrl;
-	}
+        return microsoftAuthorityUrl;
+    }
 
-	/**
-	 * Sets the microsoft authority url.
-	 *
-	 * @param microsoftAuthorityUrl the new microsoft authority url
-	 */
-	public void setMicrosoftAuthorityUrl(String microsoftAuthorityUrl) {
-		this.microsoftAuthorityUrl = microsoftAuthorityUrl;
-	}
+    /**
+     * Sets the microsoft authority url.
+     *
+     * @param microsoftAuthorityUrl the new microsoft authority url
+     */
+    public void setMicrosoftAuthorityUrl(String microsoftAuthorityUrl) {
+        this.microsoftAuthorityUrl = microsoftAuthorityUrl;
+    }
 
-	/**
-	 * Load config.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	private void loadConfig() throws IOException {
+    /**
+     * Load config.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void loadConfig() throws IOException {
 
         InputStreamReader isr = loadGlobalConfig();
 
@@ -329,12 +331,12 @@ public class Config {
         }
     }
 
-	/**
-	 * Load global config.
-	 *
-	 * @return the input stream reader
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
+    /**
+     * Load global config.
+     *
+     * @return the input stream reader
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private InputStreamReader loadGlobalConfig() throws IOException {
         InputStreamReader file = new InputStreamReader(new FileInputStream(GLOBAL_CONFIG_PATH),
                 Charset.forName("UTF-8"));
@@ -343,6 +345,7 @@ public class Config {
         }
         return null;
     }
+
     /**
      * Transform string path with write system separator.
      * IMPORTANT ! Use "/" on your path.
@@ -359,6 +362,6 @@ public class Config {
             }
         }
         return result;
-}
+    }
 
 }

@@ -89,9 +89,11 @@ public class GoogleAccountService extends GoogleService {
 			AppUser appUser = appUserRepo.findByUserKey(userKey);
 			googleAccount.setAccountName(accountName);
 			appUser.addGoogleAccount(googleAccount);
+			//FIXME bal by Djer |JPA| Attention tu ne sauvegarde pas l'entité qui est "maître" de la relation, c'est risqué. Tu devrais faire un save du "appUser", après l'avoir mis à jours, avec le UserRepository (JPA s'ocucpera de créer/mettre à jours les entités filles, notament l'ajout de ton "GoogleAccount")
 			googleAccountRepo.save(googleAccount);
 
 		} catch (IOException e) {
+		    //TODO bal by Djer |Log4J| Contextualise tes logs ! (" for user : " + userKey + " and accountName : " + accountName))
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to connect Google Account");
 		}
@@ -164,6 +166,7 @@ public class GoogleAccountService extends GoogleService {
 
             } catch (IOException e) {
 
+                //TODO bal by Djer |Gestion Exception| e.printStackTrace() affiche dans la console, pas très utile sur un serveur. Utiliser une LOG.
                 e.printStackTrace();
 
             }

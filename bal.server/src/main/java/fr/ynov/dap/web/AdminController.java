@@ -35,69 +35,71 @@ import fr.ynov.dap.repository.MicrosoftAccountRepository;
 @RequestMapping("/index")
 public class AdminController extends BaseController {
 
-	/** The google account service. */
+    /** The google account service. */
     @Autowired
     private GoogleAccountService googleAccountService;
 
-	/** The microsoft account service. */
+    /** The microsoft account service. */
     @Autowired
     private MicrosoftAccountService microsoftAccountService;
 
-	/** The microsoft account repository. */
+    /** The microsoft account repository. */
     @Autowired
+    //TODO bal by Djer |SOA| Pas top, et pas utile pourrait être injecté dans le service
     private MicrosoftAccountRepository microsoftAccountRepository;
 
-	/** The calendar service. */
+    /** The calendar service. */
     @Autowired
     private CalendarService calendarService;
 
-	/** The outlook service. */
+    /** The outlook service. */
     @Autowired
     private OutlookService outlookService;
 
-	/** The people service. */
+    /** The people service. */
     @Autowired
     private PeopleAPIService peopleService;
 
-	/** The gmail service. */
+    /** The gmail service. */
     @Autowired
     private GMailService gmailService;
 
-	/**
-	 * Datastores.
-	 *
-	 * @param model the model
-	 * @return the string
-	 * @throws IOException              Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
+    /**
+     * Datastores.
+     *
+     * @param model the model
+     * @return the string
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     @RequestMapping("/users")
-    public String datastores(final ModelMap model)
-            throws IOException, GeneralSecurityException {
+    public String datastores(final ModelMap model) throws IOException, GeneralSecurityException {
 
         ArrayList<Credential> googleCredentials = googleAccountService.getStoredCredentials();
-        ArrayList<Credential> microsoftCredentials = microsoftAccountService.getStoredCredentials(microsoftAccountRepository);
+        ArrayList<Credential> microsoftCredentials = microsoftAccountService
+                .getStoredCredentials(microsoftAccountRepository);
         ArrayList<Credential> credentials = new ArrayList<>();
         credentials.addAll(googleCredentials);
         credentials.addAll(microsoftCredentials);
         model.addAttribute("userKnown", true);
         model.addAttribute("credentials", credentials);
+        //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
         model.addAttribute("fragment", "fragments/datastore");
 
         return "base";
 
     }
 
-	/**
-	 * Calendar.
-	 *
-	 * @param model  the model
-	 * @param userId the user id
-	 * @return the string
-	 * @throws IOException              Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 * @throws UserException            the user exception
-	 */
+    /**
+     * Calendar.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     * @throws UserException            the user exception
+     */
     @RequestMapping("/nextEvent/{userId}")
     public String calendar(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException, UserException {
@@ -105,9 +107,12 @@ public class AdminController extends BaseController {
         AppUser user = getAppUserRepository().findByUserKey(userId);
         if (user == null) {
 
+            //TODO bal by Djer |Log4J| Contextualiser tes logs (" for userId : " + userId)
             getLogger().warn("User is undefined. Show Admin Calendar with error");
             model.addAttribute("userKnown", false);
+            //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
             model.addAttribute("fragment", "fragments/calendar");
+            //TODO bal by Djer |POO| Evite les multiples return dans une même méthode
             return "base";
 
         }
@@ -125,8 +130,9 @@ public class AdminController extends BaseController {
         if (events.size() == 0) {
             model.addAttribute("userKnown", true);
             model.addAttribute("event", null);
+            //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
             model.addAttribute("fragment", "fragments/calendar");
-
+            //TODO bal by Djer |POO| Evite les multiples return dans une même méthode
             return "base";
 
         }
@@ -134,29 +140,33 @@ public class AdminController extends BaseController {
         Collections.sort(events, new Sorter());
         model.addAttribute("userKnown", true);
         model.addAttribute("event", events.get(0));
+        //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
         model.addAttribute("fragment", "fragments/calendar");
 
         return "base";
 
     }
 
-	/**
-	 * Mail.
-	 *
-	 * @param model  the model
-	 * @param userId the user id
-	 * @return the string
-	 * @throws IOException              Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
+    /**
+     * Mail.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     @RequestMapping("/mails/{userId}")
     public String mail(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException {
         AppUser user = getAppUserRepository().findByUserKey(userId);
         if (user == null) {
+            //TODO bal by Djer |Log4J| Contextualiser tes logs (" for userId : " + userId)
             getLogger().warn("User is undefined. Show Admin Mail with error");
             model.addAttribute("userKnown", false);
+            //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
             model.addAttribute("fragment", "fragments/mailNumber");
+            //TODO bal by Djer |POO| Evite les multiples return dans une même méthode
             return "base";
 
         }
@@ -171,15 +181,15 @@ public class AdminController extends BaseController {
 
     }
 
-	/**
-	 * Contacts.
-	 *
-	 * @param model  the model
-	 * @param userId the user id
-	 * @return the string
-	 * @throws IOException              Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
+    /**
+     * Contacts.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     @RequestMapping("/contacts/{userId}")
     public String contacts(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException {
@@ -187,10 +197,12 @@ public class AdminController extends BaseController {
         AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
-
+            //TODO bal by Djer |Log4J| Contextualiser tes logs (" for userId : " + userId)
             getLogger().warn("User is undefined. Show Admin Contact with error");
             model.addAttribute("userKnown", false);
+            //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
             model.addAttribute("fragment", "fragments/contact");
+            //TODO bal by Djer |POO| Evite les multiples return dans une même méthode
             return "base";
 
         }
@@ -206,24 +218,27 @@ public class AdminController extends BaseController {
 
     }
 
-	/**
-	 * Mail list.
-	 *
-	 * @param model  the model
-	 * @param userId the user id
-	 * @return the string
-	 * @throws IOException              Signals that an I/O exception has occurred.
-	 * @throws GeneralSecurityException the general security exception
-	 */
+    /**
+     * Mail list.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     * @throws IOException              Signals that an I/O exception has occurred.
+     * @throws GeneralSecurityException the general security exception
+     */
     @RequestMapping("/mails/list/{userId}")
     public String mailList(final ModelMap model, @PathVariable("userId") final String userId)
             throws IOException, GeneralSecurityException {
 
         AppUser user = getAppUserRepository().findByUserKey(userId);
         if (user == null) {
+            //TODO bal by Djer |Log4J| Contextualiser tes logs (" for userId : " + userId)
             getLogger().warn("User is undefined. Show Admin Mail List with error");
             model.addAttribute("userKnown", false);
+          //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
             model.addAttribute("fragment", "fragments/mail_list");
+            //TODO bal by Djer |POO| Evite les multiples return dans une même méthode
             return "base";
 
         }
@@ -231,16 +246,17 @@ public class AdminController extends BaseController {
         ArrayList<Inbox> inboxs = outlookService.getMessages(user);
         model.addAttribute("userKnown", true);
         model.addAttribute("inboxs", inboxs);
+        //FIXME bal by Djer |Thymleaf| Tes fragments ne sont PAS rangé dans un sous dossier "fragments"
         model.addAttribute("fragment", "fragments/mail_list");
         return "base";
 
     }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.ynov.dap.web.BaseController#getClassName()
-	 */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fr.ynov.dap.web.BaseController#getClassName()
+     */
     @Override
     protected final String getClassName() {
         return AdminController.class.getName();

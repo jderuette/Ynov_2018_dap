@@ -3,6 +3,8 @@ package fr.ynov.dap.google;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.springframework.stereotype.Service;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.oauth2.Oauth2;
@@ -12,6 +14,8 @@ import com.google.api.services.oauth2.model.Userinfoplus;
 /**
  * The Class OAuthService.
  */
+//FIXME bal by Djer |IOC| N'est pas un bean vue par Spring, ne peu pas être injecté !! LE parent non plus n'est pas un Bean d'ou le mesage d'erreur au lancement du serveur "Error creating bean with name 'calendarService': Unsatisfied dependency expressed through field 'oAuthService'"
+@Service
 public class OAuthService extends GoogleService<Oauth2>{
 	
 	/* (non-Javadoc)

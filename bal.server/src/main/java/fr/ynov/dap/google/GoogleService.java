@@ -30,6 +30,7 @@ import fr.ynov.dap.Config;
  * The Class GoogleService.
  *
  * @param <T> the generic type
+ * TODO bal by Djer |JavaDoc| Indiquer ici le but de 'T' serait utile "General purpose Google service type to access specific API part"
  */
 public abstract class GoogleService<T> {
 	
@@ -38,6 +39,7 @@ public abstract class GoogleService<T> {
 	protected Config configuration;
 
 	/** The json factory. */
+	//TODO bal by Djer |POO| Vue le nomage devrait être static final. Il y a-t-il une bonne raison pour qu'elle ne le soit pas ? 
 	protected static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();;
 	
 	/** The scopes. */
@@ -129,6 +131,7 @@ public abstract class GoogleService<T> {
 	protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        //TODO bal by Djer : |Design Patern| Pas de Prepend du dossier racine ("datastoreFolder") ? 
         InputStreamReader file = new InputStreamReader(new FileInputStream(configuration.getGoogleCredentialsPath()),
                 Charset.forName("UTF-8"));
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(getJSON_FACTORY(), file);

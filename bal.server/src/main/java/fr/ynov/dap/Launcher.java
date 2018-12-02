@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Launcher {
 	/** The log. */
+    //TODO bal by Djer |IDE| Ton IDE t'indique que cette constante n'est pas utilisée. Utilise là ou sppirme la.
 	private static Logger LOG = LogManager.getLogger(Launcher.class);
 	
 	/**
@@ -23,6 +24,7 @@ public class Launcher {
 	 * @return the config
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
+	//TODO bal by Djer |POO| Pourquoi static ?
 	@Bean
 	public static Config loadConfig() throws IOException {
 		return new Config();

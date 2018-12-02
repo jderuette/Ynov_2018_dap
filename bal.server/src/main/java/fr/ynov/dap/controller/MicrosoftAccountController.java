@@ -1,6 +1,7 @@
 package fr.ynov.dap.controller;
 
 import org.springframework.stereotype.Controller;
+//TODO bal by Djer |IDE| Configure les "save action" de ton IDE pour éviter de laisser trainer des imports inutiles !
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 @Controller
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class MicrosoftAccountController {
 	/*
 	 * @RequestMapping("/index") public String index(Model model, HttpServletRequest

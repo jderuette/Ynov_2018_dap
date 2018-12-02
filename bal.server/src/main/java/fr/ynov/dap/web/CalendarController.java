@@ -1,4 +1,5 @@
- package fr.ynov.dap.web;
+
+package fr.ynov.dap.web;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -49,6 +50,7 @@ public class CalendarController extends BaseController{
             events.add(microsoftEvent);
         }
         if (events.size() == 0) {
+            //TODO bal by Djer |Log4J| Ce n'est pas une "erreur" de ne pas avoir d'évènnement à venire. C'est certes étrange. Un level Info serait suffisant (si j'utilise DaP uniquement pour mes mails)
             getLogger().error("No next event found for user with id : " + userId);
         }
         Collections.sort(events, new Sorter());
@@ -60,6 +62,7 @@ public class CalendarController extends BaseController{
         AppUser user = getUserById(userId);
         GoogleCalendarEvent evnt = calendarService.getNextEvent(user);
         if (evnt == null) {
+          //TODO bal by Djer |Log4J| Ce n'est pas une "erreur" de ne pas avoir d'évènnement à venire. C'est certes étrange. Un level Info serait suffisant (si je n'ai que des comtpes Microsoft)
             getLogger().error("No Google next event found for user with id : " + userId);
         }
         return new NextEvent(evnt);
@@ -72,6 +75,7 @@ public class CalendarController extends BaseController{
         AppUser user = getUserById(userId);
         MicrosoftCalendarEvent evnt = outlookService.getNextEvent(user);
         if (evnt == null) {
+          //TODO bal by Djer |Log4J| Ce n'est pas une "erreur" de ne pas avoir d'évènnement à venire. C'est certes étrange. Un level Info serait suffisant (si je n'ai que des comptes Google)
             getLogger().error("No Microsoft next event found for user with id : " + userId);
         }
         return new NextEvent(evnt);

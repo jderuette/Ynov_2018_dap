@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value="/calendar")
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class GoogleCalendarController {
 
 	/*

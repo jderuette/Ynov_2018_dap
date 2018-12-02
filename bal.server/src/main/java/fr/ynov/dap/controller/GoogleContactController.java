@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value="/contact")
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class GoogleContactController {
 	/*
 	 * Automatically injected attribute by the Autowired annotation

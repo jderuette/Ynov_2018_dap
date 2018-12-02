@@ -67,7 +67,7 @@ public class AccountController extends BaseController {
 
     }
 
-
+    //TODO bal by Djer |Rest API| On a toujours passé le userKey en RequestParam pourquoi ne pas continuer ? La seul exception est le "addUser" car on CREE le User, ensuite on y fait référence via le RequestParam. C'est bien de rester "cohérent" dans ton API public.
     @RequestMapping(value = "/account/google/add/{gAccountName}/{userId}") //, method = RequestMethod.POST)
     public String addGoogleAccount(@PathVariable final String gAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
@@ -99,10 +99,12 @@ public class AccountController extends BaseController {
         final String redirectUri = buildRedirectUri(request, configuration.getOAuth2CallbackUrl());
         final String userId = session.getAttribute(Constant.SESSION_USER_ID).toString();
         final String gAccountName = session.getAttribute(Constant.SESSION_ACCOUNT_NAME).toString();
+        //FIME bal by Djer |POO| Es-tu sur de l'ordre de tes paramètres en l'appelant et la signature de la méthode ?? 
         return googleAccountService.oAuthCallback(code, userId, gAccountName, decodedCode, redirectUri);
 
     }
 
+  //TODO bal by Djer |Rest API| On a toujours passé le userKey en RequestParam pourquoi ne pas continuer ? La seul est axception est le "addUser" car on CREE le User, ensuite on y fait référence via le RequestParam. C'est bien de rester "cohérent" dans ton API public.
     @RequestMapping(value = "/account/microsoft/add/{msAccountName}/{userId}") //, method = RequestMethod.POST
     public void addMicrosoftAccount(@PathVariable final String msAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
@@ -136,6 +138,8 @@ public class AccountController extends BaseController {
         UUID expectedNonce = (UUID) session.getAttribute(Constant.SESSION_EXPECTED_NONCE);
         String userId = (String) session.getAttribute(Constant.SESSION_USER_ID);
         String accountName = (String) session.getAttribute(Constant.SESSION_ACCOUNT_NAME);
+        
+        //TODO bal by Djer |POO| Une bonne partie de ce code pourrait etre dans un "MicrosoftAccountService" pour rester cohérent avec la structure du code "Google" écrit avant.
         if (state.equals(expectedState)) {
             Token idTokenObj = Token.parseEncodedToken(idToken, expectedNonce.toString());
             if (idTokenObj != null) {

@@ -3,6 +3,7 @@ package fr.ynov.dap.controller;
 import org.springframework.stereotype.Controller;
 
 @Controller
+//TODO bal by Djer |POO| Classe à supprimer ? 
 public class AuthorizeController {
 	/*
 	 * @RequestMapping(value="/authorize", method=RequestMethod.POST) public String

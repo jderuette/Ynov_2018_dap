@@ -3,6 +3,7 @@ package fr.ynov.dap.data;
 import fr.ynov.dap.model.enumeration.GuestStatusEventEnum;
 
 // TODO: Auto-generated Javadoc
+//TODO bal by Djer |JavaDoc| Je devrais me faire une moulinnette à correction "La note de {étudiant} est <<student note here>>", puis ne pas relire, ne pas completer la partie "note" et considérer la correction comme "consicencieusement terminé". Qu'en penses-tu ?
 /**
  * The Class Guest.
  */

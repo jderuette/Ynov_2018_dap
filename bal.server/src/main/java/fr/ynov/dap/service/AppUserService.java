@@ -29,6 +29,7 @@ public class AppUserService {
 			map.put("Sucess", false);
 			map.put("Message", "Un utilisateur de se nom existe déjà");
 		}
+		//TODO bal by Djer |MVC| Les messages utilisateurs devraient être géré par le controlleur. Il pourrait au passage les Internationnaliser ...
 		return map;
 	}
 	

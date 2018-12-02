@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ynov.dap.Constant;
 
+//TODO bal by Djer |POO| Pourquoi cette classe n'est pas avec ces amies "f.y.d.data.microsoft" ? Elle est punie ?
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Token {
 

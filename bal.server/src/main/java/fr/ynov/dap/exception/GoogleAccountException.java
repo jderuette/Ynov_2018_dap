@@ -3,6 +3,7 @@ package fr.ynov.dap.exception;
 /**
  * The Class GoogleAccountException.
  */
+//TODO bal by Djer |POO| Une exception parente du type "DataMissingException" indiquerait clairement que ces 3 exceptions sont "proches".
 public class GoogleAccountException extends Exception {
 
     /** The Constant serialVersionUID. */

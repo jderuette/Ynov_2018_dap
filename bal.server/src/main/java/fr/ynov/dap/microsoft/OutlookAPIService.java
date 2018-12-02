@@ -27,16 +27,8 @@ public class OutlookAPIService {
     @Autowired
     private MicrosoftAccountRepository microsoftAccountRepository;
 
-    protected static String[] scopes = { 
-    		"openid",
-    		"offline_access",
-    		"profile", 
-    		"User.Read", 
-    		"Mail.Read",
-    		"mail.readwrite", 
-    		"Calendars.Read", 
-    		"Contacts.Read" 
-    };
+    protected static String[] scopes = { "openid", "offline_access", "profile", "User.Read", "Mail.Read",
+            "mail.readwrite", "Calendars.Read", "Contacts.Read" };
 
     public OutlookAPIService() {
     }
@@ -73,10 +65,12 @@ public class OutlookAPIService {
         return resp.body();
 
     }
+
     public TokenResponse ensureTokens(final MicrosoftAccount microsoftAcc) throws IOException {
 
         if (microsoftAcc == null) {
             getLogger().warn("MicrosoftAccount is null. Null token is return");
+            //TODO bal by Djer |Gestion Exception| Bof comme design "null" veut normalement dire "Token actuel toujours valide" (dans ton algo actuel), mais là c'est un cas d'erreur... Lever une exception ?
             return null;
         }
 
@@ -85,11 +79,15 @@ public class OutlookAPIService {
         Calendar now = Calendar.getInstance();
 
         if (now.getTime().before(tokens.getExpirationTime())) {
+            //TODO bal by Djer |Log4J| Il faut contextualiser les logs (" for Microsoft accountName : " + microsoftAcc)");
+            //TODO bal by Djer |Log4J| Cette log serait plus appropriée en Debug (voir pas du tout présente, c'est le cas normal)
             getLogger().info("Token is still valid.");
             return tokens;
 
         } else {
 
+            //TODO bal by Djer |Log4J| Il faut contextualiser les logs (" for Microsoft accountName : " + microsoftAcc)");
+            //TODO bal by Djer |Log4J| Ce cas est "courrant" (en gros toutes les 30 minutes) une Log en info serait suffisant (voir en debug).
             getLogger().warn("Token is invalid. Try to refresh it.");
             TokenService tokenService = createTokenService();
             String appId = configuration.getMicrosoftAppId();
@@ -106,7 +104,7 @@ public class OutlookAPIService {
     public final TokenResponse getToken(final MicrosoftAccount microsoftAccount) throws IOException {
         TokenResponse newTokens = ensureTokens(microsoftAccount);
         if (newTokens != null) {
-        	microsoftAccount.setToken(newTokens);
+            microsoftAccount.setToken(newTokens);
             microsoftAccountRepository.save(microsoftAccount);
         }
         return newTokens;
@@ -121,5 +119,5 @@ public class OutlookAPIService {
                 .addConverterFactory(JacksonConverterFactory.create()).build();
         return retrofit.create(TokenService.class);
     }
-    
+
 }

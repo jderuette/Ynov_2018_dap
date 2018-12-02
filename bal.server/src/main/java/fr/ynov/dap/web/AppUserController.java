@@ -25,6 +25,7 @@ public class AppUserController {
 	 * @param userId the user id
 	 * @return the map
 	 */
+	//TODO bal by Djer |Rest API| dnas  cette URL "userKey" est un PathParam, pas un RequestParam
 	@RequestMapping(value="/user/add/{userKey}")
 	public Map<String, Object> addUserKey(@RequestParam("userKey") final String userId) {
 		return appUserService.addAppUser(userId);

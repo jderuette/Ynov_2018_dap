@@ -3,6 +3,7 @@ package fr.ynov.dap.microsoft;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import fr.ynov.dap.data.microsoft.TokenResponse;
@@ -10,6 +11,7 @@ import fr.ynov.dap.model.Credential;
 import fr.ynov.dap.model.enumeration.CredentialEnum;
 import fr.ynov.dap.repository.MicrosoftAccountRepository;
 
+@Service
 public class MicrosoftAccountService extends OutlookAPIService {
 
     public String getLoginUrl(final UUID state, final UUID nonce) {
@@ -26,6 +28,8 @@ public class MicrosoftAccountService extends OutlookAPIService {
         return urlBuilder.toUriString();
 
     }
+    
+    //TODO bal by Djer |IOC| Pourquoi demander à l'appelant de gérer le repository alors que c'est un détail "interne" de ce service. Fait de l'injection via Spring.
     public final ArrayList<Credential> getStoredCredentials(final MicrosoftAccountRepository microsoftAccountRepository) {
 
         if (microsoftAccountRepository == null) {
@@ -48,5 +52,6 @@ public class MicrosoftAccountService extends OutlookAPIService {
 
         return credentials;
 
+        //TODO bal by Djer |IDE| Configure ton IDE pour éviter ces petits "defaut" d formatage du code
 }
 }
