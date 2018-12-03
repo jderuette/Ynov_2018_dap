@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 public class Config {
 
     /** The data store directory. */
-    //FIXME bal by Djer |Design Patern| Presque tous les paramères sont relatifs à se dossier, et il n'est PAS configurable 
+    //FIXME bap by Djer |Design Patern| Presque tous les paramères sont relatifs à se dossier, et il n'est PAS configurable 
     private String dataStoreDirectory = System.getProperty("user.home");
 
     /** The o auth 2 callback url. */
