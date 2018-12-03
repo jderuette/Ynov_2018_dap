@@ -24,6 +24,8 @@ import com.google.api.services.calendar.Calendar.Acl.List;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.gmail.GmailScopes;
 
+
+//FIXME bes by Djer |POO| Semble être du "vieux code" suppprime le !
 public class GoogleService {
 	protected final static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	

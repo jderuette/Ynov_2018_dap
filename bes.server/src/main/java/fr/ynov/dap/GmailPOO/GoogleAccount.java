@@ -23,7 +23,9 @@ import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.GenericUrl;
 
-@Controller
+
+//FIXME bes by Djer |POO| Semble être du "vieux code" suppprime le !
+//@Controller
 public class GoogleAccount extends GoogleService {
 	
 	/**

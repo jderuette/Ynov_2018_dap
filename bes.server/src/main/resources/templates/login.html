@@ -1,0 +1,18 @@
+<div class="col-md-6">
+
+	<div class="panel panel-primary" id="login">
+		<div class="panel-heading">User</div>
+		<div class="panel-body">
+			<form th:action="@{/consulterAccount}" method="get">
+				<div>
+					<label>userKey: </label> <input type="text" name="userKey"
+						th:value="${userKey}" />
+					<button type="submit" class="btn btn-primary"
+						oncancel="document.getElementById('login').style.display='block'">OK</button>
+				</div>
+			</form>
+			<div class="text-danger" th:if="${exception}"
+				th:text="${exception.message}"></div>
+		</div>
+
+	</div>

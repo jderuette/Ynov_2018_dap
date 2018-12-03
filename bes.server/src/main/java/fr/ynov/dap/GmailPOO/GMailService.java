@@ -29,7 +29,10 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
-@RestController
+
+
+//FIXME bes by Djer |POO| Semble être du "vieux code" suppprime le !
+//@RestController
 public class GMailService extends GoogleService {
 	
 	private static GMailService instance;

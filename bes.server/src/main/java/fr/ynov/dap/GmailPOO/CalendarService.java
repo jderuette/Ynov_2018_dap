@@ -21,16 +21,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-//TODO bes by Djer séparation Controller/Service ?
+
+//FIXME bes by Djer |POO| Semble être du "vieux code" suppprime le ! (semble être repris dans fr.ynov.dap.GmailPOO.metier.CalendarService). Deplus tu as deux classe avec le même nom, Spring va s'emmeler les pinceaux avec ca ! 
+//@RestController
+//TODO bes by Djer |MVC| Séparation Controller/Service ?
 public class CalendarService extends GoogleService {
-    //TODO bes by Djer Inutile, Srping fait un Singleton par defaut sur les @RestController
+    //TODO bes by Djer |Spring| Inutile, Srping fait un Singleton par defaut sur les @RestController
     @Autowired
     private static CalendarService instance;
 
-    //TODO bes by Djer Dans un service (ou un controller) qui sont pas défaut des Singleton,
-    // on évite d'avoir des variables d'instances. Tu risques d'écraser des valeurs entre 2 appels (2 utilisateurs)
-    // La pluspart du temps, le traitement sera fait pour un utilisateur différent, il FAUT donc refaire un appel vers Google.
+    //TODO bes by Djer |POO| Dans un service (ou un controller) qui sont pas défaut des Singleton, on évite d'avoir des variables d'instances. Tu risques d'écraser des valeurs entre 2 appels (2 utilisateurs) La pluspart du temps, le traitement sera fait pour un utilisateur différent, il FAUT donc refaire un appel vers Google.
     @Autowired
     private static DateTime now;
     @Autowired
@@ -41,7 +41,7 @@ public class CalendarService extends GoogleService {
     /**
      * @return the instance
      */
-    //TODO bes by Djer Inutile, Srping fait un Singleton par defaut sur les @RestController
+    //TODO bes by Djer |Spring| Inutile, Srping fait un Singleton par defaut sur les @RestController
     public static CalendarService getInstance() {
         if (instance == null) {
             instance = new CalendarService();
@@ -60,8 +60,7 @@ public class CalendarService extends GoogleService {
         return items.size();
     }
 
-    //TODO bes by Djer Inutile, Srping fait un Singleton par defaut sur les @RestController
-    //Deplus get est une méthode d'instance, il te faut donc une instance, pour ... récupérer l'instance
+    //TODO bes by Djer |Spring| Inutile, Srping fait un Singleton par defaut sur les @RestController. Deplus get est une méthode d'instance, il te faut donc une instance, pour ... récupérer l'instance
     public CalendarService get() {
         return this;
     }
@@ -74,9 +73,9 @@ public class CalendarService extends GoogleService {
         return service;
     }
 
-    //TODO seb by Djer Pourquoi static ?
+    //TODO bes by Djer |POO| Pourquoi static ?
     private static List<Event> allEvent() throws IOException, GeneralSecurityException {
-        //TODO attention to "now" (et ton "item") sont des attributs de la classe, cela est très perturbant.
+        //TODO bes by Djer |POO|  Attention to "now" (et ton "item") sont des attributs de la classe, cela est très perturbant.
         now = new DateTime(System.currentTimeMillis());
         Events events = CalendarService.getService().events().list("primary").setMaxResults(10).setTimeMin(now)
                 .setOrderBy("startTime").setSingleEvents(true).execute();
@@ -87,14 +86,13 @@ public class CalendarService extends GoogleService {
     @RequestMapping("/getNextEvent")
     public String getNextEvent() throws IOException, GeneralSecurityException {
 
-        //TODO bes by Djer N'utilise pas cet attribut, rapelle "allEvent" pour avoir ta liste d'évènnements.
-        // Que tu stocke dans une varaible local à cette fonction, pour la traiter ensuite.
+        //TODO bes by Djer |POO| N'utilise pas cet attribut, rapelle "allEvent" pour avoir ta liste d'évènnements. Que tu stocke dans une varaible local à cette fonction, pour la traiter ensuite.
         String msg = null;
         if (items.isEmpty()) {
             msg = "No upcoming events found.";
         } else {
             System.out.println("Upcoming events");
-            //TODO bes by Djer Pourquoi un double affichage ?
+            //TODO bes by Djer |SOA| Pourquoi un double affichage ?
             System.out.println("Upcoming events");
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
@@ -102,7 +100,7 @@ public class CalendarService extends GoogleService {
                     start = event.getStart().getDate();
                 }
                 System.out.printf("%s (%s)\n", event.getSummary(), start);
-                //TODO bes by Djer Attention ton "msg" ne contiendra que les infos du dernier évènnement (il faut que tu concatene)
+                //TODO bes by Djer |POO| Attention ton "msg" ne contiendra que les infos du dernier évènnement (il faut que tu concatene)
                 msg = " " + event.getSummary() + "(" + start + "s)";
             }
         }

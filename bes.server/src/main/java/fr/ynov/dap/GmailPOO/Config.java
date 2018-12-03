@@ -1,27 +1,58 @@
 package fr.ynov.dap.GmailPOO;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-//TODO bes by Djer Configure les "save action" de ton IDE. Cf Mémo Eclipse.
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.people.v1.PeopleServiceScopes;
 
 
 public class Config {
-	private static final String CREDENTIALS_FILE = "/credentials.json";
-	private static final String CLIENT_SECRET_DIR = "tokens";
-	private static final String APPLICATION_NAME = "HoCDaP";
+	private  final String CREDENTIALS_FILE = "/credentials.json";
+	private  final String CLIENT_SECRET_DIR = "tokens";
+	private  final String APPLICATION_NAME = "HoCDaP";
+	private  final String SCOOPLIST[] = { GmailScopes.GMAIL_READONLY, CalendarScopes.CALENDAR,PeopleServiceScopes.CONTACTS_READONLY };
+	
+	private  java.util.List<String> allSCOPES;
 	public String applicationName;
 	public String credentialFolder;
 	public String clientSecretFile;
-	//TODO bes by Djer Je ne suis pas sure qu'un @Autowire" sur un constrcuteur fonctionne correctement
-	@Autowired
+	
 	 public Config (){
            this.applicationName=APPLICATION_NAME;
            this.clientSecretFile=CREDENTIALS_FILE;
            this.credentialFolder=CLIENT_SECRET_DIR;
-           
+           this.allSCOPES=new ArrayList(Arrays.asList(SCOOPLIST));
 	}
+
+	 //TODO bes by Djer |POO| implémentation un peu "étrange". Deplus n'est pas utilisé. A supprimer ! 
+	public String getPath() 
+	{
+		return credentialFolder+"\\StoredCredential";
+	}
+
+	/**
+	 * @return the allSCOPES
+	 */
+	public java.util.List<String> getAllSCOPES() {
+		return allSCOPES;
+	}
+
+
+
+	/**
+	 * @param allSCOPES the allSCOPES to set
+	 */
+	public void setAllSCOPES(java.util.List<String> allSCOPES) {
+		this.allSCOPES = allSCOPES;
+	}
+
+
 
 	/**
 	 * @return the applicationName
@@ -66,10 +97,16 @@ public class Config {
 	}
 
 	public String getoAuth2CallbackUrl() {
-	    //TODO bes by DJer Ce TODO ne semble plus juste. A supprimer (ou à traiter)
+	    //TODO bes by Djer |IDE| Supprime ce TODO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroCOnf" sur cet élement.
 		// TODO Auto-generated method stub
 	
 		return "http://localhost:8080/Callback";
+	}
+	public String getMapping() {
+	  //TODO bes by Djer |IDE| Supprime ce TODO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroCOnf" sur cet élement.
+		// TODO Auto-generated method stub
+	
+		return "/Callback";
 	}
 	
 }

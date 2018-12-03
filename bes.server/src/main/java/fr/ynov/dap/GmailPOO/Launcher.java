@@ -1,80 +1,97 @@
 package fr.ynov.dap.GmailPOO;
 
+
+
 import java.io.File;
 import java.io.IOException;
+
+
+
+import java.net.URISyntaxException;
+
 import java.security.GeneralSecurityException;
-import java.util.Scanner;
+//TODO bes by Djer |IDE| Configure les "save action" de ton IDE pour éviter de conserver des imports inutiles !
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import fr.ynov.dap.GmailPOO.dao.AccountRepository;
+import fr.ynov.dap.GmailPOO.dao.AppUserRepository;
+import fr.ynov.dap.GmailPOO.data.AppUser;
+import fr.ynov.dap.GmailPOO.data.GoogleAccount;
+
+
+//TODO bes by Djer |IDE| Configure les "save action" de ton IDE pour éviter pour éviter d'avoir du code "mal formaté"
+
 
 @SpringBootApplication
-@RestController
-public class Launcher {
-    public static String defaulUser = "monCompte@gmail.com";
-    // static  Logger logLauncher=Logger.getLogger(Launcher.class);
-    static ConfigurableApplicationContext context;
-    //TODO bes by Djer ne passe "" comme paramètre, sinon c'est loggé dans uen catégory "anonyme".
-    // Avec Log4J tu peux laissé vide (il récupère automatiquement le nom, qualifié, de la classe).
-    private static final Logger logger = LogManager.getLogger("");
-    //TODO bes by Djer cette attribut n'est pas utilisé. Supprime le.
-    // Tu devrait avoir un méthode "loadConfig" qui créé, et configure, une COnfiguration. Cette méthode devra être annoté @BEan pour que Spring la connaisse.
-    // Une fois que Spring connait la méthode, il sait "réupérer" la valeur renvoyé, et l'injecter là ou tu lui demande.
-    private static Config loadConfig;
+public class Launcher implements CommandLineRunner {
+	static int nbEvent;
+	public static String defaulUser = "monCompte@gmail.com";
+	//TODO bes by Djer |POO| Cette attribut ne sert plus. Netoie ton code et supprime le code commenté
+	// static Logger logLauncher=Logger.getLogger(Launcher.class);
+	static ConfigurableApplicationContext context;
+	private static final Logger logger = LogManager.getLogger();
+/*	static GMailService monGmail;
+    @Autowired
+	static CalendarService monCalendar;
+	static ContactsService monContact;
+   
+    @Autowired
+    private GoogleAccountRepository googleAccountRepository;
+    @Autowired
+   private fr.ynov.dap.GmailPOO.metier.Account account;
+*/
+	 @Autowired
+	 //TODO bes by Djer |IDE| ton IDE t'indique que ca n'est pas utilisé. A supprimer ? Bug ? 
+	    private AppUserRepository appUserRepository;
+	 @Autowired
+	 //TODO bes by Djer |IDE| ton IDE t'indique que ca n'est pas utilisé. A supprimer ? Bug ?
+	    private AccountRepository accountRepository;
+	//TODO bes by Djer |POO| attention si pas de "modifier" alors celui de la classe. Cette attribut est donc public ! Elle est inutilisée mais ton IDE ne peut pas te le signaler car elle est public.
+@Autowired
+Config config; 
+	public static void main(String[] args) throws IOException, GeneralSecurityException, URISyntaxException, InstantiationException, IllegalAccessException {
+		SpringApplication.run(Launcher.class, args);
+		
+		  
+		
+	
+		
+        
+		//choix();
 
-    @RequestMapping("/")
-    public String index() {
-        return "Bonjour ";
-    }
+		// DeleteTokens();
+	}
 
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
-        SpringApplication.run(Launcher.class, args);
-        //TODO bes by Djer Ne soit pas grossié avec ton code, sinon, il va encore plus planter !
-        logger.info("merde");
+	@Bean
+	public static Config loadConfig() {
 
-        // logLauncher.info("nous somme a la void launcher");
-        String user = "me";
-        int nbEvent;
-        Scanner in = new Scanner(System.in);
-        char reponse = 'F';
-        String toUp;
+		return new Config();
+	}
 
-        //TODO bes by Djer Attention, tu "initialise" un "GoogleService" mais les classe filles,
-        // Hérite de la "structure" de leur parent, pas des "données".
-        // L'état d'un parent n'est PAS partagé avec les calsse fille.
-        GoogleService monService = new GoogleService();
-        monService.setConfiguration(loadConfig());
-        monService.init();
-        GMailService monGmail = GMailService.getInstance();
-        CalendarService monCalendar = CalendarService.getInstance();
-        logger.info("la config  " + monService.getConfiguration() + "   a la recherche nbunredmail");
-        System.out.println("vous avez " + GMailService.getNbUnreadEmails(user) + " Unread Mail");
-        nbEvent = monCalendar.getNbEvents();
+	
 
-        System.out.println("vous avez " + nbEvent + " Events");
+	//TODO bes by Djer |POO| attention si pas de "modifier" alors celui de la classe. Cette méthode est donc public ! Elle est inutilisée mais ton IDE ne peut pas te le signaler car elle est public.
+	static void DeleteTokens() {
+		File fichier = new File("");
+		if (fichier.delete()) {
+			System.out.println("Deleted");
+		}
+	}
 
-        //System.out.println(monCalendar.getNextEvent());
-
-        DeleteTokens();
-    }
-
-    @Bean
-    public static Config loadConfig() {
-
-        return new Config();
-    }
-
-    static void DeleteTokens() {
-        //TODO bes by Djer Tu devrais utiliser LA config ! 
-        File fichier = new File("tokens\\StoredCredential");
-        if (fichier.delete()) {
-            System.out.println("Deleted");
-        }
-    }
+	@Override
+	public void run(String... args) throws Exception {
+		logger.info("lancement de l'APP");
+		
+		
+		
+	}
 }

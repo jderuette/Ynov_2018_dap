@@ -1,0 +1,17 @@
+<div class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
+					<li><a th:href="@{/ajoutercompte}"> Ajouter un compte </a></li>
+					<li><a th:href="@{/nbMailNonLu}" th:text="Nombremailnonlu"></a></li>
+					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
+					<li><a th:href="@{/admin}" th:text="Admin"></a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" th:if="${AppUser}">
+					<li><a th:href="@{/}" th:text="${AppUser.userKey}"></a></li>
+					<li><a th:href="@{/login?logout}">logout</a></li>
+				</ul>
+
+
+			</div>
+		</div>

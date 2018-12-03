@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<title>Ynov Java</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header>
+		<div class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
+					<li><a th:href="@{/ajoutercompte}"> Ajouter un compte </a></li>
+					<li><a th:href="@{/nbMailNonLu}" th:text="Nombremailnonlu"></a></li>
+					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
+					<li><a th:href="@{/admin}" th:text="Admin"></a></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right" th:if="${AppUser}">
+					<li><a th:href="@{/}" th:text="${AppUser.userKey}"></a></li>
+					<li><a th:href="@{/login?logout}">logout</a></li>
+				</ul>
+			
+
+			</div>
+		</div>
+	</header>
+	<section layout:fragment="content">
+		<div class="col-md-6">
+
+			<div class="panel panel-primary" id="login">
+				<div class="panel-heading">User</div>
+				<div class="panel-body">
+					<form th:action="@{/consulterAccount}" method="get">
+						<div>
+							<label>userKey: </label> <input type="text" name="userKey"
+								th:value="${userKey}" />
+							<button type="submit" class="btn btn-primary"
+								oncancel="document.getElementById('login').style.display='block'">OK</button>
+						</div>
+					</form>
+					<div class="text-danger" th:if="${exception}"
+						th:text="${exception.message}"></div>
+				</div>
+
+			</div>
+
+
+
+			<div class="panel panel-primary" th:if="${AppUser}">
+				<div class="panel-heading">Ajouter un Compte</div>
+				<div class="panel-body">
+					<div class="container-fluid">
+						<ul class="nav nav-pills">
+							<li><a th:href="${urlOutlook}" th:text="Outlook"></a></li>
+							<li><a th:href="${urlGmail}" th:text="Gmail"></a></li>
+							<li><a th:href="${urlFacebook}" th:text="Facebook"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-primary" th:if="${AppUser}">
+				<div class="panel-heading">liste des Compte</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<tr>
+							<th>Num</th>
+							<th>Account Name</th>
+							<th>adrMail</th>
+							<th></th>
+						</tr>
+						<tr th:each="o:${listGoogleAccount}">
+							<td th:text="${o.id}"></td>
+							<td th:text="${o.accountName}"></td>
+							<td th:text="${o.adrMail}"></td>
+							<td>
+
+								<div class="container-fluid">
+									<ul class="nav nav-pills">
+										<li><a
+											th:href="@{/consulterAccount(userKey=${userKey},idAccount=${o.id})}"
+											th:text="Aperçu"></a></li>
+									</ul>
+								</div>
+
+							</td>
+
+
+						</tr>
+					</table>
+					<div class="container">
+						<ul class="nav nav-pills">
+							<li th:each="p,status:${pages}"><a
+								th:href="@{/consulterAccount(userKey=${userKey},page=${status.index})}"
+								th:text="${status.index}"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${AppUser}">
+				<div class="panel-heading">Aperçu</div>
+				<div class="panel-body">
+
+					<div>
+						<label>Compte :</label> <label th:text="${accountName}"></label>
+					</div>
+					<div th:if="${nbMicroinread}">
+						<label>nb unread mail:</label> <label th:text="${nbMicroinread}"></label>
+					</div>
+
+					<table class="table" th:if="${events}">
+						<caption>Calendar</caption>
+						<thead>
+							<tr>
+								<th>Organizer</th>
+								<th>Subject</th>
+								<th>Start</th>
+								<th>End</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="event:${events}">
+								<td th:text="${event.organizer.emailAddress.name}" /></td>
+								<td th:text="${event.subject}" /></td>
+								<td th:text="${event.start.dateTime}" /></td>
+								<td th:text="${event.end.dateTime}" /></td>
+							</tr>
+
+						</tbody>
+					</table>
+					<table class="table" th:if="${eventsG}">
+						<caption>Calendar</caption>
+						<thead>
+							<tr>
+								<th>Organizer</th>
+								<th>Subject</th>
+								<th>Start</th>
+								<th>End</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="eventG:${eventsG}">
+								<td th:text="${eventG.organizer.displayName}" /></td>
+								<td th:text="${eventG.Summary}" /></td>
+								<td th:text="${eventG.start.dateTime}" /></td>
+								<td th:text="${eventG.end.dateTime}" /></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<table class="table" th:if="${allevents}">
+						<caption>Calendar</caption>
+						<thead>
+							<tr>
+								<th>Organizer</th>
+								<th>Subject</th>
+								<th>Start</th>
+								<th>End</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="event:${allevents}">
+								<td th:text="${event.organizer}" /></td>
+								<td th:text="${event.subject}" /></td>
+								<td th:text="${event.startDate}" /></td>
+								<td th:text="${event.endDate}" /></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<div class="text-danger" th:if="${errorMicro}">
+						<label th:text="${errorMicro}"></label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+	<footer>
+		<div class="navbar-fixed-bottom">
+			<small>sabeur.ben.mechlia@gmail.com</small>
+		</div>
+	</footer>
+</body>
+</html>

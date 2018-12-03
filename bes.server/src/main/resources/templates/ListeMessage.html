@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+
+
+<title th:text="#{admin.title}">Data Access Project Admin</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+	<header>
+		<th:block th:include="/menu"></th:block>
+	</header>
+	<section>
+	<div th:if="${messageGoogle}">
+	</div>
+<div th:if="${messageMicrosoft}">
+<table class="table">
+	<caption>Inbox</caption>
+	<thead>
+		<tr>
+			
+			<th>From</th>
+			<th>Subject</th>
+			<th>Received</th>
+			<th>Preview</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="message:${messageMicrosoft}">
+				<td th:text="${message.from.emailAddress.name}"></td>
+				<td th:text="${message.subject}"></td>
+				<td th:text="${message.receivedDateTime}"></td>
+				<td th:text="${message.bodyPreview}"></td>
+			</tr>
+		
+	</tbody>
+</table>
+</div>	
+	
+	</section>
+
+	<footer> </footer>
+
+</body>
+</html>
