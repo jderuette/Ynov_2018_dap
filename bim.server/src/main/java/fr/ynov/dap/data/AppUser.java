@@ -47,6 +47,7 @@ public class AppUser {
      * Constructor.
      * @param name name
      */
+    //TODO bim by Djer |Audit Code| Traite les warnings de tes outils d'audit de qualité de code
     public AppUser(String name) {
         this.name = name;
     }
@@ -78,6 +79,7 @@ public class AppUser {
      * @param microsoftAccount the microsoftAccount to set
      */
     public void setMicrosoftAccounts(List<MicrosoftAccount> microsoftAccount) {
+        //TODO bim by Djer |IDE| Traite le warning que ton IDE t'indique ! (tu as mis/oublié un "s" à "microsoftAccount(s)")
         this.microsoftAccounts = microsoftAccounts;
     }
 

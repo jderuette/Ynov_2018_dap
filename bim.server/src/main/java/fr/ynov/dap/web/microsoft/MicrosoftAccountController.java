@@ -109,9 +109,11 @@ public class MicrosoftAccountController {
                         + tokenResponse.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
 
             } else {
+                //TODO bim by Djer |Log4J| Risque de ne pas bien fonctionner, le deuxième paramètre sert de paramètre du "template de message" du premier paramètre, pas pour la traduction !
                 LOGGER.error("Impossible de valider le token reçu", "ID token failed validation.");
             }
         } else {
+          //TODO bim by Djer |Log4J| Risque de ne pas bien fonctionner, le deuxième paramètre sert de paramètre du "template de message" du premier paramètre, pas pour la traduction !
             LOGGER.error("Erreur lors de la connexion", "Unexpected state returned from authority.");
         }
         return "redirect:/userCreated";

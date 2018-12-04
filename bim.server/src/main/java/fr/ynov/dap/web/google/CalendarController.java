@@ -46,6 +46,7 @@ public class CalendarController {
     @RequestMapping("/event/google/next")
     public final Event getNextEvent(@RequestParam("userKey") final String userKey)
             throws Exception {
+        //TODO bim by Djer |Log4J| pas mal comme contexte mais ajoute le "userKey" qui est quand même vachement utile aussi (100% de tes utilisateurs vont demander "me" vue que tu ne gère pas la délagation dans ton code)
         LOGGER.info("Récupération du prochain evenement du calendrier de l'utilisateur {}...", "me");
 
         AppUser user = repository.findByName(userKey);

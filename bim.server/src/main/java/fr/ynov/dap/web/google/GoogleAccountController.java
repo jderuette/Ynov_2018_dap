@@ -88,11 +88,12 @@ public class GoogleAccountController extends CommonGoogleService {
                 AppUser user = userRepository.findByName(userKey);
                 user.addGoogleAccount(new GoogleAccount(accountName));
                 userRepository.save(user);
+                //TODO bim by Djer |Log4J| Mesage pas tout à fait juste ("Comtpe Google créé " + accountName + " pour le userkey : " + userKey). Il manque le contexte
                 LOGGER.debug("Utilisateur crée en base");
             }
 
             if (LOGGER.isDebugEnabled() && null != credential && null != credential.getAccessToken()) {
-
+                //TODO bim by Djer |Log4J| pas tout à fait juste "compte" créé, pas "utilsiateur"
                 LOGGER.debug("New user credential stored with accountName : " + accountName + "partial AccessToken : "
                         + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
 
@@ -100,6 +101,7 @@ public class GoogleAccountController extends CommonGoogleService {
 
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
+            //TODO bim by Djer |Log4J| Contextualise tes logs !
             LOGGER.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
@@ -216,6 +218,7 @@ public class GoogleAccountController extends CommonGoogleService {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+            //TODO bim by Djer |Log4J| Contextualise tes logs (" for accountName :" + accountName + " and userKey : " + userKey)
             LOGGER.error("Error while loading credential (or Google Flow)", e);
         }
         // only when error occurs, else redirected BEFORE

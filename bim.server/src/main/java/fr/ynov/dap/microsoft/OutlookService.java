@@ -37,6 +37,7 @@ public class OutlookService {
 
         HashMap<String, PagedResult<Message>> result = new HashMap<String, PagedResult<Message>>();
         for (int i = 0; i < accounts.size(); i++) {
+            //TOD bi_m by Djer |POO| Les 4 lignes suivantes peuvent être mutualisées avec tes autres méthodes de cette classe
             MicrosoftAccount account = accounts.get(i);
             String tenantId = account.getTenantId();
 

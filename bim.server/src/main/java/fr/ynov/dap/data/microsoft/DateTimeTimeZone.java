@@ -64,6 +64,7 @@ public class DateTimeTimeZone implements Comparable<DateTimeTimeZone> {
      */
     @Override
     public int compareTo(DateTimeTimeZone o) {
+        //TODO bim by Djer |POO| Attention tu néglige le "timeZone", c'est dangereux
         return this.dateTime.compareTo(o.getDateTime());
     }
 

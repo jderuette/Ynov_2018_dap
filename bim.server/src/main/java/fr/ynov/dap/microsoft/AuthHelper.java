@@ -65,6 +65,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO bim by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -80,6 +81,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO bim by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -95,6 +97,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO bim by Djer |Log4J| Une petite LOG ? 
                 return null;
             }
         }
@@ -118,6 +121,7 @@ public final class AuthHelper {
      * @throws IOException if file not found
      */
     private static void loadConfig() throws IOException {
+        //TODO bim by Djer |Design Patern| Et le ZeroConf ? Et la conf Externe ? 
         String authConfigFile = "auth.properties";
         InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -177,6 +181,7 @@ public final class AuthHelper {
         TokenService tokenService = retrofit.create(TokenService.class);
 
         try {
+            //TODO bim by Djer |POO| Evite les multiples return dans une même méthode
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
                     authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
@@ -215,6 +220,7 @@ public final class AuthHelper {
             TokenService tokenService = retrofit.create(TokenService.class);
 
             try {
+              //TODO bim by Djer |POO| Evite les multiples return dans une même méthode
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
             } catch (IOException e) {

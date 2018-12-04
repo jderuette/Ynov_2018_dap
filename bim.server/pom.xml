@@ -82,6 +82,7 @@
             <artifactId>logging-interceptor</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <!-- TODO bim by Djer |Maven| Plus utile depuis qu'on utilise Google en mode "serveur Web" -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -105,6 +106,7 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- TODO bim by Djer |Maven| Attention tu as des doublons dans tes dépendances. Mavent gère plutot bien cela mais évite de jouer avec ca. Risque de bug ultra dur à trovuer (tu change une version dans l'un mais pas dans le doublons, ...) -->
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
@@ -128,10 +130,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
+            <!-- TODO bim by Djer |Maven| Attention la version de Spring Boot de log4J est en "Java 9" ce qui fait planter la version que tu utilise de Pmd/Checkstyle (cf $ "logs" du mémo "Java bases")-->
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <!-- TODO bim by Djer |Maven| Attention la version de Spring Boot de log4J est en "Java 9" ce qui fait planter la version que tu utilise de Pmd/Checkstyle -->
         </dependency>
     </dependencies>
 

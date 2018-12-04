@@ -102,10 +102,12 @@ public class IndexController {
     public String getDataStore(final ModelMap model) throws IOException {
         GoogleAuthorizationCodeFlow flow = gmailService.getFlow();
         DataStore<StoredCredential> cred = flow.getCredentialDataStore();
+        //TODO bim by Djer |JPA| Tu pourrais simplement charger l'AppUser, les comptes y sont liés (et le Token Microsoft est lié au compte Microsoft). Tu aurais juste la trasformation "technique" à faire pour te faciliter la vie dans View.
 
         Map<String, StoredCredential> mapGoogle = new HashMap<String, StoredCredential>();
         Map<String, TokenResponse> mapMicrosoft = new HashMap<String, TokenResponse>();
 
+        //TODO bim by Djer |API Google| Attention tu récupoère ceux du fichier, et pas ceux mappé dans ta BDD. Récupéré via le DataStore de Google peut fonctionner **SI** tu as créer un Datastore spécifique qui stocke ne BDD (ce qui évite des "désynchro potentiel")
         List<String> keys = new ArrayList<String>(cred.keySet());
         List<StoredCredential> values = new ArrayList<StoredCredential>(cred.values());
 
@@ -118,6 +120,7 @@ public class IndexController {
         for (MicrosoftAccount microsoftAccount : mAccounts) {
             mapMicrosoft.put(microsoftAccount.getName(),
                     tokenRepository.findOneByMicrosoftAccount(microsoftAccount.getId()));
+            //TODO bim by Djer |SpEL| Pas besoin d'une liste de tenanId, tu peux y acceder via instance.value.token.tenantId
             tenantIdList.add(microsoftAccount.getTenantId());
         }
 
@@ -167,6 +170,7 @@ public class IndexController {
         try {
             Integer nbOutlookContact = outlookService.getNbContact(user);
             Integer nbGoogleContact = peopleService.getNbContact(user);
+            //TODO bim by Djer |POO| Tu t'embètes un peu là ? une simple addition suffirait (SAUF si un des deux service peut renvoyer une valeur négative et que tu souhiate l'ignorer...)
             if (nbOutlookContact > 0 || nbGoogleContact > 0) {
                 nbContact = 0;
                 if (nbOutlookContact > 0) {
@@ -223,10 +227,12 @@ public class IndexController {
                 if (endDate == null) {
                     endDate = nextGoogleEvent.getEnd().getDate();
                 }
+                //TPODO bim by Djer |Log4J| Contextualise tes Logs ! ("Next Google Event start at : ")
                 LOGGER.info(startDate);
                 DateTimeTimeZone startDateTimeZone = new DateTimeTimeZone(
                         new Date(startDate.getValue()));
                 DateTimeTimeZone endDateTimeZone = new DateTimeTimeZone(new Date(endDate.getValue()));
+                //TODO bim by Djer |POO| Relis le "compareTo" tu as inversé. Ca serait plus "simple" de transformer la "GoogleDate" en Date JAVA puis de comparer avec la "Date Java" contenu dans la "date Micrsooft" (sur " Java Date" tu peux utiliser les méthodes after(), before())
                 if (startDateTimeZone.compareTo(nextEvent.getStart()) <= 1) {
                     Recipient recipient = new Recipient(
                             new EmailAddress(nextGoogleEvent.getOrganizer().getDisplayName(),

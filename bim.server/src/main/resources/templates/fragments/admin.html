@@ -15,12 +15,15 @@
 			<tbody>
 				<tr th:each="instance : ${googleList}">
 					<td th:text="${instance.key}">username</td>
+					<!-- TODO bim by Djer |Thymleaf| Pourait être internationalisé ? -->
 					<td th:text="Google">Google</td>
+					<!-- TODO bim by Djer |Thymleaf| Devrait être internationalisé ? -->
 					<td th:text="Vide">Vide</td>
 					<td th:text="${instance.value.accessToken}">token</td>
 				</tr>
 				<tr th:each="instance,i : ${microsoftList}">
 					<td th:text="${instance.key}">username</td>
+					<!-- TODO bim by Djer |Thymleaf| Pourait être internationalisé ? -->
 					<td th:text="Microsoft">Microsoft</td>
 					<td th:text="${tenantIdList[i.index]}">Tenant Id</td>
 					<td class="token" th:text="${instance.value.accessToken}">token</td>

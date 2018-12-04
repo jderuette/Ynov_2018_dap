@@ -44,6 +44,7 @@ public class PeopleController {
      */
     @RequestMapping("/contact/google/number")
     public final int getNbContact(@RequestParam("userKey") final String userKey) throws Exception {
+      //TODO bim by Djer |Log4J| pas mal comme contexte mais ajoute le "userKey" qui est quand même vachement utile aussi (100% de tes utilisateurs vont demander "me" vue que tu ne gère pas la délagation dans ton code)
         LOGGER.info("Récupération du nombre de contacts de l'utilisateur {}...", "me");
 
         AppUser user = repository.findByName(userKey);

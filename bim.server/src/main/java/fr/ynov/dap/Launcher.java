@@ -36,6 +36,7 @@ public class Launcher {
      */
     @Bean
     public CommandLineRunner commandLineRunner(final ApplicationContext ctx) {
+        //TODO bim by Djer |Log4J| PAS de SysOut sur un Serveur ! Utilise une Log
         System.out.println(config.getApplicationName());
         return args -> {
         };
@@ -45,6 +46,7 @@ public class Launcher {
      * @return config
      */
     @Bean
+    //TODO bim by Djer |Spring| Est-ce toujour utile ?
     public Config loadConfig() {
         return this.config;
     }

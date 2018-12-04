@@ -39,6 +39,7 @@ public final class GmailService extends CommonGoogleService {
      */
     public Gmail getService(final String userKey) throws Exception {
         Logger logger = LogManager.getLogger();
+      //TODO bim by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey)
         logger.info("Récupération du service Gmail...");
         return new Gmail.Builder(GmailService.getHttpTransport(), GmailService.JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(getConfig().getApplicationName()).build();
@@ -60,6 +61,7 @@ public final class GmailService extends CommonGoogleService {
             Gmail service = getService(name);
             Label label = service.users().labels().get(gUser, "INBOX").execute();
             unreadMessage += label.getMessagesUnread();
+            //TODO bim by Djer |Log4J| Contexte deja pas mal, mais le gUser et (dans une moindre mesure le userKey) serait utile
             LOGGER.info("{} mails non lu pour le compte {}", label.getMessagesUnread(), name);
         }
 

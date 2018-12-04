@@ -39,8 +39,10 @@ public class Launcher {
                 break;
             case "addGoogleAccount":
                 controller.addGoogleAccount(user, account);
+              //TODO bim by Djer |Command Line| Tu as oublié le "break" ici donc l'ajout microsoft se déclenche en PLSU de l'ajout Google (et de l'aide)
             case "addMicrosoftAccount":
                 controller.addMicrosoftAccount(user, account);
+                //TODO bim by Djer |Command Line| Tu as oublié le "break" ici donc l'aide s'affiche à chaque fois qu'on ajoute un compte Mirosoft
             default:
                 printHelp();
 

@@ -17,6 +17,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * @author MBILLEMAZ
  *
  */
+//TODO bim by Djer |Audit Code| Traite la remarque de ton, outil d'audit. Pourrait etre un Service (singleton) et injecté dans les services en ayant besoin. Ou une classe mère de tous les servie "Microsoft"
 public class OutlookRequestsBuilder {
 
     /**

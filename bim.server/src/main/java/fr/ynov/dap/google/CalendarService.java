@@ -44,6 +44,7 @@ public final class CalendarService extends CommonGoogleService {
      */
 
     public Calendar getService(final String userKey) throws Exception {
+        //TODO bim by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey)
         LOGGER.info("Récupération du service Calendar...");
         return new Calendar.Builder(getHttpTransport(), JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(getConfig().getApplicationName()).build();
@@ -53,6 +54,7 @@ public final class CalendarService extends CommonGoogleService {
     /**
      * get next event for user.
      * @param user applicative user
+     * TODO bim by Djer |API Google| Non utilisé dans "Calendar" le partage se fait par CALENDRIER et non par utilisateur. Tu peux eventuellement remplacé par "CalendarId". Tu peux aussi le laisser pour que ton API "soit" cohérente mais précise dans la JavaDoc que ce paramètre est ignoré pour ce WS
      * @param gUser google user
      * @return next event
      * @throws Exception if user not found
@@ -68,11 +70,12 @@ public final class CalendarService extends CommonGoogleService {
             listEvent.addAll(events.getItems());
         }
 
+      //TODO bim by Djer |Log4J| Contextualise tes messages (" for userKey : " + user.getname())
         LOGGER.info(listEvent.size() + " evenements trouvés");
         if (listEvent.size() == 0) {
             return null;
         }
-
+        //TODO bim by Djer |Log4J| Contextualise tes messages (" for userKey : " + user.getname())
         LOGGER.info("Tri des évenements reçus");
 
         Event nextEvent = listEvent.get(0);

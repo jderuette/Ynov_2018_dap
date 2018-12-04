@@ -40,6 +40,7 @@ public class MailController {
     @RequestMapping("/email/google/nbUnread")
     public final Integer getNbUnreadEmails(@RequestParam("userKey") final String userKey) throws Exception {
         Logger logger = LogManager.getLogger();
+      //TODO bim by Djer |Log4J| pas mal comme contexte mais ajoute le "userKey" qui est quand même vachement utile aussi (100% de tes utilisateurs vont demander "me" vue que tu ne gère pas la délagation dans ton code)
         logger.info("Récupération du nombre d'emails non lu pour l'utilisateur {}...", "me");
 
         AppUser user = repository.findByName(userKey);
