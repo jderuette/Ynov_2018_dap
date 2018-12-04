@@ -46,6 +46,7 @@ public class AdminService extends GoogleService {
 
         DataStore<StoredCredential> storedCredential = super.getFlow().getCredentialDataStore();
         List<CredentialModel> listModelGoogle = new ArrayList<CredentialModel>();
+        //TODO bog by Djer |POO| Attention le "add" de liste ne fait PAS de copie, tu ajoutes à chaque fois la même instance que tu modifie. Pour pouvoir le tester il faudra que tu corige ton "ajout de comtpe Google" pour pouvoir en ajouter 2 pour le même utilisateur
         CredentialModel modelGoogle = new CredentialModel();
 
         for (String key : storedCredential.keySet()) {

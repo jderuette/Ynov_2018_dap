@@ -41,7 +41,7 @@ public class EventGlobalService {
         EventModel nextEvent = new EventModel();
 
         if (nextEventGoogle == null && nextEventMicrosoft != null) {
-
+            //TODO bog by Djer |POO| Une méthode qui initialise le "EventModel" à partir d'un "Microsoft Event" ou d'un "Google Event" aurait été pas mal
             nextEvent.setOrganisateur(nextEventMicrosoft.getOrganizer().getEmailAddress().getAddress());
             nextEvent.setSujet(nextEventMicrosoft.getSubject());
             nextEvent.setDateDebut(nextEventMicrosoft.getStart().getDateTime().toString());

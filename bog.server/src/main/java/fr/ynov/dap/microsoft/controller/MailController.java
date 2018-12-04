@@ -44,6 +44,7 @@ public class MailController {
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
             // No tokens in session, user needs to sign in
+            //TODO bog by Djer |POO| Pas très claire la méthode de "login" (en ajoutant un comtpe cela fonctionne, mais si on se déconencte ... paf fonctionen plus). Même si pas nikel demande/passe le userKey en paramètre d'URL (un peu comme pour l'API)
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
         }

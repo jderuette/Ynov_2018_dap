@@ -17,6 +17,7 @@ public class AddUserSuccess extends GoogleService {
      * @throws Exception si un problème est survenu lors de la création de l'instance Welcome
      * @throws IOException si un problème est survenu lors de la création de l'instance Welcome
      */
+    //TODO bog by Djer |POO| Ce code peut vraiment lever ces Exceptions ? 
     public AddUserSuccess() throws Exception, IOException {
     }
 

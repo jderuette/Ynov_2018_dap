@@ -69,6 +69,7 @@ public class MicrosoftEventService {
         Event nextEvent = null;
         Event event = null;
         for (MicrosoftAccountData account : accounts) {
+            //TODO bog by Djer |POO| Tu risques une exception si aucun évènnement à venir sur ce compte
             event = getEvents(account.getToken().getAccessToken(), account.getUserEmail()).getValue()[0];
             if (nextEvent == null) {
                 nextEvent = event;

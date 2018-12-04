@@ -19,6 +19,7 @@ public class AppUserController {
     /**.
      * repositoryUser is managed by Spring on the loadConfig()
      */
+    //TODO bog by Djer |SOA| Pas top d'acceder directement au repository, passer par un "UserService" aurait été mieu
     @Autowired
     private AppUserRepository repositoryUser;
 

@@ -33,6 +33,7 @@ import fr.ynov.dap.service.GoogleService;
  * Class GoogleAccount useful to connect to our Google account
  */
 @Controller
+//TODO bog by Djer |POO| Pourquoi implementer ce Callback de javax.security ?
 public class GoogleAccount extends GoogleService implements Callback {
 
     /**.
@@ -92,6 +93,7 @@ public class GoogleAccount extends GoogleService implements Callback {
                 LOG.warn("Trying to store a NULL AccessToken for user : " + accountName);
             } else {
                 if (LOG.isDebugEnabled()) {
+                    //TODO bog by Djer |Log4J| Contextualise tes messages
                     LOG.debug("New user credential stored with userId : " + accountName + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
                 }
@@ -102,6 +104,7 @@ public class GoogleAccount extends GoogleService implements Callback {
                 repositoryUser.save(userExisting);
             }
         } catch (IOException e) {
+          //TODO bog by Djer |Log4J| Contextualise tes messages
             LOG.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
@@ -215,6 +218,7 @@ public class GoogleAccount extends GoogleService implements Callback {
                 return response;
             }
             flow = super.getFlow();
+            //FIXME bog by Djer |API Google| Attention tu dois chercher par "AccountName" pas par "userkey" !
             credential = flow.loadCredential(userKey);
 
             if (credential != null && credential.getAccessToken() != null) {
@@ -227,6 +231,7 @@ public class GoogleAccount extends GoogleService implements Callback {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+            //TODO bog by Djer |Log4J| Conextualiser tes messages ("for userkey : " + userKey + " and accountName : " + accountName)
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
         return response;

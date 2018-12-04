@@ -2,13 +2,13 @@
 <pmd xmlns="http://pmd.sourceforge.net/report/2.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
-    version="6.4.0" timestamp="2018-11-25T22:45:24.480">
-<file name="C:\Users\Mon_PC\new-workspace\dap\src\main\java\fr\ynov\dap\data\AppUser.java">
+    version="6.4.0" timestamp="2018-12-04T12:41:20.884">
+<file name="D:\git\Ynov_2018_dap\bog.server\src\main\java\fr\ynov\dap\data\AppUser.java">
 <violation beginline="25" endline="25" begincolumn="21" endcolumn="22" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.data" class="AppUser" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'id'.
 </violation>
 </file>
-<file name="C:\Users\Mon_PC\new-workspace\dap\src\main\java\fr\ynov\dap\data\GoogleAccountData.java">
+<file name="D:\git\Ynov_2018_dap\bog.server\src\main\java\fr\ynov\dap\data\GoogleAccountData.java">
 <violation beginline="20" endline="20" begincolumn="21" endcolumn="22" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.data" class="GoogleAccountData" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'id'.
 </violation>
@@ -16,7 +16,7 @@ Avoid unused private fields such as 'id'.
 Avoid unused private fields such as 'owner'.
 </violation>
 </file>
-<file name="C:\Users\Mon_PC\new-workspace\dap\src\main\java\fr\ynov\dap\microsoft\data\MicrosoftAccountData.java">
+<file name="D:\git\Ynov_2018_dap\bog.server\src\main\java\fr\ynov\dap\microsoft\data\MicrosoftAccountData.java">
 <violation beginline="26" endline="26" begincolumn="21" endcolumn="22" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.microsoft.data" class="MicrosoftAccountData" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
 Avoid unused private fields such as 'id'.
 </violation>

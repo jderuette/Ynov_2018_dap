@@ -25,6 +25,7 @@
 
 	<table class="tableau">
 		<tr>
+		<!-- TODO bog by Djer |Thymleaf| internationalisation ?  -->
 			<th>GivenName</th>
 			<th>Surname</th>
 			<th>Company</th>
@@ -36,6 +37,7 @@
 				<td th:text="${contact.givenName}"></td>
 				<td th:text="${contact.surname}"></td>
 				<td th:text="${contact.companyName}"></td>
+				<!-- TODO bog by Djer |Thymleaf| soit "th:block" soit "ul", mais pas les deux -->
 				<td><ul:block th:each="email : ${contact.emailAddresses}">
 						<li th:text="${email.address}"></li>
 					</ul:block></td>

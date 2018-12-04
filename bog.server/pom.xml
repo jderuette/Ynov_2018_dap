@@ -49,6 +49,7 @@
             <artifactId>google-api-client</artifactId>
             <version>1.25.0</version>
         </dependency>
+         <!-- TODO bog by Djer |Maven| plus utile depuis qu'on a passé Googel en mdoe "serveur Web" -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -81,6 +82,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- TODO bog by Djer |Maven| Plus utile si tu utilise MySQL -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -89,12 +91,15 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        
+        <!-- TODO bog by Djer |Maven| Je pense que tu n'en a plus besoin -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
+        <!-- TODO bog by Djer |Maven| Je pense que tu n'en a plus besoin -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
@@ -102,18 +107,21 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- TODO bog by Djer |Maven| Je pense que tu n'en a plus besoin -->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
 
+        <!-- TODO bog by Djer |Maven| Je pense que tu n'en a plus besoin -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-core</artifactId>
             <version>${apache.tiles.version}</version>
         </dependency>
 
+        <!-- TODO bog by Djer |Maven| Je pense que tu n'en a plus besoin -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-jsp</artifactId>

@@ -21,6 +21,7 @@ import fr.ynov.dap.service.GoogleService;
  * Manage every maps of Calendar
  */
 @RestController
+//TODO bog by Djer |POO| Pourquoi implementer ce Callback de javax.security ?
 public class CalendarController extends GoogleService implements Callback {
 
     /**.

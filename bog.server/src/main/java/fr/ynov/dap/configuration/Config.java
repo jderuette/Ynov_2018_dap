@@ -5,6 +5,7 @@ package fr.ynov.dap.configuration;
  * Class Config
  *
  */
+//TODO bog by Djer |Spring| Externalisation de la configuration ? 
 public class Config {
     /**.
      * Nom de l'application de base

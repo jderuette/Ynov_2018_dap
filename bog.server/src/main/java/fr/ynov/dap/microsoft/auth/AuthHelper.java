@@ -21,6 +21,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 /**
  * @author Mon_PC
  */
+//TODO bog by Djer |POO| Pourquoi du static "presque" partout ? Faisant Un service (donc un Singleton par defaut) et tu pourras avoir du "vrai objet"
 public final class AuthHelper {
 
     /**.
@@ -91,9 +92,11 @@ public final class AuthHelper {
     private static String getAppId() {
         if (appId == null) {
             try {
+                //TODO bog by Djer |POO| Risqué si je n'appel pas "getAppId" en premier, "authConfigFile" est null (dans les autres "getXXX"). Fait ton initialisation dans un constructeur, ou dan le "loadConfig"
                 authConfigFile = AUTH_CONFIG_FILE;
                 loadConfig();
             } catch (Exception e) {
+                //TODO bog by Djer |Log4J| Une petite LOG ? (notament pour facilement constater que le fichier "auth" n'est pas au bon endroit)
                 return null;
             }
         }
@@ -108,6 +111,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO bog by Djer |Log4J| Une petite LOG ? (notament pour facilement constater que le fichier "auth" n'est pas au bon endroit)
                 return null;
             }
         }
@@ -122,6 +126,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO bog by Djer |Log4J| Une petite LOG ? (notament pour facilement constater que le fichier "auth" n'est pas au bon endroit)
                 return null;
             }
         }

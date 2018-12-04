@@ -1,4 +1,5 @@
 package fr.ynov.dap.client.fr.ynov.client;
+//TODO bog by Djer |POO| Attention ton nom de package est "étrange" (un double "coller" à priori)
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,7 +14,7 @@ import fr.ynov.dap.client.fr.ynov.client.api.PeopleApi;
  * Point d'entrée de l'application client
  */
 public final class App {
-    /**.
+    /**.    
      * Private constructeur de la classe App
      */
     private App() {
@@ -94,6 +95,8 @@ public final class App {
                     System.out.println("Vous avez : " + responseBodyPeople + " contact(s) pour ce compte");
                 } else {
                     if (action.equals("add")) {
+                        //TODO bog by Djer |POO| Comment ajouter un compte microsoft ? 
+                        //TODO bog by Djer |POO| Comment créer un utilisateur ? 
                         responseAddAccount = accountRessource.createAccount(userKey);
                         if (responseAddAccount == null) {
                             System.out.println("Ajout du client...");

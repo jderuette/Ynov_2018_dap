@@ -27,6 +27,7 @@ import fr.ynov.dap.repository.AppUserRepository;
 public class CalendarService extends GoogleService {
 
     /**.
+     * TODO bog by Djer |Spring| Oui géré par Spring mais PAS dans le loadConfig ! Géré grace à des annotations !
      * repositoryUser is managed by Spring on the loadConfig()
      */
     @Autowired

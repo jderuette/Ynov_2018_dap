@@ -18,6 +18,7 @@ import fr.ynov.dap.service.GoogleService;
  * Manage every maps of Gmail
  */
 @RestController
+//TODO bog by Djer |POO| Pourquoi implementer ce Callback de javax.security ?
 public class GmailController extends GoogleService implements Callback {
 
     /**.

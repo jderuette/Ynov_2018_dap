@@ -12,7 +12,9 @@ public class AccountApi extends BaseApi {
      * default chemin of the AccountApi
      * To change this, use SetChemin from BaseApi
      */
-    private static String chemin = "google/account/add/";
+    //TODO bog by Djer |POO| Attention il manque (manquait) le / au début de cette route pour que cela fonctionne.
+    //TODO bog by Djer [POO| Tu as changé tes URLS "Comtpe Google" en passant tout en "PathParam" il faut que tu adapte ton client (je te recommande de REmettre le "userKey" en PathParam)
+    private static String chemin = "/google/account/add/";
 
     /**.
      * Constructor of AccountApi and send attributs "chemin" to BaseApi

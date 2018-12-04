@@ -73,6 +73,7 @@ public class GmailService extends GoogleService {
      * @throws IOException si un problème est survenu lors de l'appel à cette fonction
      * @throws GeneralSecurityException si un problème est survenu lors de l'appel à cette fonction
      */
+    //TODO bog by Djer |API Google| Ne fonctionne plus depuis la version "multi-compte" (SAUF si userKey == AccountName ET userKey=adresseEmail de mon compte, ce qui est un cas très particilier et ne fonctionnerait que pour UN SEUL compte par utilsiateur)
     public List<Label> getListLabelsGmail(final String userId) throws IOException, GeneralSecurityException {
         return this.buildGmailService(userId).users().labels().list(userId).execute().getLabels();
     }

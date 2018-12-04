@@ -1,3 +1,4 @@
+//TODO bog by Djer |POO| Attention aux majuscules dans ton nom de package (on utilise le camelCase dans les nom de package donc pas de majuscule au "début" du mot)
 package fr.ynov.dap.client.fr.ynov.client.api;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.net.URISyntaxException;
  * @author Mon_PC
  * GmailApi class get all Gmail's fonctions
  */
+//TODO bog by Djer |JavaDoc| Le nom de cette classe (et sa Javadoc) n'est plus correcte car intéroge aussi les comptes "Microsoft"
 public class GmailApi extends BaseApi {
     /**.
      * default chemin of the GmailApi

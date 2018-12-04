@@ -19,6 +19,7 @@ import fr.ynov.dap.service.PeopleGoogleService;
  * Manage every maps of PeopleGoogle
  */
 @RestController
+//TODO bog by Djer |POO| Pourquoi implementer ce Callback de javax.security ?
 public class PeopleController extends GoogleService implements Callback {
     /**.
      * peopleService is managed by Spring on the loadConfig()
@@ -45,8 +46,10 @@ public class PeopleController extends GoogleService implements Callback {
     public int getAllContacts(@PathVariable("userKey") final String userKey) throws GeneralSecurityException {
         int nbContact = 0;
         try {
+            //FIXME bog by Djer |API Google| Provoque systématiquement une erreur un "userkey" n'est pas un "GoogleAcount" !
             nbContact = peopleService.getNbContact(userKey);
         } catch (IOException e) {
+            //TODO bog by Djer |Log4J| Le message est incorect, "userKey", pas "userId"
             LOG.error("Un problème est survenu lors de l'appel du service people", "UserId = " + userKey, e);
         }
         return nbContact;

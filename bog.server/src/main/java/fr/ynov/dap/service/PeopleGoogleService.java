@@ -43,6 +43,7 @@ public class PeopleGoogleService extends GoogleService {
      * @throws IOException si un problème est survenu lors de l'appel à cette fonction
      * @throws GeneralSecurityException si un problème est survenu lors de l'appel à cette fonction
      */
+    //TODO bog by Djer |JavaDoc| Pour pouvoir fonctionner le "userId" DOIT être un accountName
     public int getNbContact(final String userId) throws IOException, GeneralSecurityException {
         int nbContact = 0;
         nbContact = this.buildPeopleService(userId).people().connections().list("people/me")
