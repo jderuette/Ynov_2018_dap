@@ -39,6 +39,7 @@ public class GoogleCalendarController {
 	private AppUserRepository appUserRepository;
 	
 	@Autowired
+	//TODO bof by Djer |IDE| Ton IDE t'indique que ce n'est pas utilisé, Bug ? A supprimer ? 
 	private GoogleAccountRepository googleAccountRepository;
 	
 	
@@ -59,7 +60,7 @@ public class GoogleCalendarController {
 				try {
 				events.add((EventModel) calendarService.getUpcomingEvent(googleAccount.getAccountName()));
 				}catch (ClassCastException clCastException) {
-					
+					//TODO bof by Djer |POO| Evite les catch vide. A minima met une Log, ou un commentaire indiquant que tu "étouffe" volontairement cette exception
 				}
 			}
 		}
@@ -67,6 +68,7 @@ public class GoogleCalendarController {
 		if(events.size() > 0) {
 			nextEvent = events.get(0);
 			for (EventModel eventModel : events) {
+			    //TODO bof by Djer |IDE| Formate ton code (ou fait-le faire par ton IDE via les "save actions")
 				if(((EventModel) nextEvent).getStartDate().compareTo(eventModel.getStartDate()) >= 0 && ((EventModel) nextEvent).getStartDate().compareTo(new Date()) > 0){
 					nextEvent = eventModel;
 				}

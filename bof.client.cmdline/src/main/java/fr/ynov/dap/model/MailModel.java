@@ -2,6 +2,7 @@ package fr.ynov.dap.model;
 
 public class MailModel extends MasterModel {
 
+  //TODO bof by Djer |POO| évite de mélanger les attributs et les getter/setter
 	public int getNbOfEmail() {
 		return nbOfEmail;
 	}

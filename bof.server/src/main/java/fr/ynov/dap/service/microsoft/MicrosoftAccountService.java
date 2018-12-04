@@ -31,11 +31,14 @@ public class MicrosoftAccountService {
 
 	@Autowired
 	private AppUserRepository appUserRepository;
+	//TODO bof by Djer |IDE| Ton IDE t'indique que ce n'est pas utilisé, Bug ? A supprimer ?
 	@Autowired
 	private OutlookAccountRepository outlookAccountRepository;
 
+	//TODO bof by Djer |Log4J| ton IDE t'indique que ca n'est pas utilisé. En plus tu utilises une catégorie qui n'est pas la bonne
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 	
+	//TODO bof by Djer |MVC| Evite que ton service dépende d'objet "sous la responsabilité du controller" comme HttpServletRequest et HttpSession (et Model)
 	public String addAccount(final String accountName,final String userKey, final HttpServletRequest request,
 			final HttpSession session, Model model) throws GeneralSecurityException {
 		UUID state = UUID.randomUUID();
@@ -55,6 +58,7 @@ public class MicrosoftAccountService {
         return response;
 	}
 	
+	//TODO bof by Djer |MVC| Evite que ton service dépende d'objet "sous la responsabilité du controller" comme HttpServletRequest et HttpSession (et Model)
 	public String authorize(String code, String idToken, UUID state,
 			HttpServletRequest request) throws ServletException {
 		HttpSession session = request.getSession();
@@ -68,10 +72,10 @@ public class MicrosoftAccountService {
 				TokenResponse token = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
 				return oAuthSuccess(session, token, idTokenObj.getTenantId());
 			} else {
-				throw new ServletException( "ID token failed validation.");
+				throw new ServletException("ID token failed validation.");
 			}
 		} else {
-			throw new ServletException( "Unexpected state returned from authority");
+			throw new ServletException("Unexpected state returned from authority");
 		}
 	}
 	

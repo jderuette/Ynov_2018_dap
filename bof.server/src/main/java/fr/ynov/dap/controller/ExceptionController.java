@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+//TODO bof by Djer |Audit Code| Configure PMD/checkstyle, en JavaDoc la description est obligatoirement AVANT les anotations !
 /**
  * 
  * @author Florent

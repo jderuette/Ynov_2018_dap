@@ -37,11 +37,13 @@ public class GlobalEventController {
 		AppUserModel appUser = appUserRepository.findByUserKey(userKey);
 
 		if (appUser != null) {
+		    //TODO bof by Djer |IDE| Ton IDE t'indique que ce n'est oas utilisé, Bug ? A supprimer ? 
 			int sumOfContacts = 0;
 
 			List<EventModel> events = new ArrayList<>();
 			EventModel nextEvent = null;
 
+			 //TODO bof by Djer |IDE| Ton IDE t'indique que ce n'est oas utilisé, Bug ? A supprimer ? 
 			EventModel response = null;
 			for (OutlookAccountModel accountModel : appUser.getMicrosoftAccounts()) {
 				events.add(microsoftCalendarService.getNextEvent(accountModel));
@@ -69,6 +71,7 @@ public class GlobalEventController {
 			}
 
 			model.addAttribute("nextEvent", nextEvent);
+			//TODO bof by Djer |POO| Evite les multiples return dans une même méthode
 			return "GlobalNextEvent";
 		} else {
 			model.addAttribute("errorMessage", "No user found for given useKey");

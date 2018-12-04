@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.ynov.dap.model.AppUserModel;
 import fr.ynov.dap.model.MailModel;
+//TODO bof by Djer |IDE| Configure les "save action" de ton IDE pour éviter de laisser trainer des import inutiles
 import fr.ynov.dap.model.MasterModel;
 import fr.ynov.dap.model.Google.GoogleAccountModel;
 import fr.ynov.dap.model.microsoft.OutlookAccountModel;
@@ -36,6 +37,7 @@ public class GlobalMailController {
 		int inboxSum = 0;
 		if(null != appUserRepository.findByUserKey(userKey)) {
 			AppUserModel appUser =  appUserRepository.findByUserKey(userKey);
+			//TODO bof by Djer |POO| le "for xxxxxaccounts" pourrait être codé dans le service pour éviter cette "charge métier" au controller
 			for (GoogleAccountModel googleAccount : appUser.getGoogleAccounts()) {
 				MailModel inbox = (MailModel) mailService.getInboxMail(googleAccount.getAccountName());
 				inboxSum += inbox.getNbOfEmail();

@@ -31,6 +31,7 @@ public class GoogleService {
 	@Autowired 
 	protected Config cfg;
 	
+	//TODO bof by Djer |POO| Ton IDE t'indique que ces variables ne sont pas utilisées. Bug ? A supprimer ? 
 	private Credential credentials;
 	private GoogleAuthorizationCodeFlow flow;
 	
@@ -44,6 +45,7 @@ public class GoogleService {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+	//TODO bof by Djer |JavaDoc| utilise "userKey" à la place de "userID"
 	protected Credential getCredentials(String userId) throws IOException, GeneralSecurityException {
 		return credentials = this.getFlow().loadCredential(userId);
 	}

@@ -20,6 +20,7 @@ import fr.ynov.dap.service.microsoft.MicrosoftContactsService;
 @RequestMapping("/microsoft")
 public class MicrosoftContactsController {
 	
+  //TODO bof by Djer |SOA| Transférer l'itération dans le service métier éviterait à ton controller de dépendre d'un objet "acces aux données"
 	@Autowired
 	AppUserRepository appUserRepository;
 	
@@ -27,6 +28,7 @@ public class MicrosoftContactsController {
 	MicrosoftContactsService microsoftContactsService;
 	
 	@RequestMapping("/contacts")
+	//TODO bof by Djer |Audit Code| "redirectAttributes" n'est pas/plus utilisé, inutile de le garder dans la signature de la méthode
 	public MasterModel contacts(@RequestParam final String userKey,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		int nbOfContact = 0;
 		AppUserModel appUser = appUserRepository.findByUserKey(userKey);

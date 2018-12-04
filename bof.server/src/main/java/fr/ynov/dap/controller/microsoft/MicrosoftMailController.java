@@ -23,6 +23,7 @@ import fr.ynov.dap.service.microsoft.MicrosoftMailService;
 @RequestMapping("/microsoft")
 public class MicrosoftMailController {
 
+  //TODO bof by Djer |SOA| Transférer l'itération dans le service métier éviterait à ton controller de dépendre d'un objet "acces aux données"
 	@Autowired
 	private OutlookAccountRepository outlookAccountRepository;
 
@@ -33,6 +34,7 @@ public class MicrosoftMailController {
 	public String mail(Model model, HttpServletRequest request) {
 
 		HashMap<String, Message[]> usersMessages = new HashMap<>();
+		//TODO bof by Djer |JPA| Cela affiche tous les mails de tous le monde, ca n'est très repectueux de la vie privée. N'affiche que les email du compte rattaché au userKey (à passer en paramètre)
 		for (OutlookAccountModel account : outlookAccountRepository.findAll()) {
 			usersMessages.put(account.getAccountName(), microsoftMailService.getMails(account));
 		}

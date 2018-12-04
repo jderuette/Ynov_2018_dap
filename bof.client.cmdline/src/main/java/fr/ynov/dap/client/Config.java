@@ -1,5 +1,6 @@
 package fr.ynov.dap.client;
 
+//TODO bof by Djer |POO| Evite d'appeler cette classe "Config". Les constantes ne sont PAS configurables. Cela prete à confusion
 public class Config {
 
 	public final static String URL_BASE = "http://localhost:8080";

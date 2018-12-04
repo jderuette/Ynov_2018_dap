@@ -20,6 +20,7 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
 
 @EnableJpaRepositories
 public class Config {
+    //TODO bof by Djer |Design Patern| Nomage de tes attributs !!! Il pourrais y avoir une constante pour la valeur par defaut et il DOIT y avoir un attribut pour laisser configurable.
     private String APPLICATION_NAME = "Gmail API Java Quickstart";
     private JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private String TOKENS_DIRECTORY_PATH = "tokens";

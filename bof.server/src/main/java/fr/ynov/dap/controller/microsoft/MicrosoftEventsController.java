@@ -25,6 +25,7 @@ public class MicrosoftEventsController {
 	@Autowired
 	MicrosoftCalendarService microsoftEventService;
 
+	//TODO bof by Djer |SOA| Transférer l'itération dans le service métier éviterait à ton controller de dépendre d'un objet "acces aux données"
 	@Autowired
 	AppUserRepository appUserRepository;
 
@@ -44,6 +45,7 @@ public class MicrosoftEventsController {
 			if (events.size() > 0) {
 				nextEvent = events.get(0);
 				for (EventModel eventModel : events) {
+				    //TODO bof by Djer |POO| Ton cast n'est pas/plus utile
 					if (((EventModel) nextEvent).getStartDate().compareTo(eventModel.getStartDate()) >= 0) {
 						nextEvent = eventModel;
 					}

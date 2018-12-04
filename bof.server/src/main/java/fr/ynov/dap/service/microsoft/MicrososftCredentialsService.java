@@ -13,6 +13,8 @@ import fr.ynov.dap.repository.microsoft.TokenResponseRepository;
 @Service
 public class MicrososftCredentialsService {
 
+    
+    //TODO bof by Djer |POO| Si tu ne précise pas de modifier "hérite" de celui de la classe. Cet atribut est donc public !
 	@Autowired
 	OutlookAccountRepository outlookAccountRepository;
 	

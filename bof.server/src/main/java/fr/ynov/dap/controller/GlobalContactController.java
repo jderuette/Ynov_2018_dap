@@ -44,6 +44,7 @@ public class GlobalContactController {
 				sumOfContacts += microsoftContactsService.countContacts(microsoftAccount);
 			}
 			model.addAttribute("nbOfContacts", sumOfContacts);
+			//TODO bof by Djer |POO| Evite les multiples return dans une même méthode
 			return "GlobalContacts";
 		}
 		model.addAttribute("errorMessage", "userKey non reconnu");

@@ -1,5 +1,6 @@
 package fr.ynov.dap.model.Google;
 
+//TODO bof by Djer |IDE| Organise tes imports, ca évitera ces "import globaux" qui sont en général une fausse bonne idée
 import javax.persistence.*;
 
 import fr.ynov.dap.model.AppUserModel;
@@ -14,6 +15,7 @@ public class GoogleAccountModel extends MasterModel {
 	
 	private String accountName;
 	
+	//TODO bof by Djer |POO|Evite des getter/setter au milieu des attributs
 	public String getAccountName() {
 		return accountName;
 	}

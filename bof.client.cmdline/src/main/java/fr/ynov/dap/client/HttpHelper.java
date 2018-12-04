@@ -1,5 +1,6 @@
 package fr.ynov.dap.client;
 
+//TODO bof by Djer |IDE| Configure les "save action" de ton IDE pour éviter de laisser trainer des imports inutilisé.
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class HttpHelper {
 			in.close();
 
 			// print result
+			//TODO bof by Djer |POO| Evite les multiples return dans la même méthode
 			return response.toString();
 		} else {
 			return "GET request not worked";

@@ -48,6 +48,7 @@ public class MicrosoftMailService {
 					.body();
 			return messages.getValue();
 		} catch (IOException e) {
+		    //TODO bof by Djer |Log4J| Une petite log pour éviter que cette exception soit silencieusement étouffée
 			return null;
 		}
 	}
@@ -70,6 +71,7 @@ public class MicrosoftMailService {
 			OutlookMailFolder mailFolder = outlookService.getMailFolders(folder).execute().body();
 			return new MailModel(mailFolder.getUnreadItemCount());
 		} catch (IOException e) {
+		  //TODO bof by Djer |Log4J| Une petite log pour savoir qu'on a renvoyé une information potentiellement fausse à l'utilisateur ? 
 			return new MailModel(0);
 		}
 	}

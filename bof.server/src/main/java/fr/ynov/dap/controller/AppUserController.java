@@ -13,6 +13,7 @@ public class AppUserController {
 	@Autowired
 	AppUserService appUserService;
 	
+	//TODO bof by Djer |IDE| Configure les "save actions" de ton IDE pour formater le code à la sauvegarde, cela évitera ce petit "double espace" entre final et le type.
 	@RequestMapping(value="/user/add/{userKey}")
 	public String addUser(@PathVariable final  String userKey) {
 		return appUserService.addUser(userKey);

@@ -22,6 +22,7 @@ public class MicrosoftContactsService {
 	@Autowired
 	AppUserRepository appUserRepository;
 	
+	//TODO bof by Djer |POO| Si tu ne précise pas de modifier "hérite" de celui de la classe. Cet atribut est donc public ! Il n'est pas utilisé mais ton IDE ne peut pas te le signaler car public
 	@Autowired
 	OutlookAccountRepository outlookAccountRepository;
 	
@@ -34,6 +35,7 @@ public class MicrosoftContactsService {
 		OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken());
 
 		// Retrieve messages from the inbox
+		//TODO bof by Djer |IDE| Ton IDE t'indique que ca n'est pas/plus utilisé. Bug ? A supprimé ?
 		String folder = "inbox";
 		// Return at most 10 messages
 

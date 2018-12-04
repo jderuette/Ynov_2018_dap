@@ -28,6 +28,7 @@ public class Launcher {
 	 * Method who launch springBoot app
 	 */
 	public static void main(String[] args) throws Exception {
+	    //TODO bof by Djer |IDE| Supprime ce TO-DO s'il n'est plus vrai
 		// TODO Auto-generated method stub
 		SpringApplication.run(Launcher.class, args);
 	}

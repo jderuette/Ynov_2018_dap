@@ -14,7 +14,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+//TODO bof by Djer |POO| Pourquoi tout en static ? Un Service (donc Singleton) aurait fait l'affaire et était injectable.
 public class AuthHelper {
+    //TODO bof by Djer |POO| Si static final la variable DOIT être écrit en majuscule (Active PMD/Checkstyle pour t'aider à identifier ce genre d'oublie !)
 	private static final String authority = "https://login.microsoftonline.com";
 	private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 	
@@ -37,6 +39,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO bof by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -47,6 +50,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO bof by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -58,6 +62,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO bof by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -73,6 +78,7 @@ public class AuthHelper {
 	}
 	
 	private static void loadConfig() throws IOException {
+	    //TODO bof by Djer |Design Patern| ZéroConf ? Configuration externalisable ? 
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 		

@@ -30,6 +30,8 @@ public class GoogleAccountService extends GoogleService {
 
 	@Autowired
 	private AppUserRepository appUserRepository;
+	
+	//TODO bof by Djer |IDE| Ton IDE t'indique que ce n'est pas utilisé, Bug ? A supprimer ?
 	@Autowired
 	private GoogleAccountRepository googleAccountRepository;
 	
@@ -37,6 +39,7 @@ public class GoogleAccountService extends GoogleService {
 		super();
 	}
 
+	//TODO bof by Djer |Audit Code| Pourquoi variable en majuscule et non static ?
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	
@@ -68,6 +71,7 @@ public class GoogleAccountService extends GoogleService {
 	public String oAuthCallback(final String code, final HttpServletRequest request,
 			final HttpSession session) throws ServletException, GeneralSecurityException {
 		final String decodedCode = extracCode(request);
+		//TODO bof by Djer |Log4J| Contextualise tes messages (même a minimum lorsque c'est du débug). En mettant cette log apres la récupération de l'accountName en session. Deplus ce "decodedCode" est une information "senssible" tu ne devrais en affiher qu'un morceau (ou simplement la taille)
 		LOG.debug(decodedCode);
 		final String redirectUri = buildRedirectUri(request, cfg.getAuth2CallbackUrl());
 
@@ -78,6 +82,7 @@ public class GoogleAccountService extends GoogleService {
 
 			final Credential credential = flow.createAndStoreCredential(response, accountName);
 			if (null == credential || null == credential.getAccessToken()) {
+			    //TODO bof by Djer |Log4J| Message partiellement faux, ce n'est pas un "user" mais un "accountName"
 				LOG.warn("Trying to store a NULL AccessToken for user : " + accountName);
 			}
 

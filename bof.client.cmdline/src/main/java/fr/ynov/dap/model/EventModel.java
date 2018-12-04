@@ -3,6 +3,8 @@ package fr.ynov.dap.model;
 import java.util.Date;
 
 public class EventModel extends MasterModel {
+    
+    //TODO bof by Djer |POO| évite de mélanger les attributs et les getter/setter (ordre : Constantes, attributs statics, attributs, initializateur static, constructeurs, méthodes métiers, méthpode "générique" (toString, equals, hasCode,...), getter/setter)
 
 	private String summary;
 	public String getSummary() {

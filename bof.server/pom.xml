@@ -68,11 +68,13 @@
 			<artifactId>logging-interceptor</artifactId>
 			<version>3.2.0</version>
 		</dependency>
+		<!-- TODO bof by Djer |Maven| Plus utile depuis que Google est en mode "serveur web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO bof by Djer |Maven| Plus utile si tu utilise une BDD MySQL -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -104,13 +106,13 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
-			<version>2.11.1</version>
+			<version>2.9.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jul</artifactId>
-			<version>2.11.1</version>
+			<version>2.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -122,11 +124,14 @@
 			<optional>true</optional>
 		</dependency>
 
+<!-- TODO bof by Djer |Maven| Pourquoi, tu as deja Log4J via org.apache.logging.log4j:log4j-api:2.9.1 et le log4j-core -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		
+		<!-- TODO bof by Djer |Maven| Pourait être proche des autres dépendance "Google" ?  -->
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-people</artifactId>
@@ -206,6 +211,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
+				<!-- TODO bof by Djer |Audit Code| Je t'encourage a utilisé le fichier de config que je vous ai proposé -->
 					<rulesets>
 						<!-- A rule set, that comes bundled with PMD -->
 						<ruleset>/category/java/bestpractices.xml</ruleset>
@@ -225,6 +231,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
+							<!-- FIXME bof by Djer |Command Line| Il n'y a plus de classes à cet emplacement -->
 							<mainClass>fr.ynov.dap.dap.Launcher</mainClass>
 						</manifest>
 					</archive>
@@ -263,6 +270,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
+									<!-- FIXME bof by Djer |Command Line| Il n'y a plus de classe à cet emplacement -->
 										fr.ynov.dap.dap.Launcher
 									</mainClass>
 								</manifest>
@@ -302,6 +310,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<!-- FIXME bof by Djer |Maven| Tu n'a pas défini cette propriété (et il ne me semble pas qu'elle en ai une par defaut) -->
 									<mainClass>${start-class}</mainClass>
 								</transformer>
 							</transformers>
@@ -313,6 +322,9 @@
 	</build>
 
 	<reporting>
+	<!-- TODO bof by Djer |Javadoc| Raport pour la Javadoc ?  -->
+	<!-- TODO bof by Djer |Audit Code| Raport pour PMD ?  -->
+	<!-- TODO bof by Djer |Audit Code| Rapport pour Checkstyle ? -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

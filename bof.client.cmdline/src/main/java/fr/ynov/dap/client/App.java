@@ -34,6 +34,8 @@ public class App
     		return;
     	}
         switch(args[0]) {
+        //FIXME bof by Djer |API Microsoft| Ajout de compte Microsoft ?
+        //FIXEME vof by Djer |Rest API| Ajout d'utilisateur ? 
         case "Add":
         	Desktop.getDesktop().browse(new URI(Config.URL_BASE + Config.ADD_ACCOUNT + args[1]));
         	break;

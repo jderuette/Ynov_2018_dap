@@ -50,6 +50,7 @@ public class GoogleCalendarService extends GoogleService {
 	 * @throws IOException
 	 * 
 	 */
+    //TODO bof by Djer |JavaDoc| utilise "userKey" à la place de "userID"
 	private Calendar getService(String userID) throws GeneralSecurityException, IOException {
 
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -68,6 +69,7 @@ public class GoogleCalendarService extends GoogleService {
 	 * @return EventModel The request response formated in JSON
 	 * @throws Exception
 	 */
+	//TODO bof by Djer |JavaDoc| utilise "userKey" à la place de "userID"
 	public EventModel getUpcomingEvent(String userID) throws Exception {
 		DateTime now = new DateTime(System.currentTimeMillis());
 		Calendar service = getService(userID);

@@ -32,6 +32,7 @@ public class GoogleContactService extends GoogleService{
 	 * @throws IOException
 	 * 
 	 */
+  //TODO bof by Djer |JavaDoc| utilise "userKey" à la place de "userID"
 	private PeopleService getService(String userID) throws GeneralSecurityException, IOException {
 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -49,6 +50,7 @@ public class GoogleContactService extends GoogleService{
 	 * @return ContactModel The request response formated in JSON
 	 * @throws Exception
 	 */
+	//TODO bof by Djer |JavaDoc| utilise "userKey" à la place de "userID"
 	public int getNbContacts(String userID) throws GeneralSecurityException, IOException {
 		PeopleService service = getService(userID);
 		ListConnectionsResponse response = service.people().connections()

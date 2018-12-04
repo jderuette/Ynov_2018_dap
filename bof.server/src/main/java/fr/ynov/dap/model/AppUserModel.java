@@ -22,6 +22,7 @@ public class AppUserModel {
 	@Column(unique=true)
 	private String userKey;
 	
+	//TODO bof by Djer |POO|Evite des getter/setter au milieu des attributs
 	public String getUserKey() {
 		return userKey;
 	}
