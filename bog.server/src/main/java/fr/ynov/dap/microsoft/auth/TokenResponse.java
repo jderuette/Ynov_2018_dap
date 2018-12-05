@@ -21,7 +21,7 @@ public class TokenResponse {
     /**.
      * propriété length
      */
-    //TODO bog by Djer |JavaDoc| Nom un peu plus claire ? Au moins une Javadoc plus claire ? 
+    //TODO bog by Djer |JavaDoc| Nom un peu plus claire ? Au moins une Javadoc plus claire ?
     private static final int LENGTH = 1000000;
 
     /**.

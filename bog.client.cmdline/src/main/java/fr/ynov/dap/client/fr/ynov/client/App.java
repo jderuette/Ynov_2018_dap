@@ -95,8 +95,8 @@ public final class App {
                     System.out.println("Vous avez : " + responseBodyPeople + " contact(s) pour ce compte");
                 } else {
                     if (action.equals("add")) {
-                        //TODO bog by Djer |POO| Comment ajouter un compte microsoft ? 
-                        //TODO bog by Djer |POO| Comment créer un utilisateur ? 
+                        //TODO bog by Djer |POO| Comment ajouter un compte microsoft ?
+                        //TODO bog by Djer |POO| Comment créer un utilisateur ?
                         responseAddAccount = accountRessource.createAccount(userKey);
                         if (responseAddAccount == null) {
                             System.out.println("Ajout du client...");
