@@ -97,13 +97,13 @@ public class Config {
 	}
 
 	public String getoAuth2CallbackUrl() {
-	    //TODO bes by Djer |IDE| Supprime ce TODO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroCOnf" sur cet élement.
+	    //TODO bes by Djer |IDE| Supprime ce TO-DO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroConf" sur cet élement.
 		// TODO Auto-generated method stub
 	
 		return "http://localhost:8080/Callback";
 	}
 	public String getMapping() {
-	  //TODO bes by Djer |IDE| Supprime ce TODO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroCOnf" sur cet élement.
+	  //TODO bes by Djer |IDE| Supprime ce TO-DO s'il n'est plus juste. Ou alors profites-en pour faire du "zéroConf" sur cet élement.
 		// TODO Auto-generated method stub
 	
 		return "/Callback";

@@ -1,8 +1,10 @@
 <div class="navbar navbar-default">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
+				<!-- FIXME bes by Djer |MVC| Tes liens doivent pointer vers un Controller, qui fera des traitements métier, puis selctionnera la vue à afficher -->
 					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
 					<li><a th:href="@{/ajoutercompte}"> Ajouter un compte </a></li>
+					<!-- TODO bes by Djer |Thymleaf| Pour que tes message soient traduits il faut : qu'il soit dans un ${} ET que la clef soit dans les fichiers de traductions -->
 					<li><a th:href="@{/nbMailNonLu}" th:text="Nombremailnonlu"></a></li>
 					<li><a th:href="@{/}" th:text="FR.YNOV.DAP"></a></li>
 					<li><a th:href="@{/admin}" th:text="Admin"></a></li>

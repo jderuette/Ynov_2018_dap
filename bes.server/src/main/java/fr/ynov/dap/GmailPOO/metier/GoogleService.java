@@ -68,7 +68,7 @@ public class GoogleService {
 			
 			LOG.info("problem getCredencials user="+user);
 			
-			//TODO bes by Djer Evite les multiples return dnas une même méthode
+			//TODO bes by Djer |POO| Evite les multiples return dnas une même méthode
 			return null;
 
 		}
@@ -125,7 +125,7 @@ public class GoogleService {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
-		    //TODO bes by Djer |Log4J| PAS de sysout sur un server, cela ne saute pas une ligne dans le ficheir de logs. Et il ne faut PAS sauter de lignes dans un ficheir de logs (c'est un fichier "technique" qui doit être facilement parssable)
+		    //TODO bes by Djer |Log4J| PAS de sysout sur un server, cela ne saute pas une ligne dans le fichier de logs. Et il ne faut PAS sauter de lignes dans un ficheir de logs (c'est un fichier "technique" qui doit être facilement parssable)
 			System.out.println();
 			//TODO bes by Djer |Log4J| Met un message claire "error while intializing Google Service". Utilise le deuxième paramètre de la méthode "error" pour mettre la cause ("e") ainsi tu auras le message de l'excetipn PLUS la pile d'éxécution
 			LOG.error("Config"+e.getMessage());

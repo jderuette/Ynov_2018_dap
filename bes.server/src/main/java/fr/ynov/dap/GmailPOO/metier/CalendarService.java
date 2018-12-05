@@ -33,7 +33,7 @@ public class CalendarService extends GoogleService {
         return allEvents.size();
     }
 
-    //TODO bes by Djer Inutile, Srping fait un Singleton par defaut sur les @RestController
+    //TODO bes by Djer |Spring| Inutile, Srping fait un Singleton par defaut sur les @RestController
     //Deplus get est une méthode d'instance, il te faut donc une instance, pour ... récupérer l'instance
     /**
      * @throws IOException 

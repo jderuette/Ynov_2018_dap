@@ -16,18 +16,22 @@
 <link rel="stylesheet" type="text/css"
 	href="../static/css/bootstrap.min.css"
 	th:href="@{/css/bootstrap.min.css}" />
+	<!-- TODO bes by Djer |Thymleaf| Attention ce fichier CSS n'existe pas -->
 <link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
 	th:href="@{/css/myStyle.css}" />
 </head>
 <body>
 	<header>
+	<!-- FIXME bes by Djer |Thymleaf| Ne fonctionne pas mode "jar". Lorsque tu fait un "include" il faut indiquer une "vue" donc juste "login". Thymeleaf s'occupera de retrouver la vue et de l'éxécuter. cf : https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#difference-between-thinsert-and-threplace-and-thinclude -->
 		<th:block th:include="/menu"></th:block>
 	</header>
 	<section>
+	<!-- FIXME bes by Djer |Thymleaf| Ne fonctionne pas mode "jar". include attend une vue et pas uen "ressource"
 	<th:block th:include="/login"></th:block>
 	</section>
 	<footer>
 		<div class="navbar-fixed-bottom">
+		<!-- TODO bes by Djer |Thymleaf| Evite de laisser ton adresse mail dans le code source -->
 			<small>sabeur.ben.mechlia@gmail.com</small>
 		</div>
 	</footer>
