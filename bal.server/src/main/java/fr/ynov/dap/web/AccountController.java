@@ -55,6 +55,7 @@ public class AccountController extends BaseController {
         return AccountController.class.getName();
     }
 
+    //TODO bal by Djer |MVC| Synonyme de "/user/add/{userKey}" dans AppUserController ?
     @RequestMapping(value = "/account/add/{userKey}") //, method = RequestMethod.POST)
     public AppUser addNewUser(@PathVariable final String userKey) {
 
