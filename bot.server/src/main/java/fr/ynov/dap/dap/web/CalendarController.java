@@ -36,6 +36,7 @@ public class CalendarController {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws GeneralSecurityException the general security exception
 	 */
+	//TODO bot by Djer |POO| Renome aussi le paramètre de la méthode
 	@RequestMapping("/nextEvent")
 	public Map<String, Object> getNextEvent(@RequestParam("userKey") final String userId) throws
 	IOException, GeneralSecurityException {

@@ -18,6 +18,7 @@ import retrofit2.Retrofit;
 /**
  * The Class AuthHelper.
  */
+//TODO bot by Djer |POO| Pourquoi tout en static ? Tu pourrais utilsier un Service (singleton par defaut) puis l'injecter là ou tu en a besoin. Ou faire un héritage.
 public class AuthHelper {
 	
 	/** The Constant authority. */
@@ -56,6 +57,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO bot by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -72,6 +74,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO bot by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -88,6 +91,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO bot by Djer |Log4J| Une petite LOG ? 
 				return null;
 			}
 		}
@@ -102,6 +106,7 @@ public class AuthHelper {
 	private static String getScopes() {
 		StringBuilder sb = new StringBuilder();
 		for (String scope : scopes) {
+		    //TODO bot bu Djer |IDE| Traite cette remarque PMD (fait une deuxième "append" avec ton espace)
 			sb.append(scope + " ");
 		}
 		return sb.toString().trim();
@@ -114,12 +119,14 @@ public class AuthHelper {
 	 */
 	private static void loadConfig() throws IOException {
 		String authConfigFile = "auth.properties";
+		//TODO bot by Djer |Design Patern| Rendre la conf externalisable ? 
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
 		if (authConfigStream != null) {
 			Properties authProps = new Properties();
 			try {
 				authProps.load(authConfigStream);
+				//TODO bot by Djer |Design Patern| principe ZéroConf ?
 				appId = authProps.getProperty("appId");
 				appPassword = authProps.getProperty("appPassword");
 				redirectUrl = authProps.getProperty("redirectUrl");
@@ -177,6 +184,7 @@ public class AuthHelper {
 		TokenService tokenService = retrofit.create(TokenService.class);
 
 		try {
+		    //TODO bot by Djer |POO| Evite les multipels return dans une même méthode
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(),
 					"authorization_code", authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
@@ -221,6 +229,7 @@ public class AuthHelper {
 		    TokenService tokenService = retrofit.create(TokenService.class);
 
 		    try {
+		      //TODO bot by Djer |POO| Evite les multipels return dans une même méthode
 		      return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(), 
 		          "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 		    } catch (IOException e) {

@@ -4,6 +4,7 @@ package fr.ynov.dap.dap.google;
 /**
  * The Class CalendarResponse.
  */
+//TODO bot by Djer |POO| Synonyme de GoogleCalendarResponse ? Cette classe devrait être dans "Model" avec ces copines ? 
 public class CalendarResponse {
 	
 	/** The start. */

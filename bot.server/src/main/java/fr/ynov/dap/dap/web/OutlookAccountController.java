@@ -79,6 +79,7 @@ public class OutlookAccountController {
 	 * @return the user account
 	 * @throws ServletException the servlet exception
 	 */
+	//TODO bot by Djer |POO| Domage de dupliquer le code du GoogleAccountController, en plus en gardant les message "Google". A refactorer ? 
 	private String getUserAccount(final HttpSession session) throws ServletException {
 		String accountName = null;
 		if (null != session && null != session.getAttribute("accountName")) {
@@ -99,6 +100,7 @@ public class OutlookAccountController {
 	 * @return the user key
 	 * @throws ServletException the servlet exception
 	 */
+	//TODO bot by Djer |POO| Domage de dupliquer le code du GoogleAccountController, en plus en gardant les message "Google". A refactorer ?
 	private String getUserKey(final HttpSession session) throws ServletException {
 		String userKey = null;
 		if (null != session && null != session.getAttribute("userKey")) {

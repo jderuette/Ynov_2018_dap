@@ -25,6 +25,7 @@ import fr.ynov.dap.dap.repository.AppUserRepository;
 public class OutlookCalendarService {
 
 	/** The log. */
+  //TODO bot by Djer |Log4J| Static ? Au bon endroit ? Avec la bonne catégorie ("OutlookCalendarService" au lieu de "GoogleAccountService")
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	/** The app user repo. */
@@ -60,6 +61,7 @@ public class OutlookCalendarService {
 				.body();
 
 		if (events.getValue().length == 0) {
+		  //TODO bot by Djer |POO| Evite les multiples return dans une même méthode (si lenght > 0 : nextEvent = events.getValue()[0], et pas besoin de else, ni de multiple return)
 			return null;
 		}
 		OutlookEvent nextEvent = events.getValue()[0];
@@ -79,18 +81,23 @@ public class OutlookCalendarService {
 			try {
 				events.add(getNextEvent(account));
 			} catch (IOException e) {
+			  //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
 				LOG.error("Error when trying get next event for all accounts", e);
 			}
 		}
 		
 		if(events.size() == 0) {
+		  //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.warn("No events available for outlook.");
+			//TODO bot by Djer |POO| Evite les multiples return dans une même méthode
 			return null;
 		}
 
+		//TODO bot by Djer |POO| Ta variable "next" contient en faite le précédent lors de la boucle ...
 		OutlookEvent nextEvent = events.get(0);
 
 		for (OutlookEvent event : events) {
+		    //TODO bot by Djer |POO| Est-ce a cause de ce nom de varialbe ? Mais j'ai l'impression que tu fait l'inverse que ce qui est demandé.
 			if (nextEvent.getStart().getDateTime().getTime() > 
 			event.getStart().getDateTime().getTime()) {
 				nextEvent = event;

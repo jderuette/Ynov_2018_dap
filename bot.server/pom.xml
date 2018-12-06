@@ -75,6 +75,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO bot by Djer |Maven| Plus besoin depuis que Google est en mode "server web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -184,6 +185,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
+				<!-- TODO bot by Djer |Maven| Il n'y a pas de fichier à cet emplacement -->
 					<configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
 				</configuration>
 				<reportSets>
@@ -194,6 +196,7 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+			<!-- TODO bot by Djer |Audit Code| Config PMD ? -->
 		</plugins>
 
 	</reporting>

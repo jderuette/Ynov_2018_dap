@@ -22,6 +22,8 @@ public class AppUser {
 	/** The name. */
 	private String name;
 	
+	//TODO bot by Djer |POO| Evite de melanger des getter/setter au milieu des attributs (ordre : Constantes, attributs, intiialisateurs static, constructeurs, méthdoe métier, méthode générique (toString, HasCode,...), getter/setter)
+	
 	/**
 	 * Gets the name.
 	 *

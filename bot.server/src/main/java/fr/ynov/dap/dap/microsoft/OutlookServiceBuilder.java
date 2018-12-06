@@ -53,6 +53,7 @@ public class OutlookServiceBuilder {
 
 		// Create and configure the Retrofit object
 		Retrofit retrofit = new Retrofit.Builder()
+		        //TODO bot by Djer |POO| Pourrais être extrait en constante, voir configurable (au moins pour le developper)
 				.baseUrl("https://graph.microsoft.com").client(client)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build();

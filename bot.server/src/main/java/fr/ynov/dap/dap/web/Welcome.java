@@ -40,6 +40,7 @@ public class Welcome {
 	 * Welcome.
 	 *
 	 * @param model the model
+	 * TODO bot by Djer |POO| Ce userId est en faite un accountName ? 
 	 * @param userId the user id
 	 * @return the string
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -88,8 +89,10 @@ public class Welcome {
 			}
 			model.addAttribute("dataStore", usersCrendentials);
 		} catch (IOException e) {
+		    //TODO bot by Djer |Log4J| "e.printStackTrace()" affiche dans la console. Utilise une Log à la palce, et utilise le deuxième paramètre (la cause) pour y indiquer l'exception
 			e.printStackTrace();
 		} catch (Exception e) {
+		  //TODO bot by Djer |Log4J| "e.printStackTrace()" affiche dans la console. Utilise une Log à la palce, et utilise le deuxième paramètre (la cause) pour y indiquer l'exception
 			e.printStackTrace();
 		}
 		return "data";

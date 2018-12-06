@@ -33,8 +33,8 @@ public class GMailService extends GoogleService {
 	 */
 	private Gmail getService(String userId) throws GeneralSecurityException, IOException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-		Gmail service = new Gmail.Builder(HTTP_TRANSPORT, configuration.getJSON_FACTORY(),
-				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getAPPLICATION_NAME()).build();
+		Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JACKSON_FACTORY,
+				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getApplicationName()).build();
 		return service;
 	}
 

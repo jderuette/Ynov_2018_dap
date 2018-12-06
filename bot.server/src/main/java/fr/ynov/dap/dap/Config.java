@@ -15,6 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 public class Config {
 
 	/** The client secret dir. */
+    //TODO bot by Djer |Design Patern| Inutiel ton "credentialsFilePath" contient le chemin en entier
 	private String clientSecretDir;
 
 	/** The application name. */
@@ -30,8 +31,10 @@ public class Config {
 	private String redirectUrlGoogle;
 
 	/** The Constant CONFIG_FILE_PATH. */
+	//TODO bot by Djer |Design Patern| Domage que je ne puisse pa configurer CET propriété ... 
 	private static final String CONFIG_FILE_PATH = 
-			System.getProperty("user.home") + "\\config.properties";
+	        //TODO bot by Djer |POO| Utiliser System.getProperty("") pour rester compatible sur d'autres OS que celui sur lequel tu developpe
+			System.getProperty("user.home") + "\\dap\\bot\\config.properties";
 
 	/**
 	 * Instantiates a new config.
@@ -50,6 +53,7 @@ public class Config {
 		this.clientSecretDir = "google/client";
 		this.applicationName = "Hoc Dap";
 		this.tokensDirectoryPath = "tokens";
+		//TODO bot by Djer |POO| Utiliser System.getProperty("") pour rester compatible sur d'autres OS que celui sur lequel tu developpe
 		this.credentialsFilePath = System.getProperty("user.home") + "\\credentials.json";
 		this.redirectUrlGoogle = "/oAuth2Callback";
 		
@@ -57,6 +61,7 @@ public class Config {
 			Properties configProps = new Properties();
 			try {
 				configProps.load(configStream);
+				//TODO bot by Djer |Design Patern| Et si je decide de ne pas valoriser UNE des propriété dnas le fichier ? Cela écrase par "null" ? 
 				this.clientSecretDir = configProps.getProperty("client_secret_dir");
 				this.applicationName = configProps.getProperty("application_name");
 				this.tokensDirectoryPath = configProps.getProperty("tokens_directory_path");

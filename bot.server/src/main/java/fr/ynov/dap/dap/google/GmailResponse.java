@@ -4,6 +4,7 @@ package fr.ynov.dap.dap.google;
 /**
  * The Class GmailResponse.
  */
+//TODO bot by Djer |POO| Cette classe devrait être dans "Model" avec ces copines ? 
 public class GmailResponse {
 	
 	/** The nb mail un read. */

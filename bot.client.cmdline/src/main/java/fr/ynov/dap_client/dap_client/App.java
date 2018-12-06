@@ -1,3 +1,4 @@
+//TODO bot by Djer |POO| Pas de "_" dans les noms de package
 package fr.ynov.dap_client.dap_client;
 
 import java.net.HttpURLConnection;
@@ -59,6 +60,7 @@ public class App {
 					Desktop.getDesktop().browse(myURI);
 	
 				} catch (URISyntaxException e) {
+				    //TODO bot by Djer |Log4J| "e.printStackTrace()" affiche dans la console. Utilise une log à la palce.
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();

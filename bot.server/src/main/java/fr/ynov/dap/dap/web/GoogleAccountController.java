@@ -71,6 +71,7 @@ public class GoogleAccountController {
 	}
 	
 	/**
+	 * TODO bot by Djer |JavaDoc| "get the AccountName" PAS le "userId"
 	 * Gets the userid.
 	 *
 	 * @param session the session
@@ -85,6 +86,7 @@ public class GoogleAccountController {
 
 		if (null == accountName) {
 			LOG.error("accountName in Session is NULL in Callback");
+			//TODO bot by Djer |Log4J| Message partiellement faux "accountName is Null", pas "userId". Pour éviter  ces "oublie de copier colelr" créer une méthode "loadFromSession(String key)" serait pas mal ? (cast de la valeur de retour a gérer, masi une version ne fonctionnat qu'avaec un type "String" sera déja pas mall) 
 			throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
 		}
 		return accountName;
@@ -104,7 +106,9 @@ public class GoogleAccountController {
 		}
 
 		if (null == userKey) {
+		  //TODO bot by Djer |Log4J| Message partiellement faux "accountName is Null", pas "userId".
 			LOG.error("userId in Session is NULL in Callback");
+			//TODO bot by Djer |Log4J| Message partiellement faux "accountName is Null", pas "userId".
 			throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
 		}
 		return userKey;

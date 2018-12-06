@@ -36,6 +36,8 @@ public class GoogleCalendarService extends GoogleService {
 	@Autowired
     private AppUserRepository appUserRepo;
 	
+	//TODO bot by Djer |POO| Attention a l'ordre ! 
+	//TODO bot by Djer |Log4J| Devrait être static (Cela justifirai ausis que se soit ecrit en majuscules !)
 	/** The log. */
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 	
@@ -81,6 +83,7 @@ public class GoogleCalendarService extends GoogleService {
         List<Event> items = events.getItems();
         
         if(items.size() <= 0) {
+          //TODO bot by Djer |POO| Evite les multiples return dans une même méthode
         	return null;
         }
         
@@ -102,7 +105,8 @@ public class GoogleCalendarService extends GoogleService {
 	 * @throws GeneralSecurityException the general security exception
 	 */
 	public GoogleCalendarResponse getNextEventForAllAccounts(final String userKey) throws IOException, GeneralSecurityException {
-		LOG.info("getNextEventAllAccount");
+	  //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
+	    LOG.info("getNextEventAllAccount");
 		AppUser user = appUserRepo.findByName(userKey);
 		ArrayList<GoogleCalendarResponse> events = new ArrayList<>();
 		
@@ -115,7 +119,10 @@ public class GoogleCalendarService extends GoogleService {
 			}
 		}
 		if(events.size() == 0) {
+		    //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
+		    //TODO bot by Djer |Log| Pas vraiment un warning, un utilisateur peu ne pas avoir d'évènnement à venire. Un level Info serait suffisant
 			LOG.warn("No events available for google.");
+			//TODO bot by Djer |POO| Evite les multiples return dans une même méthode
 			return null;
 		}
 		

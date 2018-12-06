@@ -7,6 +7,7 @@ import fr.ynov.dap.dap.model.GoogleCalendarResponse;
 /**
  * The Class SortByDate.
  */
+//TODO bot by Djer |JavaDoc| Précise que ca par "start Date" ? (soit dans la JavaDoc soit dans le nom de la classe, soit les deux)
 public class SortByDate implements Comparator<GoogleCalendarResponse>{
 
 	/* (non-Javadoc)

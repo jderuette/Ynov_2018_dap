@@ -23,6 +23,7 @@ public class AppUserService {
 	 * Adds the user.
 	 *
 	 * @param userKey the user key
+	 * TODO bot by Djer |javaDoc| "the map", je supose que c'est un modèle dans lequel le controller peut/doit piocher des informations ? Structures ? documenter l'utilité de chaque attributs ? Pour éviter de tout décrire en description tu peux créer une classe qui representra et décrira ta structure
 	 * @return the map
 	 */
 	public Map<String, Object> addUser(final String userKey){

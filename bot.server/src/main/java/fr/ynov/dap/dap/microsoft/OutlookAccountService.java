@@ -87,6 +87,7 @@ public class OutlookAccountService {
 					outlookAccount.setTenantId(idTokenObj.getTenantId());
 					outlookAccount.addToken(token);
 					appUser.addMicrosoftAccount(outlookAccount);
+					//TODO bot by Djer |JPA| Sauvegarde ton "AppUser" Jpa s'ocupera de mettre à jour/créer les entités filles (c'est AppUser qui est "maitre" dans les relations)
 					outlookAccountRepository.save(outlookAccount);
 				}else {
 					session.setAttribute("error", "Account already exist.");

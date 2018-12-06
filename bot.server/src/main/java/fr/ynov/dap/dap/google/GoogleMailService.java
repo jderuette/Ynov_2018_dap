@@ -28,6 +28,7 @@ public class GoogleMailService extends GoogleService {
     private AppUserRepository appUserRepo;
 	
 	/** The log. */
+	//TODO bot by Djer |Log4J| Static ? Au bon endroit ? Avec la bonne catégorie ("GoogleMailService" au lieu de "GoogleAccountService")
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	/**
@@ -61,6 +62,7 @@ public class GoogleMailService extends GoogleService {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws GeneralSecurityException the general security exception
 	 */
+	//TODO bot by Djer |POO| Pourquoi "public", seulement utilsié dans cette classe. Et aussi dans "welcome" mais Welcome pourrait utilsier la version "forAllAccount" (en modifiant aussi les "redirecte" des OAuthCallback)
 	public int getNbMailInbox(final String accountName) throws IOException, GeneralSecurityException {
 		Gmail service = getService(accountName);
 		Label listResponse = service.users().labels().get("me", "INBOX").execute();
@@ -80,12 +82,15 @@ public class GoogleMailService extends GoogleService {
 		int nbUnreadMail = 0;
 		
 		if(user != null) {
+		    //TODO bot by Djer |POO| "currentData" c'est un Account ? donc "account" serait pas mal comme nom de variable ?
 			for (GoogleAccount currentData : user.getGoogleAccounts()) {
 	            nbUnreadMail += getNbMailInbox(currentData.getName());
 	        }
+			//TODO bot by Djer |POO| Evite les multiples return dans une même méthode
 			return nbUnreadMail;
 		}
-		
+		//TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
+		//TODO bot by Djer |log4J| Pas vraiment un Warning, on a le droit de ne pas avoir de mail en retard de lecture. Un level Info serait suffisant
 		LOG.warn("No user found !");
 		
 		return 0;

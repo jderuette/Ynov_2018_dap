@@ -88,10 +88,12 @@ public class GoogleAccountService extends GoogleService {
 			AppUser appUser = appUserRepo.findByName(userKey);
 			googleAccount.setName(accountName);
 			appUser.addGoogleAccount(googleAccount);
+			//TODO bot by Djer |JPA| Sauvegarde ton "AppUser" Jpa s'ocupera de mettre à jour/créer les entités filles (c'est AppUser qui est "maitre" dans les relations)
 			googleAccountRepo.save(googleAccount);
 
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		  //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey + " and accountname : " + accountName)
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to connect Google Account");
 		}
@@ -106,6 +108,7 @@ public class GoogleAccountService extends GoogleService {
 	 * @param userKey the user key
 	 * @param redirectUri the redirect uri
 	 * @param session the session
+	 * TODO bot by Djer |JavaDoc| La génération de javadoc t'aide à éviter d'oublié des paramètre, pas a faire le travail "intélligent" à ta place !
 	 * @return the string
 	 */
 	public String addAccount(final String accountName,final String userKey, String redirectUri, final HttpSession session) {
@@ -125,6 +128,7 @@ public class GoogleAccountService extends GoogleService {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		  //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey + " and accountname : " + accountName)
 			LOG.error("Error while loading credential (or Google Flow)", e);
 		}
 

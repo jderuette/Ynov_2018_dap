@@ -34,8 +34,10 @@ public class ContactService extends GoogleService {
 	 */
 	private PeopleService getService(String userId) throws GeneralSecurityException, IOException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-		PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, configuration.getJSON_FACTORY(),
-				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getAPPLICATION_NAME()).build();
+		//FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+		PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, JACKSON_FACTORY,
+		      //FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getApplicationName()).build();
 		return service;
 	}
 	
@@ -47,7 +49,7 @@ public class ContactService extends GoogleService {
 	 * @throws GeneralSecurityException the general security exception
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	//TODO bot by Djer Renvoie un nombre de contact, le nom de la méthode n'est pas très claire. Et la Javadoc n'éclaire pas !
+	//TODO bot by Djer |POO| Renvoie un nombre de contact, le nom de la méthode n'est pas très claire. Et la Javadoc n'éclaire pas !
 	public int getContacts(String userId) throws GeneralSecurityException, IOException {
 		PeopleService service = getService(userId);     
 		ListConnectionsResponse response = service.people().connections()
@@ -55,7 +57,7 @@ public class ContactService extends GoogleService {
                 .setPageSize(10)
                 .setPersonFields("names,emailAddresses")
                 .execute();
-		//TODO bot by Djer Toujour max 10 contacts, car paginé, et 10 résultats par page et que tu ne parcour pas les pages
+		//TODO bot by Djer |API Google| (Ancien TO-DO non corrigé !) Toujour max 10 contacts, car paginé, et 10 résultats par page et que tu ne parcour pas les pages
 		int countContact = response.getTotalPeople();
 		return countContact;
 	}

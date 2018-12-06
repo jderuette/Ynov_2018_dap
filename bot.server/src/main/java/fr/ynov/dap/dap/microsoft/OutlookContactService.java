@@ -23,6 +23,7 @@ import fr.ynov.dap.dap.repository.AppUserRepository;
 public class OutlookContactService {
 	
 	/** The log. */
+  //TODO bot by Djer |Log4J| Static ? Au bon endroit ? Avec la bonne catégorie ("OutlookContactService" au lieu de "GoogleAccountService")
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	/** The app user repo. */
@@ -56,9 +57,11 @@ public class OutlookContactService {
         		.body();
 
         if (contacts != null && contacts.getValue() != null) {
+          //TODO bot by Djer |POO| Evite les multiples return dans une même méthode
             return contacts.getValue().length;
         }
         
+        //TODO bot by Djer |Log4J| Pas vraiment un Warning, c'est autorisé dene pas avoir de contact sur un de ces comptes. Un level Info suffirait
         LOG.warn("No contacts available for outlook account : " + account.getName());
 
         return 0;
@@ -77,6 +80,7 @@ public class OutlookContactService {
     	AppUser appUser = appUserRepo.findByName(userKey);
     	
         if (appUser.getOutlookAccounts().size() == 0) {
+            //TODO bot by Djer |Log4J| Pas vraiment un warning, c'est autorisé de n'avoir QUE des comptes Google (SAUF si AVANT chanque appels tu vérifie que cette appel est "utile" et donc là il devrait y avoir des comptes Microsoft)
         	LOG.warn("Current user " + appUser.getName() + " haven't any outlook account");
             return 0;
         }

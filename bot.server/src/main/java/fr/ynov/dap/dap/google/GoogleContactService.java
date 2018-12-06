@@ -28,6 +28,7 @@ public class GoogleContactService extends GoogleService {
     private AppUserRepository appUserRepo;
 	
 	/** The log. */
+	//TODO bot by Djer |Log4J| Static ? Au bon endroit ? Avec la bonne catégorie ("GoogleContactService" au lieu de "GoogleAccountService")
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 	/**
 	 * Instantiates a new contact service.
@@ -85,11 +86,15 @@ public class GoogleContactService extends GoogleService {
 			for (GoogleAccount currentData : user.getGoogleAccounts()) {
 				nbContacts += getNbContacts(currentData.getName());
 	        }
+			//TODO bot by Djer |POO| Evite les multiples return dans une même méthode
 			return nbContacts;
 		}
 		
+		//TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
+        //TODO bot by Djer |log4J| Pas vraiment un Warning, on a le droit de ne pas avoir de contatcs. Un level Info serait suffisant
 		LOG.warn("No user found !");
 		
+		//TODO bot by Djer |POO| Comme to "nbContacts" est initialisé à "0" tu peux le retourne, si on est passé da,s le "if" le "0" sera changé, et du coups un seul return. Il faut juste gérer ta log dans un "else"
 		return 0;
 	}
 }

@@ -18,6 +18,7 @@ import com.google.api.services.calendar.model.Events;
  * The Class CalendarService.
  */
 @Service
+//TODO bot by Djer |POO| Semble être du "vieux code", à supprimer ?
 public class CalendarService extends GoogleService { 
 	
 	/**
@@ -37,8 +38,10 @@ public class CalendarService extends GoogleService {
 	 */
 	private Calendar getService(String userId) throws GeneralSecurityException, IOException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-		Calendar service = new Calendar.Builder(HTTP_TRANSPORT, configuration.getJSON_FACTORY(),
-				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getAPPLICATION_NAME()).build();
+		//FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+		Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JACKSON_FACTORY,
+		      //FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+				getCredentials(HTTP_TRANSPORT, userId)).setApplicationName(configuration.getApplicationName()).build();
 		return service;
 	}
 	
@@ -50,6 +53,7 @@ public class CalendarService extends GoogleService {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws GeneralSecurityException the general security exception
 	 */
+	//TODO bot by Djer |JavaDoc| userId devrait être renomé en "userKey", et de préférence documenté (au moins UNE fois)
 	public CalendarResponse getNextEvent(String userId)  throws IOException, GeneralSecurityException {
 		Calendar service = getService(userId);
 		DateTime now = new DateTime(System.currentTimeMillis());
@@ -60,6 +64,7 @@ public class CalendarService extends GoogleService {
                 .setSingleEvents(true)
                 .execute();
         List<Event> items = events.getItems();
+        //FIXME bot by Djer |API Google| Plante si pas d'évènnement à venir
         CalendarResponse calendarRes = new CalendarResponse(items.get(0).getStart().toString(),
         		items.get(0).getEnd().toString(), items.get(0).getStatus(), items.get(0).getSummary());
         return calendarRes;

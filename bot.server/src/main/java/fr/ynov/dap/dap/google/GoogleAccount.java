@@ -22,10 +22,11 @@ import org.apache.logging.log4j.LogManager;
  * The Class GoogleAccount.
  */
 @Service
+//TODO bot by Djer |POO| Semble être du "vieux code", à supprimer ? 
 public class GoogleAccount extends GoogleService {
 	
 	/** The log. */
-    //TODO bot by Djer Final ?
+    //TODO bot by Djer |POO| (Ancien TO-DO non corrigé !) Final ?
 	private static Logger LOG = LogManager.getLogger(GoogleAccount.class);
 	
 	/** The sensible data first char. */
@@ -50,14 +51,14 @@ public class GoogleAccount extends GoogleService {
 	 * @return the string
 	 * @throws ServletException the servlet exception
 	 */
-	//TODO bot by Djer Bien vue de sparer service et Controller. Mais un service qui dépend de "requets" et "session" Ce n'est pas top.
-	//Essaye d'extraire les données dans le controller, puis de fournir les données au service
+	//TODO bot by Djer [MVC| (Ancien TO-DO non corrigé !) Bien vue de séparer service et Controller. Mais un service qui dépend de "requets" et "session" Ce n'est pas top. Essaye d'extraire les données dans le controller, puis de fournir les données au service
 	public String oAuthCallback(String code, final HttpServletRequest request,
 			final HttpSession session) throws ServletException {
 		
 		final String decodedCode = extracCode(request);
 
-		final String redirectUri = buildRedirectUri(request, getConfiguration().getoAuth2CallbackUrl());
+		//FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+		final String redirectUri = buildRedirectUri(request, getConfiguration().getRedirectUrl());
 		final String userId = getUserid(session);
 		try {
 			final GoogleAuthorizationCodeFlow flow = super.getFlow();
@@ -75,11 +76,12 @@ public class GoogleAccount extends GoogleService {
 			}
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		    //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userId)
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to conenct Google Account");
 		}
 
-		//TODO bot by Djer es-tu sure d'avoir un mapping sur / ?
+		//TODO bot by Djer |MVC| (Ancien TO-DO non corrigé !) Es-tu sure d'avoir un mapping sur / ?
 		return "redirect:/";
 	}
 
@@ -165,11 +167,13 @@ public class GoogleAccount extends GoogleService {
                 response = "AccountAlreadyAdded";
             } else {
                 final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-                authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfiguration().getoAuth2CallbackUrl()));
+              //FIXME bot by Djer |POO| Ne compilait pas/plus, je corrige pour pouvoir vérifier l'éxécution de ton code
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfiguration().getRedirectUrl()));
                 session.setAttribute("userId", userId);
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+          //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userId)
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
         return response;

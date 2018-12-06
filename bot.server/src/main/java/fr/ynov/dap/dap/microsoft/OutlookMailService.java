@@ -32,6 +32,7 @@ public class OutlookMailService {
 	private AppUserRepository appUserRepo;
 	
 	/** The log. */
+	//TODO bot by Djer |Log4J| Static ? Au bon endroit ? Avec la bonne catégorie ("OutlookMailService" au lieu de "GoogleAccountService")
 	private final Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	/**
@@ -45,6 +46,8 @@ public class OutlookMailService {
 		List<String> users = new ArrayList<>();
 		List<OutlookMessage[]> messages = new ArrayList<>();
 		AppUser appUser = appUserRepo.findByName(userKey);
+		
+		//TODO bot by Djer |POO| Pourquoi ne pas avoir fait une méthode privé "par accountName" comme pour les autres services ? 
 		String folder = "inbox";
 		String sort = "receivedDateTime DESC";
 		String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
@@ -61,6 +64,7 @@ public class OutlookMailService {
 	        	users.add(account.getName());
 	        	messages.add(emails.getValue());
 	        }catch(IOException e) {
+	          //TODO bot by Djer |Log4J| Contextualise tes messages (" for accountName : " + account.getName())
 	        	LOG.error("Error when trying get mail for all accounts.",  e);
 	        }
 	    }
@@ -79,6 +83,8 @@ public class OutlookMailService {
 	public int getNbMailInboxForAllAccount(String userKey) {
 		AppUser appUser = appUserRepo.findByName(userKey);
 		int totalMailInbox = 0;
+		
+		//TODO bot by Djer |POO| Pourquoi ne pas avoir fait une méthode privé "par accountName" comme pour les autres services ?
 		for(OutlookAccount account : appUser.getOutlookAccounts()) {
 			Token tokens = AuthHelper.ensureTokens(account.getToken(), account.getTenantId());	
 	    	OutlookService outlookService = OutlookServiceBuilder
@@ -87,6 +93,7 @@ public class OutlookMailService {
 	            OutlookMailFolder mailFolder = outlookService.getMailFolders("INBOX").execute().body();
 	            totalMailInbox += mailFolder.getUnreadItemCount();
 	        }catch(IOException e) {
+	          //TODO bot by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey)
 	            LOG.error("Error when trying get number mail inbox for all accounts.",  e);
 	        }
 		}	

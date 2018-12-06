@@ -11,6 +11,7 @@
 
 </head>
 <body>
+<!-- TODO bot by Djer |Thymleaf| internationalisation ?  -->
 	<h1>Data</h1>
 
 	<div class="table">
@@ -27,6 +28,7 @@
 		<table>
 			<tr th:each="data : ${dataStore}">
 				<td><span th:text="${data.key}"></span></td>
+				<!-- TODO bot by Djer |API Microsoft| Tenant ID pour Microsoft ?  -->
 				<td><span th:text="${data.accessToken}"></span></td>
 				<td><span th:text="${data.refreshToken}"></span></td>
 				<td><span th:text="${data.expirationTimeMilliseconds}"></span></td>

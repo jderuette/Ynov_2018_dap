@@ -99,7 +99,7 @@ public class GoogleCalendarResponse {
 
 	/**
 	 * Sets the status.
-	 *
+	 * TODO bot by Djer |JavaDoc| Status de l'evennement ou de l'utilisateur effectuant la requete ? 
 	 * @param status the new status
 	 */
 	public void setStatus(String status) {

@@ -29,6 +29,7 @@ public class OutlookViewController {
 	@RequestMapping("/mails")
 	public String getMailForAllAccounts(@RequestParam("userKey") final String userKey,
 			ModelMap model) {
+	    //TODO bot by Djer |POO| Tu ne devrais appeler ton service qu'une fois, puis extraire les deux infos du resultat. Petit risque sur les PERF, mais SURTOUT tu pourrais avoir une désynchro entre les deux réponses, et tu produis deux listes tu supose qu'elle sont "synchroniser (le 3ème de l'une corespond au 3ème de l'autre).
 		model.put("users",
 				outlookMailService.getMailForAllAccounts(userKey)
 				.get("users"));
