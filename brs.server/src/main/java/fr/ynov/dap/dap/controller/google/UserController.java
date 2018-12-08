@@ -32,9 +32,11 @@ public class UserController {
 	
 	
 	
+	//TODO brs by Djer |POO| Ajoute un utilisateur ? Ou un compte Google ? (le nom de la méthode n'est pas claire)
 	@RequestMapping("/user/add/{userKey}")
 	public String addAccount(@PathVariable final String userKey, final HttpServletRequest request,
 			final HttpSession session) throws GeneralSecurityException {
+	    //TODO brs by Djer |IDE| Ton ide te dit que  ca n'est pas utilisé. Bug ? A supprimer ? 
 		String response = "errorOccurs";
 		GoogleAuthorizationCodeFlow flow;
 		Credential credential = null;
@@ -62,7 +64,7 @@ public class UserController {
 		AppUser user0 = new AppUser();
 		
 		
-		
+		//TODO brs by Djer |POO| Pourquoi renvoyer u ndes paramètre passé en entré ? 
 		return repo.findByUserkey(userKey).getUserkey();
 	}
 	

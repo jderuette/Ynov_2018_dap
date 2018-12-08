@@ -29,6 +29,7 @@ public class MicrosoftEventService extends MicrosoftService {
 		AppUser appU = appUserRepo.findByUserkey(user);
 		
 		if (appU == null) {
+		  //TODO brs by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return nextEvent;
 		}
@@ -44,6 +45,7 @@ public class MicrosoftEventService extends MicrosoftService {
 	private Event getNExtEventByAccount(MicrosoftAccount account) {
 		if (account.getToken() == null ) {
 			// No tokens, user needs to sign in
+		    //TODO brs by Djer |POO| Devrait être une exception
 			LOG.error("error", "please sign in to continue.");
 			return null;
 		}
@@ -55,19 +57,25 @@ public class MicrosoftEventService extends MicrosoftService {
 	    // Only return the properties we care about
 	    String properties = "organizer,subject,start,end";
 	    // Return at most 10 events
+	    //TODO brs by Djer |API Microsoft| Tu pourrais limiter à 1 event comme tu ne veux que le prochain.
 	    Integer maxResults = 10;
 	
 		PagedResult<Event> event = null;
 		
 	
 		try {
+		    //TODO brs by Djer |API Microsoft| Tu ne précise pas de date début de recherhe ("now")? Est-ce que par defaut Microsoft ne renvoi que ceux à venir ?  
 			event = outlookService.getEvents(
 			          sort, properties, maxResults)
 			          .execute().body();
 			
+			//TODO brs by Djer |Log4J| Conextualise tes messages
 			LOG.info(event);
+			//TODO brs by Djer |POO| Evite les multiple return dans une même méthode
+			//TODO brs by Djer |API Microsoft| Plante si pas d'évennement à venir (ArrayOutOfBoundException)
 			return event.getValue()[0];
 		} catch (IOException e) {
+		  //TODO brs by Djer |Log4J| Conextualise tes messages
 			LOG.error("error", e);
 		}
 		

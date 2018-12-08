@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <!-- TODO brs by Djer |Maven| Il y a un ordre "attendu" dans ce fichier. Cf "mémo maven" -->
   <build>
 		<plugins>
 			<plugin>
@@ -10,6 +11,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
+							<!-- TODO brs by Djer |Maven| Il n'y a pas de clases à cette endroit -->
 							<mainClass>fr.ynov.dap.dap.launcher</mainClass>
 						</manifest>
 					</archive>
@@ -38,6 +40,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
+						<!-- TODO brs by Djer |Maven| Il n'y a pas de clases à cette endroit -->
 							<mainClass>fr.ynov.dap.dap.launcher</mainClass>
 						</manifest>
 					</archive>
@@ -68,12 +71,15 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	<!-- TODO brs by Djer |Spring| utilises-tu vraiment Spring/Spring-boot dans le client ?  -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.5.RELEASE</version>
 	</parent>
 	<dependencies>
+	<!-- TODO brs by Djer |Maven| utilises-tu vraiment Spring-web dans le client ?  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -102,6 +108,8 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- TODO brs by Djer |API Google| As-tu vraiment besoin des dépendance "Google" dans le client ? -->
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>

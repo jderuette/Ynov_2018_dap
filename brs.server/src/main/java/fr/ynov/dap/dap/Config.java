@@ -1,6 +1,7 @@
 package fr.ynov.dap.dap;
 
 import java.io.File;
+//TODO brs by Djer |IDE| Configure tes "save action" : nettoyer les imports, formater le code
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import com.google.api.services.people.v1.PeopleServiceScopes;
 /**
  * The Class config.
  */
+//FIXME brs by Djer |Design Patern| Rendre la configuration modifiable de l'extérieur ? 
 public class Config {
 
 	/** The application name. */

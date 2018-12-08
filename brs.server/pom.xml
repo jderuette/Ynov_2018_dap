@@ -13,6 +13,7 @@
 		<version>2.0.5.RELEASE</version>
 	</parent>
 	<dependencies>
+	<!-- TODO brs by Djer |Audit Code| Ajouter cette dépendance ne configure PAS checkstyle. Cf "mémo checkstyle" -->
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-checkstyle-plugin</artifactId>
@@ -66,6 +67,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- TODO brs by Djer |Maven| Plus utile si tu utilise MySQL -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -103,6 +105,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO brs by Djer |Maven| Plus utile depuis que tu utilises Google en mode "serveur Web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -191,6 +194,7 @@
 					<skipEmptyReport>false</skipEmptyReport>
 					<minimumTokens>75</minimumTokens>
 					<rulesets>
+					<!-- TODO brs by Djer |Audit Code| Le fichier Existe mais il est "vide" je t'encourage a utiliser celui que je vous ai proposé dans le "mémo PMD" -->
 						<ruleset>/pmd/dap_pmd.xml</ruleset>
 					</rulesets>
 				</configuration>

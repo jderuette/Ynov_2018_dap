@@ -47,8 +47,11 @@ public abstract class GoogleServices extends LoggerUtils {
 	public  Config getConfiguration() {
 		return configuration;
 	}
+	//TODO brs by Djer |POO| Devrait être static, pourrais être protected avec les classe fille qui l'utilise directement
 	private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	
+	//TODO brs by Djer |POO| Pourquoi public ? Ce Getter n'est utilisé QUE par les classe fille, protected suffirait (même protected directement sur l'attribut, qui devrait être en static)
+	//TODO brs by Djer |POO| Ne definie pas de getter au milieu de tes attributs
 	public JsonFactory getJSON_FACTORY() {
 		return JSON_FACTORY;
 	}
@@ -58,13 +61,16 @@ public abstract class GoogleServices extends LoggerUtils {
 	 *
 	 * @param configuration the new configuration
 	 */
+	//TODO brs by Djer |Sprting| Ton attribut a déja un autowire, pas la peine d'an ajouter run sur le setter.
 	@Autowired
 	public void setConfiguration(final Config cfg) {
 		this.configuration = cfg;
 	}
 
+	//TODO brs by Djer |POO| même remarques que pour JSON_FACTORY
 	private final List<String> SCOPES = new ArrayList<String>();
 	
+	//TODO brs by Djer |POO| même remarques que pour JSON_FACTORY
 	public List<String> getSCOPES() {
 		return SCOPES;
 	}

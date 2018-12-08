@@ -59,6 +59,8 @@ public class CalendarController extends LoggerUtils {
 
 		JSONObject returnedJSON = new JSONObject();
 		if (eventGoogle == null && eventMicrosoft == null) {
+		    //TODO brs by Djer |Log4J| Ajoute du contexte à ts messages ("for userKey : " + user).
+		  //TODO brs by Djer |Log4J| pas vraiment uen erreur, on a le droit de ne pas avoir d'évènnement à venir. Un level Info serait suffisant
 			LOG.error("There is not event");
 			return null;
 		} else {
@@ -73,6 +75,7 @@ public class CalendarController extends LoggerUtils {
 				jsonMicrosoft.put("subject", eventMicrosoft.getSubject().toString());
 				jsonMicrosoft.put("organiser", eventMicrosoft.getOrganizer().getEmailAddress().getName().toString());
 				returnedJSON = jsonMicrosoft;
+				//TODO brs by Djer |Log4J| Contextualise tes messages
 				LOG.info(jsonMicrosoft);
 			} else if (eventGoogle != null && eventMicrosoft == null) {
 
@@ -93,11 +96,13 @@ public class CalendarController extends LoggerUtils {
 				} else {
 					//LOG.info(jsonMicrosoft);
 					returnedJSON = jsonMicrosoft;
+					//TODO brs by Djer |Log4J| Contextualise tes messages
 					LOG.info(jsonMicrosoft);
 				}
 			}
 
 		}
+		//TODO brs by Djer |Log4J| Contextualise tes messages ("next Event start at : " returnedJSON.getString("start"))
 		LOG.info(returnedJSON.getString("start"));
 		model.addAttribute("content", "event");
 		

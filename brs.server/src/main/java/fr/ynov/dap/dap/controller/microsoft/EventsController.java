@@ -31,11 +31,14 @@ public class EventsController {
 	@Autowired
 	MicrosoftEventService eventService;
 
+	//TODO brs by Djer |Spring| Si tu n'as pas besoin de la requete ou des redirectAttributtes, ne les mets pas dans la signature de la méthode.
+	  //TODO brs by Djer |Audit Code| Tes paramètres devraient être static
   @RequestMapping("/events")
   public String events(@RequestParam(value = "userKey", required = true) String userKey,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     
     Event events = eventService.getNextEvent(userKey);
     if(events == null) {
+      //TODO brs by Djer |API Microsoft| En quoi est-ce une "erreur" de n'avoir aucun évènnement sur aucun de ces comtpes Micrsooft ? (si je ne souhaite utiliser QUE les mails ?)
     	return "error";
     }
     model.addAttribute("start",events.getStart().getDateTime());

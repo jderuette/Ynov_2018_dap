@@ -21,6 +21,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 
 import fr.ynov.dap.dap.data.AppUserRepository;
 import fr.ynov.dap.dap.service.google.GoogleAccountService;
+//TODO brs by Djer |IDE| Configure les "save action" de ton IDE pour éviter de laisser trainer des imports inutiles
 import fr.ynov.dap.dap.service.google.GoogleServices;
 
 
@@ -59,6 +60,7 @@ public class AccountController {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		    //TODO brs by Djer |Log4J| Pourquoi enlever cette LOG ? Tu "étouffe" cette exception c'est quand même bien d'avoir un minimum d'infos !
 			//LOG.error("Error while loading credential (or Google Flow)", e);
 		}
 		// only when error occurs, else redirected BEFORE

@@ -18,7 +18,7 @@ import fr.ynov.dap.dap.data.AppUser;
 import fr.ynov.dap.dap.data.AppUserRepository;
 import fr.ynov.dap.dap.data.GoogleAccount;
 
-
+//TODO brs by Djer |IDE| Formate ton code !
 /**
  * The Class CalendarService.
  */
@@ -49,6 +49,7 @@ public class CalendarService extends GoogleServices {
 	        
 	        Integer lastEvent = events.getItems().size() - 1;
 	        if(lastEvent == 0) {
+	            //TODO brs by Djer |Log4J| Pas vraiment une Erreur. Contextualise tes messages (" for accountName :" + user)
 	        	LOG.error("No event");
 	        }
 		
@@ -57,17 +58,22 @@ public class CalendarService extends GoogleServices {
 	        return event;
 	    }
 	    
+	 //TODO brs by Djer |Javadoc| Quel diffétrence avec la "getEvent(String)"
 	    public Event getNextEvent(String user) {
 	    	AppUser userDb = repo.findByUserkey(user);
 	    	
 	    	if(user == null) {
+	    	    //TODO brs by Djer |Log4J| Contextualise tes messages
 				LOG.info("no user");
 				return null;
 			}
 	    	
+	    	//TODO brs by Djer |POO| Nom de variable pas très claire
 	    	Event event1 =  null;
 	    	Integer count = 0;
 	    	for (GoogleAccount googleAccount: userDb.getGoogleAccounts()) {
+	    	    //TODO brs by Djer |POO| Evite d'apeller plusieurs fois ta méthode "getEvent" avec même paramètre, appel une fois au début de la boucle puis utuilise le résultat
+	    	    
 				try {
 					if (count > 0) {
 						Long longDate1 = event1.getStart().getDateTime().getValue();
@@ -83,8 +89,11 @@ public class CalendarService extends GoogleServices {
 						event1 = getEvent(googleAccount.getAccountName());
 					}
 					} catch (IOException e) {
+					    //TODO brs by Djer |Log4J| Log la cause de l'exception. En général on construit le message dans le premièr argument, puis on utilise le deuxième pour indiquer la casue (l'exception que l'on a"catché))
 						LOG.error("Google account : ",googleAccount);
+						//TODO brs buy Djer |Log4J| Evite de logger l'erreur indépendament du messages. D'autres messages peuvent se positionner entre message et log rendant le fichier de log incompréhenssible
 						LOG.error(e);
+						//TODO brs by Djer |Log4J| "e.printStackTrace()" affiche dictement dans la console, il faut éviter de l'utiliser, une Log (avec la cause) est bien plus claire
 						e.printStackTrace();
 					} catch (GeneralSecurityException e) {
 						LOG.error("Google account : ",googleAccount);

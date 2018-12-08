@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 public class GoogleAccount {
 	
 	
+    //TODO brs by Djer |POO| Attention à l'ordre (ordre  : constantes, attributs, initialisateurs statics, constructeurs, méthodes métiers, méthodes "génériques" (toString, hashCode,...) getter/steer)
 	public GoogleAccount() {
 		super();
 	}

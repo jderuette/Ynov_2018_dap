@@ -63,12 +63,14 @@ public Integer getNbTotalContact(String userKey) {
 		Integer nbTotalContact = 0;
 		AppUser user = repo.findByUserkey(userKey);
 		if(user == null) {
+		  //TODO brs by Djer |Log4J| Contextualise tes messages
 			LOG.info("no user");
 			return 0;
 		}
 		for (GoogleAccount googleAccount : user.getGoogleAccounts()) {
 			try {
 				nbTotalContact += getNbContactByAccount(googleAccount.getAccountName());
+				//TODO brs by Djer |Log4J| Contextualise tes messages
 				LOG.info("Google account : ",googleAccount);
 			} catch (IOException e) {
 				LOG.error("Google account : ",googleAccount);
@@ -81,6 +83,7 @@ public Integer getNbTotalContact(String userKey) {
 			}
         }
 		if(nbTotalContact == 0) {
+		  //TODO brs by Djer |Log4J| Contextualise tes messages (au lieu de "this userKey" utilise " for userkey : " + userKey)
 			LOG.info("No contact for this userKey");
 		}
 		return nbTotalContact;

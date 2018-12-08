@@ -70,6 +70,7 @@ public class GmailService extends GoogleServices {
 		for (GoogleAccount googleAccount : user.getGoogleAccounts()) {
 			try {
 				nbMailUnread += getLabelInfo(googleAccount.getAccountName()).getMessagesUnread();
+				//TODO brs by Djer |Log4J| Contextualise tes messages (Qu'est qui a été fait avec le "googleAccount" ? )
 				LOG.info("Google account : ",googleAccount);
 			} catch (IOException e) {
 				LOG.error("Google account : ",googleAccount);

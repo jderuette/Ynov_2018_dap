@@ -50,6 +50,7 @@ public class MicrosoftService extends LoggerUtils {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO brs by Djer |Log4J| Une petite log ? 
         return null;
       }
     }
@@ -60,6 +61,7 @@ public class MicrosoftService extends LoggerUtils {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO brs by Djer |Log4J| Une petite log ? 
         return null;
       }
     }
@@ -71,6 +73,7 @@ public class MicrosoftService extends LoggerUtils {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO brs by Djer |Log4J| Une petite log ? 
         return null;
       }
     }
@@ -86,6 +89,7 @@ public class MicrosoftService extends LoggerUtils {
   }
 
   private  void loadConfig() throws IOException {
+      //TODO brs by Djer |Design Patern| Configuration externalisé ? 
     String authConfigFile = "auth.properties";
     InputStream authConfigStream = MicrosoftService.class.getClassLoader().getResourceAsStream(authConfigFile);
 

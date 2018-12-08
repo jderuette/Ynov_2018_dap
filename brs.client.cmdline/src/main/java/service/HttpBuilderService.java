@@ -54,6 +54,7 @@ public class HttpBuilderService {
 		System.out.println("Response Code ... " + status);
 
 		if (redirect) {
+		    //FIXME brs by Djer |API Google| Difficile de faire fonctionner cela (il faudrait "transférer" la session entre le "HttpURLConnection" et le naviguateur). Ouvre directement "add" dans le naviguateur
 
 			// get redirect url from "location" header field
 			String newUrl = con.getHeaderField("Location");

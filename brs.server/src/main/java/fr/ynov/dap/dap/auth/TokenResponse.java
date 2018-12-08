@@ -48,21 +48,24 @@ public class TokenResponse {
     /**
      * Access token.
      */
-    @Column(length = 10000)
+  //TODO brs by Djer |API Microsoft| 5000 devrait sufifr.
+    @Column(length = 5000)
     @JsonProperty("access_token")
     private String accessToken;
 
     /**
      * Refresh token.
      */
-    @Column(length = 10000)
+  //TODO brs by Djer |API Microsoft| 5000 devrait sufifr.
+    @Column(length = 5000)
     @JsonProperty("refresh_token")
     private String refreshToken;
 
     /**
      * Id token.
      */
-    @Column(length = 10000)
+    //TODO brs by Djer |API Microsoft| 5000 devrait sufifr.
+    @Column(length = 5000)
     @JsonProperty("id_token")
     private String idToken;
 

@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import fr.ynov.dap.dap.data.GoogleAccount;
 
+//TODO brs by Djer |IDE| Formate ton code; Ou fait le faire par ton IDE via les "save action" ou manuellement.
 @Entity
 public class AppUser {
 	public AppUser() {
@@ -25,6 +26,7 @@ public class AppUser {
 
 	private String userkey;
 	
+	//TODO brs by Djer |POO| Evite de définir des getter/setter au milieu de tes attrivuts
 	public String getUserkey() {
 		return userkey;
 	}
@@ -75,6 +77,7 @@ public class AppUser {
 			
 			return microsoftAccounts;
 		}else {
+		    //TODO brs by Djer |POO| Evite les mulriples return dasn une même methode. Ici tu peux simplement systémétiquement retourner "microsoftAccounts" après l'avoir initialisé s'il est vide
 			return microsoftAccounts;
 		}
 		

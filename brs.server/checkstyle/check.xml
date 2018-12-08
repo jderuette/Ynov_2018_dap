@@ -29,6 +29,7 @@
 
         <property name="basedir" value="${basedir}"/>
     -->
+    <!-- TODO brs by Djer |Audit Code| Cette property est "mal placée" je l'ai précisé en cours, et/ou il faut demander lorsque cela ne fonctionne pas. A déplacer dans  le module "TreeWalker" -->
     <property name="tabWidth" value="4"/>
 
     <property name="fileExtensions" value="java, properties, xml"/>

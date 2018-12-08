@@ -33,10 +33,13 @@ public class MailController extends LoggerUtils {
 	@Autowired
 	MicrosoftOutlookService outlookService;
 
+	//TODO brs by Djer |Spring| Si tu n'as pas besoin de la requete ou des redirectAttributtes, ne les mets pas dans la signature de la méthode.
+	  //TODO brs by Djer |Audit Code| Tes parmaètres devraient être static
   @RequestMapping("/mail")
   public String mail(@RequestParam(value = "userKey", required = true) String userKey,Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     
     Integer nbUnreadEmails = outlookService.getNbMailUnread(userKey);
+  //TODO brs by Djer |Log4J| Contextualise tes messages ("for userKey : " + userKey)
 	LOG.info("mails : " + nbUnreadEmails);
 	if (nbUnreadEmails == null) {
 		model.addAttribute("content", "error"); 
@@ -50,10 +53,13 @@ public class MailController extends LoggerUtils {
 	return "index";
   }
   
+  //TODO brs by Djer |Spring| Si tu n'as pas besoin de la requete ou des redirectAttributtes, ne les mets pas dans la signature de la méthode.
+  //TODO brs by Djer |Audit Code| Tes parmaètres devraient être static
   @RequestMapping("/mail/{name}")
   public String listMail(Model model,@PathVariable final String name,@RequestParam(value = "userKey", required = true) String userKey, HttpServletRequest request, RedirectAttributes redirectAttributes) {
     
     Message [] messages = outlookService.getListEmail(userKey,name);
+    //TODO brs by Djer |Log4J| Contextualise tes messages ("for userKey : " + userKey)
 	LOG.info("mails : " + messages);
 	if (messages == null) {
 		model.addAttribute("content", "error"); 

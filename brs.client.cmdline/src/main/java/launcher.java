@@ -1,4 +1,4 @@
-
+//TODO brs by Djer |POO| Evite de lassier des classe dnas le "package par defaut" (sans package)
 import service.HttpBuilderService;
 
 import java.util.Scanner;
@@ -16,6 +16,7 @@ public class launcher {
 	 */
 	public static void main(String... args) throws Exception {
 
+	    //TODO brs by Djer |IDE| Ton IDE te dit que ca n'est pas utilsé. Bug ? A supprimer ? 
 		String user = "";
 		while (true) {
 			@SuppressWarnings("resource")

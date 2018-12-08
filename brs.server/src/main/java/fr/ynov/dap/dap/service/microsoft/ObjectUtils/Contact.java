@@ -1,3 +1,4 @@
+//TODO brs by Djer |POO| Evite les Majuscule dansa les nom de package. Deplus ce package semble un peu "étrange". C'est en faite des "data" mais entre microsoft et ton appli.
 package fr.ynov.dap.dap.service.microsoft.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

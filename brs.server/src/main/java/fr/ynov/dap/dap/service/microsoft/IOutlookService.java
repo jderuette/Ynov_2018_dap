@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+//TODO brs by Djer |POO| Tes autres Interface nom pas de "I" devant. Fait un choix puis reste cohérent.
 public interface IOutlookService {
 
   @GET("/v1.0/me")

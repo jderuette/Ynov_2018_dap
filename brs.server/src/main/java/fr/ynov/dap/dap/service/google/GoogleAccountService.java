@@ -43,7 +43,7 @@ public class GoogleAccountService extends GoogleServices {
 	@Autowired 
 	public AppUserRepository repo;
 	
-	
+	//TODO brs by Djer |JavaDoc| Supprime cette JavaDoc si elle n'est plus utile
 	/**
 	 * Instantiates a new google account.
 	 * @param accountName 
@@ -107,10 +107,12 @@ public class GoogleAccountService extends GoogleServices {
 				
 			}
 			
+			//TODO brs by Djer : |Log4J| Contextualise entièrement le message, en lisant la log on aura l'impression que 'accountName" est toujours vide !
 			LOG.info("New user credential stored with userKey : " + userKey+" AccountName : " + ", partial AccessToken : "
 					+ credential.getAccessToken().substring('.'));
 			if (LOG.isDebugEnabled()) {
 				if (null != credential && null != credential.getAccessToken()) {
+				  //TODO brs by Djer |Log4J| Contextualise entièrement le message, en lisant la log on aura l'impression que 'accountName" est toujours vide !
 					LOG.debug("New user credential stored with userId : " + userKey +"AccountName"+ "partial AccessToken : "
 							+ credential.getAccessToken().substring('.'));
 				}
@@ -155,7 +157,9 @@ public class GoogleAccountService extends GoogleServices {
 
 		if (null == accountName) {
 			accountName = null;
+			//TODO brs by Djer |Log4J| Ce message est faux ! C'est le "accountName" qui est null en session, pas le "userId"
 			LOG.error("userId in Session is NULL in Callback");
+			//TODObrs by Djer |POO| Pourquoi changer le comportement alors qu'il est très simillaire à la méthode juste au dessus ? 
 			//throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
 		}
 		return accountName;
@@ -192,6 +196,7 @@ public class GoogleAccountService extends GoogleServices {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		    //TODO brs by Djer |Log4J| Contextualise tes messages
 			LOG.error("Error while loading credential (or Google Flow)", e);
 		}
 		// only when error occurs, else redirected BEFORE

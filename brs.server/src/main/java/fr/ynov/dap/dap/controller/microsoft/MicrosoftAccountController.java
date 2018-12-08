@@ -34,7 +34,8 @@ public class MicrosoftAccountController extends LoggerUtils {
 	private MicrosoftService microsoftService;
 
 
-	
+	//TODO brs by Djer |Spring| Si tu n'as pas besoin de la requete ou des redirectAttributtes, ne les mets pas dans la signature de la méthode.
+	  //TODO brs by Djer |Audit Code| Tes attributs devraient être static
 		@RequestMapping("/account/add/microsoft/{accountName}")
 		public String addAccount(Model model,@RequestParam("userKey") final String userKey, @PathVariable final String accountName, final HttpServletRequest request,
 				final HttpServletResponse response) throws GeneralSecurityException, IOException {
@@ -51,9 +52,11 @@ public class MicrosoftAccountController extends LoggerUtils {
 	  session.setAttribute("userId",userKey);
 	  session.setAttribute("name", accountName);
 	  String loginUrl = microsoftService.getLoginUrl(state, nonce);
+	//TODO brs by Djer |Log4J| Contextualise tes messages ("Login URL : " + loginUrl +" for userKey : " + userKey + " and accountName : " + accountName)
 	  LOG.warn(loginUrl);
 	  model.addAttribute("loginUrl", loginUrl);
 	  response.sendRedirect(loginUrl);
+	  //TODO brs by Djer |POO| Ce commentaire n'est pas/plus vrai
 	  // Name of a definition in WEB-INF/defs/pages.xml
 	  model.addAttribute("content", "welcomeViews"); 
 	  return "index";

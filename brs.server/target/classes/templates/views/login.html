@@ -1,9 +1,11 @@
 <div th:fragment="login">
 
+<!-- TODO brs by Djer |API Microsoft| Ce fragment est affiché lorsque l'utilisateur n'existe pas, il ne faut pas conseiller d'ajouter un compte, mais de créer un utilisateur -->
     <div class="container" style="margin-top:8em">
 		<div class="alert alert-info" role="alert">
 		  <h3 class="alert-heading" th:text="#{login.title}"></h3>
 		  <p th:text="#{login.text}"></p>
+		  <!-- TODO brs by Djer |Thymleaf| Les URLs n'ont pas besoin d'être traduites, seul le "texte" du lien doit être traduit. en utilisant @{path} de Thymleaf il poourra faire un lien vers le "path" fourni -->
 		  <p th:text="#{login.google}"></p>
 		  <p th:text="#{login.microsoft}"></p>
 		</div>
