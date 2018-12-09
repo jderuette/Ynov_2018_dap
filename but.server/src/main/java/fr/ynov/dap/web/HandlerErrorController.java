@@ -19,6 +19,7 @@ public abstract class HandlerErrorController {
     /**
      * Logger for the class.
      */
+  //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**

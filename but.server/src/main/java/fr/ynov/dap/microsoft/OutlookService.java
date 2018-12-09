@@ -53,6 +53,7 @@ public interface OutlookService {
      * @return the contacts.
      */
     @GET("/v1.0/me/contacts?$count=true")
+    //TODO but by Djer |POO| Renome cette méthode, son nom est confusant
     Call<PagedResult<Contact>> getContacts(
         @Query("$orderby") String orderBy,
         @Query("$select") String select,

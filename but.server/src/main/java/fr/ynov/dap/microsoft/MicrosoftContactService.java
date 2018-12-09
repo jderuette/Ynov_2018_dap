@@ -32,6 +32,7 @@ public class MicrosoftContactService {
     /**
      * Logger for the class.
      */
+  //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -62,6 +63,7 @@ public class MicrosoftContactService {
                     sort, properties, maxResults).execute();
 
             if (response.code() >= HttpStatus.SC_BAD_REQUEST) {
+              //TODO but by Djer |Log4J| Une petite LOG ? (en Warning à priori)
                 throw new HttpResponseException(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Error with Microsoft API.");
             }
 

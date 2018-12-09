@@ -4,7 +4,7 @@
   <local-check-config name="dap" location="dap_checkstyle.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="dap" local="true">
+  <fileset name="all" enabled="true" check-config-name="but checkstyle (serveur)" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
 </fileset-config>

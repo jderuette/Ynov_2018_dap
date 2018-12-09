@@ -21,11 +21,14 @@ import fr.ynov.dap.data.google.GoogleAccount;
  * @author thibault
  *
  */
+//TODO but by Djer |POO| La majorité des remarques de GMAILService sont vrais pour cette classe.
+//C'est d'ailleur "frappant" comme toutes ces classes "Google Service" ce ressembles. Ce qui les différentie : "getService" renvoie un type différent (utiliser un classe avec un paramètre "Generic", mais attentions à l'IOC). Chaque méthode métier est différentes mais qui fonctionne par "pair (par "Account, et "forAll").
 @Service
 public class GooglePeopleService extends GoogleService {
     /**
      * Logger for the class.
      */
+  //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**

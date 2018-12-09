@@ -44,6 +44,7 @@ public class GoogleAccountService extends GoogleService {
     /**
      * Logger for the class.
      */
+    //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -52,6 +53,8 @@ public class GoogleAccountService extends GoogleService {
     @Autowired
     private AppUserRepository repositoryUser;
 
+    
+    //TODO but by Djer |POO| Met les constante avant les attiruts (ordre : constantes, attributs, initialisateur static, constructeur, methodes métiers, méthodes "génériques" (toString, HasCode,...) getter/setter)
     /**
      * Index of first char for sensible data.
      */
@@ -68,11 +71,13 @@ public class GoogleAccountService extends GoogleService {
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
+    //TODO but by Djer |POO| Pourquoi public ? Expose le moins possible ton code, créé en privé, passe en protected/public lorsque c'est NECESSAIRE. Cette méthode devrait être du coté des "controller" (dans le GoogleAccountController qui est le seul à l'utiliser pour le moment)
     public String getInSession(final String key, final HttpSession session) throws ServletException {
         String param = null;
         if (null != session && null != session.getAttribute(key)) {
             param = (String) session.getAttribute(key);
         }
+        //TODO but by Djer |POO| Tu pourrais en profiter pour vérifier qu'il n'est pas "vide" car ce ne serait pas normal non plus
         if (null == param) {
             logger.error(key + " in Session is NULL in Callback");
             throw new ServletException("Error when trying to add Google account : " + key + " is NULL in User Session");
@@ -108,6 +113,7 @@ public class GoogleAccountService extends GoogleService {
             }
 
             if (credential.getRefreshToken() != null) {
+                //TODO but by Djer |Log4J| Devrait être un warning ? Voir une "error" ? (si le refreshToken est "null" c'est que "Google" à déconné !)
                 logger.info("Refresh token is not null");
             } else {
                 logger.info("Refresh token is null!");
@@ -115,6 +121,7 @@ public class GoogleAccountService extends GoogleService {
 
             if (logger.isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
+                    //TODO but by Djer |POO| Essaye d'utiliser un StringBuilder, les "+" sur des String en Java est "dangereux" pour les perfs (utilisation mémoire)
                     logger.debug("New user credential stored with accountName : " + accountName
                             + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));

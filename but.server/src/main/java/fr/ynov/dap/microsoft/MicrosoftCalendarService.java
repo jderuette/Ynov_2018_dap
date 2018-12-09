@@ -35,6 +35,7 @@ public class MicrosoftCalendarService {
     /**
      * Logger for the class.
      */
+  //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -70,12 +71,14 @@ public class MicrosoftCalendarService {
                     .execute();
 
             if (response.code() >= HttpStatus.SC_BAD_REQUEST) {
+                //TODO but by Djer |Log4J| Une petite LOG ? (en Warning à priori)
                 throw new HttpResponseException(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Error with Microsoft API.");
             }
 
             Event[] events = response.body().getValue();
 
             if (events.length > 0) {
+                //TODO but by Djer |POO| Attention tu as essayé de mélanger 2 choses "initialisation au premier passage" et "comparaison". S'il y a déja un "event" tu doit comparer avec cette event et pas avec events[0].getStart()
                 if (event == null
                         || events[0].getStart().getDateTime().getTime() < event.getStart().getDateTime().getTime()) {
                     event = events[0];

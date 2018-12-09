@@ -40,6 +40,7 @@ public class JPADataStore extends AbstractDataStore<StoredCredential> {
     /**
      * Logger for the class.
      */
+    //TODO but by Djer |Log4J| Devrait être static final. Une instance de cette classe est construite régulièrement (et contruire un Logger est couteux).
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -100,6 +101,7 @@ public class JPADataStore extends AbstractDataStore<StoredCredential> {
     public final StoredCredential get(final String key) throws IOException {
         Optional<GoogleAccount> jpaStoredCredentialOptional = repository.findByAccountNameAndOwner(key, owner);
         if (!jpaStoredCredentialOptional.isPresent()) {
+            //TODO but by Djer |POO| Evite les multiples return dans une même méthode
             return null;
         }
         GoogleAccount googleCredential = jpaStoredCredentialOptional.get();
@@ -112,8 +114,10 @@ public class JPADataStore extends AbstractDataStore<StoredCredential> {
 
     @Override
     public final DataStore<StoredCredential> set(final String key, final StoredCredential value) throws IOException {
+        //TODO but by Djer |POO| Tu devrais appeler cette variable "googleAccount" c'est confusant ce "credential" surtout dans cette classe
         GoogleAccount googleCredential = repository.findByAccountNameAndOwner(key, owner)
                 .or(new GoogleAccount(key, owner, value));
+        //TODO but by Djer |POO| Ne semble pas utile le constructeur que tu utilise juste au dessus fait déja le travail de "apply"
         googleCredential.apply(value);
         logger.info("User : " + owner.getUserKey());
         repository.save(googleCredential);
@@ -122,6 +126,7 @@ public class JPADataStore extends AbstractDataStore<StoredCredential> {
 
     @Override
     public final DataStore<StoredCredential> clear() throws IOException {
+        //TODO but by Djer |POO| Attention tu ne respecte pas l'API de "DataStore" tu  devrais effacer TOUS les credential (je trouve cette méthode un peu "violente", mais c'est ce que demande l'API "Deletes all of the stored keys and values.")
         repository.deleteByOwner(owner);
         return this;
     }

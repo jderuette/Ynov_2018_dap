@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author thibault
  *
  */
+
 public abstract class GoogleService {
     /**
      * Global Config for Google Service.
@@ -54,6 +55,7 @@ public abstract class GoogleService {
     /**
      * Logger for the class.
      */
+  //TODO but by Djer |Log4J| Devrait être final
     private Logger logger = LogManager.getLogger();
 
     /**
@@ -75,6 +77,7 @@ public abstract class GoogleService {
      * @throws IOException If the credentials.json file cannot be found.
      * @throws GeneralSecurityException Security on Google API
      */
+    //TODO but by Djer |POO| Icic aussi tu donne l'impression que n'importe quel "owner" peut appeler n'importe quel "accountName" alors qu'ils sont liés. Tu pourrais passer uiniquement une instance de GoogleAcocunt ce qui clarifirait ton API (tu auras acces au AppUser grace = "getOwner()"))
     protected Credential getCredentials(final String accountName, final AppUser owner)
             throws IOException, GeneralSecurityException {
         this.logger.info("Generate credentials Google API for account '" + accountName + "'");
@@ -92,6 +95,7 @@ public abstract class GoogleService {
     protected GoogleAuthorizationCodeFlow getFlow(final AppUser owner)
             throws IOException, GeneralSecurityException {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        //TODO but by Djer |Log4J| Contextualise tes messages (" for userKey : " + owner.getUserKey())
         this.logger.info("Generate new flow with scopes for Google API.");
 
         // Load client secrets.
@@ -104,6 +108,7 @@ public abstract class GoogleService {
                 clientSecrets, getScopes())
                         .setDataStoreFactory(
                                 new JPADataStoreFactory(repository, owner))
+                        //TODO but by Djer |API Google| "Auto" est déja la valeur par defaut pour "setApprovalPrompt" pour une application "web" si tu laisse el "null".
                         .setAccessType("offline").setApprovalPrompt("auto").build();
 
         return flow;

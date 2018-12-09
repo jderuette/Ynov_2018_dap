@@ -31,6 +31,7 @@ public class MicrosoftMailService {
     /**
      * Logger for the class.
      */
+    //TODO but by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**

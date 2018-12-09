@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author thibault
  *
  */
+//TODO but by Djer |POO| Je sait que c'est proposé dnas le tuto mais mélangé un DTO avec quelques traitement "métier" n'est pas ce qu'on à fait dans les autres classe (parseEncodedToken(), isValid() pourraient être déplacées) 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IdToken {
     /**
@@ -84,9 +85,11 @@ public class IdToken {
         try {
             newToken = mapper.readValue(decodedBytes, IdToken.class);
             if (!newToken.isValid(nonce)) {
+                //TODO but by Djer |log4J| Une petite log ?
                 return null;
             }
         } catch (Exception e) {
+            //TODO but by Djer |log4J| Une petite log ? Pas de "e.printStackTrace()" car cela ecrit directement dans la console !
             e.printStackTrace();
         }
         return newToken;
@@ -228,12 +231,14 @@ public class IdToken {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime))
                 || now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+           //TODO but by Djer |log4J| Une petite log ? (en warning à priori)
             return false;
         }
 
         // Check nonce
         if (!nonceToken.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO but by Djer |log4J| Une petite log ? (en warning à priori)
             return false;
         }
 

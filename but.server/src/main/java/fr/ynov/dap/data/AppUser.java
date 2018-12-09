@@ -71,6 +71,7 @@ public class AppUser {
      * Add a google account of this user.
      * @param account the GoogleAccount to add
      */
+    //TODO but by Djer |POO| Evite de melanger tes methodes "metier" au millieu de tes getters/setter. Ici tu as regroupé ce qui concerne les "GoogleAccount" et les "MicrosoftAcocunt", tu suis une logique, mais "piègeuse". Si tu as des méthodes qui "doivent" être groupées enssembles au seing d'une autre classe, c'est surement que tu devrais en extraire une nouvelle classe (ici une "extenssion" de collection ce qui est un peu étrange ....)
     public void addGoogleAccount(final GoogleAccount account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);

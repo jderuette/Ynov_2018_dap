@@ -85,6 +85,7 @@ public class Config {
      */
     public String getAuthPropertiesPath() {
         String name = authPropertiesName;
+        //TODO but by Djer |Spring| Es-tu sur que si la valeur par defaut injecté par spring est "null" avec des guillemets ? Cela me parait étrange
         if (authPropertiesName.equals("null")) {
             name = AUTH_PROPERTIES_NAME;
         }

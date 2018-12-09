@@ -21,11 +21,13 @@ import fr.ynov.dap.data.google.GoogleAccount;
  *
  */
 @Service
+//TODO but by Djer |POO| Pourquoi toutes ces majuscules ? 
 public class GMAILService extends GoogleService {
 
     /**
      * Logger for the class.
      */
+    //TODO but by Djer |Log4J| Devrait être static (par "principe" car ici tu as un singleton (@Service) tu ne devrais donc pas avoir de "surcout" de création de logger)
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -38,6 +40,7 @@ public class GMAILService extends GoogleService {
      */
     public Gmail getService(final String accountName, final AppUser owner)
             throws IOException, GeneralSecurityException {
+        //TODO but by Djer |Log4J| Comme tu autorises la création du même "accountName" pour deux "owner" différent, owner devient une information de contexte potentiellement utile (soit l'ID, soit le userKey)
         logger.info("Generate service GMAIL for user '" + accountName + "'");
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(httpTransport, this.getJsonFactory(), this.getCredentials(accountName, owner))
@@ -81,6 +84,7 @@ public class GMAILService extends GoogleService {
     public int getUnreadEmailsNumberOfAllEmails(final AppUser user) throws IOException {
         int numberUnread = 0;
 
+        //TODO but by Djer |POO| (par rapport à mes remarques sur "getService(String AppUser)") Ici on sent bien que GoogleAccount et AppUser n,e sont pas si indépendant que cela (ce qui est une bonne chose, le seul "défaut" c'est que certaines méthodes de ton API laisse croire que ca n'est pas le cas)
         for (GoogleAccount gAccount : user.getGoogleAccounts()) {
             numberUnread += getUnreadEmailsNumber(gAccount.getAccountName(), user);
         }

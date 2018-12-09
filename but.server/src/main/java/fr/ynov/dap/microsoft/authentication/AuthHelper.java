@@ -138,6 +138,8 @@ public final class AuthHelper {
                 authConfigStream.close();
             }
         } else {
+            //TODO but by Djer |IDE| Ton IDE t'indique que c'est du "code mort", en effet authConfigStream ne peu JAMAIS être null dans ton code.
+            //TODO but by Djer |Log4J| Attention ton message est faux ! C'est "config.getAuthPropertiesPath()" qui est cherché, est pas forcément dans le classpath
             throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
         }
     }
@@ -189,6 +191,7 @@ public final class AuthHelper {
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
+            //TODO but by Djer |Log4J| Une petite Log pourrait être utile
             return error;
         }
     }
