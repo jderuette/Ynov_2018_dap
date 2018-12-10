@@ -1,3 +1,4 @@
+//TODO elj by Djer |POO| Evite les majuscules dans les nom de package, mais surtout evite de mettre des infos technique. Si jamais tu décides de ne plus utiliser Maven tu change tous les noms de packages ? 
 package fr.ynov.dap.GoogleMaven;
 
 
@@ -24,18 +25,21 @@ import fr.ynov.dap.GoogleMaven.repository.GoogleAccountRepository;
 import fr.ynov.dap.GoogleMaven.web.MailController;
 
 
-
+//TODO elj by Djer |Rest API| Est-ce vraiment un controller Rest ? 
 @RestController
 @SpringBootApplication
 public class Launcher implements CommandLineRunner{
 	private  final static Logger logger = LogManager.getLogger();
 	
+	//TODO elj by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 	@Autowired
 	private GoogleAccountRepository googleAccountRepository;
 	
+	//TODO elj by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 	@Autowired
 	private AppUserRepostory appUserRepostory;
 	
+	//TODO elj by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 	@Autowired
 	private fr.ynov.dap.GoogleMaven.repository.AccountData accountData;
 	
@@ -51,6 +55,7 @@ public class Launcher implements CommandLineRunner{
 		SpringApplication.run(Launcher.class, args);
         
 
+		//TODO elj by Djer |Rest API| La très grande majorité de ce code devrait être transféré dans le client !
 		try{
 			Scanner un = new Scanner(System.in); 
             String user = null;
@@ -75,6 +80,7 @@ public class Launcher implements CommandLineRunner{
 				switch(variable)
 				{
 				case 1 :
+				    //TODO elj by Djer |POO| Evite de suposer que Chrome est présent. Java porpose une méthdoe "multi plateforme" via Desktop.getDesktop().browse. Cependant Spring lance ton appli en mdoe "server" et donc "headLess" ce qui va empecher la JVM d'ouvrir un naviguateur (ce code DOIT être dnas un projet "client")
 					Runtime.getRuntime().exec(new String[]{"cmd", "/c","start chrome http://localhost:8080/unreadmailgoogle/"+user});
 					break;
 				case 2 :

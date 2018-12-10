@@ -64,6 +64,7 @@ public class GMailService extends GoogleService {
 			List<Message> messages = new ArrayList<Message>();
 			i=0;
 			while (response.getMessages() != null) {
+			    //TODO elj by Djer |API Google| Attention ton "i" s'incremente UNE fois par Pages !! Ton "vrai" nombre d'emails non lu est dans messages.length (à la fin de toutes les itérations)
 				i++;
 				
 				messages.addAll(response.getMessages());
@@ -77,6 +78,7 @@ public class GMailService extends GoogleService {
 			}
 	
 		} catch (IOException e) {
+		    //TODO elj by Djer |Log4J| Contextualise tes messages et evite d'ajouter e.getmessages dans TON message
 			logger.info(e.getMessage());
 		}
 

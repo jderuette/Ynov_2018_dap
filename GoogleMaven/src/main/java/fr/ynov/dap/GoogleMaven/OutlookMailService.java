@@ -44,6 +44,7 @@ public class OutlookMailService {
 		String folder = "inbox";
  		String sort = "receivedDateTime DESC";
  		String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
+ 		//TODO elj by Djer |IDE| Ton IDE te dit que ca n'est pas utilsié. Bug ? A supprimer ?  
 		String propertiesforunread = "isRead";
  		Integer maxResults = 1000;
 		PagedResult<Message> messages = null;

@@ -16,6 +16,7 @@ import fr.ynov.dap.GoogleMaven.ContactService;
 
 
 @Controller
+//TODO elj by Djer |POO| Utilise le CamelCase pour le nom de tes classes ! Configure Pmd/CheckStyle, ils auraient au moins repréré la majuscule manquante au début
 public class contactsgmailcontroller {
 
 

@@ -28,6 +28,7 @@ public class CalendarController {
 	 */
 	@Autowired CalendarService calendarService;
 	
+	//TODO elj by Djer |Rest API| Evite les Majuscule dans les URL, le support par les naviguateurs est "variable"
 	@RequestMapping("/NextEvents/{userKey}")
 	public String GetNextEvents (@PathVariable final String userkey,ModelMap model, HttpServletRequest request, HttpSession session) throws IOException, GeneralSecurityException{
 		

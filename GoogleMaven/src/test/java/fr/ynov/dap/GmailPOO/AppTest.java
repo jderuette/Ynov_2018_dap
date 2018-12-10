@@ -1,3 +1,4 @@
+//TODO elj by Djer |POO| Drole de nom de package ? Que tu n'utilise pas dans la partie "Java" .... 
 package fr.ynov.dap.GmailPOO;
 
 import junit.framework.Test;

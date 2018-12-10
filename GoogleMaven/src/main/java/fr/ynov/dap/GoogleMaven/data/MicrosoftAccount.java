@@ -1,5 +1,6 @@
 package fr.ynov.dap.GoogleMaven.data;
 
+//TODO elj by Djer |IDE| Configure les "save action" de ton IDE qu'il néttoie les import (et format ton code) quand tu sauveagrdes pour éviter  ce genre d'oublie
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
+//TODO elj by Djer |API Microsoft| Tu n'utilise pas cette entité ? (devrait être en "one to many dans AppUser + Repository + utiliser dans quelques services Microsoft)
+//TODO elj by Djer |POO| Attention tu as déja une classe avec le meme nom dans le package "data", ca n'est pas nécéssairement bloquant mais au mieux ambigue
 public class MicrosoftAccount {
 	@Id
 	@GeneratedValue
@@ -30,6 +33,7 @@ public class MicrosoftAccount {
     }
     
 	public void setOwner(AppUser owner) {
+	    //TODO elj by Djer |JPA| Finie cette implémentation !
 		// TODO Auto-generated method stub
 		
 	}

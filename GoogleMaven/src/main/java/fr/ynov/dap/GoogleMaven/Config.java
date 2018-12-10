@@ -3,6 +3,7 @@ package fr.ynov.dap.GoogleMaven;
 
 
 
+//TODO elj by Djer |Design Patern| Externalisation de la configuration ? 
 public class Config {
 	private static final String CREDENTIALS_FILE = System.getProperty("user.home")
             + System.getProperty("file.separator") + "Credential" + System.getProperty("file.separator")

@@ -17,6 +17,7 @@ import fr.ynov.dap.GoogleMaven.GoogleAccount;
 import fr.ynov.dap.GoogleMaven.MicrosoftAccount;
 
 @Service
+//TODO elj by Djer |POO| Suprime les classe qui ne te servent plus. Cela complexifie ton projet. (Et ajoute une surcharge de travail à Spring car il y a un @Service)
 public class AccountManager {
 	@Autowired GoogleAccount ManagerGoogle;
 	//@Autowired MicrosoftAccount ManagerMicrosoft;

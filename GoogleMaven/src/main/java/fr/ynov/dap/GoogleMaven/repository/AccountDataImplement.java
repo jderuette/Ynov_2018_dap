@@ -10,6 +10,7 @@ import fr.ynov.dap.GoogleMaven.data.AppUser;
 import fr.ynov.dap.GoogleMaven.data.GoogleAccount;
 
 @Service
+//TODO elj by Djer |POO| En général on suffixe par "Impl". Idéalement on précise la particularité de cette implementation (ici tu utilise JPA et des repository qui pourraient etre utilisé comme suffixe)
 public class AccountDataImplement implements AccountData{
 	
 	@Autowired
@@ -25,6 +26,7 @@ public class AccountDataImplement implements AccountData{
 	    
 	       }
 
+	    //TODO elj by Djer |Gestion Exception| Il faut utiliser le mot clef "throw" si tu veux que ton exception soit levée. ici tu créé juste une "instance de classe" sans en conserver la référence
 	   new NotFoundException("Compte introvable  ");
 	   return null; 
 	}
@@ -35,6 +37,7 @@ public class AccountDataImplement implements AccountData{
 	}
 
 	public void deleteUser(String userKey) {
+	    //TODO elj by Djer |IDE| tyraite les TO-DO. A la limite leve une Exeption "NotImplemented" en attendant de coder cette méthode
 		// TODO Auto-generated method stub
 		
 	}
@@ -45,6 +48,7 @@ public class AccountDataImplement implements AccountData{
 
 	public void ajouterAccount(String userkey, String adrMail,
 			String accountName) throws NotFoundException {
+	  //TODO elj by Djer |IDE| tyraite les TO-DO. A la limite leve une Exeption "NotImplemented" en attendant de coder cette méthode
 		// TODO Auto-generated method stub
 		
 	}
@@ -56,7 +60,7 @@ public class AccountDataImplement implements AccountData{
 		     return listGoogleAccount.getAccountName();
 		     
 		       }
-
+		//TODO elj by Djer |Gestion Exception| Il faut utiliser le mot clef "throw" si tu veux que ton exception soit levée.
 		   new NotFoundException("Compte introvable  ");
 		   return null;  
 	}

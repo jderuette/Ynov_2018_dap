@@ -48,10 +48,10 @@ public class GoogleService {
 	 */
 	protected Credential getCredentials(NetHttpTransport HTTP_TRANSPORT,String userKey) throws IOException, GeneralSecurityException {
 		HTTP_TRANSPORT= GoogleNetHttpTransport.newTrustedTransport();
+		//TODO elj by Djer |log4J| Utilise une constante "LOG" dans la classe et ne créé PAS un logger à chaque fois ! 
 		 final java.util.logging.Logger buggyLogger = java.util.logging.Logger.getLogger(FileDataStoreFactory.class.getName());
 	        buggyLogger.setLevel(java.util.logging.Level.SEVERE);
 
-		
 		InputStream in = new FileInputStream(new File(configuration.getCredentialFolder()));
 		
 			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
@@ -70,6 +70,7 @@ public class GoogleService {
 
 	        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
 	                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, allSCOPES)
+	                //TODO elj by Djer |Design Patern| Tu devrais utiliser ta conf au lieu d'une chaine ne "dur"
 	                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
 	                .setAccessType("offline")
 	                .build();

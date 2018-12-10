@@ -25,6 +25,7 @@ public class IndexController {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+    //TODO elj by Djer |Spring| TU peux injecter directement la Session
 	public String index(ModelMap model, HttpServletRequest request) {
 		UUID state = UUID.randomUUID();
 		UUID nonce = UUID.randomUUID();

@@ -45,6 +45,7 @@ public class MailController extends GoogleService {
 	@RequestMapping("/unreadmailgoogle/{userkey}")
 	public String mailGoogle(@PathVariable final String userkey,ModelMap model, HttpServletRequest request, HttpSession session) throws IOException, GeneralSecurityException, InstantiationException, IllegalAccessException{
 		if(gMailService.getNbUnreadEmails(userkey).equals("-1"))
+		  //TODO elj by Djer |Log4J| une petite Log ? 
 			model.addAttribute("unread","L'utilisateur "+ userkey+"  est inexistant");	
 		else {
 			model.addAttribute("unread", "Vous avez "+ gMailService.getNbUnreadEmails(userkey)+" mails non lus");

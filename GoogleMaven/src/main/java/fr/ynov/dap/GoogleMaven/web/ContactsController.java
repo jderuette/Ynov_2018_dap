@@ -33,6 +33,7 @@ public class ContactsController {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+    //TODO elj by Djer |POO| place tes attributs AVANT tes méthodes (ordre : cosntantes, attributs, initialisateurs static, Constructeurs, méthodes métiers, méthdoe Générique (toString, hashCode,...) getter/setter)
 	@Autowired ContactsOutlook contactsOutlook;
 	@Autowired IndexController indexController;
 	@RequestMapping("/contactsoutlook")
@@ -43,6 +44,7 @@ public class ContactsController {
 			model.addAttribute("contacts", contactsOutlook.contacts(model, request));
 			responce="ContactsOutlook";
 		} catch (Exception e) {
+		    //TODO elj by DJer |Log4J| Une petite log ? 
 			// TODO: handle exception
 			responce="ConnexionOutlook";
 		}

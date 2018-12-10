@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: fr.ynov.dap.GmailPOO.AppTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in fr.ynov.dap.GmailPOO.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in fr.ynov.dap.GmailPOO.AppTest

@@ -46,7 +46,9 @@ public class ContactService extends GoogleService {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+	//TODO elj by Djer |POO| Une méthode ne doit pas commencer par une majuscule
 	public int GetContact(String userKey) throws IOException, GeneralSecurityException {
+	    //TODO elj by Djer |POO| Pourais s'appeler "nbContacts" ?
 		int i=0;
 		try{
 			PeopleService service = GetPeopleservice(userKey); 
@@ -54,6 +56,7 @@ public class ContactService extends GoogleService {
 			// Request 10 connections.
 			ListConnectionsResponse response = service.people().connections()
 					.list("people/me")
+					//TODO elj by Djer |API Google| Et si j'ai 1001 contacts ? Tu pourrais utilsier la pagination comme dans Gmailservice (getNbUnreadEmails(...)
 					.setPageSize(1000)
 					.setPersonFields("names,emailAddresses")
 					.execute();
@@ -67,14 +70,17 @@ public class ContactService extends GoogleService {
 						
 						i++;
 					} else {
+					    //TODO elj by Djer |Log4J| Ajoute du contexte dans tes messages ( "for userKey : " + userKey + " and person : ????")
 						logger.info("No names available for connection.");
 					}
 				}
 			} else {
+			    //TODO elj by Djer |Log4J| Ajoute du contexte dans tes messages ( "for userKey : " + userKey)
 				logger.info("No connections found.");
 			}
 			
 		} catch (IOException e) {
+		    //TODO elj by Djer |log4J| Contexte + evite de mettre le e.getMessage() dans TON message
 			logger.warn("Un problème vient d'être détecté avec comme détails : "+e.getMessage());
 		}
 		return i;

@@ -25,6 +25,7 @@ public class PeopleController {
 	@RequestMapping("/NombreDeContact")
 	public String GetContact(@RequestParam final String userKey) throws IOException, GeneralSecurityException {
 		
+	    //TODO elj by Djer |Thymleaf| C'est le travail de la vue d'internationnaliser et du coups de "produire le texte".
 		String nbcontacts = "vous avez : "+contactService.GetContact(userKey)+" contacts";
 		return nbcontacts;
 		

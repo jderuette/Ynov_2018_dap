@@ -54,9 +54,11 @@ public class AuthorizeController {
 					session.setAttribute("error", e.getMessage());
 				}
 			} else {
+			    //TODO elj by Djer |Log4J| une petite Log ? 
 				session.setAttribute("error", "ID token failed validation.");
 			}
 		} else {
+		  //TODO elj by Djer |Log4J| une petite Log ? 
 			session.setAttribute("error", "Unexpected state returned from authority.");
 		}
 		return "redirect:/";

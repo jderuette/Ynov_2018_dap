@@ -26,6 +26,7 @@ public class MicrosoftAccount {
 	
 	@Autowired
 	MicrosoftAccountRepository microsoftAccountRepository;
+	//TODO elj by Djer |Spring| Attention cette URL est déja utilisée, comme indiqué par l'erreur "Ambiguous mapping. Cannot map 'microsoftAccount' method ..." lors du démarage de ton serveur
 	@RequestMapping("/account/add/{accountName}/{userKey}")
 	public String addAccount(@PathVariable final String accountName, @PathVariable final String userKey, final HttpServletRequest request,
 			final HttpSession session) throws GeneralSecurityException, InstantiationException, IllegalAccessException {
@@ -38,8 +39,7 @@ public class MicrosoftAccount {
 			appUserRepostory.save(myuser);
 		}
 			
-		
-	
+		//TODO elj by Djer |API Microsoft| Sauvegarde du compte Microsoft ,
 		
 		return "response";
 	}

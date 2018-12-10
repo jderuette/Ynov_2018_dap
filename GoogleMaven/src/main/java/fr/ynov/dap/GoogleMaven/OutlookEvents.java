@@ -37,6 +37,7 @@ public class OutlookEvents {
 			HttpSession session = request.getSession();
 			TokenResponse tokens = (TokenResponse)session.getAttribute("tokens");
 			
+			//TODO elj by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 			Date now = new Date();
 
 			
@@ -58,9 +59,12 @@ public class OutlookEvents {
 			
 		}
 		catch (Exception e){
+		    //TODO elj by Djer |log4J| Contexte + ne pas utilsier e.getMessges() dans TON message
 			logger.warn("Une erreur a été détecter dans le service evenements outlook avec comme details : "+e.getMessage());
 
 		}
 		return events.getValue();
 	}
+	
+	//TODO elj by Djer |API Microsoft| Récupérer LE prochain évènnement ?
 }

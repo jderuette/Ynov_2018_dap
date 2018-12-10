@@ -24,6 +24,7 @@ import fr.ynov.dap.GoogleMaven.repository.GoogleAccountRepository;
 
 @Controller
 public class GoogleAccount extends GoogleService {
+    //TODO elj by Djer |Log4J| Attention ici tu crée un Logger qui a comme catégorie "vide" (root). Il vaut mieu ne pas mettre de paramtre, dans cas c'est Log4J qui va déterminer la catégorie (il utilisera le nom qualifié de la classe ce qui est une "bonne" catégorie)
 	private static final Logger logger = LogManager.getLogger("");
 	
 	@Autowired
@@ -59,6 +60,7 @@ public class GoogleAccount extends GoogleService {
 
 			if (logger.isDebugEnabled()) {
 				if (null != credential && null != credential.getAccessToken()) {
+				    //TODO elj by Djer |Log4J| Pourquoi enlever une Log utile (lorsque "Google déconne") ?
 					//LOG.debug("New user credential stored with userId : " + userId + "partial AccessToken : "
 					//		+ credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
 						//			SENSIBLE_DATA_LAST_CHAR));
@@ -66,6 +68,7 @@ public class GoogleAccount extends GoogleService {
 			}
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		    //TODO elj by Djer |Log4J| Contextualise tes messages (" for userKey : " + userId)
 			logger.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to conenct Google Account");
 		}
@@ -188,6 +191,7 @@ public class GoogleAccount extends GoogleService {
 			logger.error("Error while loading credential (or Google Flow)", e);
 		}
 		// only when error occurs, else redirected BEFORE
+		//TODO elj by Djer |Rest API| Pas de SysOut sur un serveur
 		System.out.println(response);
 		
 		return response;

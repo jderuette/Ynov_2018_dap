@@ -19,6 +19,9 @@ import fr.ynov.dap.GoogleMaven.GMailService;
 
 @Controller
 public class WelcomeController {
+    
+    //TODO elj by Djer |Spring| pourquoi autrant d'attrvitubs non utilisés ? 
+    //TODO elj by Djer |POO| Attention comme tu ne précise pas "privée", ces attributs sont "public" par defaut, ton IDE ne peu donc pas t'indiquer qu'ils ne sont pas utilisés.
 @Autowired MailControllerOutlook mailControllerOutlook;
 @Autowired IndexController indexController;
 @Autowired AccountManager accountManager;

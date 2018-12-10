@@ -73,6 +73,7 @@ public class AuthHelper {
 	}
 	
 	private static void loadConfig() throws IOException {
+	    //TODO elj by Djer |Design Patern| Externalisation de la configuration ?
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 		
