@@ -1,0 +1,25 @@
+h1 {color:purple;width:30%;margin-left:auto;margin-right:auto;}
+ html, body {width:100%;}
+ 
+.wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+}
+
+.box-one {
+  background-color: pink;
+  width: 50%;
+  height: auto;
+  overflow: hidden;
+}
+
+.box-two {
+  background-color: blue;
+  width: 50%;
+  height: auto;
+  min-width: 400px;
+}
