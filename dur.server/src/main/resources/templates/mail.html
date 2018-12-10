@@ -11,6 +11,7 @@
 		<span th:text="${error}"></span>
 	</th:if>
 <div th:each="pagedResult : ${messages}">
+<!-- TODO dur by Djer |Thymleaf| Tu voulais écrire "th:if" ? -->
 	<table if="${!messages}">
 	<tr>
 	  <td th:text="#{email.datereceived}"></td>

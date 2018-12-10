@@ -64,6 +64,7 @@ public class CalendarService extends GoogleService {
         List<Event> items = events.getItems();
         if(items.size() == 0) {
             LOGGER.info("No upcoming events found for user : " + userKey);
+            //TODO dur by Djer |POO| Evite les multiples return dans une même méthode
         	return null;
         } else {
             return items.get(0);
@@ -85,7 +86,9 @@ public class CalendarService extends GoogleService {
         }
 
         if (events.isEmpty()) {
+            //TODO dur by Djer |Log4J| Contextualise tes messages
             LOGGER.info("No upcoming events found for this user");
+            //TODO dur by DJer |POO| Evite les multiples return dans une même méthode
             return null;
         }
 

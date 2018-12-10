@@ -34,17 +34,20 @@ public abstract class BaseController {
         return LOGGER;
     }
 
+    //TODO dur by Djer |JavaDoc| Peut-être que si tu avais completé la JavaDoc pour le paramètre tu aurais constaté qu'il était "mal nomé" (il s'agit d'un userKey)
     /**
      * Return current class name.
      * @return Class name
      */
     protected abstract String getClassName();
 
+    //TODO dur by Djer |Audit Code| Attention au nomage de tes méthodes ! En plus c'est signalé par ton outisl d'audit du code
     protected AppUser GetUserById(final String userId) {
 
         AppUser user = appUserRepository.findByUserKey(userId);
 
         if (user == null) {
+            //TODO dur by Djer |log| Contextualise tes messages (" avec le userKey : " + userId)
             LOGGER.error("NO USER:", "Aucun user avec cette identifiant");
         }
 

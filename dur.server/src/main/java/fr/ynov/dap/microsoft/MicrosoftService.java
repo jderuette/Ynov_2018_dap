@@ -78,6 +78,7 @@ public class MicrosoftService {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO dur by Djer |Log4J| Une petite Log ?
                 return null;
             }
         }
@@ -93,6 +94,7 @@ public class MicrosoftService {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO dur by Djer |Log4J| Une petite Log ?
                 return null;
             }
         }
@@ -108,6 +110,7 @@ public class MicrosoftService {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO dur by Djer |Log4J| Une petite Log ?
                 return null;
             }
         }
@@ -151,6 +154,7 @@ public class MicrosoftService {
      * @throws IOException Exception
      */
     protected static void loadConfig() throws IOException {
+        //TOD dur by Djer |Design Patern| ZeoConf ? Externalisation des paramètres ? 
         String authConfigFile = "auth.properties";
         InputStream authConfigStream = MicrosoftService.class.getClassLoader()
                 .getResourceAsStream(authConfigFile);
@@ -166,6 +170,7 @@ public class MicrosoftService {
                 authConfigStream.close();
             }
         } else {
+          //TODO dur by Djer |Log4J| Une petite Log ?
             throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
         }
     }
@@ -193,6 +198,7 @@ public class MicrosoftService {
                     getAppPassword(), "authorization_code", authCode, getRedirectUrl()).execute();
             return resp.body();
         } catch (IOException e) {
+          //TODO dur by Djer |Log4J| Une petite Log ?
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
@@ -226,6 +232,7 @@ public class MicrosoftService {
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
             } catch (IOException e) {
+              //TODO dur by Djer |Log4J| Une petite Log ?
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());

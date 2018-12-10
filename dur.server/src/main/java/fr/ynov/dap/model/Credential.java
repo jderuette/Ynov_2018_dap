@@ -2,8 +2,10 @@ package fr.ynov.dap.model;
 
 /**
  * Represent user's credential data.
+ * 
+ * FIXME dur by Djer |Javadoc| Tu ne donne même pas la peine de changer l'auteur ? 
  * @author Kévin Sibué
- *
+ * TODO dur by Djer |POO| Comme tu n'utilises pas cette classe dans ton code, tu peux la supprimer
  */
 public class Credential {
 

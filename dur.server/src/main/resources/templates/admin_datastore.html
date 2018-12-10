@@ -27,6 +27,7 @@
   <td th:text="#{admin.grid.ti}">Tenant ID</td>
 </tr>
  <tr th:each="credential : ${credentials}">
+ <!-- TODO dur by Djer |Thymleaf| Internationnalisation ? -->
       <td>Google</td>
      <td th:text="${credential.key}">1</td>
      <td th:text="${credential.value.getAccessToken()}">2</td>
@@ -34,6 +35,7 @@
      <td th:text="${credential.value.getRefreshToken()}">4</td>
   </tr>
   <tr th:each="otAccount : ${otAccounts}">
+  <!-- TODO dur by Djer |Thymleaf| Internationnalisation ? -->
      <td>Microsoft</td>
       <td th:text="${otAccount.getOwner().getUserKey()}">1</td>
      <td th:text="${otAccount.getToken().getAccessToken()}">2</td>

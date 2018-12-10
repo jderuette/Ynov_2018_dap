@@ -65,6 +65,7 @@ public class CalendarController extends BaseController {
         } else if (gEvent == null && msEvent != null) {
             model.addAttribute("event", msEvent);
         } else if ((gEvent != null && msEvent == null)
+                //TODO dur by Djer |API Google| Attention pour els évènnement "toutes la journée" getDateTime() est Null, il faut alors regarder "getDate". Tu auras un NPE si l'éèvnnement est "toutes la journée"
                 || (gEvent.getStart().getDateTime().getValue() < msEvent.getStart().getDateTime().getTime())) {
             model.addAttribute("event", gEvent);
         } else {

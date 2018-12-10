@@ -1,3 +1,4 @@
+//TODO dur by Djer |POO| Par "habitude" on apelle "entity" des classe qui mappent des données vers une BDD. Ici on parlera plutot de DTO (Data Transfert Objet) ou de VO (Value Object) ou simplement de (MicrosoftGraph)Model"
 package fr.ynov.dap.microsoft.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

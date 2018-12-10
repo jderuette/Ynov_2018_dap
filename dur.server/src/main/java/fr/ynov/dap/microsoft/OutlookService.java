@@ -74,6 +74,7 @@ public class OutlookService extends MicrosoftService {
                         .body();
                 messages.add(emails);
             } catch (IOException e) {
+                //TODO dur by Djer |Log4J| Ajoute du context dans tes messages (" for userKey : " + userKey)
                 LOGGER.error("Error when trying get mail for all accounts.", e);
             }
         }
@@ -153,6 +154,7 @@ public class OutlookService extends MicrosoftService {
         }
 
         if (events.isEmpty()) {
+          //TODO dur by Djer |Log4J| Ajoute du context dans tes messages (" for user : " + user.getUserKey())
             LOGGER.info("No upcoming events found for this user");
             return null;
         }
@@ -165,6 +167,7 @@ public class OutlookService extends MicrosoftService {
             }
         }
 
+        //TODO dur by Djer |API Microsoft| Un oublie ? Tu voulais surement renvoyer "nextEvent"
         Event event = events.get(0);
 
         return event;
@@ -186,6 +189,7 @@ public class OutlookService extends MicrosoftService {
         PagedResult<Contact> contacts = response.body();
 
         if (contacts != null && contacts.getValue() != null) {
+            //TODO dur by Djer |API Microsoft| Quelle est la taille d'une "page de contact" par defaut ? 
             return contacts.getValue().length;
         }
 
@@ -197,6 +201,8 @@ public class OutlookService extends MicrosoftService {
         Integer nbOfContacts = 0;
 
         if (user.getMicrosoftAccounts().size() == 0) {
+            //TODO dur by Djer |Log4J| Pas vraiment ue erreur, c'est autorisé de ne pas avoir de contacts !. Un level "Info" serait suffisant
+            //TODO dur by DJer |Log4J| Contextualise tes messages
             LOGGER.error("This user don't have microsoft accounts");
         } else {
 

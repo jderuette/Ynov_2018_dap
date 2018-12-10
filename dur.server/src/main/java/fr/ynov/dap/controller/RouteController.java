@@ -18,6 +18,7 @@ public class RouteController {
      */
     @RequestMapping("/")
     public String HelloMrDeruette() throws IOException, GeneralSecurityException {
+        //TODO dur by Djer |Thymleaf| Tu aurais pu me faire un petit template pour faire plus beau (et internationnaliser !)
         return "Bienvenue sur cette belle application presque fonctionnelle";
     }
 }

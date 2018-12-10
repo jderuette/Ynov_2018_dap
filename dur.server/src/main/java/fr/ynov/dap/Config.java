@@ -50,7 +50,7 @@ public class Config {
         try {
             loadConfig();
         } catch (IOException e) {
-
+            //TODO dur by Djer |Log4J| Une petite Log
         }
     }
     
@@ -121,6 +121,7 @@ public class Config {
 
     private void loadConfig() throws IOException {
         String authConfigFile = "config.properties";
+        //TODO dur by Djer |Design Patern| Ta conf n'est PAS externalisé, car tu ne recherche le ficheir "config.properties" QUE dans le cassPath. Il faudrait pouvoir demander à ton appli de le chercher ailleur
         InputStream authConfigStream = Config.class.getClassLoader().getResourceAsStream(authConfigFile);
 
         if (authConfigStream != null) {

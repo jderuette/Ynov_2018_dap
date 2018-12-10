@@ -20,9 +20,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+//TODO dur by Djer |Hbernate| Tu dois avoir un versio nde MySQL spécial, car les "row" sont trop grandes (à cause des chaines de texts de 8192)
 public class TokenResponse {
 
-    private static final int STRING_LENGTH = 8192;
+    
+    //TODO dur by Djer |POO| Pourquoi ne pas avoir utilisé Constants.DATABASE_TOKEN_SIZE ?
+    private static final int STRING_LENGTH = 4096;
     /**
      * Unique.
      */

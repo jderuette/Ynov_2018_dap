@@ -37,6 +37,7 @@ public class AuthorizeController {
      * Instance of AppUserRepository.
      * Auto resolved by Autowire.
      */
+    //TODO dur by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ?
     @Autowired
     private MicrosoftAccountRepository microsoftAccountRepository;
 
@@ -47,7 +48,9 @@ public class AuthorizeController {
             final HttpServletRequest request) {
       // Get the expected state value from the session
       HttpSession session = request.getSession();
+    //TODO dur by Djer |POO| Pouruqoi ne pas utiliser Constants.SESSION_EXPECTED_STATE
       UUID expectedState = (UUID) session.getAttribute("expected_state");
+      //TODO dur by Djer |POO| Pouruqoi ne pas utiliser Constants.SESSION_EXPECTED_NONCE
       UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
   
       // Make sure that the state query parameter returned matches
@@ -82,14 +85,17 @@ public class AuthorizeController {
               user = outlookService.getCurrentUser().execute().body();
               session.setAttribute("userEmail", user.getMail());
             } catch (IOException e) {
+              //TODO dur by Djer |Log4J| Une petite LOG ?
               session.setAttribute("error", e.getMessage());
             }
             session.setAttribute("userTenantId", idTokenObj.getTenantId());
           } else {
+            //TODO dur by Djer |Log4J| Une petite LOG ?
             session.setAttribute("error", "ID token failed validation.");
           }
       }
       else {
+          //TODO dur by Djer |Log4J| Une petite LOG ?
         session.setAttribute("error", "Unexpected state returned from authority.");
       }
         return "login_success";
@@ -100,6 +106,7 @@ public class AuthorizeController {
      * @param request User's Id
      * @return the index html page
      */
+    //TODO dur by Djer |Audit Code| Checkstyle t'incite à passer le paramètre en final
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request) {
       HttpSession session = request.getSession();

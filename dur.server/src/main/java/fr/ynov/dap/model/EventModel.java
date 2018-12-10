@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * The Class EventModel.
+ * TODO dur by Djer |POO| Comme tu n'utilises pas cette classe dans ton code, tu peux la supprimer
  */
 public class EventModel {
 

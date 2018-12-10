@@ -118,6 +118,7 @@ public class MailController extends BaseController {
 
         tokens = MicrosoftService.ensureTokens(tokens, tenantId);
 
+        //TODO dur by Djer |IDE| TOn IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
         String email = (String) session.getAttribute("userEmail");
 
         OutlookApiCalls outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken());

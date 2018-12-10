@@ -61,6 +61,7 @@ public abstract class GoogleService {
      */
     protected Credential GetCredentials (String userId) throws IOException, GeneralSecurityException {
     	GoogleAuthorizationCodeFlow flow = getFlow();
+    	//FIXME dur by Djer |API Google| Cela fonctionne au mieux TRES mal en mode "serveur Web" !!!
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userId);
     }
     
@@ -97,6 +98,7 @@ public abstract class GoogleService {
         HashMap<String, StoredCredential> mapDataStore = new HashMap<String, StoredCredential>();
         for (String key : keys) {
             mapDataStore.put(key, dataStore.get(key));
+            //TODO dur by Djer  |Rest API| Pas de SysOut sur un serveur. Utilise une LOG si besoin
             System.out.println(key);
         }
         return mapDataStore;

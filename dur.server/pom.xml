@@ -82,6 +82,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO dur by Djer |Maven| Cette dépendance n'est plus utile depuis que Google est mode "server web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -158,7 +159,6 @@
                 </configuration>
             </plugin>
 
-			<!-- TODO dur by Djer Checkstyle ? -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>

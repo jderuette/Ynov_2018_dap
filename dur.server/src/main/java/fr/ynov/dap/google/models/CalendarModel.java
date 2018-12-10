@@ -78,6 +78,7 @@ public class CalendarModel {
     public void setState(final String inState) {
         this.state = inState;
     }
+    //TODO dur by Djer |POO| ttention à l'ordre (ordre : Cosntantes, attributs, intialisateurs statics, Constructeur, méthodes métiers, méthdoe "générique" (toStrong, hashCode,...) getter/setter)
 
     /** The subject. */
     private String subject;

@@ -83,6 +83,7 @@ public class GoogleAccountService extends GoogleService {
 
         } catch (IOException e) {
 
+            //TODO dur by Djer |Log4J| ajoute du contexte dans tes messages
             LOGGER.error("Exception while trying to store user Credential", e);
 
             throw new ServletException("Error while trying to conenct Google Account");

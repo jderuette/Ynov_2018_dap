@@ -49,6 +49,7 @@ public class AdminController extends BaseController {
      * @throws IOException Exception
      */
     @RequestMapping("/admin")
+    //TODO dur by Djer |Audit Code| Il ne edvrait pas y avoir de majuscule au début de cette méthode. As-tu configuré PMD/Checkstyle ?
     public String GetAllCredentials(final ModelMap model) throws IOException, GeneralSecurityException {
         HashMap<String, StoredCredential> mapStoredCred = accountService.GetCredentialsAsMap();
 

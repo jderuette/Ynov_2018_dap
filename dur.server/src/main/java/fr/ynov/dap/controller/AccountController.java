@@ -73,6 +73,7 @@ public class AccountController extends BaseController {
      * @param userKey user Key
      * @return Html page
      */
+    //TODO dur by Djer |Rest API| Ton URL devraient être renomé en "/user/..." pour clarifier
     @RequestMapping("/account/add/{userKey}")
     @ResponseBody
     public String addNewUser(@PathVariable final String userKey) {
@@ -94,6 +95,7 @@ public class AccountController extends BaseController {
     * @return the string
     * @throws GeneralSecurityException the general security exception
     */
+    //TODO dur by Djer |Spring| Tu peux enlever le paramètre "request" tu ne l'utilises pas/plus
     @RequestMapping("/account/google/add/{gAccountName}")
     public String addAcount(@PathVariable final String gAccountName,
             @RequestParam(value = "userKey", required = true) final String userKey,
@@ -103,6 +105,7 @@ public class AccountController extends BaseController {
         session.setAttribute("accountName", gAccountName);
 
         final String redirectUri = buildRedirectUri(request, config.getOAuth2CallbackUrl());
+        //TODO dur by Djer |POO| Cette méthode n'a plus besoin de la session, tu la met à jour juste avant (et c'est mieux que tes méthodes "métier" ne dépendent pas d'objet "Web")
         String response = googleAccountService.addAccount(gAccountName, userKey, redirectUri, session);
 
         return response;

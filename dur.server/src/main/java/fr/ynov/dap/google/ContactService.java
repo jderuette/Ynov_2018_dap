@@ -50,7 +50,7 @@ public class ContactService extends GoogleService {
             throws GeneralSecurityException, IOException {
 
         if (user.getGoogleAccounts().size() == 0) {
-
+            //TODOD dur by Djer |Audit Code| Ton outils d'audit de code d'indique que c'est étrange de faire un "if" et de ne pas y insérer du code...
         }
 
         Integer nbContacts = 0;
