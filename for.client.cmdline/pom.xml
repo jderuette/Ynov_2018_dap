@@ -82,11 +82,12 @@
                     <skipEmptyReport>false</skipEmptyReport>
                     <minimumTokens>75</minimumTokens>
                     <rulesets>
-                    <!-- TODO for by Djer Il n'y a pas de fichier ici ! -->
+                    <!-- TODO for by Djer |Maven| (acien To-Do) Il n'y a pas de fichier ici ! -->
                         <ruleset>/pmd/dap_pmd.xml</ruleset>
                     </rulesets>
                 </configuration>
             </plugin>
+            <!-- TODO for by Djer |Audit Code| Config pour CheckStyle ? -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>

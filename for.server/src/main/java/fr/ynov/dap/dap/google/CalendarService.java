@@ -19,7 +19,7 @@ import fr.ynov.dap.dap.model.CalendarModel;
 import fr.ynov.dap.dap.repository.AppUserRepository;
 
 @RestController
-//TODO for by Djer Séparation service/Controller ?
+//TODO for by Djer |SOA| (ancine TO-DO) Séparation service/Controller ?
 public class CalendarService {
 	@Autowired
 	public AppUserRepository appRepo;
@@ -34,14 +34,13 @@ public class CalendarService {
   @RequestMapping("/nextEvent")
   public String getNextEvent(@RequestParam("userKey") final String userKey)
       throws IOException, GeneralSecurityException {
-      //TODO for by Djer ton IDE  te dit que ce n'est pas utilser. A supprimer ? A utiliser correctement ? A supprimer ?
     Calendar service = getService(userKey);
     DateTime now = new DateTime(System.currentTimeMillis());
     Events events = service.events().list("primary").setOrderBy("startTime")
         .setMaxResults(1).setTimeMin(now)
         .setSingleEvents(true).execute();
     if (events.getItems().size() == 0) {
-      //TODO for by Djer Evite les multiples return dans une même méthode
+      //TODO for by Djer |POO| (ancine TO-DO) Evite les multiples return dans une même méthode
       return null;
     } else {
       CalendarModel event = new CalendarModel(events.getItems().get(0).getSummary(), 
