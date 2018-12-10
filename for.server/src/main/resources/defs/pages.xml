@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <definition name="common" template="/src/main/resources/layout/base.jsp" />
+
+  <definition name="index" extends="common">
+    <put-attribute name="title" value="Java Mail API Tutorial" />
+    <put-attribute name="body" value="/src/main/resources/templates/index.html" />
+    <put-attribute name="current" value="index" />
+  </definition>
+  
+  <definition name="mail" extends="common">
+  <put-attribute name="title" value="My Mails" />
+  <put-attribute name="body" value="/src/main/resources/templates/mail.html" />
+  <put-attribute name="current" value="mail" />
+</definition>
+  
+  <definition name="events" extends="common">
+  <put-attribute name="title" value="My Events" />
+  <put-attribute name="body" value="/src/main/resources/templates/events.html" />
+  <put-attribute name="current" value="events" />
+</definition>
+</tiles-definitions>
