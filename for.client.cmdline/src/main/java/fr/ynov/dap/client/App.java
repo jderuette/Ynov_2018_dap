@@ -20,6 +20,7 @@ public class App {
  */
   public static void main(String[] args) throws IOException, URISyntaxException {
     if(args.length > 0) {
+        //TODO for by Djer |POO| ton control "args[1] != null" est dans toutes les conditions, tu pourrais le faire uen fois (avec message d'erreur spécifique en bonnus)
     	if(args[0].equals("addAccount") && args[1] != null)
     	{
             URL addAccountURI = new URL(link.ADD_ACCOUNT + args[1]);
@@ -86,6 +87,7 @@ public class App {
       BufferedReader rd = new BufferedReader(new InputStreamReader(in));
       String line;
       while ((line = rd.readLine()) != null) {
+          //TODO for by Djer |POO| Tu pourrais renvoyer la réponse plutot que forcer le "print". L'appelant aurait plsu de "souplesse". En plus le nom de ta méthode n'est pas "claire" sur le faite que cette méthode "affiche" un résultat
         System.out.println(line);
       }
     } finally {
