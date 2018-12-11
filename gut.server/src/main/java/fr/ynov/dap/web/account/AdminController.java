@@ -16,18 +16,22 @@ import fr.ynov.dap.repository.MicrosoftAccountRepository;
 @Controller
 public class AdminController {
 
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired
 	AppUserRepository 
 	appUserRepository;
 	
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public). En plus tu ne l'utilise pas mais ton IDE ne peut pas te le signaler car l'attribut est "public"
 	@Autowired 
 	MicrosoftAccountRepository 
 	microsoftAccountRepository;
 	
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public). En plus tu ne l'utilise pas mais ton IDE ne peut pas te le signaler car l'attribut est "public"
 	@Autowired
 	GoogleAccountRepository
 	googleAccountRepository;
 	
+	//FIXME gut by Djer |Spring| le "PathVariable" n'est PAS dans ton template. Ajoute dans le template d'URI ou passe en QueryParam
 	@RequestMapping("/admin")
 	public String addUser(ModelMap model, @PathVariable final String userKey) {
 		Iterable<AppUser> userList = appUserRepository.findAll();

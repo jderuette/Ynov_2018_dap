@@ -65,6 +65,7 @@ public class GmailService extends GoogleService{
 	 * @return la liste des labels
 	 * @throws IOException
 	 */
+	//TODO gut by Djer |Sprig| Le "@RequestParam" ne semble plus d'acutalité
 	public List<String> getLabels(@RequestParam final String userId) throws IOException {
 		getLogger().debug("Recuperation des labels lies au compte gmail");
 		ListLabelsResponse listResponse = getService(userId).users().labels().list(getUser()).execute();

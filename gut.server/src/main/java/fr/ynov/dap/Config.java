@@ -14,8 +14,9 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import fr.ynov.dap.service.google.GmailService;
 
 @Component
-//TODO gut by Djer Principe "ZeroConf" à revoir, ici tu as du "noConf" ! 
+//TODO gut by Djer |Design Patern| (ancien TO-DO) Principe "ZeroConf" à revoir, ici tu as du "noConf" ! 
 public class Config {
+    //TODO gut by Djer |POO| Attention si tu laisse en static, tu ne peu avoir qu'UNE seul configuration (ce n'est pas trop genant dans notre cas)
 	private static String CREDENTIALS_FOLDER = "/credentials.json";
 	private static InputStream CLIENT_SECRET_DIR = GmailService.class.getResourceAsStream(CREDENTIALS_FOLDER);
 	private static String APPLICATION_NAME = "HoC DaP";
@@ -23,12 +24,16 @@ public class Config {
 	private static NetHttpTransport http_transport = null;
 	private static final Logger logger = LogManager.getLogger();
 	
+	//TODO gut by Djer |Design Patern| Pour appliquer le prinbcipe ZeroConf tu DOIS avoir (1)des variable (attributs) qui (2)ont une valeur par defaut "raisonablement juste
+	
+	//TODO gut by Djer |Design Patern| Externalisation de la configuration ? Si tu as des variables tu pourras les mettres à jour via une configuration externe
 	
 	public Config(String _credentialsFolder,
 			String _applicationName,
 			String _TokensDirecotryPath) 
 			throws IOException, GeneralSecurityException {
 		logger.debug("Chargement d'une configuration personnalisee");
+		//TODO gut by Djer |POO| C'est TRES étrange d'initialiser des attributs **static** dans un constructeur (qui a pour role de créer une **instance** alors que le mot clef "static" sert justement acréer des attributs **non** lié à une instance)
 		http_transport = GoogleNetHttpTransport.newTrustedTransport();
 		CREDENTIALS_FOLDER = _credentialsFolder;
 		APPLICATION_NAME = _applicationName;
@@ -54,6 +59,7 @@ public class Config {
 	 * path pour les crédentials
 	 * @return String
 	 */
+	//TODO gut by Djer |POO| Ca n'est pas interdit, mais un getter "d'instance" qui renvoie un attribut static c'est très étrange ! (et piegeux !)
 	public String getCredentialsFolder() {
 		return CREDENTIALS_FOLDER;
 	}

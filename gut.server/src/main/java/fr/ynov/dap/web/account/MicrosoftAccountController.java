@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.ynov.dap.data.AppUser;
+//TODO gut by Djer |IDE| Configure les "save actions" de ton IDE !
 import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftUser;
@@ -29,15 +30,17 @@ import fr.ynov.dap.service.microsoft.helper.OutlookServiceBuilder;
 @Controller
 public class MicrosoftAccountController {
 	
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired 
 	AppUserRepository 
 	appUserRepository;
 	
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired 
 	MicrosoftAccountRepository 
 	microsoftAccountRepository;
 	
-	
+	//TODO gut by Djer |API Microsoft| Pourquoi tu POST ?
 	@RequestMapping(value = "/account/add/microsoft/{accountName}",
 			method = RequestMethod.POST)
 	public String addMicrosoftAccount(
@@ -99,15 +102,19 @@ public class MicrosoftAccountController {
 									new MicrosoftAccount(accountName,
 											tokenResponse.getAccessToken(),
 											idTokenObj.getTenantId());
+							//TODO gut by Djer |IDE| Ton IDE t'indique une "erreur bizzard", mais il devrait te dire que tu n'as pas utilisé le bon "add....()"
 							if(!currentAppUser.getGoogleAccounts().contains(newMicrosoftAccount)) {
+							    //TODO gut by Djer |JPA| Comme pour "Google" save l'APPUser car c'est lui qui contient le lien "principal" et laisse JPA répercuter sur les liens
 								microsoftAccountRepository.save(newMicrosoftAccount);
 							}
 							appUserRepository.save(new AppUser(userKey));
 							model.addAttribute("callbackMsg", "New account");
 						} else {
+						    //TODO gut by Djer |Log4J| Une petite log ?
 							model.addAttribute("callbackMsg", "user account dont exist");
 						}
 					} else {
+					    //TODO gut by Djer |Log4J| Une petite log ?
 						model.addAttribute("callbackMsg", "user account name missing");
 					}
 					
@@ -122,9 +129,11 @@ public class MicrosoftAccountController {
 					}
 					session.setAttribute("userTenantId", idTokenObj.getTenantId());
 				} else {
+				    //TODO gut by Djer |Log4J| Une petite log ?
 					session.setAttribute("error", "ID token failed validation.");
 				}
 			} else {
+			    //TODO gut by Djer |Log4J| Une petite log ?
 				session.setAttribute("error", "Unexpected state returned from authority.");
 			}
 			return "mail";

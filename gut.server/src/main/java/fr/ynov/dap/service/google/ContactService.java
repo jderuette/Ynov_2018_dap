@@ -52,7 +52,7 @@ public class ContactService extends GoogleService{
 				.setRequestMaskIncludeField("person.names,person.emailAddresses")
 				.execute();
 
-		//TODO gut by Djer et si j'ai plus de 500 contacts ?
+		//TODO gut by Djer |API Google| (ancien TO-DO) Et si j'ai plus de 500 contacts ? (utilise la pagination comme dans getUnreadMessageCount)
 		List<Person> connections = r.getConnections();
 		return connections.size();
 	}

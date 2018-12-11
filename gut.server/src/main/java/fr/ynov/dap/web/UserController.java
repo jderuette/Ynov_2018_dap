@@ -12,6 +12,7 @@ import fr.ynov.dap.repository.AppUserRepository;
 @Controller
 public class UserController extends BaseController {
 
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired
 	AppUserRepository appUserRepository;
 

@@ -8,6 +8,7 @@ public class BaseController {
 	private static final Logger logger = LogManager.getLogger();
 
 	public static Logger getLogger() {
+	    //TODO gut by Djer |Log4J| Attention toutes tes classe fille vont partager la catégory "BaseController"
 		return logger;
 	}
 	

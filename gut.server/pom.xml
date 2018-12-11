@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<!-- TODO gut il y a un format "attendu" de pom.cml. Cf mémo Maven -->
+	<!-- TODO gut by Djer |Maven| Il y a un format "attendu" de pom.xml. Cf mémo Maven -->
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ynov.dap</groupId>
@@ -23,6 +23,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.5.RELEASE</version>
 	</parent>
+	<!-- TODO gut by Djer |Maven| Il y a un ordre attendu dans un fichier POM. Cf "mémo Maven" -->
 
 	<build>
 		<pluginManagement>
@@ -223,6 +224,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- TODO gut by Djer |JavaDoc| Génération automatique de la JavaDoc ?  -->
 		</plugins>
 	</reporting>
 
@@ -274,6 +276,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
+		<!-- TODO gut by Djer |Spring| Il vaut mieux utiliser le connecteur de Spring-Boot. Celui-ci est TRES senssible à la version de MySQL installé -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

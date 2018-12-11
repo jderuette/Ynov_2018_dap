@@ -1,7 +1,7 @@
 package fr.ynov.dap.client;
 
 import java.io.IOException;
-//TODO gut by Djer Configuer les "save actions" de ton IDE. CF mémo Elcipse.
+//TODO gut by Djer |IDE| (ancien TO-DO) Configuer les "save actions" de ton IDE. CF mémo Elcipse.
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -42,6 +42,9 @@ public class App
         myService.getContactsCount();
         myService.getEvents();
         myService.getGmailLabels();
+        
+        //TODO gut by Djer |API Google| Ajout de comtpe Google ? 
+      //TODO gut by Djer |API Microsoft| Ajout de comtpe Microsoft ? 
     }
     
     

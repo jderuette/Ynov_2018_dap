@@ -19,18 +19,18 @@
 <body>
 	<div th:replace="~{fragments/header :: header}"></div>
 	<div class="jumbotron">
-		<h1>Java Web App Tutorial</h1>
-		<p>This sample uses the Mail API to read messages in your inbox.</p>
+		<h1>Java Web App Tutorial</h1><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
+		<p>This sample uses the Mail API to read messages in your inbox.</p><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 		<p>
 			<a class="btn btn-lg btn-primary" th:href="${loginUrl}">Click
-				here to login</a>
+				here to login</a><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 		</p>
 	</div>
 
-	<h1>welcome</h1>
+	<h1>welcome</h1><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 	<div>
 		<span th:text="#{email.nb}">You have&nbsp;:</span> <span
-			th:text="${nbEmails}"></span>
+			th:text="${nbEmails}"></span><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 	</div>
 	<div th:replace="~{fragments/footer :: footer}"></div>
 </body>

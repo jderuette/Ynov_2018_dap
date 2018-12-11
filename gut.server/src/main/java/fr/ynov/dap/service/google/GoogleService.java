@@ -46,6 +46,7 @@ public abstract class GoogleService {
 	 * @param configuration
 	 */
 	public void setConfiguration(Config configuration) {
+	    //TODO gut by Djer |POO| Pourquoi une méthode Vide ? 
 	}
 
 	/**
@@ -63,6 +64,7 @@ public abstract class GoogleService {
 				);
 	    scopes = myscopes;
 	    logger.debug("Chargement de la configuration");
+	    //TODO gut by Djer |Spring| Pourquoi faire un "setConfig" avec comme valeur l'attribut qui est lui même, en théorie, mis à jour par le set Config ? 
 	    setConfiguration(loadConfig);
 	    
 	}
@@ -121,6 +123,7 @@ public abstract class GoogleService {
 	}
 
 	public static Logger getLogger() {
+	    //TODO gut by Djer |Log4J| Attention toutes tes classe filles vont logger dans la catégorie "GoogleService" ce qui n'est pas top
 		return logger;
 	}
 	

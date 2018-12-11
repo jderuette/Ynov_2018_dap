@@ -31,9 +31,11 @@ import fr.ynov.dap.service.google.GoogleService;
 public class GoogleAccountController extends GoogleService {
 	protected static org.apache.logging.log4j.Logger LOG = LogManager.getLogger();
 
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired
 	AppUserRepository appUserRepository;
 	
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired
 	GoogleAccountRepository googleAccountRepository;
 	
@@ -71,6 +73,7 @@ public class GoogleAccountController extends GoogleService {
 			}
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		    //TODO gut by Djer |Log4J| Contextualise tes messages (" for userKey : " + userId)
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to conenct Google Account");
 		}
@@ -170,8 +173,11 @@ public class GoogleAccountController extends GoogleService {
 				// store userId in session for CallBack Access
 				// ajouter le compte
 				if (userKey != null) {
+				    
 					if (appUserRepository.findByUserKey(userKey) != null) {
+					  //TODO gut by Djer |JPA| Le "appUserRepository.findByUserKey" te renvoie l'APPUser. Evite de créer des "New entity" quand elle existe déja tu t'expose a des problems de "doublons" ou de "synchronisation"
 						AppUser currentAppUser = new AppUser(userKey);
+						//TODO gut by Djer |JPA| Tu as une méthode "addGoogleAccount" dans Appuser qui fait le Job. Il vaut mieux que tu "ssave" l'entité qui contient le lien "principale" et laisser JPA répercuter sur els entité filles
 						GoogleAccount newGoogleAccount = new GoogleAccount(userId);
 						if(!currentAppUser.getGoogleAccounts().contains(newGoogleAccount)) {
 							googleAccountRepository.save(newGoogleAccount);
@@ -189,6 +195,7 @@ public class GoogleAccountController extends GoogleService {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		    //TODO gut by Djer |Log4J| Contextualise tes message (" for userkey : " + userKey + " and accountName : " + userId)
 			LOG.error("Error while loading credential (or Google Flow)", e);
 		}
 		// only when error occurs, else redirected BEFORE

@@ -55,6 +55,7 @@ public class DapService {
 	public void getUnreadMailsCount() throws MalformedURLException, IOException {
 		String url = "http://localhost:8080/gmail/countUnread";
 		
+		//TODO gut by Djer |POO| une grosse partie de ce code est commun avec tes autres méthodes. Soit ajouter dnas "callAPI" soit une méthode pour "extraire la réponse" serait approprié
 		
 		 try (InputStream response = callApi(url)) {
 			 

@@ -26,11 +26,14 @@ import fr.ynov.dap.service.microsoft.helper.PagedResult;
 
 @RestController
 public class CalendarController extends BaseController {
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	/**
+	 *TODO gut by Djer |JavaDoc| Ce commentaire est faux ! ("Calendar" pas "People")
 	 * Service permettant de communiquer avec la People API de google
 	 */
 	@Autowired CalendarService calendarService;
 
+	//TODO gut by Djer |API Google| Comment obtenir LE next Event ? 
 	/**
 	 * @param userId
 	 * @return liste des évenements à venir format JSON
@@ -38,11 +41,13 @@ public class CalendarController extends BaseController {
 	 */
 	 @RequestMapping("/calendar/events")
 	 public String getEvents(@RequestParam final String userId) 
-			 throws IOException {		 
+			 throws IOException {
+	     //TODO gut by Djer |Log4J| pas la peine d'ajouter "CalendarController/getEvents" cela est ajouté par defaut par Log4J (et est configurable !)
 		 getLogger().debug("CalendarController/getEvents : Appel de calendar service pour recuperer les derniers evenements");
 		 List<Event> events = calendarService.getEvents(userId);
 		 String stringEvent = "Pas d'évènements";
 		 if (events.isEmpty()) {
+		     //TODO gut by Djer |POO| pas de SysOut sur un server
 	         System.out.println(stringEvent);
 	     } else {
 	    	 stringEvent = "{events:[";
@@ -65,11 +70,13 @@ public class CalendarController extends BaseController {
 	         		stringEvent += ",";
 	            }
 	         }
+	         //TODO gut by Djer |API Google| Gestion de "mon" status ?
 	         stringEvent += "]}";
 	     }
 		 return stringEvent;
 	 }
 	 
+	//TODO gut by Djer |SOA| Une bonne partie de ce code pourrait être dans un "MicrosoftCalendarService"
 	 @RequestMapping("/outlook/events")
 	  public String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 	    HttpSession session = request.getSession();
@@ -96,6 +103,7 @@ public class CalendarController extends BaseController {
 	    Integer maxResults = 10;
 	    
 	    try {
+	        //TODO gut by Djer |API Microsoft| Microsodft renvoie par defaut les événnement "à partir de now" ?  
 	      PagedResult<MicrosoftEvent> events = outlookService.getEvents(
 	          sort, properties, maxResults)
 	          .execute().body();

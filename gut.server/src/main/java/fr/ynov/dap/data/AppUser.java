@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.data.microsoft.MicrosoftAccount;
+//TODO gut by Djer |IDE| Configure les "save actions" de ton IDE pour qu'il organise les import (et format) lors de la sauvegarde
 import fr.ynov.dap.data.microsoft.MicrosoftUser;
 
 

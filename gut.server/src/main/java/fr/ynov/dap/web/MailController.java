@@ -33,11 +33,13 @@ import fr.ynov.dap.service.microsoft.helper.PagedResult;
 @RestController
 public class MailController extends BaseController {
 	
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	/**
 	 * Service Gmail permettant d'appeler l'API Google
 	 */
 	@Autowired GmailService gmailService;
 
+	//TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired AppUserRepository appUserRepository;
 	
 	
@@ -97,6 +99,7 @@ public class MailController extends BaseController {
 							googleAccount.getAccountName()
 							);		
 			for (Message message : messages) {
+			    //TODO gut by Djer |POO| Tu peux utiliser la methode "size" sur une collection plutot que de la parcourir
 				unreadMessageCount++;
 			}
 		}

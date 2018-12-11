@@ -11,8 +11,6 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
-//TODO gut by Djer Configure le "formatter" de ton IDE !! cf Mémo Eclispe.
-//TODO gut by Djer TRaite les remarques des outils de controle qualité !!
 @Service
 public class CalendarService extends GoogleService{
 	

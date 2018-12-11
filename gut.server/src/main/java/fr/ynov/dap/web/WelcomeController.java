@@ -17,6 +17,7 @@ import fr.ynov.dap.web.MailController;
 @Controller
 public class WelcomeController extends BaseController {
 
+  //TODO gut by Djer |POO| SI tu ne précise pas, cette attribut aurat la même porté que la classe (donc public).
 	@Autowired
 	MailController gmailRequests;
 

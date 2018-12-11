@@ -20,11 +20,11 @@
 	<div th:replace="~{fragments/header :: header}"></div>
 
 	<table class="table">
-		<caption>Accounts</caption>
+		<caption>Accounts</caption> <!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Accounts</th>
+				<th>Name</th><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
+				<th>Accounts</th><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 			</tr>
 		</thead>
 		<tbody>
@@ -33,7 +33,7 @@
 					<td th:text="${appUser.givenName}"></td>
 					<td>
 						<div th:if="${appUser.googleAccounts}">
-							<span>Google accounts</span>
+							<span>Google accounts</span><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 							<ul class="list-inline">
 								<th:block th:each="googleAccount : ${appUser.googleAccounts}">
 									<li th:text="#{googleAccount.accountName} ${googleAccount.accountName}"></li>
@@ -41,7 +41,7 @@
 							</ul>
 						</div>
 						<div th:if="${appUser.microsoftAccounts}">
-							<span>Microsoft accounts</span>
+							<span>Microsoft accounts</span><!-- TODO gut by Djer |Thymleaf| Internationalisation ? -->
 							<ul class="list-inline">
 								<th:block th:each="microsoftAccount : ${appUser.microsoftAccounts}">
 									<li th:text="#{microsoft.accountName} ${microsoftAccount.accountName}"></li>

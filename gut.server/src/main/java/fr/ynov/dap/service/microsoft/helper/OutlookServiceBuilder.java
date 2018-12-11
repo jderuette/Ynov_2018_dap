@@ -48,6 +48,7 @@ public class OutlookServiceBuilder {
 		
 		// Create and configure the Retrofit object
 		Retrofit retrofit = new Retrofit.Builder()
+		        //TODO gut by Djer |API Microsoft| Tu est sure ? Tu devrais plutot pointer vers "graph" (je pense que tu n'a pas du réussire à lire le email "Ynov")
 				.baseUrl("https://outlook.office.com")
 				.client(client)
 				.addConverterFactory(JacksonConverterFactory.create())

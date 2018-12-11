@@ -42,6 +42,8 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO gut by Djer |POO| Evite les multiples return dans une même méthode.
+	            //TODO gut by Djer |Log4J| Une petite Log ?
 				return null;
 			}
 		}
@@ -52,6 +54,8 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO gut by Djer |POO| Evite les multiples return dans une même méthode.
+	            //TODO gut by Djer |Log4J| Une petite Log ?
 				return null;
 			}
 		}
@@ -63,6 +67,8 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO gut by Djer |POO| Evite les multiples return dans une même méthode.
+	            //TODO gut by Djer |Log4J| Une petite Log ?
 				return null;
 			}
 		}
@@ -78,6 +84,7 @@ public class MicrosoftService {
 	}
 	
 	private static void loadConfig() throws IOException {
+	    //TODO gut by Djer |Design Patern| Externalisation de la configuration ? 
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = MicrosoftService.class.getClassLoader().getResourceAsStream(authConfigFile);
 		
@@ -133,6 +140,7 @@ public class MicrosoftService {
 		    return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 		        "authorization_code", authCode, getRedirectUrl()).execute().body();
 		  } catch (IOException e) {
+		    //TODO gut by Djer |Log4J| Une petite Log ?
 		    TokenResponse error = new TokenResponse();
 		    error.setError("IOException");
 		    error.setErrorDescription(e.getMessage());

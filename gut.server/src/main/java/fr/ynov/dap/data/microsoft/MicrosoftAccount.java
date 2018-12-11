@@ -29,6 +29,7 @@ public class MicrosoftAccount {
 	AppUser appUser;
 
 	public MicrosoftAccount(String name, String accessToken, String tenantId) {
+	    //TODO gut by Djer |IDE| Penses à suprimmer les TO-DO lorsqu'ils ne sont plus vrai
 		// TODO Auto-generated constructor stub
 		this.accountName = name;
 		this.accessToken = accessToken;
