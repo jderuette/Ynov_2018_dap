@@ -1,0 +1,15 @@
+fr/ynov/dap/web/PeopleController.class
+fr/ynov/dap/web/Welcome.class
+fr/ynov/dap/web/CalendarController.class
+fr/ynov/dap/data/AppUser.class
+fr/ynov/dap/GoogleService.class
+fr/ynov/dap/GmailService.class
+fr/ynov/dap/web/MailController.class
+fr/ynov/dap/Launcher.class
+fr/ynov/dap/Config.class
+fr/ynov/dap/data/GoogleAccount.class
+fr/ynov/dap/repository/AppUserRepository.class
+fr/ynov/dap/CalendarService.class
+fr/ynov/dap/PeopleService.class
+fr/ynov/dap/GoogleAccountService.class
+fr/ynov/dap/web/utilisateurController.class
