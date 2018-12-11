@@ -35,6 +35,8 @@ public class MicrosoftContactService {
         try {
             User user = userRepository.findByName(userName);
             if (user == null) {
+              //TODO grj by Djer |Gestion Exception| Contexte (for userName : +userName).
+                //TODO grj by Djer |Log4J| une petite log ?
                 throw new Exception("User does not exist");
             }
 
@@ -50,7 +52,9 @@ public class MicrosoftContactService {
             }
 
         } catch (Exception e) {
+          //TODO grj by Djer |Log4J| Contexte (for userName : +userName).
             LOGGER.error("Error when trying to count all MicrosoftAccount unread mails", e);
+          //TODO grj by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console, la pile est déja présente dans ton message de log. Supprime la ligne ci-dessous
             e.printStackTrace();
         }
 

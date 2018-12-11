@@ -5,6 +5,7 @@ package fr.ynov.dap;
  */
 public class Configuration {
 
+    //TODO grj by Djer |Design Patern| Externalisation de la configuration ? 
 
     private String credentialFolder = "/google/credentials.json";
     private String clientSecretDir  = "tokens";

@@ -52,7 +52,9 @@ public class GoogleMailService {
             }
 
         } catch (Exception e) {
+          //TODO grj by Djer |Log4J| Contexte (for userName : +userName).
             LOGGER.error("Error when trying to count all GoogleAccount unread mails", e);
+          //TODO grj by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console, la pile est déja présente dans ton message de log. Supprime la ligne ci-dessous
             e.printStackTrace();
         }
 

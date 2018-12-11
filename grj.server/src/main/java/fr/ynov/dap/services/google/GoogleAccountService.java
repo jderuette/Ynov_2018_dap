@@ -65,6 +65,7 @@ public class GoogleAccountService extends GoogleHelper {
             final GoogleAuthorizationCodeFlow flow     = googleHelper.getFlow();
             final TokenResponse               response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
 
+            //TODO grj by Djer |API Google| Ne fait pas la sauvegahrde, l'utilsiateur peut refuser de "partager ces données" et tu auras un "compte fantome". Fait le dans le callback
             User user = userRepository.findByName(userName);
 
             GoogleAccount googleAccount = new GoogleAccount();
@@ -84,6 +85,7 @@ public class GoogleAccountService extends GoogleHelper {
             }
 
         } catch (IOException e) {
+            //TODO grj by Djer |log4J| Ajoute du contexte (" for Google account : " + googleAccountName)
             LOG.error("Exception while trying to store user AccountCredential", e);
         }
 

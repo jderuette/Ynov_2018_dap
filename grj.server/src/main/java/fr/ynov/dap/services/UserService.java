@@ -41,13 +41,16 @@ public class UserService {
                 userRepository.save(newUser);
 
                 response.put("message", "New user " + userName + " is successfully created");
+                //TODO grj by Djer |Log4J| Contextualise tes messages
                 LOGGER.info("New user created");
             } catch (Exception e) {
                 response.put("error", "Error when trying to create new user: " + e.toString());
+              //TODO grj by Djer |Log4J| Contextualise tes messages
                 LOGGER.error("Error when trying to create new user");
             }
         } else {
             response.put("error", "User already exists");
+          //TODO grj by Djer |Log4J| Contextualise tes messages. Un level Warning serait peut-$etre plus approprié ? 
             LOGGER.info("Failed to create new user, he already exists");
         }
 

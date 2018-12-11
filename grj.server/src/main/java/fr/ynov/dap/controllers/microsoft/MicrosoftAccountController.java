@@ -25,6 +25,7 @@ public class MicrosoftAccountController {
      * Autowired UserRepository
      */
     @Autowired
+    //TODO grj by Djer |POO| par defaut ton attribut aura la porté de la classe (donc public).
     UserRepository userRepository;
 
 
@@ -51,6 +52,7 @@ public class MicrosoftAccountController {
         session.setAttribute("microsoftAccountName", microsoftAccountName);
 
         String loginUrl = MicrosoftAuthHelper.getLoginUrl(state, nonce);
+        //TODO grj by Djer |MVC| pas très utile, ton modèle ne sera pas "sauvegardé" après le "redirect. A la limite tu peux mettre cette URL dans la session utilisateur mais je ne suis pas certains que tu en ai vraiment besoin
         model.addAttribute("loginUrl", loginUrl);
 
         return "redirect:" + loginUrl;
@@ -87,6 +89,7 @@ public class MicrosoftAccountController {
                             outlookUser = outlookService.getCurrentUser().execute().body();
                             microsoftAccount.setEmail(outlookUser.getMail());
                         } catch (IOException e) {
+                            //TODO grj by Djer |Gestion Exception| Attention comme tu "catch" cette exception, tu l'étouffe et ton programe continue après. Tu va donc sauvegarder un "micrsooft acocunt" sans email. C'est peut-être ton objectif, mais pense à une LOG en complment dans ce cas. Les exeptiosn "étouffées" sans "avertissement" (une Log en error/warning) peuvent être très difficile à débugger
                             session.setAttribute("error", e.getMessage());
                         }
 

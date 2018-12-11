@@ -49,6 +49,8 @@ public class GoogleEventService {
             User user = userRepository.findByName(userName);
 
             if (user == null) {
+              //TODO grj by Djer |Gestion Exception| Contexte (for userName : +userName).
+                //TODO grj by Djer |Log4J| une petite log ? 
                 throw new Exception("User does not exists");
             }
 
@@ -69,8 +71,11 @@ public class GoogleEventService {
                     Event event = nextEvents.getItems().get(0);
 
                     nextEventResponse.setName(event.getSummary());
+                    //TODO grj by Djer |API Google| Attention tu ignore l'heur, c'est riqué. Comme tu va comparer sur 2 calendariers différents et que tu utilises un "is Before" si tu as 2 évènnement le même jours, celui du premier calendrier analysé sera prioritaire, même s'il est "après" dans le temps
+                    //TODO grj by Djer |API Google| Attention event.getStart().**getDate()** n'est valiorisé QUE pour elms évennements durant la journée entière. Il faut utiliser "event.getStart().getDateTime()" pour les évènnements avec une heur de début et de fin
                     nextEventResponse.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(event.getStart().getDate().toString()));
                     nextEventResponse.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(event.getStart().getDate().toString()));
+                  //TODO grj by Djer |API Google| Gestion de "mon" status ?
                 }
 
                 if (nextEvent.getStartDate() == null) {
@@ -80,9 +85,12 @@ public class GoogleEventService {
                         nextEvent = nextEventResponse;
                     }
                 }
+                
             }
         } catch (Exception e) {
+          //TODO grj by Djer |Log4J| Contexte (for userName : +userName).
             LOGGER.error("Error when trying retrieve last event", e);
+          //TODO grj by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console, la pile est déja présente dans ton message de log. Supprime la ligne ci-dessous
             e.printStackTrace();
         }
 

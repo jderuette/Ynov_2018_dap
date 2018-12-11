@@ -20,18 +20,18 @@
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark" style="margin-bottom: 50px">
-    <h1 style="color: white"><span th:text="${userName}"></span>'s mails</h1>
+    <h1 style="color: white"><span th:text="${userName}"></span>'s mails</h1><!-- TODO grj by Djer |Thymleaf| internationalisation ?  -->
 </nav>
 
 <div th:each="mails : ${mailsMap}">
-    <h2>Microsoft Account: <span th:text="${mails.key}"></span></h2>
+    <h2>Microsoft Account: <span th:text="${mails.key}"></span></h2><!-- TODO grj by Djer |Thymleaf| internationalisation ?  -->
     <div class="row col-md-12 table-responsive">
         <table class="table">
             <thead>
             <tr class="table">
-                <th>From</th>
-                <th>Subject</th>
-                <th style="max-width: 100px">Content</th>
+                <th>From</th><!-- TODO grj by Djer |Thymleaf| internationalisation ?  -->
+                <th>Subject</th><!-- TODO grj by Djer |Thymleaf| internationalisation ?  -->
+                <th style="max-width: 100px">Content</th><!-- TODO grj by Djer |Thymleaf| internationalisation ?  -->
             </tr>
             </thead>
 

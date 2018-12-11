@@ -1,5 +1,6 @@
 package fr.ynov.dapClient;
 
+//TODO grj by Djer |IDE| Configure les "save actions" de ton IDE et évite les imports Wilcard, ca n'aporte jamais rien de bon.
 import fr.ynov.dapClient.services.*;
 
 

@@ -46,6 +46,7 @@ public class MicrosoftAuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO grj by Djer |Log4J| Une petite Log ? 
                 return null;
             }
         }
@@ -62,6 +63,7 @@ public class MicrosoftAuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO grj by Djer |Log4J| Une petite Log ? 
                 return null;
             }
         }
@@ -78,6 +80,7 @@ public class MicrosoftAuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO grj by Djer |Log4J| Une petite Log ? 
                 return null;
             }
         }
@@ -105,6 +108,7 @@ public class MicrosoftAuthHelper {
      */
     private static void loadConfig() throws IOException {
         String      authConfigFile   = "auth.properties";
+        //TODO grj by Djer |Design Patern| Externaliser la configuration ?
         InputStream authConfigStream = MicrosoftAuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
         if (authConfigStream != null) {
@@ -185,6 +189,7 @@ public class MicrosoftAuthHelper {
      * @param microsoftAccount microsoftAccount
      * @return MicrosoftAccount
      */
+    //TODO grj by Djer |POO| pas top de "modifier" un paramètre qu'on te passe. En plus ici tu le renvoie si qui est encore plus confusant. Comme le nom de ta méthdoe semble indiquer une modification, ne renvoie rien. Il est aussis "sous-entendu" que l'appelant DOIT sauveagrder le compte, éventuellement, modifié
     public static MicrosoftAccount ensureTokens(MicrosoftAccount microsoftAccount) {
         // Are tokens still valid?
         Calendar now = Calendar.getInstance();
@@ -218,6 +223,7 @@ public class MicrosoftAuthHelper {
                 microsoftAccount.setRefreshToken(microsoftTokenResponse.getRefreshToken());
                 microsoftAccount.setTokenExpirationTime(microsoftTokenResponse.getExpirationTime());
             } catch (IOException e) {
+              //TODO grj by Djer |Log4J| Une petite Log ? 
                 MicrosoftTokenResponse error = new MicrosoftTokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());

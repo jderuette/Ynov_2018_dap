@@ -16,6 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class ContactController {
 
     /**
+     * TODO grj by Djer |Audit Code| La description DOIT se terminer par un ".". Cela fera plaisir à CheckStyle en plus
      * Autowired GoogleContactService
      */
     @Autowired
@@ -38,6 +39,7 @@ public class ContactController {
 
         Map<String, Integer> response = new HashMap<>();
 
+        //TODO grj by Djer |IDE| Configure les "save action" de ton IDE pour formater ton code lors de la sauvegarde pour éviter ces lignes à rallonge
         int totalUnreadEmail = googleContactService.getNumberContacts(userName) + microsoftContactService.getNumberUnreadEmails(userName);
 
         response.put("total-contacts", totalUnreadEmail);

@@ -20,6 +20,7 @@ public class EventController {
     private GoogleEventService googleEventService;
 
     /**
+     * TODO grj by DJer |javaDoc| Pense à vérifier que ta Javadoc est toujours "juste" ... (essaye d'éviter les copier/coller d'une façon général)
      * Get contact number of all account of a user
      *
      * @param userName userName
@@ -31,6 +32,8 @@ public class EventController {
         Event nextEvent;
 
         nextEvent = googleEventService.getNextEvent(userName);
+        
+        //TODO grj by Djer |API Microsoft| Intégrogation des comtpes Microsoft ?
 
         return nextEvent;
     }

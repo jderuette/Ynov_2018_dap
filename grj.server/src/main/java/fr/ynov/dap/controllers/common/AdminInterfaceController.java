@@ -17,6 +17,7 @@ import java.util.*;
 /**
  * AdminInterfaceController
  */
+//TODO grj by Djer |POO| Evite d'employer le mot "Interface" qui à déja un sens en Java. Tu peux utiliser GUI (ou IHM) si vraiment tu as besoin de le préciser dans ta classe.
 @Controller
 public class AdminInterfaceController {
 
@@ -39,6 +40,7 @@ public class AdminInterfaceController {
     @RequestMapping("/admin-interface")
     public String dataStore(ModelMap model) throws IOException {
 
+        //TODO grj by Djer |POO| Depuis Java 1.7 tu peux ne pas re-préciser le type des paramètre lors de l'instanciation, mais tu DOIS laisser les <> (le compilateur completera automatiquement à partir du type déclaré)
         Map<String, AccountCredential> credentials = new HashMap();
 
         DataStore<StoredCredential> dataStore = googleDataStoreService.getDataStore();
@@ -58,6 +60,7 @@ public class AdminInterfaceController {
             credentials.put(currentMicrosoftAccount.getName(), accountCredential);
         }
 
+        //TODO grj by Djer |POO| N'hésite pas être claire dans le nom des variable que tu transfert a Thymleaf via le modele (accountsMap, ou accountsData serait plus claire)
         model.addAttribute("dataMap", credentials);
 
         return "credentials";

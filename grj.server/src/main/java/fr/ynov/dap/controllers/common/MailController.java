@@ -36,6 +36,7 @@ public class MailController {
 
         Map<String, Integer> response = new HashMap<>();
 
+        //TODO grj by Djer |IDE| Configure tes "save actions"
         int totalUnreadEmail = googleMailService.getNumberUnreadEmails(userName) + microsoftMailService.getNumberUnreadEmails(userName);
 
         response.put("total-email-unread", totalUnreadEmail);

@@ -55,6 +55,7 @@ public class GoogleAccountController extends GoogleHelper {
         boolean isUserExists = userRepository.findByName(userName) != null;
 
         if (isUserExists) {
+            //TODO grj by Djer |POO| Ce n'est aps top de passer des objet "Web" (Request/session) à test services. essaye d'extraire les informations dans le controller et de passer des objets "non Web" a tes services
             return googleHelper.loadCredential(request, session, userName, googleAccountName);
         } else {
             return "redirect:/user-does-not-exist";
@@ -73,6 +74,7 @@ public class GoogleAccountController extends GoogleHelper {
 
         String response = null;
         try {
+            //TODO grj by Djer |POO| Tu pourais extraire les données des objets "Web" en plus ca te ferait du contexte pour la LOG d'erreur ! 
             response = googleAccountService.addGoogleAccountToUser(request, session);
         } catch (ServletException e) {
             LOGGER.error("Error when trying to store google account", e);

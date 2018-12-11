@@ -46,6 +46,7 @@ public class MicrosoftMailController {
         Map<String, MicrosoftMessage[]> mails = new HashMap<>();
 
         if (user != null) {
+            //TODO grj by Djer |SOA| Un petit "Microsoft mail service" serait pas mal.
 
             List<MicrosoftAccount> microsoftAccountList = user.getMicrosoftAccountList();
 

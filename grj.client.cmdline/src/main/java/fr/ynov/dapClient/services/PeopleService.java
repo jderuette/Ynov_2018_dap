@@ -20,6 +20,8 @@ public class PeopleService {
      * @throws IOException Exception
      */
     public String getNumberContacts(String userKey) throws IOException {
+        
+        //TODO grj by Djer |POO| Beaucoup de code en commun avec CalendarService.getNextEvent() ....
         URL url = null;
         try {
             url = new URL(DAP_API_URL + "/contact/" + userKey);

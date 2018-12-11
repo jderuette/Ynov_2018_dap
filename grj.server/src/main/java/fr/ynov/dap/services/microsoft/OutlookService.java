@@ -17,9 +17,11 @@ public interface OutlookService {
             @Query("$top") Integer maxResults
     );
 
+    //TODO grj by Djer |API Microsoft| Je pense que l'API de Microsoft peut être mappé sur quelques chose de plus "précise " que "Object"
     @GET("/v1.0/me/mailfolders/inbox")
     Call<Object> getUnread();
 
+  //TODO grj by Djer |API Microsoft| Je pense que l'API de Microsoft peut être mappé sur quelques chose de plus "précise " que "Object"
     @GET("/v1.0/me/contacts?$count=true")
     Call<Object> getNumberContacts();
 }

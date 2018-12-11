@@ -43,6 +43,8 @@ public class GoogleContactService {
         try {
             User user = userRepository.findByName(userName);
             if (user == null) {
+                //TODO grj by Djer |Gestion Exception| Contexte (for userName : +userName).
+                //TODO grj by Djer |Log4J| une petite log ?
                 throw new Exception("User does not exist");
             }
 
@@ -55,7 +57,9 @@ public class GoogleContactService {
             }
 
         } catch (Exception e) {
+          //TODO grj by Djer |Log4J| Contexte (for userName : +userName).
             LOGGER.error("Error when trying to count all GoogleAccount contacts", e);
+            //TODO grj by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console, la pile est déja présente dans ton message de log. Supprime la ligne ci-dessous
             e.printStackTrace();
         }
 

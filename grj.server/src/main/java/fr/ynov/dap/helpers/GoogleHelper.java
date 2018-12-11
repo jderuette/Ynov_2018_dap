@@ -39,6 +39,7 @@ public class GoogleHelper {
     /**
      * Autowired GoogleAccountService
      */
+    //TODO grj by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
     @Autowired
     private GoogleAccountService googleAccountService;
 
@@ -66,6 +67,7 @@ public class GoogleHelper {
      */
     public GoogleAuthorizationCodeFlow getFlow() throws IOException {
 
+        //TODO grj by Djer |Design Patern| impossible de charger un fichier externe avec "getResourceAsStream". Passe sur un "Input Stream" (et externalise le fichier)
         InputStream         in            = Launcher.class.getResourceAsStream(configuration.getCredentialFolder());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         return new GoogleAuthorizationCodeFlow.Builder(
@@ -98,6 +100,7 @@ public class GoogleHelper {
      * @throws IOException              Exception
      */
     public Gmail getGmailService(String userKey) throws GeneralSecurityException, IOException {
+        //TODO grj by Djer |POO| Pourquoi ne pas utiliser la constante de cette classe ? 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
@@ -114,6 +117,7 @@ public class GoogleHelper {
      * @throws GeneralSecurityException Exception
      */
     public PeopleService getPeopleService(String userKey) throws IOException, GeneralSecurityException {
+      //TODO grj by Djer |POO| Pourquoi ne pas utiliser la constante de cette classe ? 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         return new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
@@ -130,6 +134,7 @@ public class GoogleHelper {
      * @throws IOException              Exception
      */
     public com.google.api.services.calendar.Calendar getCalendarService(String userKey) throws GeneralSecurityException, IOException {
+      //TODO grj by Djer |POO| Pourquoi ne pas utiliser la constante de cette classe ? 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         return new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
                 .setApplicationName(configuration.getApplicationName())
@@ -172,6 +177,7 @@ public class GoogleHelper {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+            //TODO grj by Djer |Log4J| Contextualise tes messages de log
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
 
