@@ -1,3 +1,4 @@
+//TODO job by Djer |POO| Evite d'avoir dex "racine" différentes dnas tes package (Notament pour Spring Boot qui, par defaut, ne scanne que les "sous package"). Un package "fr.ynov.dap.microsoft" serait plus approprié
 package com.outlook.dev.auth;
 
 import java.io.FileNotFoundException;
@@ -28,6 +29,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO jog by Djer |Log4J| Une petite Log ? 
 				return null;
 			}
 		}
@@ -39,6 +41,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO jog by Djer |Log4J| Une petite Log ? 
 				return null;
 			}
 		}
@@ -50,6 +53,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO jog by Djer |Log4J| Une petite Log ? 
 				return null;
 			}
 		}
@@ -65,6 +69,7 @@ public class AuthHelper {
 	}
 
 	private static void loadConfig() throws IOException {
+	  //TODO jog by Djer |Design Patern| Externalisation de la configuration ? 
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -115,6 +120,7 @@ public class AuthHelper {
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
 					authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
+		  //TODO jog by Djer |Log4J| Une petite Log ? 
 			TokenResponse error = new TokenResponse();
 			error.setError("IOException");
 			error.setErrorDescription(e.getMessage());
@@ -147,6 +153,7 @@ public class AuthHelper {
 				return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
 						"refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 			} catch (IOException e) {
+			  //TODO jog by Djer |Log4J| Une petite Log ? 
 				TokenResponse error = new TokenResponse();
 				error.setError("IOException");
 				error.setErrorDescription(e.getMessage());

@@ -12,6 +12,7 @@ import fr.ynov.dap.data.AppUser;
 import fr.ynov.dap.repository.AppUserRepository;
 
 @RestController
+//TODO job by Djer |Audit Code| active les outils d'audit de code (PMD/Checkstyle) pour éviter ce genre d'erreur. Une Classe Commence par une majuscule 
 public class utilisateurController {
 	@Autowired
 	AppUserRepository repo;

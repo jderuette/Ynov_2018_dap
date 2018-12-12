@@ -19,6 +19,7 @@ public class AppUser {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	List<GoogleAccount> googleAccounts;
 
+	//TODO job by Djer |API Microsoft| Récupération des comptes Microsoft ?
 	public AppUser(String name) {
 		super();
 		this.name = name;

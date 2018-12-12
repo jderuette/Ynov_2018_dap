@@ -40,9 +40,12 @@ public class IdToken {
 		try {
 			newToken = mapper.readValue(decodedBytes, IdToken.class);
 			if (!newToken.isValid(nonce)) {
+			  //TODO jog by Djer |Log4J| Une petite Log ? 
+			  //TODO jog by Djer |POO| Evitel es multiple return dans une même méthode
 				return null;
 			}
 		} catch (Exception e) {
+		  //TODO jog by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console. Utilise ton Logger et fourni l'exception (cause) en deuxième paramètre.
 			e.printStackTrace();
 		}
 		return newToken;

@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+//TODO job by Djer |IDE| Configure les "save action" de ton IDE pour qu'il organise les imports (et formate ton code) lors de la sauvegarde pour éviter ce genre d'oublies
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -85,6 +86,7 @@ public class MailController {
 					.body();
 			model.addAttribute("messages", messages.getValue());
 		} catch (IOException e) {
+		  //TODO jog by Djer |Log4J| Une petite Log ?
 			redirectAttributes.addFlashAttribute("error", e.getMessage());
 			return "redirect:/index";
 		}

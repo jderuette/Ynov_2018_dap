@@ -21,7 +21,7 @@ public class PeopleController {
 			throws IOException, GeneralSecurityException {
 
 		return PeopleService.getPeople(userKey, gUser);
-
+		//TODO jog by Djer |API Microsoft| intérogration des comtpes Microsoft ? 
 	}
 
 }

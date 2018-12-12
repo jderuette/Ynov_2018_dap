@@ -45,6 +45,7 @@ public class Welcome {
 		}
 
 		po.addAttribute("data", laMap);
+		//TODO job by Djer |API Microsoft| Affichage des comtpes Microsoft ? 
 		return "admin";
 
 	}

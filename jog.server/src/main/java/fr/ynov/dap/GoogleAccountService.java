@@ -25,6 +25,7 @@ import com.google.api.client.http.GenericUrl;
 import fr.ynov.dap.data.AppUser;
 
 @Controller
+//TODO jog by Djer |MVC| Il faudrait séparer Service/controller (les "@RequestMapping" doivent être dnas le controller et idéalement els paramtre "Requets" et "session" doivent être géré dans le controller)
 public class GoogleAccountService extends GoogleService {
 	public GoogleAccountService() throws GeneralSecurityException, IOException {
 		super();
@@ -157,6 +158,7 @@ public class GoogleAccountService extends GoogleService {
 	@RequestMapping("/add/account/{accountName}")
 	public String addAccount(@PathVariable final String accountName, final HttpServletRequest request,
 			final HttpSession session) throws GeneralSecurityException {
+	    //TODO jog by Djer |Rest API| pas de SysOut sur un serveur
 		System.out.println(accountName);
 		String response = "errorOccurs";
 		GoogleAuthorizationCodeFlow flow;
@@ -176,6 +178,7 @@ public class GoogleAccountService extends GoogleService {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		    //TODO jog by Djer |log4J| Contextualise tes messages (" for accountName : " + accountName)
 			LOG.error("Error while loading credential (or Google Flow)", e);
 		}
 		// only when error occurs, else redirected BEFORE

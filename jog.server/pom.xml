@@ -36,6 +36,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- TODO job by DJer |Maven| Plus utile depuis que tu utilises MySQL -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -86,6 +87,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO jog by Djer |Maven| N'est plus utile depuis qu'on utilise Google en mode "Serveur Web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -262,6 +264,7 @@
 					<skipEmptyReport>false</skipEmptyReport>
 					<minimumTokens>75</minimumTokens>
 					<rulesets>
+					<!-- TODO jog by Djer |Audit Code| Il n'y a pas de fichier à cette emplacement -->
 						<ruleset>/dap_pmd.xml</ruleset>
 					</rulesets>
 				</configuration>
@@ -283,6 +286,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
+				<!-- TODO jog by Djer |Audit Code| Il n'y a pas de fichier à cette emplacement -->
 					<configLocation>/checkStyle.xml</configLocation>
 				</configuration>
 				<reportSets>

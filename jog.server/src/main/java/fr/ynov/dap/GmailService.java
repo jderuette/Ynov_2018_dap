@@ -28,6 +28,7 @@ public class GmailService extends GoogleService {
 	}
 
 	/**
+	 * TODO jog by Djer |JavaDoc| Ce commentaire nes pas/plus juste. (retourne "le nombre" d'email non lus)
 	 * Fonction qui retourne les emails non-lus
 	 * 
 	 * @param user
@@ -38,6 +39,7 @@ public class GmailService extends GoogleService {
 
 	public int getUnreadMessageCount(String userKey, String gUser) throws IOException, GeneralSecurityException {
 
+	    //TODO jog by Djer |API Google| Filtre aussi sur les "dans ma boite principal"
 		ListMessagesResponse listMessagesResponse = getService(userKey).users().messages().list(gUser).setQ("in:unread")
 				.execute();
 		List<Message> messages = new ArrayList<Message>();
@@ -53,6 +55,7 @@ public class GmailService extends GoogleService {
 		}
 		int unreadMessageCount = 0;
 		for (Message message : messages) {
+		    //TODO jog by Djer |POO| Pas très efficace tu peux utiliser la méthode "size()" sur une collection
 			unreadMessageCount++;
 		}
 

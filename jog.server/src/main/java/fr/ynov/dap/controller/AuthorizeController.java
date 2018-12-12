@@ -44,13 +44,16 @@ public class AuthorizeController {
 						user = outlookService.getCurrentUser().execute().body();
 						session.setAttribute("userEmail", user.getMail());
 					} catch (IOException e) {
+					  //TODO jog by Djer |Log4J| Une petite Log ?
 						session.setAttribute("error", e.getMessage());
 					}
 					session.setAttribute("userTenantId", idTokenObj.getTenantId());
 				} else {
+				  //TODO jog by Djer |Log4J| Une petite Log ?
 					session.setAttribute("error", "ID token failed validation.");
 				}
 			} else {
+			  //TODO jog by Djer |Log4J| Une petite Log ?
 				session.setAttribute("error", "Unexpected state returned from authority.");
 			}
 

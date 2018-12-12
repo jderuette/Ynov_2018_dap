@@ -42,6 +42,7 @@ public class PeopleService extends GoogleService {
 
 		String contacts = null;
 		// Request 10 connections.
+		//TODO jog by Djer |API Google| la demande etait de connaitre le nombre de contact (attention à la limite de "10", il faudra utiliser la pagination)
 		ListConnectionsResponse response = getService(userKey).people().connections().list("people/" + gUser)
 				.setPageSize(10).setPersonFields("names,emailAddresses").execute();
 
@@ -61,7 +62,10 @@ public class PeopleService extends GoogleService {
 		} else {
 			contacts = "No connections found.";
 		}
+		//TODO job by Djer |Rest API| Pas de SysOut sur un serveur. utilise une log si besoin (à priori du débug ici)
 		System.out.println(contacts.replace("<br>", "\n"));
+		
+		//TODO job by Djer |MVC| Renvoie un objet (Liste de Person) et laisse le controller faire les traitement d'affichage (il le fera faire à priori pas la Vue)
 		return contacts;
 
 	}

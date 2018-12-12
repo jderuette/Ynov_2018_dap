@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 public class CalendarService extends GoogleService {
 
+    //TODO jog by Djer |IDE| Ton IDE t'indique que ce n'est pas utilisé. Cela doit être du "vieux" code de l'époque ou vous aviez codé le Singleton (maintennt Spring le fait tout seul grace au @Service)
 	private static CalendarService gCalendarService;
 
 	private CalendarService() throws GeneralSecurityException, IOException {
@@ -45,6 +46,7 @@ public class CalendarService extends GoogleService {
 
 		String prochainEvent = null;
 
+		//TODO jog by Djer |POO| Pourquoi ne pas utiliser ta méthode "getService" qui fait exactement le code ci-dessous ?
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 		Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, userKey))
 				.setApplicationName(configuration.getApplicationName()).build();
@@ -59,6 +61,7 @@ public class CalendarService extends GoogleService {
 
 		} else {
 
+		    //TODO job by Djer |API Google| Tu itère sur les 10 events, et tu écrase "prochainEvent", tu en garde donc que je dernier de la liste (ce n'est donc pas le prochain, mais le "10 ème à partir de "now""). Tu peux faire un "maxResult" de "1" lors de l'appel et te faciliter la vie et avoir un résultat juste.
 			for (Event event : items) {
 				DateTime start = event.getStart().getDateTime();
 				if (start == null) {
@@ -68,6 +71,8 @@ public class CalendarService extends GoogleService {
 
 			}
 		}
+		//TODO jog by Djer |API Google| Afficher "mon status" sur l'évènnement ? 
+		
 		return prochainEvent;
 	}
 }

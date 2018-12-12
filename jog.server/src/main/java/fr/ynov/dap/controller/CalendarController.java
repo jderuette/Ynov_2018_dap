@@ -18,7 +18,7 @@ public class CalendarController {
 	@RequestMapping("calendar")
 	public String prochainEvents(@RequestParam("userKey") String userKey) throws IOException, GeneralSecurityException {
 		return calendarService.getNextEvents(userKey);
-
+		//TODO job by Djer |API Microsoft| Intégrogation de Microsoft ? 
 	}
 
 }
