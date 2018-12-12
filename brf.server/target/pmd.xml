@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
+    version="6.4.0" timestamp="2018-11-28T21:15:09.251">
+<file name="C:\Users\Florian\Desktop\cours\Java\workspace\dap\src\main\java\fr\ynov\dap\dap\data\AppUser.java">
+<violation beginline="25" endline="25" begincolumn="21" endcolumn="22" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.dap.data" class="AppUser" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'id'.
+</violation>
+</file>
+<file name="C:\Users\Florian\Desktop\cours\Java\workspace\dap\src\main\java\fr\ynov\dap\dap\data\GoogleAccountData.java">
+<violation beginline="19" endline="19" begincolumn="17" endcolumn="18" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.dap.data" class="GoogleAccountData" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'id'.
+</violation>
+</file>
+<file name="C:\Users\Florian\Desktop\cours\Java\workspace\dap\src\main\java\fr\ynov\dap\dap\microsoft\auth\TokenResponse.java">
+<violation beginline="31" endline="31" begincolumn="21" endcolumn="22" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.dap.microsoft.auth" class="TokenResponse" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'id'.
+</violation>
+</file>
+<file name="C:\Users\Florian\Desktop\cours\Java\workspace\dap\src\main\java\fr\ynov\dap\dap\microsoft\data\MicrosoftAccountData.java">
+<violation beginline="24" endline="24" begincolumn="17" endcolumn="18" rule="UnusedPrivateField" ruleset="Best Practices" package="fr.ynov.dap.dap.microsoft.data" class="MicrosoftAccountData" variable="id" externalInfoUrl="https://pmd.github.io/pmd-6.4.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'id'.
+</violation>
+</file>
+</pmd>

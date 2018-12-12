@@ -2,55 +2,85 @@ package fr.ynov.dap.dap.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.google.api.services.gmail.Gmail;
 
+import fr.ynov.dap.dap.data.AppUser;
+import fr.ynov.dap.dap.data.AppUserRepository;
+import fr.ynov.dap.dap.data.GoogleAccountData;
+
 /**
- * 
  * @author Florian BRANCHEREAU
  * Extends MainService
  */
 @Service
 public class GmailService extends GoogleService {
-	
-	public GmailService() throws Exception, IOException {
 
-	}
-
-	/**
-	 * 
-	 * @return gmailservice
-	 * @throws IOException
-	 * @throws GeneralSecurityException 
-	 */
-	private Gmail BuildGmailService(String userKey) throws IOException, GeneralSecurityException
-	{
-		Gmail gmailservice = new Gmail.Builder(GetHttpTransport(), GetJsonFactory(), getCredentials(userKey))
-	            .setApplicationName(configuration.getApplicationName())
-	            .build();
-		return gmailservice;
-	}
-	
-	/**
-     * 
-     * @return GetServiceGmail : Le nombre de mail non lu
-	 * @throws Exception 
+    /**.
+     * LOG
      */
-    public int getMsgsUnread(String userKey) throws Exception
-    {
-    	return this.GetServiceGmail(userKey).users().labels().get("me", "INBOX").execute().getMessagesUnread();
-    }
-    
-	/**
-	 * 
-	 * @return BuildGmailService
-	 * @throws IOException 
-	 * @throws GeneralSecurityException 
-	 */
-	public Gmail GetServiceGmail(String userKey) throws IOException, GeneralSecurityException
-	{
-		return BuildGmailService(userKey);
-	}
+    protected static final Logger LOG = LogManager.getLogger();
+    /**.
+     * Declaration de AppUserRepository
+     */
+    @Autowired
+    private AppUserRepository appUserRepository;
 
+    /**
+     * @throws Exception constructeur
+     * @throws IOException constructeur
+     */
+    public GmailService() throws Exception, IOException {
+
+    }
+
+    /**
+     * @param userKey nom du compte
+     * @return gmailservice
+     * @throws IOException fonction
+     * @throws GeneralSecurityException fonction
+     */
+    private Gmail buildGmailService(final String userKey) throws IOException, GeneralSecurityException {
+        Gmail gmailservice = new Gmail.Builder(getHttpTransport(), getJsonFactory(), getCredentials(userKey))
+                .setApplicationName(getConfiguration().getApplicationName())
+                .build();
+        return gmailservice;
+    }
+
+    /**
+     * @param userKey nom du compte
+     * @return GetServiceGmail : Le nombre de mail non lu
+     * @throws Exception fonction
+     */
+    public int getMsgsUnread(final String userKey) throws Exception {
+        return this.buildGmailService(userKey).users().labels().get("me", "INBOX").execute().getMessagesUnread();
+    }
+
+    /**.
+     * @param userKey Nom de l'utilisateur
+     * @return le nombre total de mail pour un compte
+     * @throws IOException fonction
+     * @throws GeneralSecurityException fonction
+     */
+    public int getMsgsUnreadORM(final String userKey) throws IOException, GeneralSecurityException {
+        int nbMessageUnreadForAll = 0;
+        AppUser user = appUserRepository.findByName(userKey);
+        List<GoogleAccountData> accounts = user.getAccounts();
+
+        for (GoogleAccountData accountData : accounts) {
+            try {
+                nbMessageUnreadForAll += getMsgsUnread(accountData.getAccountName());
+                LOG.debug("GmailService nbMessageUnreadForAll : " + nbMessageUnreadForAll);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return nbMessageUnreadForAll;
+    }
 }

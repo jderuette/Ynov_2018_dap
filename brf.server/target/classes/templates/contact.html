@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
+
+<meta name="description" content="The Dap trainning project admin" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Data Access Project" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
+
+<title>Page contact</title>
+
+</head>
+<body>
+
+	<h1><span th:text="#{titreContact}"></span></h1>
+
+	<nav>
+		<a th:href="${logoutUrl}" th:text="#{deconnexion}" /></a>
+		<a th:href="${evenement}" th:text="#{evenement}" /></a>
+		<a th:href="${mail}" th:text="#{mail}" /></a>
+	</nav>
+
+	<th:if test="${error ne null}">
+		<span th:text="${error}"></span>
+	</th:if>
+
+	<p><span th:text="#{nbContacts}"></span> : <span th:text="${nbContacts}"></span></p>
+	
+	
+
+	<h3><span th:text="#{titreTabContact}"></span></h3>
+	<table>
+		<tr>
+			<th th:text="#{nom}"></th>
+			<th th:text="#{entreprise}"></th>
+			<th th:text="#{mail}"></th>
+		</tr>
+		<th:block th:each="contacts : ${contacts}">
+			<tr>
+				<td th:text="${contacts.givenName + ' ' + contacts.surname}"></td>
+				<td th:text="${contacts.companyName}"></td>
+				<th:block th:each="address : ${contacts.emailAddresses}">
+					<td th:text="${address.address}"></td>
+				</th:block>
+		</th:block>
+	</table>
+</body>
+</html>
