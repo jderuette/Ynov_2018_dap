@@ -50,6 +50,7 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 	 * @return Thymeleaf template Login Success
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/add/account/{accountName}")
 	public @ResponseBody String addAccount(@PathVariable(value = "accountName") final String accountName,
 			@RequestParam(value = "userKey", required = true) final String userKey, Model model,
@@ -71,6 +72,7 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 		// Name of a definition in WEB-INF/defs/pages.xml
 
 		response.sendRedirect(loginUrl);
+		//TODO mot by Djer |API Microsoft| Si l'utilisateur à été redirigé, alors c'estr "/autorize" qu idétermnera la page à afficher. Si l'utilisateur n'est pas redirigé, c'est plutot une page "d'erreur technique" qu'il faut afficher
 
 		return "loginSuccess";
 	}

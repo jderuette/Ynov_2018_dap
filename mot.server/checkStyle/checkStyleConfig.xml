@@ -29,6 +29,7 @@
 
         <property name="basedir" value="${basedir}"/>
     -->
+    <!-- FIXME mot by Djer |Audit Code| Cette propriété est invalide ici, il faut la transférer dans le module "treeWalker" -->
     <property name="tabWidth" value="4"/>
 
     <property name="fileExtensions" value="java, properties, xml"/>

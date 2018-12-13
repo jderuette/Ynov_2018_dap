@@ -72,12 +72,17 @@ public class EventMicrosoftService extends MicrosoftService {
 					.body();
 
 			if (e.getNextPageLink() == null) {
+			    //TOD mot by Djer |API Microsoft| Pourquoi tout arreter si les résultats tiennent sur une seul page ? 
 				return null;
 			}
+			//TODO mot by Djer |API Microsoft| Tu auras un "ArrayOutOfBoundException" si pas d'évènnements
 			return e.getValue()[0];
 
 		} catch (IOException e) {
+		    //TODO mot by Djer |Log4J| Contextualise tes messages (" for microsofot accountname : " + account)
+            //TODO mot by Djer |Log4J| Evite d'ajouter le message de l'excpetion dans ton propre message. Met la cause ("e") en deuxième paramètre et Log4J s'occupera d'afficher le message et la pile de la cause.
 			LOG.error("Error during getFirstEventByAccount", e.getMessage());
+			//TODO mot by Djer |POO| Evite les multiples return dans une même méthode
 			return null;
 		}
 	}

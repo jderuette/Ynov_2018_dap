@@ -29,6 +29,7 @@ public class GoogleAccount {
 	}
 
 	public void setOwner(AppUser appUser) {
+	    //TODO mot by Djer |IDE| Pense à supprimer les TO-DO lorsqu'ils ne sont plus vrais.
 		// TODO Auto-generated method stub
 		this.owner = appUser;
 	}

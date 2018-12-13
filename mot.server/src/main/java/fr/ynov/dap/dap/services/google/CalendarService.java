@@ -31,6 +31,8 @@ public class CalendarService extends GoogleService {
 	@Autowired
 	AppUserRepository appUserRepository;
 
+	//TODO mot by Djer |POO| Si en MAJUSCULE devrait être static finale. Pourquoi "protected" ?)
+	//TODO mot by Djer |Log4J| Avec Log4J il va automatiquement prendre le nom pleinnement qualifié de la classe si tu ne passes pas de paramètres (ce qui est une excellente valeur par defaut)
 	protected Logger LOG = LogManager.getLogger(CalendarService.class);
 
 	/**
@@ -61,6 +63,7 @@ public class CalendarService extends GoogleService {
 		Events events = service.events().list("primary").setMaxResults(1).setTimeMin(now).setOrderBy("startTime")
 				.setSingleEvents(true).execute();
 
+		//TODO mot by Djer |POO| Tu peux simplifier cet algo en : 1-vérifier que la liste n'est pas vide, 2- si pas vide renvoyer get(0)
 		Integer lastEventId = events.getItems().size() - 1;
 
 		if (events.getItems().isEmpty()) {
@@ -90,7 +93,9 @@ public class CalendarService extends GoogleService {
 		ArrayList<Event> events = new ArrayList<>();
 
 		if (appUser == null) {
+		    //TODO mot by Djer |Log4J| Contextualise tes messages (" for userKey : " + user)
 			LOG.error("No user found");
+			//TODO mot by Djer |Gestion Exception| Tu pourrais mettre ton message dans l'exception. Tu pourrais créer une exception "spécial" pour ce cas (qui pourrait hériter de IOException mais je ne suis pas certains que cela soit TOP)
 			throw new IOException();
 		}
 
@@ -103,16 +108,22 @@ public class CalendarService extends GoogleService {
 				}
 
 			} catch (IOException | GeneralSecurityException e) {
+			  //TODO mot by Djer |Log4J| Contextualise tes messages (" for userKey : " + user + " and accountName : " + g.getName())
 				LOG.error("Error when getNextEvent() ", e);
 			}
 		}
 		if (events.size() == 0) {
+		  //TODO mot by Djer |Log4J| Contextualise tes messages (" for userKey : " + user)
+		    //TODO mot by Djer |Log4J| Pas vraiment une erreur on a le droit d'avoir un agenda vide (si je n'utilise QUE les mails). Un level Info (au pire Warning) serait plus approprié
 			LOG.error("No events founds");
+			//TODO mot by Djer |POO| Evite les mutiples return. En plus ici tu inialises response avec un "New Event" pour l'écraser par "null" s'il n'y a pas d'event ....
 			response = null;
 		} else {
 			Collections.sort(events, new CompareEvent());
 			response = events.get(0);
 		}
+		
+		//TODO mot by Djer |API Google| Gestion de "MON" status ? 
 
 		return response;
 	}

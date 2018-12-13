@@ -48,8 +48,10 @@ public class NextEventAllAccountService {
 		}
 
 		if (nextEventMicrosoft != null && nextEventGoogle != null) {
+		    //TODO mot by Djer |API Google| Attention "getStart().getDateTime()" est Null pour les évennements qui durent toute la journée, il faut alors utiliser "getStart().getDate()"
 			Date dateGoogle = new Date(nextEventGoogle.getStart().getDateTime().getValue());
 
+			//TODO mot by Djer |POO| Tu aurais pu utiliser la méthode "before()" de "Date"
 			Integer compareDate = dateGoogle.compareTo(nextEventMicrosoft.getStart().getDateTime());
 
 			if (compareDate > 0) {
@@ -75,6 +77,7 @@ public class NextEventAllAccountService {
 	private String getResponseGoogle(Event nextEventGoogle) {
 		JSONObject responseGoogle = new JSONObject();
 
+		//TODO mot by Djer |API Google| Attention contient le status de l'évènnement pas "MON" status
 		responseGoogle.put("Status", nextEventGoogle.getStatus());
 		responseGoogle.put("Date debut", new Date(nextEventGoogle.getStart().getDateTime().getValue()));
 		responseGoogle.put("Date fin", new Date(nextEventGoogle.getEnd().getDateTime().getValue()));
@@ -91,7 +94,8 @@ public class NextEventAllAccountService {
 	 * @return the response for a microsoft account
 	 */
 	private String getResponseMicrosoft(EventMicrosoft nextEventMicrosoft) {
-		JSONObject responseMicrosoft = new JSONObject();
+		//TODO mot by Djer |POO| Attention ta representation d'un évènnement "Google" et "Microsoft" sont différentes, cela va te compliquer la vie ! 
+	    JSONObject responseMicrosoft = new JSONObject();
 
 		responseMicrosoft.put("Sujet", nextEventMicrosoft.getSubject());
 		responseMicrosoft.put("Date debut", nextEventMicrosoft.getStart().getDateTime());

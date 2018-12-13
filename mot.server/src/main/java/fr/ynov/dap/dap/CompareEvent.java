@@ -10,6 +10,7 @@ import java.util.Date;
 public class CompareEvent implements Comparator<Event> {
 	@Override
 	public int compare(final Event e1, final Event e2) {
+	    //TODO mot by Djer |API Google| Attention "getDateTime()" est Null pour les évènnements qui durent toute la journée !
 		Date e1Date = new Date(e1.getStart().getDateTime().getValue());
 		Date e2Date = new Date(e2.getStart().getDateTime().getValue());
 		return e1Date.compareTo(e2Date);

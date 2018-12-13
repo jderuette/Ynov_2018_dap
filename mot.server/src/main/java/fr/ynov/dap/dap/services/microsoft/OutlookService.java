@@ -84,6 +84,7 @@ public class OutlookService extends MicrosoftService {
 		Integer response;
 		if (account.getToken() == null) {
 			// No tokens, user needs to sign in
+		    //TODO mot by Djer |Log4J| Ce message est très mal construit, et n'est pas contextualisé
 			LOG.error("error", "please sign in to continue.");
 			return 0;
 		}
@@ -96,6 +97,7 @@ public class OutlookService extends MicrosoftService {
 		// Sort by time received in descending order
 		String sort = "receivedDateTime DESC";
 		String properties = "isRead";
+		//TODO mot by Djer |API Microsoft| Utilise la pagination, sinon il n'y aura jamais plus de 10 "mails non lus"
 		Integer maxResults = 10;
 
 		PagedResult<Message> messages = null;
@@ -115,6 +117,7 @@ public class OutlookService extends MicrosoftService {
 			return response;
 		} catch (IOException e) {
 			response = 0;
+			 //TODO mot by Djer |Log4J| Contextualise tes messages (" for microsofot accountname : " + account)
 			LOG.error("Error during CountMicrosoftMail", e);
 		}
 
@@ -155,6 +158,7 @@ public class OutlookService extends MicrosoftService {
 			return response;
 		} catch (IOException e) {
 			response = null;
+			//TODO mot by Djer |Log4J| Evite d'ajouter le message de l'excpetion dans ton propre message. Met la cause ("e") en deuxième paramètre et Log4J s'occupera d'afficher le message et la pile de la cause.
 			LOG.error("Error during listMailByAccount", e.getMessage());
 		}
 

@@ -29,6 +29,7 @@ public class NextEventAllAccountController {
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 * @throws GeneralSecurityException the general security exception
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/nextEventOfAllAccount")
 	public String nextEventOfAllAccount(ModelMap model,
 			@RequestParam(value = "userKey", required = true) String userKey)

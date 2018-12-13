@@ -29,6 +29,7 @@ public class ContactMicrosoftController {
 	 * @param redirectAttributes the redirect attributes
 	 * @return the thymeleaf template Contact with nbContact Microsoft
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/nbContactMicrosoft")
 	public String nbContact(@RequestParam(value = "userKey", required = true) String userKey, Model model,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {

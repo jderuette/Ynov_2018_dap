@@ -23,7 +23,8 @@ public class App {
 	 * @throws URISyntaxException       the URI syntax exception
 	 */
 	public static void main(String[] args) throws IOException, GeneralSecurityException, URISyntaxException {
-		String URl_PATH = "http://localhost:8080/";
+	    //TODO mot by Djer |POO| C'est une varaibled evrait être écrit en minuscule
+	    String URl_PATH = "http://localhost:8080/";
 
 		Scanner scannerConnexion = new Scanner(System.in);
 		System.out.println("Veulliez saisir un nom d'utilisateur :  \n");
@@ -59,6 +60,7 @@ public class App {
 	private static void lauchHttpRequest(int choix, Scanner scanner, String URl_PATH, String userKey,
 			String accountName) throws IOException, GeneralSecurityException, URISyntaxException {
 		if (choix == 1) {
+		    //TODO mot by Djer |API Microsoft| Gestion des comptes Microsoft ? 
 			System.out.println("URL : " + URl_PATH + "add/googleAccount/" + accountName + "?userKey=" + userKey);
 			String url = URl_PATH + "add/googleAccount/" + accountName + "?userKey=" + userKey;
 

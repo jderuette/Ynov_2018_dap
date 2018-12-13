@@ -6,8 +6,10 @@ import java.security.GeneralSecurityException;
 /**
  * The Class Config.
  */
+//TODO mot by Djer |Design Patern| Externalisation de la configuration ? 
 public class Config {
 
+    //TODO mot by Djer |POO| Si écrit en Majusucule devrait être static final
 	/** The application name. */
 	private final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
 
@@ -20,9 +22,11 @@ public class Config {
 	/** The Auth 2 callback url. */
 	private final String Auth2CallbackUrl = "/oAuth2Callback";
 
+	//TODO mot by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 	/** The separator. */
 	private String separator = System.getProperty("file.separator");
 
+	//TODO mot by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
 	/** The home path. */
 	private String homePath = System.getProperty("user.home");
 	

@@ -24,6 +24,7 @@ public class ContactMicrosoftService extends MicrosoftService {
 	@Autowired
 	AppUserRepository appUserRepository;
 
+	//TODO mot by Djer |POO| Si en MAJUSCULE devrait être static finale. Pourquoi "protected" ?)
 	protected Logger LOG = LogManager.getLogger(ContactMicrosoftService.class);
 
 	/**
@@ -62,6 +63,7 @@ public class ContactMicrosoftService extends MicrosoftService {
 
 		String sort = "GivenName ASC";
 		String properties = "GivenName,Surname,CompanyName,EmailAddresses";
+		//TODO mot by Djer |API Microsoft| Utiliser la pagination serait plus "juste"
 		Integer maxResults = 2000;
 
 		try {
@@ -69,6 +71,8 @@ public class ContactMicrosoftService extends MicrosoftService {
 
 			return contacts.getValue().length;
 		} catch (IOException e) {
+		  //TODO mot by Djer |Log4J| Contextualise tes messages (" for microsofot accountname : " + account)
+		    //TODO mot by Djer |Log4J| Evite d'ajouter le message de l'excpetion dans ton propre message. Met la cause ("e") en deuxième paramètre et Log4J s'occupera d'afficher le message et la pile de la cause.
 			LOG.error("Error during getContactByAccount", e.getMessage());
 		}
 

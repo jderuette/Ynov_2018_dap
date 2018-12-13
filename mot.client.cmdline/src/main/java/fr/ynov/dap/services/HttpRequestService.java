@@ -1,5 +1,4 @@
 package fr.ynov.dap.services;
-//TODO mot by Djer devrait être un sous package de fr.ynov.dap
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;

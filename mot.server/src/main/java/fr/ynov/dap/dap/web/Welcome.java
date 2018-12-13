@@ -34,12 +34,14 @@ public class Welcome {
 	 * @param userKey the user key
 	 * @return template ThymeLeaf welcome Or Error
 	 */
+	//TODO mot by Djer |Spring| Le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/welcome")
 	public String welcome(ModelMap model, @RequestParam(value = "userKey", required = true) String userKey) {
 		try {
 			Integer nbunreadEmails = gmailService.nbrEmailUnread(userKey);
 			model.addAttribute("nbEmails", nbunreadEmails);
 
+			//TODO mot by Djer |POO| "i" ?? "googleAccounts" serait mieux ?
 			DataStore<StoredCredential> i;
 			i = gmailService.getFlow().getCredentialDataStore();
 			HashMap<String, String> hashMap = new HashMap<>();
@@ -50,13 +52,17 @@ public class Welcome {
 			model.addAttribute("credentials", hashMap);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+		    //TODO mot by Djer |Log4| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.error("Error on Welcome", e);
+			//TODO mot by Djer |POO| Attention, "e" n'est pas "errorMessage", cela peut être gènant dans ta Vue
 			model.addAttribute("errorMessage", e);
 			return "error";
 
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
+		  //TODO mot by Djer |Log4| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.error("Error on Welcome", e);
+			//TODO mot by Djer |POO| Attention, "e" n'est pas "errorMessage", cela peut être gènant dans ta Vue
 			model.addAttribute("errorMessage", e);
 			return "error";
 		}

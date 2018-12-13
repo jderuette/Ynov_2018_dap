@@ -40,6 +40,7 @@ public class Admin {
 		ArrayList<MicrosoftAccount> listInfoMicrosoft = new ArrayList<>();
 		ArrayList<GoogleAccount> listInfoGoogle = new ArrayList<>();
 
+		//TODO mot by Djer |POO| T uas un NPE si je passe un UserKey qui n'existe pas (affichage "assez correct" sur le "site" cependant)
 		if (appUser.getMicrosoftAccount() != null) {
 			for (MicrosoftAccount microsoftAccount : appUser.getMicrosoftAccount()) {
 				listInfoMicrosoft.add(microsoftAccount);

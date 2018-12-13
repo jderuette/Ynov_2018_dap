@@ -34,6 +34,9 @@ public class GmailController {
 	 * @return the nbr unread mail
 	 * @throws JSONException
 	 */
+	//TODO mot by Djer |Spring| "@ResponseBody" n'est pas utile, par defaut les méthodes "mappées" d'un **Rest**Controller produisent un Body
+    //TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
+	//TODO mot by Djer |POO| dnas le contact et Calendar Controller, la méthode gère les exception. Pourquoi les laisse-tu remonter pour cette méthode ? 
 	@RequestMapping("/nbrUnreadMailGoogle")
 	public @ResponseBody String getNbrUnreadMail(@RequestParam(value = "userKey", required = true) String userKey)
 			throws IOException, GeneralSecurityException, JSONException {

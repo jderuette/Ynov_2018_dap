@@ -34,6 +34,7 @@ public class EventMicrosoftController {
 	 * @param redirectAttributes the redirect attributes
 	 * @return Thymeleaf template event with nextEvent
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/microsoftNextEvent")
 	public String microsoftNextEvent(@RequestParam(value = "userKey", required = true) String userKey, Model model,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {

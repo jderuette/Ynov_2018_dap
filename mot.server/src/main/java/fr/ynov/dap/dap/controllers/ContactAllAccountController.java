@@ -29,6 +29,7 @@ public class ContactAllAccountController {
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 * @throws GeneralSecurityException the general security exception
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/nbContactAllAccount")
 	public Integer nbContactAllAccount(ModelMap model, @RequestParam(value = "userKey", required = true) String userKey)
 			throws IOException, GeneralSecurityException {

@@ -35,6 +35,8 @@ public class CalendarController {
 	 * @param userKey the user key
 	 * @return the Next Event Google
 	 */
+	//TODO mot by Djer |Spring| "@ResponseBody" n'est pas utile, par defaut les méthodes "mappées" d'un **Rest**Controller produisent un Body
+	//TODO mot by DJer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/nextEventGoogle")
 	public @ResponseBody String nextEvent(@RequestParam(value = "userKey", required = true) String userKey) {
 		Event lastEvent = null;
@@ -53,6 +55,7 @@ public class CalendarController {
 			}
 			
 		} catch (IOException e) {
+		    //TODO mot by Djer |log4J| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.error("Error during getNextEvent google", e);
 		}
 

@@ -25,6 +25,7 @@ public class GmailService extends GoogleService {
 	@Autowired
 	AppUserRepository appUserRepository;
 
+	//TODO mot by Djer |POO| Si en MAJUSCULE devrait être static finale. Pourquoi "protected" ?)
 	protected Logger LOG = LogManager.getLogger(GmailService.class);
 
 	public GmailService() throws IOException, GeneralSecurityException {
@@ -73,6 +74,7 @@ public class GmailService extends GoogleService {
 					response += getLabel(g.getName()).getMessagesUnread();
 				}
 			} catch (IOException | GeneralSecurityException e) {
+			  //TODO mot by Djer |Log4J| Contextualise tes messages (" for userKey : " + user + " and accountName : " + g.getName())
 				LOG.error("Error nombre de mails", e);
 			}
 		}

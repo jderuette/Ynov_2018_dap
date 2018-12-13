@@ -39,6 +39,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- TODO mot by Djer |Maven| Plus utile depuis que tu utilise MySQL -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -67,6 +68,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.25.0</version>
 		</dependency>
+		<!-- TODO mot by Djer |Maven| Plus utile depuis que Google est mode "serveur Web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -110,6 +112,7 @@
 			<version>3.2.0</version>
 		</dependency>
 	</dependencies>
+	<!-- TODO mot by Djer |Maven| Il y a un "ordre attendu" dans un pom.xml (les properties sont généralement avant les dépendances) -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -162,8 +165,10 @@
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.9</version>
 			</plugin>
+			<!-- TODO mot by Djer |Audit Code| Checkstyle ? -->
 		</plugins>
 	</reporting>
+	<!-- TODO mot by Djer |Maven| Il y a un "ordre attendu" dans un pom.xml (Ces propriétés vont avec le "groupId", et le "artefectId" et le "version" -->
 	<!-- More Project Information -->
 	<name>dap</name>
 	<url>http://maven.apache.org</url>

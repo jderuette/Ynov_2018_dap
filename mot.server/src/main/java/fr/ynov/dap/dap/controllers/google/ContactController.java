@@ -31,6 +31,8 @@ public class ContactController {
 
 	protected Logger LOG = LogManager.getLogger(ContactController.class);
 
+	//TODO mot by Djer |Spring| "@ResponseBody" n'est pas utile, par defaut les méthodes "mappées" d'un **Rest**Controller produisent un Body
+    //TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("nbContGoogle")
 	public @ResponseBody String getNbContact(@RequestParam(value = "userKey", required = true) String userKey) {
 
@@ -42,9 +44,11 @@ public class ContactController {
 			response = nbContact.toString();
 
 		} catch (IOException e) {
+		  //TODO mot by Djer |log4J| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.error("Error Contact google", e);
 
 		} catch (GeneralSecurityException e) {
+		  //TODO mot by Djer |log4J| Contextualise tes messages (" for userkey : " + userKey)
 			LOG.error("Error Contact google", e);
 		}
 		return response;

@@ -35,6 +35,8 @@ public class OutlookController {
 	 * @param redirectAttributes the redirect attributes
 	 * @return Thymeleaf Template nbUnreadMail
 	 */
+	//TODO mot by Djer |Spring| Le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
+	//TODO mot by Djer |Sping| Si tu n'as pas besoin de la "HttpServletRequest" et/ou de la "RedirectAttributes" ne les met pas en paramètre de ta méthode
 	@RequestMapping("/nbMailByAccountMicrosoft")
 	public String nbMail(@RequestParam(value = "userKey", required = true) String userKey, Model model,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -60,10 +62,13 @@ public class OutlookController {
 	 * @param redirectAttributes the redirect attributes
 	 * @return ThymeLeaf template ListMail OR Error Template
 	 */
+	//TODO mot by Djer |Sping| Si tu n'as pas besoin de la "HttpServletRequest" et/ou de la "RedirectAttributes" ne les met pas en paramètre de ta méthode
 	@RequestMapping("/listMailByAccountMicrosoft/{accountName}")
 	public String mail(@PathVariable(value = "accountName") final String accountName,
 			@RequestParam(value = "userKey", required = true) String userKey, Model model, HttpServletRequest request,
 			RedirectAttributes redirectAttributes) {
+	    
+	    //TODO mot by Djer |JPA| A partir d'un "accountName" tu peux récupérer un "userKey". Tu pourrais te passer du "userKey" sauf si tu souhaites l'utiliser pour vérifier que c'est bien le "bon" utilisateur. Dans ce cas assure-toi que le userKey est bien associé à CE accountName
 
 		if (outlookService.getListMessage(userKey, accountName) != null) {
 			Message[] messageList = outlookService.getListMessage(userKey, accountName);
@@ -72,6 +77,7 @@ public class OutlookController {
 			model.addAttribute("name", accountName);
 			model.addAttribute("userKey", userKey);
 		} else {
+		    //TODO mot by Djer |API Microsoft| Ne pas avoir d'email n'est pas vraiment une "erreur", je pourrais utiliser QUE les calendar Microsoft
 			model.addAttribute("errorMessage", "No email found for this account");
 			return "error";
 		}

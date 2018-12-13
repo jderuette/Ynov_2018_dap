@@ -57,6 +57,7 @@ public class GoogleAccountController extends GoogleService {
 	 * @param session     the session
 	 * @return the string
 	 */
+	//TODO mot by Djer |Spring| le "required = true" est la valeur par defaut, tu n'es pas obligé de le préciser
 	@RequestMapping("/add/googleAccount/{accountName}")
 	public @ResponseBody String addAccount(@PathVariable(value = "accountName") final String accountName,
 			@RequestParam(value = "userKey", required = true) String userKey, final HttpServletRequest request,
@@ -70,12 +71,14 @@ public class GoogleAccountController extends GoogleService {
 			try {
 				flow = super.getFlow();
 			} catch (GeneralSecurityException e) {
+			  //TODO mot by Djer |log4J| N'afficher "que" le message de l'exception est en général une mauvaise idée. Il vaut mieux un message de log "personnalisé" avec du contexte ET la cause (avec la pile).
 				LOG.error(e.getLocalizedMessage());
 			}
 
 			credential = flow.loadCredential(accountName);
 
 			if (credential != null && credential.getAccessToken() != null) {
+			  //TODO mot by Djer |log4J| Contextualise tes messages (" for userkey : " + userKey)
 				LOG.warn("User already added and saved in store");
 			} else {
 				final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
@@ -85,6 +88,7 @@ public class GoogleAccountController extends GoogleService {
 				session.setAttribute("accountName", accountName);
 				
 				responseServ.sendRedirect(authorizationUrl.build());
+				//TODO mot by Djer |POO| Evite les multiple return dans une même méthode. Alimente uen variable "response", puis prend les actions à la fin de la méthode
 				return  "";
 			}
 		} catch (IOException e) {

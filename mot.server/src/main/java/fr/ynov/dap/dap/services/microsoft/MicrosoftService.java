@@ -38,6 +38,7 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO mot by Djer |Log4J| une petite Log ? 
 				return null;
 			}
 		}
@@ -49,6 +50,7 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO mot by Djer |Log4J| une petite Log ? 
 				return null;
 			}
 		}
@@ -60,6 +62,7 @@ public class MicrosoftService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO mot by Djer |Log4J| une petite Log ? 
 				return null;
 			}
 		}
@@ -80,6 +83,7 @@ public class MicrosoftService {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private static void loadConfig() throws IOException {
+	    //TODO mot by Djer |Design Patern| Externalisation de la configuration ?
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = MicrosoftService.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -162,6 +166,7 @@ public class MicrosoftService {
 				return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
 						"refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 			} catch (IOException e) {
+			  //TODO mot by Djer |Log4J| une petite Log ? 
 				TokenResponse error = new TokenResponse();
 				error.setError("IOException");
 				error.setErrorDescription(e.getMessage());

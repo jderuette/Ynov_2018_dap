@@ -26,6 +26,7 @@ public class ContactService extends GoogleService {
 	@Autowired
 	AppUserRepository appUserRepository;
 
+	//TODO mot by Djer |POO| Si en MAJUSCULE devrait être static finale. Pourquoi "protected" ?)
 	protected Logger LOG = LogManager.getLogger(ContactService.class);
 
 	/**
@@ -81,6 +82,7 @@ public class ContactService extends GoogleService {
 					response += getListConnection(g.getName()).getTotalItems();
 				}
 			} catch (IOException | GeneralSecurityException e) {
+			  //TODO mot by Djer |Log4J| Contextualise tes messages (" for userKey : " + user + " and accountName : " + g.getName())
 				LOG.error("Error nombre de contact", e);
 			}
 		}
