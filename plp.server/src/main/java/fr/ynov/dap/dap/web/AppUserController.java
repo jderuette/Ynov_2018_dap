@@ -10,6 +10,7 @@ import java.util.Map;
 
 @RestController
 public class AppUserController {
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate AppUserService
      */

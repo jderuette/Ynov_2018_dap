@@ -18,6 +18,7 @@ import java.util.Map;
 
 @Controller
 public class DataStoreController {
+    //TODO plp by DJer |POO| Pouruqoi public ? Garde ton code "privée" lorsque c'est utile de l'exposer
     /**
      * instantiate a DataStoreService
      */

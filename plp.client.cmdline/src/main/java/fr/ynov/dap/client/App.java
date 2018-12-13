@@ -1,7 +1,6 @@
 package fr.ynov.dap.client;
 
-import org.json.JSONObject;
-
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -9,6 +8,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
 
 /**
  * @author Pierre Plessy
@@ -99,7 +100,8 @@ public class App {
         if (redirect) {
             String newUrl = con.getHeaderField("Location");
 
-            getDesktop().browse(new URI(newUrl));
+            //TODO plp by Djer |POO| Il manquait le "Desktop."
+            Desktop.getDesktop().browse(new URI(newUrl));
 
             System.out.println("Redirect to URL : " + newUrl);
 

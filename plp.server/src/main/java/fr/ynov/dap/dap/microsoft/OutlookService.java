@@ -23,6 +23,7 @@ public class OutlookService {
      */
     private static final Logger LOG = LogManager.getLogger(OutlookService.class);
 
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par defaut cette attribut est public (comme la classe) !
     /**
      * instantiate userRepository
      */
@@ -35,6 +36,7 @@ public class OutlookService {
      * @param redirectAttributes : redirect
      * @return return the 10 last mail of each account of one user
      */
+    //TODO plp by Djer |MVC| Ce code est un mélange de controller et de service (met dans le controller le code lié aux objets "Web")
     public List<Map> mail(final String userKey, RedirectAttributes redirectAttributes) {
 
         AppUser appUser = userRepository.findByName(userKey);
@@ -65,6 +67,7 @@ public class OutlookService {
                         folder, sort, properties, maxResults)
                         .execute().body();
                 OutlookFolder outlookFolder = ioutlookService.getFolder("inbox").execute().body();
+                //TODO plp by Djer |POO| "account" ne semble pas bien choisi, "message" serait mieux ? 
                 Map<String, Object> account = new HashMap<>();
                 account.put("name", outlookAccount.getName());
                 account.put("messages", messages.getValue());
@@ -72,6 +75,7 @@ public class OutlookService {
                 listResponse.add(account);
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("error", e.getMessage());
+              //TODO plp by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey)
                 LOG.error("Can't get messages", e);
             }
         }
@@ -91,6 +95,7 @@ public class OutlookService {
         Integer nbUnread = 0;
         for (OutlookAccount outlookAccount : appUser.getOutlookAccount()) {
             if (outlookAccount.getToken() == null) {
+              //TODO plp by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey)
                 LOG.error("No token for unread email");
             }
 
@@ -104,6 +109,7 @@ public class OutlookService {
                         .execute().body();
                 nbUnread += folder.getUnreadItemCount();
             } catch (IOException e) {
+                //TODO plp by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey)
                 LOG.error("Can't get messages", e);
             }
         }
@@ -116,6 +122,7 @@ public class OutlookService {
      * @param userKey: name user
      * @return the last event of one user
      */
+    //TODO plp by Djer |POO| Nom de méthode pas très claire ("lasEvent" serait mieux)
     public EventMicrosoft events(final String userKey) {
         AppUser appUser = userRepository.findByName(userKey);
 
@@ -140,6 +147,7 @@ public class OutlookService {
             Integer maxResults = 1;
 
             try {
+                //TODO plp by Djer |API Microsoft| Par defaut Microsoft recherche à partir de "now" ? 
                 EventMicrosoft event = outlookService.getEvents(
                         sort, properties, maxResults)
                         .execute().body().getValue()[0];
@@ -147,6 +155,7 @@ public class OutlookService {
                 if (lastEvent == null) {
                     lastEvent = event;
                 } else {
+                    //TODO plp by DJer |API Microsoft| Inutile car limite maxResult à "1"
                     if (lastEvent.getStart().getDateTime().after(event.getStart().getDateTime())) {
                         lastEvent = event;
                     }
@@ -179,6 +188,7 @@ public class OutlookService {
             String properties = "GivenName,Surname,CompanyName,EmailAddresses";
 
             try {
+                //TODO plp by Djer |API Microsoft| Quel est la taille d'une page par defaut ? 
                 PagedResult<Contact> contacts = outlookService.getContacts(
                         sort, properties)
                         .execute().body();

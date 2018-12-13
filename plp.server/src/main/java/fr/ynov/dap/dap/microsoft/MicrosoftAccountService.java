@@ -18,6 +18,7 @@ public class MicrosoftAccountService {
      * @param request
      * @return
      */
+  //TODO plp by Djer |MVC| La majorité de ce code est du code de "Controller" pas de service
     public Map<String, String> index(Model model, HttpServletRequest request) {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();
@@ -41,6 +42,7 @@ public class MicrosoftAccountService {
      * @param request     : request
      * @return return a redirect
      */
+    //TODO plp by Djer |MVC| La majorité de ce code est du code de "Controller" pas de service
     public String addAccount(final String accountName, final String userKey, final HttpServletRequest request) {
         UUID state = UUID.randomUUID();
         UUID nonce = UUID.randomUUID();

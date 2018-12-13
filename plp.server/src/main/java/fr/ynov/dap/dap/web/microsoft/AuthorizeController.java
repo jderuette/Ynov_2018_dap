@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/microsoft")
 public class AuthorizeController {
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par defaut cette attribut est public (comme la classe) !
     /**
      * instantiate AuthorizeService
      */

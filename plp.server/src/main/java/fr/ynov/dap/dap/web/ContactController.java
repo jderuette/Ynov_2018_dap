@@ -15,12 +15,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate a peopleGService
      */
     @Autowired
     PeopleGService peopleGService;
 
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate a OutlookService
      */

@@ -27,6 +27,7 @@ import java.util.List;
  * @author Pierre Plessy
  */
 class GoogleService {
+  //TODO plp by Djer |POO| Devrait être écris en MAJUSCULE (Checkstyle/PMD te signale ce genre d'oublie)
     /**
      * Instantiate Logger.
      */
@@ -41,6 +42,7 @@ class GoogleService {
     private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR_READONLY,
             GmailScopes.GMAIL_LABELS, PeopleServiceScopes.CONTACTS_READONLY);
 
+    //TODO plp by Djer |IOC| Evite de définir une valeur par defaut, Si jamais aucun "@Bean" ne propose de config tu risques de ne pas le voir à cause de ce "new"
     /**
      * Get the config in Launcher.
      */
@@ -59,6 +61,7 @@ class GoogleService {
         GoogleClientSecrets clientSecrets;
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            //TODO plp by Djer |Design Patern| Externaliser la configuration ? 
             InputStream in = Launcher.class.getResourceAsStream(config.getCredentialFolder());
 //            InputStream in = new FileInputStream(config.getCredentialFolder());
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in, Charset.forName("UTF-8")));

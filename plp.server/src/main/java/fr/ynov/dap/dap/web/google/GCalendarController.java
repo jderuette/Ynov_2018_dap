@@ -49,6 +49,7 @@ public class GCalendarController {
         if (nextEvent.isEmpty()) {
             response.put("subject", "No incomming event");
         } else {
+            //TODO plp by Djer |API Google| accesRole = Status de l'évènnement ?
             response.put("accessRole", nextEvent.getStatus());
             response.put("subject", nextEvent.getSummary());
             if (nextEvent.getStart().getDate() == null) {
@@ -59,6 +60,7 @@ public class GCalendarController {
                 response.put("finish", nextEvent.getEnd().getDate().toString());
             }
         }
+        //TODO plp by Djer |API Google| Gestion de "MON" status ?
         return response;
     }
 }

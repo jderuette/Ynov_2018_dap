@@ -26,6 +26,7 @@ public class GoogleAccountController {
      */
     private static final Logger log = LogManager.getLogger(GoogleAccountController.class);
 
+    ///TODO plp by Djer |Spring| Pour être "cohérent" avec tes autres classe fait de l'injection "par attributs" (plutot que via le "getter", le résultat sera identique, mais on dirait que c'est un autre developpeur qui a codé cette classe !)
     @Autowired
     public GoogleAccountController(GoogleAccountService googleAccountService) {
         this.googleAccountService = googleAccountService;

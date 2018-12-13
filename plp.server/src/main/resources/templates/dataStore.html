@@ -39,6 +39,7 @@
             </table>
         </td>
         <td><a th:href="'/microsoft/mail?userKey='+${user.userKey}">
+        <!-- TODO plp by Djer |Thymleaf| "div" n'est pas valide à l'intérieur d'un "<a>". Tu peux utiliser "th:block" qui ne produit pas de "balise HTML" et te permet d'utiliser un th:text -->
             <div th:text="#{mail}">Mail</div>
         </a></td>
     </tr>

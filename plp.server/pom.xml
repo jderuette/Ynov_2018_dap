@@ -24,6 +24,7 @@
         <checkstyleVersion>6.18</checkstyleVersion>
     </properties>
 
+<!-- TODO plp by Djer |Maven| il y a un "ordre attendu" dans un pom.xml. Place tes dépendances AVANT les build/reporting -->
     <build>
         <finalName>plessy_pierre_dap_server</finalName>
         <plugins>
@@ -82,6 +83,7 @@
                     <artifactId>maven-pmd-plugin</artifactId>
                     <version>3.10.0</version>
                     <configuration>
+                    <!-- TODO plp by Djer |Audit Code| Utilise le fichie de configuration que je vous ai proposé -->
                         <rulesets>
                             <!-- A rule set, that comes bundled with PMD -->
                             <ruleset>/category/java/bestpractices.xml</ruleset>
@@ -147,6 +149,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- TODO plp by Djer |Maven| Plsu utile depuis que tu utilise MySQL -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -164,6 +167,7 @@
             <artifactId>google-api-client</artifactId>
             <version>1.23.0</version>
         </dependency>
+        <!-- TODO plp by Djer |Maven| Plus utile depuis que Google est en mode "serveur Web" -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -205,17 +209,24 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+            <!-- TODO plp by Djer |Maven| As-tu une "ClassNotFoundException: com.fasterxml.jackson.databind.exc.InvalidDefinitionException" au démarage deton server ? avec ta version 2.7.4 ? -->
+            <!-- 
             <version>2.7.4</version>
+             -->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+            <!-- 
             <version>2.7.4</version>
+             -->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <!-- 
             <version>2.7.4</version>
+             -->
         </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>

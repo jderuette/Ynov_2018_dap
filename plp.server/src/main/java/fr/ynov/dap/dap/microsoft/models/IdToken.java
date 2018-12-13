@@ -40,9 +40,12 @@ public class IdToken {
         try {
             newToken = mapper.readValue(decodedBytes, IdToken.class);
             if (!newToken.isValid(nonce)) {
+                //TODO plp by Djer |Log4J| une petite Log ? 
+                //TODO plp by Djer |POO| Evite les multiples return dans une même méthode
                 return null;
             }
         } catch (Exception e) {
+            //TODO plp by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console. Utilise une log à la place, avec l'exception comme deuxième param_ètre (la cause) et laisse Log4J gérer 
             e.printStackTrace();
         }
         return newToken;
@@ -130,12 +133,16 @@ public class IdToken {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime)) ||
                 now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+            //TODO plp by Djer |Log4J| Une petite Log ?
+            //TODO plp by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
         // Check nonce
         if (!nonce.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO plp by Djer |Log4J| Une petite Log ?
+          //TODO plp by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 

@@ -18,10 +18,12 @@ import java.util.Map;
 
 @RestController
 public class DataStoreService {
+    //TODO plp by Djer |IOC| Un "new" ? Fait de l'injection (@Autowire) à la palce !
     /**
      * Instanciate un GoogleService
      */
     private GoogleService googleService = new GoogleService();
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      *  Instanciate un AppUserRepository
      */

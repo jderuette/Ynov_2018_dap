@@ -20,10 +20,12 @@ import java.security.GeneralSecurityException;
  */
 @Service
 public class PeopleGService extends GoogleService {
+  //TODO plp by Djer |POO| Devrait être écris en MAJUSCULE (Checkstyle/PMD te signale ce genre d'oublie)
     /**
      * instantiate Logger.
      */
     private static final Logger log = LogManager.getLogger(PeopleGService.class);
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate userRepository
      */
@@ -67,6 +69,7 @@ public class PeopleGService extends GoogleService {
 
             Integer fo = connectionsResponse.getTotalPeople();
             if (fo != null) {
+                //TODO plp by Djer |POO| Tu peux écrire nbContacts += fo, ca précise mieu ton intention
                 nbContacts = nbContacts + fo;
             }
 

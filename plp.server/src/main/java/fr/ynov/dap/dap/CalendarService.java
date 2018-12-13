@@ -67,6 +67,7 @@ public class CalendarService extends GoogleService {
     public final Event getNextEvent(final String userKey) throws IOException, GeneralSecurityException {
         AppUser appUser = userRepository.findByName(userKey);
 
+        //TODO plp by DJer |IDE| Ton IDE te dit que ca n'est plus utilisé. Bug ? A supprimer ? 
         List<Event> events = new ArrayList<>();
         Event nextEvent = new Event();
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
@@ -80,6 +81,7 @@ public class CalendarService extends GoogleService {
                     .setMaxResults(1).setTimeMin(now).setOrderBy("startTime")
                     .setSingleEvents(true).execute();
 
+            //TODO plp by Djer |API Google| Tu auras un "IndexOutOfBoundExxception" s'il n'y a pas d'évènnement à venir
             Event itemFirst = firstEvent.getItems().get(0);
             if (!itemFirst.isEmpty()) {
                 if (nextEvent.isEmpty()) {

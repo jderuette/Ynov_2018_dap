@@ -6,6 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+//TODO plp by Djer |POO| C'est ta seul interface qui commence par un "I" ... Choisi de prefixer (ou pas) et garde la même logique sur le même projet
 public interface IOutlookService {
 
     @GET("/v1.0/me")

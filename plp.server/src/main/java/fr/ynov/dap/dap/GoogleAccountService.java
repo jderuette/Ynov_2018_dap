@@ -38,15 +38,21 @@ public class GoogleAccountService extends GoogleService {
      * sensible data.
      */
     private static final int SENSIBLE_DATA_LAST_CHAR = 15;
+    
+  //TODO plp by Djer |POO| Devrait être écris en MAJUSCULE (Checkstyle/PMD te signale ce genre d'oublie)
     /**
      * instantiate Logger.
      */
     private static final Logger log = LogManager.getLogger(GoogleAccountService.class);
+    
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate appUserRepository
      */
     @Autowired
     AppUserRepository userRepository;
+    
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate googleAccountRepository
      */
@@ -95,10 +101,12 @@ public class GoogleAccountService extends GoogleService {
 //            googleAccount.setOwner(user);
             googleAccount.setName(accountName);
             user.addGoogleAccount(googleAccount);
+            //TODO plp by Djer |JPA| Sauvegarde simple le "AppUSer", avec le Cascade.ALL dans ton entité, JPA va s'occuper de mettre à jour/créer les "Google acocunts"
             googleRepository.save(googleAccount);
             userRepository.save(user);
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
+            //TODO plp by Djer |Log4J| Contextualise tes messages (" for userkey : " + userKey + " and accountName : " + accountName)
             log.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to connect Google Account");
         }
@@ -222,6 +230,7 @@ public class GoogleAccountService extends GoogleService {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+            //TODO plp by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and acocuntName : " + accountName)
             log.error("Error while loading credential (or Google Flow)", e);
         }
         return response;

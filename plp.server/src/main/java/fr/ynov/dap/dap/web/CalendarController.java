@@ -113,6 +113,7 @@ public class CalendarController {
             try {
                 Date dateGoogle;
                 if (google.getStart().getDate() == null) {
+                    //TODO plp by Djer |POO| Les "DateTime" de Google ont une compsante "heure" je ne suis pas certains que ton parseur fonctionnera bien
                     dateGoogle = format.parse(google.getStart().getDateTime().toString());
                 } else {
                     dateGoogle = format.parse(google.getStart().getDate().toString());

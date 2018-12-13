@@ -20,10 +20,12 @@ import java.security.GeneralSecurityException;
  */
 @Service
 public class GMailService extends GoogleService {
+    //TODO plp by Djer |POO| Devrait être écris en MAJUSCULE (Checkstyle/PMD te signale ce genre d'oublie)
     /**
      * Instantiate logger.
      */
     private static final Logger log = LogManager.getLogger(GMailService.class);
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par défaut cet attribut est public (comme la classe) !
     /**
      * instantiate userRepository
      */

@@ -12,6 +12,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/microsoft")
 public class MicrosoftContactController {
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par defaut cette attribut est public (comme la classe) !
     /**
      * instantiate OutlookService
      */

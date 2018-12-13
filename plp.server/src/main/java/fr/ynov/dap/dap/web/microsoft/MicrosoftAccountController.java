@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+//TODO plp by Djer |IDE| Configure les "save action" de ton IDE pour qu'il organise les import automatiquement (et format ton code) lors de la sauvegarde
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @Controller
 public class MicrosoftAccountController {
+  //TODO plp by Djer |POO| Attention si tu ne précise pas, par defaut cette attribut est public (comme la classe) !
     /**
      * instantiate MicrosoftAccountService
      */

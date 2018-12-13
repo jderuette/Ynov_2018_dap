@@ -21,6 +21,7 @@ public class AuthHelper {
     private static final String authority = "https://login.microsoftonline.com";
     private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 
+    //TODO plp by Djer |Log4J| Avec Log4J ce n'est pas nécéssaire de préciser la catégorie, il va par defaut prendre le nom pleinnement qualifié de la classe
     /**
      * Instantiate Logger.
      */
@@ -84,6 +85,7 @@ public class AuthHelper {
     }
 
     private static void loadConfig() throws IOException {
+        //TODO plp by Djer |Design Patern| Externalisation de la configuration ?
         String authConfigFile = "auth.properties";
         InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -143,6 +145,7 @@ public class AuthHelper {
             Token error = new Token();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
+            //TODO plp by Djer |Log4J| Contextualise tes messages (" for tenantId : " + tenantId)
             LOG.error("Error when trying to getTokenFromAuthCode", e);
             return error;
         }
@@ -181,6 +184,7 @@ public class AuthHelper {
                 Token error = new Token();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());
+              //TODO plp by Djer |Log4J| Contextualise tes messages (" for tenantId : " + tenantId)
                 LOG.error("Error when trying to refresh token", e);
                 return error;
             }
