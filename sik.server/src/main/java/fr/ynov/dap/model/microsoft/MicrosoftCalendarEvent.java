@@ -84,6 +84,7 @@ public class MicrosoftCalendarEvent implements ApiEvent {
     @Override
     public final AttendeeEventStatusEnum getStatusForAttendee(final String mail) {
 
+        //TODO sik by Djer |POO| Evite les multiples return dans une même méthode
         if (getEvent() == null) {
             return AttendeeEventStatusEnum.UNKNOWN;
         }
@@ -118,6 +119,7 @@ public class MicrosoftCalendarEvent implements ApiEvent {
     }
 
     @Override
+    //TODO sik by DJer |POO| Renvoie une List plutot qu'un ArrayList
     public final ArrayList<Attendee> getAttendees() {
         ArrayList<Attendee> res = new ArrayList<Attendee>();
         if (getEvent() != null && getEvent().getAttendees() != null) {

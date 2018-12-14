@@ -31,6 +31,7 @@ public class GMailService extends GoogleAPIService<Gmail> {
      * @throws IOException Exception
      * @throws NoConfigurationException Thrown when no configuration found
      */
+    //TODO sik by Djer |POO| Pourquoi surcharger la "getService()", implementer la méthode "getGoogleClient" semble suffisant ?
     @Override
     public Gmail getService(final String accountName)
             throws NoConfigurationException, IOException, GeneralSecurityException {

@@ -42,6 +42,7 @@ public class AdminController extends BaseController {
     /**
      * Default page name to use.
      */
+  //TODO sik by DJer |POO| Pourrais être dans le "baseController" à priori tous les controller "HTML" utiliseront le même ?
     private static final String DEFAULT_PAGE_NAME = "base";
 
     /**
@@ -52,6 +53,7 @@ public class AdminController extends BaseController {
     /**
      * Fragment attribute name to use on model.
      */
+    //TODO sik by DJer |POO| Pourrais être dans le "baseController" à priori tous les controller "HTML" utiliseront le même ?
     private static final String FRAGMENT_ATTRIBUTE = "fragment";
 
     /**
@@ -173,6 +175,7 @@ public class AdminController extends BaseController {
         if (events.size() == 0) {
 
             model.addAttribute("event", null);
+            //TODO sik by Djer |POO| Evite les multiples returns. Ici avec un "else" on varait bien qu'il n'y QUE le "event" dans modèle que l'on change suivant le cas. Et utilisant une variable (par defaut à null) pour le résultat on pourrait juste avoir un "if size() >0"
 
             return getPageWithFragment(model, true, "fragments/admin_calendar");
 
@@ -199,6 +202,7 @@ public class AdminController extends BaseController {
     public String mail(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
+        //TODO sik by Djer |POO| Utilise ta méthode utilitaire "getUserById" de ton BaseController
         AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
@@ -233,6 +237,7 @@ public class AdminController extends BaseController {
     public String contacts(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws IOException, GeneralSecurityException {
 
+      //TODO sik by Djer |POO| Utilise ta méthode utilitaire "getUserById" de ton BaseController
         AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
@@ -267,6 +272,7 @@ public class AdminController extends BaseController {
     public String mailsList(final ModelMap model, @PathVariable(USER_ID_PATH_VARIABLE) final String userId)
             throws IOException, GeneralSecurityException {
 
+      //TODO sik by Djer |POO| Utilise ta méthode utilitaire "getUserById" de ton BaseController
         AppUser user = getAppUserRepository().findByUserKey(userId);
 
         if (user == null) {
@@ -295,6 +301,7 @@ public class AdminController extends BaseController {
     private String getPageWithFragment(final ModelMap model, final Boolean known, final String fragmentName) {
 
         model.addAttribute(USER_KNOWN_ATTRIBUTE, known);
+        //TODO sik by Djer |POO| Tu pourrais avoir une constante "FRAGMENT_PATH" pour éviter de le repeter à chaque appel (et mettre dans le model "FRAGMENT_PATH+fragmentName" ? 
         model.addAttribute(FRAGMENT_ATTRIBUTE, fragmentName);
 
         return DEFAULT_PAGE_NAME;

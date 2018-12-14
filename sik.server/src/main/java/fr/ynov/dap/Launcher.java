@@ -19,6 +19,8 @@ public class Launcher {
     /**
      * Logger instance.
      */
+    //TODO sik by Djer |POO| Devrait etre static (en plus il est MAJUSCULE ce qui est trompeur !)
+    //TODO sik by Djer |POO| Attention, cette atribut est public (même modifier que la classe si rien de préicser). En plus il n'est pas/plus utilisé mais ton IDE ne peut pas te l'indiquer
     static final Logger LOGGER = LogManager.getLogger();
 
     /**
@@ -34,6 +36,7 @@ public class Launcher {
      * @return Configuration
      * @throws IOException Exception
      */
+    //TODO sik by Djer |Spring| Comme tu as mis un "@Configuration" sur la classe Config, cette méthode n'est plus utile.
     @Bean
     public Config loadConfig() throws IOException {
         return new Config();

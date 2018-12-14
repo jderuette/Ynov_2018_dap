@@ -25,6 +25,7 @@ public class Config {
     /**
      * Path where microsoft auth properties files are stored.
      */
+    //TODO sik by Djer |Design Patern| Pourquoi ne pas le rendre configurable de l'extérieur ? Les propriété "microsoft" pourraient aussi être dans le fichier de config général "dap.properties", voir dans le fichier "spring-boot" : "application.properties" 
     private static final String MICROSOFT_AUTH_PROPERTIES_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "auth.properties";
 
@@ -179,6 +180,7 @@ public class Config {
 
             logger.error("Microsoft Auth Properties file not found. Microsoft API will not work fine.");
 
+            //TODO sik by Djer |POO| Attention tu ne "close"" pas "file" !
             throw new FileNotFoundException(
                     "Property file '" + MICROSOFT_AUTH_PROPERTIES_PATH + "' not found in the classpath.");
 

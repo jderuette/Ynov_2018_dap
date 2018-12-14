@@ -37,6 +37,7 @@ public class OutlookService extends OutlookAPIService {
     /**
      * Default name for Inbox folder.
      */
+    //TODO sik by Djer |POO| Tu as créer des constante pour tes messages, mais cela "masque" (ou met en avant) que tu as du code que tu aurais pu mutualiser (isAccountValid(msAcc), hasAccount(userkey),...)
     public static final String INBOX_FOLDER_NAME = "inbox";
 
     /**
@@ -61,7 +62,7 @@ public class OutlookService extends OutlookAPIService {
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (msAcc == null) {
-
+            //TODO sik by Djer |Log4J| Contextualise tes messages ("for userKey : " + msAcc.getownner().getUserKey() " for accountName : + msAcc.getAccountName()
             getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return 0;
@@ -87,7 +88,7 @@ public class OutlookService extends OutlookAPIService {
         OutlookFolder inboxFolder = outlookService.getFolder(INBOX_FOLDER_NAME).execute().body();
 
         if (inboxFolder == null) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn("Graph API respond with empty or malformed JSON");
 
             return 0;
@@ -110,7 +111,7 @@ public class OutlookService extends OutlookAPIService {
             throws NoConfigurationException, IOException, GeneralSecurityException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn("No MicrosoftAccount found for this DaP user");
 
             return 0;
@@ -138,7 +139,7 @@ public class OutlookService extends OutlookAPIService {
     private MicrosoftCalendarEvent getNextEvent(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return null;
@@ -150,7 +151,7 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return null;
@@ -276,6 +277,7 @@ public class OutlookService extends OutlookAPIService {
             return contacts.getValue().length;
         }
 
+        //TODO sik by Djer |Log4J| ajoute ne contexte un identifiant "compréhenssible", juste l'ID est parfois insuffisant pour etre efficace lors de la recherche de PB dans les logs
         getLogger().warn("Value return by Graph API isn't valid for microsoft account : " + msAcc.getId());
 
         return 0;
@@ -321,7 +323,7 @@ public class OutlookService extends OutlookAPIService {
     private ArrayList<Message> getMessages(final MicrosoftAccount msAcc) throws IOException {
 
         if (msAcc == null) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn(ERROR_MICROSOFT_ACCOUNT_NULL);
 
             return new ArrayList<Message>();
@@ -333,7 +335,7 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = msAcc.getToken();
 
         if (StrUtils.isNullOrEmpty(tenantId) || StrUtils.isNullOrEmpty(email) || tokens == null) {
-
+          //TODO sik by Djer |Log4J| Contextualise tes messages
             getLogger().warn(ERROR_MICROSOFT_INFO_EMPTY);
 
             return null;

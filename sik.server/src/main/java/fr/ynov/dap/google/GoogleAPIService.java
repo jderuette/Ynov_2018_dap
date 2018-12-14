@@ -41,6 +41,7 @@ public abstract class GoogleAPIService<T> {
     /**
      * Logger instance.
      */
+    //TODO sik by Djer |Log4J| Devrait être final (pour indiquer ton "intention" de l'initialiser et de ne plus le changer)
     private Logger logger = LogManager.getLogger(getClassName());
 
     /**
@@ -150,6 +151,7 @@ public abstract class GoogleAPIService<T> {
 
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
+        //TODO sik by Djer |Design Patern| Tous tes "fichiers de conf" devrait être realitf à "getConfig().getDatastoreDirectory()" pour faciliter la configuration. Eventuellement tu peux avoir un logique "si GoogleCredentialsPath est un "bon" fichier utiliser SINON essayer avec rootFolder + / + GoogleCredentialsPath".
         InputStreamReader file = new InputStreamReader(new FileInputStream(config.getGoogleCredentialsPath()),
                 Charset.forName("UTF-8"));
 
@@ -168,7 +170,7 @@ public abstract class GoogleAPIService<T> {
                     .setDataStoreFactory(fileDataStoreFactory).setAccessType("offline").build();
 
         } else {
-
+            //TODO sik by Djer |IDE| Ton IDE t'indique-t-il un "ressoruce Leak" ? (tu devrais faire un "file.close()" ici aussi)
             throw new ConfigurationException();
 
         }
@@ -213,6 +215,8 @@ public abstract class GoogleAPIService<T> {
      * @param appName Application Name
      * @return Instance of GoogleClient
      */
+    //TODO sik by Djer |POO| Tu pourrais forunir une implementation de cette méthode en ayant un deuxième paramètre à ta classe de type (B extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient.Builder)
+    //Une "Interface "Buildable" sur les Services Google aurait été pratique, masi je ne vois rien qui ressemble à cela dans l'API de Google.
     protected abstract T getGoogleClient(NetHttpTransport httpTransport, Credential cdt, String appName);
 
 }

@@ -25,11 +25,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * @author Kévin Sibué
  *
  */
+//TODO sik by Djer |POO| Tu pourrias créer une classe aprente aux Service Googet et Microsoft avec : la Config, le Logger, et des methdoe utilitaire (hasAccount(userkey) : abstract car différente pour Google et Microsoft, isConfValid(),...)
 public class OutlookAPIService {
 
     /**
      * Logger instance.
      */
+    //TODO sik by Djer |Log4J| Devrait être satic final. Créer un Logger est couteux. Attention si les classes "fille" l'utilise la catégorie ne sera pas forcément celle désirée.
     private Logger logger = LogManager.getLogger();
 
     /**
@@ -72,6 +74,7 @@ public class OutlookAPIService {
      * Get current instance of logger.
      * @return Logger
      */
+    //TODO sik by Djer |POO| Protecetd serait suffisant
     public Logger getLogger() {
         return logger;
     }
@@ -80,6 +83,7 @@ public class OutlookAPIService {
      * Get current instance of configuration.
      * @return Configuration
      */
+  //TODO sik by Djer |POO| Protecetd serait suffisant
     public Config getConfig() {
         return config;
     }

@@ -19,6 +19,7 @@ public class Inbox {
     /**
      * Store list messages.
      */
+    //TODO sik by Djer |POO| "List" serait mieux que "Arraylist"
     private ArrayList<Message> messages;
 
     /**

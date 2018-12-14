@@ -211,6 +211,7 @@
         </plugins>
     </reporting>
 
+<!-- TODO sik by Djer |Maven| Devrait etre groupé avec les autres info du projet -->
     <name>client</name>
     <url>http://maven.apache.org</url>
     

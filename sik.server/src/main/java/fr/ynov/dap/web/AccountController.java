@@ -130,10 +130,12 @@ public class AccountController extends BaseController {
 
                 response.sendRedirect(url);
 
+                //TODO sik by Djer |POO| Il n'est pas nécéssaire de reonvoyer un résultat. Tu peux faire comme pour l'ajout de compte Microsoft
                 return "";
 
             } else {
 
+                //TODO sik by Djer |Gestion Exception| Ajouter le "setErrorDescription" dans le message ?
                 throw new AddAccountFailedException();
 
             }
@@ -259,7 +261,7 @@ public class AccountController extends BaseController {
                 appUserRepository.save(currentUser);
 
             } else {
-
+                
                 throw new InvalidTokenException();
 
             }

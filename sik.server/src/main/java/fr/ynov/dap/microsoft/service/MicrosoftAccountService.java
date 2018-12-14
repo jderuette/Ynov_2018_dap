@@ -50,6 +50,8 @@ public class MicrosoftAccountService extends OutlookAPIService {
      * @param repo token repository
      * @return List of every Microsoft credential stored in database
      */
+    //TODO sik by Djer |POO| Renvoie une List plutot qu'un ArrayList
+    //TODO sik by Djer |POO| Pourquoi demander à l'appelant de fournir le repo, Il vaudrait mieu l'injecter directement dnas ce service. Cela eviterait au Controller de dépendre du repo (idéalement Controller -> Service --> Data, on peut cependant considérer un "repo" comme un service)
     public final ArrayList<Credential> getStoredCredentials(final MicrosoftAccountRepository repo) {
 
         if (repo == null) {

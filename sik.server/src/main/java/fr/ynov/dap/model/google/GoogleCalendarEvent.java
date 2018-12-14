@@ -61,6 +61,7 @@ public class GoogleCalendarEvent implements ApiEvent {
      */
     @Override
     public Date getStartDate() {
+        //TODO sik by Djer |API Google| Attention "getDateTime()" est null pour un évènnement qui dur "toute la journé", il faut alors utiliser getDate()
         long val = event.getStart().getDateTime().getValue();
         return new Date(val);
     }
@@ -70,6 +71,7 @@ public class GoogleCalendarEvent implements ApiEvent {
      */
     @Override
     public Date getEndDate() {
+      //TODO sik by Djer |API Google| Attention "getDateTime()" est null pour un évènnement qui dur "toute la journé", il faut alors utiliser getDate()
         long val = event.getEnd().getDateTime().getValue();
         return new Date(val);
     }
@@ -97,7 +99,7 @@ public class GoogleCalendarEvent implements ApiEvent {
      */
     @Override
     public AttendeeEventStatusEnum getStatusForAttendee(final String userMail) {
-
+        //TODO sik by Djer |POO| Essaye d'eviter les multiples return dans une même méthode. LE as ou c'est "toléré" c'est si tu intérompt pour paramètre invalide ("early break", et même dans ce cas le plus "lisible" est uen exception). Dans les autres cas c'est souvent une "fausse bonne idée"
         if (event == null) {
             return AttendeeEventStatusEnum.UNKNOWN;
         }
@@ -148,6 +150,7 @@ public class GoogleCalendarEvent implements ApiEvent {
     }
 
     @Override
+    //TODO sik by Djer |POO| Je pense que tu renvoyer une List (Interface) plutot qu'un Arraylist (implementation). Peut-être une "Collection" ou un "Iterable" ?
     public final ArrayList<Attendee> getAttendees() {
         ArrayList<Attendee> res = new ArrayList<Attendee>();
         if (event != null && event.getAttendees() != null) {

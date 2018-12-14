@@ -186,12 +186,16 @@ public class IdToken {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime))
                 || now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+            //TODO sik by Djer |Log4J| Une petite Log ? 
+            //TODO sik by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
         // Check nonce
         if (!nonc.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO sik by Djer |Log4J| Une petite Log ? 
+            //TODO sik by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
@@ -220,9 +224,12 @@ public class IdToken {
         try {
             newToken = mapper.readValue(decodedBytes, IdToken.class);
             if (!newToken.isValid(nonce)) {
+              //TODO sik by Djer |Log4J| Une petite Log ? 
+                //TODO sik by Djer |POO| Evite les multiples return dans une même méthode
                 return null;
             }
         } catch (Exception e) {
+          //TODO sik by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console. Utiliser une LOG à la place (avec la cause en deuxième paramètre)
             e.printStackTrace();
         }
 

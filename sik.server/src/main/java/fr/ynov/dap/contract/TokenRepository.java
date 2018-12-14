@@ -9,6 +9,7 @@ import fr.ynov.dap.microsoft.model.TokenResponse;
  * @author Kévin Sibué
  *
  */
+//TODO sik by Djer |JPA| Tu n'utilises pas cette Interface, ne la créé pas.
 public interface TokenRepository extends CrudRepository<TokenResponse, Integer> {
 
 }

@@ -38,12 +38,14 @@ public class HttpService {
     /**
      * Logger instance.
      */
+    //TODO sik by Djer |POO| Devrait être static final
     private Logger logger = LogManager.getLogger(getClassName());
 
     /**
      * Return current instance of Logger.
      * @return Logger
      */
+    //TODO sik by Djer |POO| Pourquoi public ? Protected serait suffisant. Evite le plus possible d'exposer ton code.
     public Logger getLogger() {
         return logger;
     }
@@ -55,6 +57,7 @@ public class HttpService {
      * @throws IOException Exception
      * @throws ServerSideException Exception thrown when server send an error
      */
+  //TODO sik by Djer |POO| Pourquoi public ? Protected serait suffisant. Evite le plus possible d'exposer ton code.
     public String sendGetRequest(final String url) throws IOException, ServerSideException {
 
         HttpURLConnection connection = getHttpURLConnection(url, "GET");
@@ -70,6 +73,7 @@ public class HttpService {
      * @throws IOException Exception
      * @throws ServerSideException Exception thrown when server send an error
      */
+  //TODO sik by Djer |POO| Pourquoi public ? Protected serait suffisant. Evite le plus possible d'exposer ton code.
     public String sendPostRequest(final String url) throws IOException, ServerSideException {
 
         HttpURLConnection connection = getHttpURLConnection(url, "POST");
@@ -85,6 +89,7 @@ public class HttpService {
      * @throws IOException Exception
      * @throws ServerSideException Exception thrown when server send an error
      */
+  //TODO sik by Djer |POO| Pourquoi public ? Private serait suffisant. Evite le plus possible d'exposer ton code.
     public String sendRequest(final HttpURLConnection connection) throws IOException, ServerSideException {
 
         int responseCode = connection.getResponseCode();
