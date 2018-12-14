@@ -17,6 +17,7 @@ public class Launcher {
 	 * 
 	 * @return Config
 	 */
+    //TODO zal by DJer |Spring| Tu as mis un @Configuration sur ta classe Config, Spring va en faire un Singleton, cette méthode n'est plus utile
 	@Bean
 	public Config loadConfig() {
 		return new Config();

@@ -12,20 +12,20 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	
-<title>Data Access Project Admin</title>
+<title>Data Access Project Admin</title> <!-- TODO zal by Djer |Thymleaf| Internationnalisation ? -->
 
 </head>
 <body>
 	<div class="container">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/admin/">Administration</a>
+			<a class="navbar-brand" href="/admin/">Administration</a> <!-- TODO zal by Djer |Thymleaf| Internationnalisation ? -->
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    	<ul class="navbar-nav mr-auto">
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/mails?userKey=">Mail</a>
+			        	<a class="nav-link" href="/admin/mails?userKey=">Mail</a> <!-- TODO zal by Djer |Thymleaf| Internationnalisation ? -->
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="/admin/contacts?userKey=">Contacts</a>
+			        	<a class="nav-link" href="/admin/contacts?userKey=">Contacts</a> <!-- TODO zal by Djer |Thymleaf| Internationnalisation ? -->
 			      	</li>
 		   		</ul>
   			</div>
@@ -43,6 +43,7 @@
 				</thead>
 				<tbody>
 					
+					<!-- TODO zal by Djer |Thymleaf| Tu as oublié de fermer ton TR -->
 					<tr th:each="email : ${message.value.getValue()}"
 						
 					<td ><span

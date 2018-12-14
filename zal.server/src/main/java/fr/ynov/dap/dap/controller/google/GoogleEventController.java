@@ -47,6 +47,7 @@ public class GoogleEventController {
 			Recipient recipient = new Recipient(new EmailAddress(googleNextEvent.getOrganizer().getDisplayName(),
 					googleNextEvent.getOrganizer().getEmail()));
 			event = new EventModel(googleNextEvent.getSummary(),
+			        //TODO zal by Djer |API Google| "getDateTime()" est null pour les évènnements qui durent toute la journée, il faut utiliser getDate() pour ceux-là
 					new Date(googleNextEvent.getStart().getDateTime().getValue()),
 					new Date(googleNextEvent.getEnd().getDateTime().getValue()), recipient);
 		}

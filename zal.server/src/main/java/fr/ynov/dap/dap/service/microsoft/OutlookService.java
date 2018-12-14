@@ -26,6 +26,7 @@ import fr.ynov.dap.dap.service.microsoft.requestservice.OutlookRequestService;
 @Service
 public class OutlookService {
 
+    //TODO zal by DJer |IDE| Ton IDE te dit que ca n'est pa utilisé. Bug ? A supprimer ?
 	/** The ms repository. */
 	@Autowired
 	private MicrosoftAccountRepository msRepository;
@@ -47,6 +48,7 @@ public class OutlookService {
 		}
 		for (MicrosoftAccount account : user.getMicrosoftAccounts()) {
 			if (account == null) {
+			    //TODO zal by Djer |POO| Si UN seul account est "null" tu ne comptes RIEN du tout ? (si c'est vraiment ton objectif (éviter de renvoyer des données "partielles") ajoute une log en error !) Sinon "break" serait suffisant
 				return 0;
 			}
 			String email = account.getEmail();
@@ -54,6 +56,7 @@ public class OutlookService {
 			TokenResponse token = account.getToken();
 
 			if (token == null || email.isEmpty() || email == null) {
+			  //TODO zal by Djer |POO| Si UN seul token est "invalide" tu ne comptes RIEN du tout ? (log en error ? Break ?)
 				return 0;
 			}
 			TokenResponse newToken = OutlookCredentialService.ensureTokens(token, tenantId);
@@ -63,6 +66,7 @@ public class OutlookService {
 
 			OutlookFolder folder = outlookService.getOutlookFolder("inbox").execute().body();
 			if (folder == null) {
+			  //TODO zal by Djer |POO| Si UN seul folder est "invalide" tu ne comptes RIEN du tout ? (log en error ? Break ?)
 				return 0;
 			}
 

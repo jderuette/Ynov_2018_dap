@@ -45,6 +45,7 @@ public class GoogleCalendarService extends GoogleService {
 		if (items.isEmpty()) {
 			return null;
 		} else {
+		    //TODO zal by Djer |Rest API| Pas de SysOut sur un serveur ! (une Log si tu as besoin de cette information)
 			System.out.println("Upcoming events");
 			event = items.get(0);
 		}
@@ -68,6 +69,7 @@ public class GoogleCalendarService extends GoogleService {
 			try {
 				Event event = getCalendarEvent(account.getName());
 				if (nextEvent != null) {
+				    //TODO zal by Djer |API Google| Attention "getDate()" est valorisé pour les évennements qui durent toute la journée. Attention tu compares 2 choses, potentiellement, différentes "getDate()" et "getDateTime()" 
 					Date dateOfEvent = new Date(event.getStart().getDate().getValue());
 					Date dateOfNextEvent = new Date(nextEvent.getStart().getDateTime().getValue());
 					if (dateOfEvent.before(dateOfNextEvent)) {
@@ -76,8 +78,10 @@ public class GoogleCalendarService extends GoogleService {
 				} else {
 					nextEvent = event;
 				}
+				//TODO zal by Djer |API Google| Gestion de "MON" status ?
 
 			} catch (Exception e) {
+			    //TODO zal by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console. Utilise une Log
 				e.printStackTrace();
 			}
 		}
@@ -95,6 +99,7 @@ public class GoogleCalendarService extends GoogleService {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
+	//TODO zal by Djer |POO| "final" sur un **méthode** empèche les "classes filles" de surcharger la méthode (hors c'est déja impossible, cette méthode est privée). Je pense que tu voulais mettre le final sur le **paramètre** pour indiquer que la méthode ne pourra PAS changer la (pseudo)référence de ce paramètre.
 	private final Calendar getGoogleCalendarClient(final String accountName)
 			throws GeneralSecurityException, IOException {
 		final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();

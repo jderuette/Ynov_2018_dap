@@ -7,6 +7,7 @@ import com.google.api.client.http.GenericUrl;
 /**
  * The Class BuildRedirectUri.
  */
+//TODO zal by Djer |Spring| Si c'est "helper" tu peux mettre en static. A minima faisant un Singleton (en ajoutant un @Service par exemple)
 public class BuildRedirectUri {
 
 	/**

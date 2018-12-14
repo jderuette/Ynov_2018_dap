@@ -16,6 +16,7 @@ import fr.ynov.dap.dap.service.google.GoogleContactService;
 @RequestMapping("/google/contacts")
 public class GoogleContactController {
 
+    //TODO zal by Djer |Audit Code| Tes outils d'audit de code t'indique que l'indetition n'est pas correct (tabulations au lieu d'espace). Configure ton formater dans ton IDE !
 	/** The contact service. */
 	@Autowired
 	private GoogleContactService contactService;

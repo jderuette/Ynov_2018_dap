@@ -1,5 +1,6 @@
 package fr.ynov.dap.dap.service.microsoft.requestservice;
 
+//TODO zal by DJer |IDE| configure les "save action" de ton IDE pour qu'il organise les import (et format ton code) lorsque tu sauvegardes
 import org.springframework.stereotype.Service;
 
 import fr.ynov.dap.dap.data.microsoft.Message;

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 @Primary
 @Configuration
 @PropertySource("classpath:spring.properties")
+//TODO zal by Djer |Design Patern| Attetion à cause du "spring.properties" tes valeurs par defauts ne sont pas "raisonablement juste". Ne cré pas ce fichier (et valeur par defaut en java (car plus de marge de manoeuvre), ou crér ce fichier en mode "template"))
 public class Config {
 
 	/** The application name. */

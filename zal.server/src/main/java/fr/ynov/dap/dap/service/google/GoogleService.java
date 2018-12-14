@@ -30,6 +30,7 @@ import fr.ynov.dap.dap.Config;
  */
 public abstract class GoogleService {
 
+    //TODO zal by Djer |IDE| Ton ide t'indique que ca n'est pas utilisé. Utilise-le ou supprim-le s'il n'est vraiment pas utile.
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LogManager.getLogger(GoogleService.class);
 
@@ -50,6 +51,7 @@ public abstract class GoogleService {
 	protected JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
 	/** The scopes. */
+	//TODO zal by Djer |POO| Met cette attribut en static cela évitera que chaque classe fille est sa propre instance
 	private final List<String> scopes = new ArrayList<String>();
 
 	/**
@@ -91,6 +93,7 @@ public abstract class GoogleService {
 	public GoogleAuthorizationCodeFlow getFlow() throws GeneralSecurityException, IOException {
 		// Load client secrets.
 		InputStreamReader in = new InputStreamReader(
+		        //TODO zal by Djer |POO| Utilise "file.separator"
 				new FileInputStream(cfg.getCredentialsFilePath() + "/" + cfg.getClientSecretFile()),
 				Charset.forName("UTF-8"));
 

@@ -105,6 +105,7 @@ public class GoogleAccountService extends GoogleService {
 	 * @throws GeneralSecurityException
 	 *             *GeneralSecurityException*
 	 */
+	//TODO zal by Djer |MVC| Tu as supprimé la Request des paramères, mais HttpSession est aussi du domaine du "controller". Tu peux valoriser la session dans le controller si cette méthode renvoie une url commençeant par "redirect"
 	public String addAccount(final String accountName, final String userKey, String redirectUri, HttpSession session)
 			throws GeneralSecurityException {
 		String response = "errorOccurs";
@@ -124,14 +125,18 @@ public class GoogleAccountService extends GoogleService {
 			try {
 				flow = super.getFlow();
 			} catch (GeneralSecurityException e) {
+			    //TODO zal by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 				LOGGER.error("Error loading credential or Google Flow", e);
+				//TODO zal by Djer |Gestion Exception| Attention, tu "étouffes" cette exception, mais ta méthdoe continue son éxécution alors que "flow" sera null !!!
 			}
 			credential = flow.loadCredential(accountName);
 
 			if (credential != null && credential.getAccessToken() != null) {
 				response = "AccountAlreadyAdded";
+				//TODO zal by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 				LOGGER.error("AccountAlreadyAdded");
 			} else {
+			    //TODO zal by DJer |JPA| Sauvegarde plutot à partir de AppUser (via AppUserRepository)qui est "maitre" de la elation vers les "account". Comme tu as un Cascade.ALl JPA s'ocuppera de créer/mettre à jours les entites "filles"
 				googleAccountRepository.save(account);
 				final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
 				authorizationUrl.setRedirectUri(redirectUri);
@@ -139,6 +144,7 @@ public class GoogleAccountService extends GoogleService {
 				response = "redirect:" + authorizationUrl.build();
 			}
 		} catch (IOException e) {
+		  //TODO zal by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 			LOGGER.error("Error loading credential or Google Flow", e);
 		}
 		return response;

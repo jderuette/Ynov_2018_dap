@@ -53,6 +53,7 @@ public class AdminService extends GoogleService {
 	 */
 	public ArrayList<CredentialModel> getCredentialsMicrosoft(MicrosoftAccountRepository repository) {
 		ArrayList<CredentialModel> listCredential = new ArrayList<CredentialModel>();
+		//TODO zal by Djer |POO| Tu peux conserver le "Iterable<T>". A la limite Cast en "List" mais pas en ArrayList (tu n'est absolument pas certains que l'implementation de "findAll" renvoie (et continura à renvoyer) une **Array**List
 		ArrayList<MicrosoftAccount> listMsAccount = (ArrayList<MicrosoftAccount>) repository.findAll();
 
 		for (MicrosoftAccount account : listMsAccount) {
@@ -74,6 +75,7 @@ public class AdminService extends GoogleService {
 	 *            the microsoft credentials
 	 * @return the all credential list
 	 */
+	//TODO zal by Djer |POO| Renvoie une List (interface) plutot qu'un Arraylist (implementation), voir une "Collection" ou un Iterable
 	public ArrayList<CredentialModel> getAllCredentialList(ArrayList<CredentialModel> googleCredentials,
 			ArrayList<CredentialModel> MicrosoftCredentials) {
 

@@ -26,6 +26,7 @@ public class GmailController {
 
 	/** The app user repository. */
 	@Autowired
+	//TODO zal by Djer |Audit Code| Checkstyle t'indique que cette attribut de vrait etre "privée". Par defaut il uara la porté de la classe, donc public
 	AppUserRepository appUserRepository;
 
 	/**

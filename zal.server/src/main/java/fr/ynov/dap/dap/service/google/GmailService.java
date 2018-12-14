@@ -47,6 +47,7 @@ public class GmailService extends GoogleService {
 			service = new Gmail.Builder(httpTransport, this.jsonFactory, getCredentials(httpTransport, accountName))
 					.setApplicationName(getCfg().getApplicationName()).build();
 		} catch (GeneralSecurityException | IOException e) {
+		  //TODO zal by Djer |Log4J| Contextualise tes messages (" for accountName : " + accountName)
 			logger.error("Error while loading credentials", e);
 		}
 		return service;
@@ -66,7 +67,9 @@ public class GmailService extends GoogleService {
 			service = getGmailGoogleService(accountName);
 			label = service.users().labels().get("me", "INBOX").execute();
 		} catch (IOException e) {
+		  //TODO zal by Djer |Log4J| Contextualise tes messages (" for accountName : " + accountName)
 			logger.error("Error when get mail inbox", e);
+			//TODO zal by Djer |Gestion Exception| Attention tu "éttoufes" l'exception, du coup tu renveras "null" (valeur par defaut de "label") et tu auras un NPE dans l'appelant
 		}
 		return label;
 	}

@@ -46,6 +46,7 @@ public class OutlookCredentialService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO zal by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -62,6 +63,7 @@ public class OutlookCredentialService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO zal by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -78,6 +80,7 @@ public class OutlookCredentialService {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO zal by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -104,6 +107,7 @@ public class OutlookCredentialService {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	private static void loadConfig() throws IOException {
+	    //TODO zal by Djer |Design Patern| Externalsation de la configuration ?
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = OutlookCredentialService.class.getClassLoader()
 				.getResourceAsStream(authConfigFile);
@@ -150,6 +154,7 @@ public class OutlookCredentialService {
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
 					authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
+		  //TODO zal by Djer |log4J| Une petite log ?
 			TokenResponse error = new TokenResponse();
 			error.setError("IOException");
 			error.setErrorDescription(e.getMessage());
@@ -191,6 +196,7 @@ public class OutlookCredentialService {
 				return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
 						"refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 			} catch (IOException e) {
+			  //TODO zal by Djer |log4J| Une petite log ?
 				TokenResponse error = new TokenResponse();
 				error.setError("IOException");
 				error.setErrorDescription(e.getMessage());

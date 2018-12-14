@@ -25,6 +25,8 @@ public class App {
 	 */
 	public static void main(String[] args) {
 
+	    //TODO zal by Djer |Command Line| Voulais-tu dire "args[0]" ?
+	    //TODO zal by Djer |POO| "==" ne fonctionne JAMAIS sur deux chaines de caractères ! Utilise "help".equals(xxxxx)
 		if (args[1] == "help") {
 			System.out.println("\n usage API and add user : -jar client-0.0.1-SNAPSHOT.jar [options] [userKey] \n"
 					+ " example: java -jar client-0.0.1-SNAPSHOT.jar \"contacts\" loic  \n");

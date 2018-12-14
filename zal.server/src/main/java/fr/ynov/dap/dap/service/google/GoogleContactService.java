@@ -24,6 +24,7 @@ public class GoogleContactService extends GoogleService {
 	 * @throws Exception
 	 *             *Exception*
 	 */
+    //TODO zal by Djer |Gestion Exception| Evite de lever "Exception", soit précis
 	public PeopleService getPeopleGoogleService(final String userId) throws Exception {
 		final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 		PeopleService service = new PeopleService.Builder(httpTransport, jsonFactory,

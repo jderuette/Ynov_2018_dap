@@ -11,6 +11,9 @@
     <url>http://maven.apache.org</url>
 
     <properties>
+    	<!-- TODO zal by Djer |Maven| Si tu ne précise pas la version, tu va (re) passer en 1.5 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -30,6 +33,7 @@
             </plugin>
         </plugins>
     </build>
+    <!-- TODO zal by Djer |Maven| il ya un ordre "attendu" pour un pom.xml. Met des dépendances après tes "properties" -->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
