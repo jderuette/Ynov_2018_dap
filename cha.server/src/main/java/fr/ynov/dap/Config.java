@@ -14,6 +14,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @PropertySource("classpath:application.properties")
+//TODO cha by Djer |Design Patern| Domage qu'on ne puisse pas modifier l'emplacement des deux fichiers de "configuration" cela aurait permis à un admin de placer ces ficher là ou il veut. On moins le "dataStoreFolder" si ensuite tout est relatif à lui.
 public class Config {
 	
 	/**
@@ -308,6 +309,7 @@ public class Config {
      * Load configuration.
      * @throws IOException Exception
      */
+	//TODO cha by Djer |POO| Pourquoi protected ? Private serait suffisant
     protected void loadMicrosoftConfig() throws IOException {
 
         InputStreamReader file = new InputStreamReader(new FileInputStream(getMicrosoftCredentialsPath()),
@@ -337,6 +339,7 @@ public class Config {
      * @return the input stream reader
      * @throws IOException Signals that an I/O exception has occurred.
      */
+    //TODO cha by Djer |POO| Evite de laisser à l'appelant la charge de "fermer" ton InputStream; Tu pourais directement charger les "Properties" et les renvoyer dans cette méthode (et laisser l'appelant uniquement mettre à jour les attributs nécéssaires)
     private InputStreamReader loadGlobalConfig() throws IOException {
         InputStreamReader file = new InputStreamReader(new FileInputStream(GLOBAL_CONFIG_PATH),
                 Charset.forName("UTF-8"));

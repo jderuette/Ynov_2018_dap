@@ -43,6 +43,7 @@ public class MicrosoftAccountService extends OutlookAPIService {
      * @param microsoftAccountRepository the microsoft account repository
      * @return List of every Microsoft credential stored in database
      */
+    //TODO cha by Djer |POO| Utilise List (interface) plutpot que Arraylist (implementation)
     public final ArrayList<Credential> getStoredCredentials(final MicrosoftAccountRepository microsoftAccountRepository) {
 
         if (microsoftAccountRepository == null) {

@@ -39,6 +39,7 @@ public class GMailService extends GoogleService<Gmail> {
      * @throws NoConfigurationException Thrown when no configuration found
      */
     @Override
+    //TODO cha by Djer |POO| Pourquoi surcharger la parent générique ?
     public Gmail getService(final String accountName)
             throws IOException, GeneralSecurityException {
 

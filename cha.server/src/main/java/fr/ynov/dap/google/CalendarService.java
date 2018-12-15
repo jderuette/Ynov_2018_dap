@@ -78,6 +78,7 @@ public class CalendarService extends GoogleService<Calendar> {
 
         Calendar calendarService = getService(accountName);
 
+        //TODO cha by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? 
         DateTime now = new DateTime(System.currentTimeMillis());
 
         OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);

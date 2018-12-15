@@ -58,22 +58,26 @@ public abstract class GoogleService<T> {
 	 *
 	 * @return the configuration
 	 */
+  //TODO cha by Djer |POO| Public inutile, scope est protected, les classe filles y ont accès, et il n'y a qu'elles qui y accede.
 	public Config getConfiguration() {
 		return configuration;
 	}
 
+	//TODO cha by Djer |POO| Public inutile, scope est protected, les classe filles y ont accès, et il n'y a qu'elles qui y accede.
 	public static JsonFactory getJSON_FACTORY() {
 		return JSON_FACTORY;
 	}
-
+	//TODO cha by Djer |POO| Public inutile, scope est protected, les classe filles y ont accès, et il n'y a qu'elles qui y accede.
 	public static List<String> getSCOPES() {
 		return SCOPES;
 	}
 
+	//TODO cha by Djer |POO| Utilisé nullpart (heureusement !). Ne crée pas de setter si ca n'est pas nécéssaire. Et soit TRES prudent avec un setter static !
 	public static void setJSON_FACTORY(JsonFactory jSON_FACTORY) {
 		JSON_FACTORY = jSON_FACTORY;
 	}
 
+	//TODO cha by Djer |POO| Utilisé nullpart (heureusement !). Ne crée pas de setter si ca n'est pas nécéssaire. Et soit TRES prudent avec un setter static !
 	public static void setSCOPES(List<String> sCOPES) {
 		SCOPES = sCOPES;
 	}
@@ -87,6 +91,7 @@ public abstract class GoogleService<T> {
      * @throws IOException If the credentials.json file cannot be found.
 	 * @throws GeneralSecurityException 
      */
+	 //TODO cha by Djer |POO| Pourquoi public ? Protected serait largement suffisant. Evite d'exposer ton code si ca n'est pas nécéssaire
     public Credential getCredentials(final String googleAccountName) throws IOException, GeneralSecurityException {
 
         // Build flow and trigger user authorization request.

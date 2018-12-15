@@ -69,12 +69,16 @@ public class GoogleAccountService extends GoogleService {
 
 			GoogleAccount googleAccount = new GoogleAccount();
 			AppUser appUser = appUserRepo.findByUserKey(userKey);
+		
 			googleAccount.setAccountName(accountName);
 			appUser.addGoogleAccount(googleAccount);
+			//TODO cha by DJer |JPA| Sauvegarde en utilisant le AppUser qu iest maitre de la relation vers les "acocunt". Grace au manyToOne, JPA so'cupepra de crer/modifier les entitées filles
+			 //TODO cha by Djer |JPA| En plus ici tu n'as pas défini le "AppUser" du GoogleAccount, il n'y a donc pas de liens ! Via "AppUser" la addGoogleAccount() gère le lien corectement
 			googleAccountRepo.save(googleAccount);
 
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		    //TODO cha by Djer |log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to connect Google Account");
 		}
@@ -121,7 +125,7 @@ public class GoogleAccountService extends GoogleService {
             }
 
         } catch (IOException e) {
-
+          //TODO cha by Djer |log4J| Une petite log ?
             addAccountResult.setIsSuccess(false);
 
             return addAccountResult;
@@ -161,7 +165,7 @@ public class GoogleAccountService extends GoogleService {
                 credentials.add(newCredential);
 
             } catch (IOException e) {
-
+              //TODO cha by Djer |log4J| "e.printStackTrace()" affiche directemtn dans la console. Uitlise une Log à la place (avec l'exception en deuxième paramètre : la cause)
                 e.printStackTrace();
 
             }
@@ -174,6 +178,7 @@ public class GoogleAccountService extends GoogleService {
     
     @Override
     protected final Object getGoogleClient(final Credential credential, final NetHttpTransport httpTransport, final String appName) {
+        //TODO cha by Djer |POO| Pourquoi mettre ne place une classe parente Generic pour ne pas l'utiliser ? As-tu compris ce que "tu" as codé ? 
         return null;
     }
 

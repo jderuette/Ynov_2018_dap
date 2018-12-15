@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Launcher {
 	
+    //TODO cha by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. A utiliser ? A supprimer ? 
 	/** The log. */
 	private static Logger LOG = LogManager.getLogger(Launcher.class);
 	
@@ -23,6 +24,7 @@ public class Launcher {
 	 * @return the config
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
+	//TODO cha by Djer |IOC| Comme tu as un "@Configuration" sur ta Config, cette méthode n'est plus utile.
 	@Bean
 	public static Config loadConfig() throws IOException {
 		return new Config();

@@ -27,6 +27,7 @@ public class OutlookService extends OutlookAPIService {
     /**
      * Default name for Inbox folder.
      */
+    //TODO cha by Djer |POO| Pourquoi public ? Privé serait suffisant
     public static final String INBOX_FOLDER_NAME = "inbox";
 
     /**
@@ -53,9 +54,9 @@ public class OutlookService extends OutlookAPIService {
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (tenantId.isEmpty() || email.isEmpty() || tokens == null) {
-
+            //TODO cha by Djer |Log4J| Contextualise tes messages (" for accountName : " + microsoftAccount.getAccountName() + " and userKey : " + microsoftAccount.getOwner().getUserKey()) 
             getLogger().warn("MicrosoftAccount information are empty or null");
-
+            //TODO cha by Djer |POO| Evite les multiples return dans une même méthode
             return 0;
 
         }
@@ -68,8 +69,9 @@ public class OutlookService extends OutlookAPIService {
 
         if (inboxFolder == null) {
 
+          //TODO cha by Djer |Log4J| Contextualise tes messages (" for accountName : " + microsoftAccount.getAccountName() + " and userKey : " + microsoftAccount.getOwner().getUserKey())
             getLogger().warn("Graph API respond with empty or malformed JSON");
-
+          //TODO cha by Djer |POO| Evite les multiples return dans une même méthode
             return 0;
 
         }
@@ -90,7 +92,7 @@ public class OutlookService extends OutlookAPIService {
             throws IOException, GeneralSecurityException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-
+          //TODO cha by Djer |Log4J| Contextualise tes messages (" for userKey : " + user.getUserKey())
             getLogger().warn("No MicrosoftAccount found for this DaP user");
 
             return 0;
@@ -126,11 +128,12 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+        //TODO cha by Djer |IDE| Ton IDE te dit que ca n'est pas utiliser? Bug ? A supprimer ? 
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (email.isEmpty() || tokens == null) {
-
+          //TODO cha by Djer |Log4J| Contextualise tes messages (" for accountName : " + microsoftAccount.getAccountName() + " and userKey : " + microsoftAccount.getOwner().getUserKey())
             getLogger().warn("MicrosoftAccount information are empty or null");
 
             return null;
@@ -151,6 +154,7 @@ public class OutlookService extends OutlookAPIService {
 
         PagedResult<OutlookEvent> events = response.body();
 
+        //TODO cha by Djer |POO| Evite les mutliples return. Toutes tes conditions peuvent être "groupées" avec des || (en méttant en premier celles qui peuvent empecher les suivantes de fonctionner). Java évalue les conditions dans l'ordre, et comme il s'agit d'un "ou" dès que 1 n'est pas satisfait, il arete l'évaluation des suivantes (et entre dans la branche du if)
         if (events == null) {
             return null;
         }
@@ -178,13 +182,14 @@ public class OutlookService extends OutlookAPIService {
     public MicrosoftCalendarEvent getNextEvent(final AppUser user) throws IOException {
 
         if (user.getMicrosoftAccounts().size() == 0) {
-
+            //TODO cha by Djer |Log4J| Evite d'utiliser uniquement l'ID, un identifiant plus "lisible", comme le "userKey" en plus sera utile
             getLogger().warn("Current user " + user.getId() + " haven't any MicrosoftAccount");
 
             return null;
 
         }
 
+        //TODO cha by Djer |POO| Utilise List (interface) plutot que ArrayList (implementation)
         ArrayList<MicrosoftCalendarEvent> events = new ArrayList<>();
 
         for (MicrosoftAccount microsoftAccount : user.getMicrosoftAccounts()) {
@@ -198,7 +203,7 @@ public class OutlookService extends OutlookAPIService {
         }
 
         if (events.size() == 0) {
-
+            //TODO cha by Djer |Log4J| Est-ce vraiment un warning de ne pas avoir d'évènnements à venir ? Le level Info serait suffisant
             getLogger().warn("No next event found for current user : " + user.getId());
 
             return null;
@@ -230,11 +235,12 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+      //TODO cha by Djer |IDE| Ton IDE te dit que ca n'est pas utiliser. Bug ? A supprimer ?
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (email.isEmpty() || tokens == null) {
-
+          //TODO cha by Djer |Log4J| Contextualise tes messages (" for accountName : " + microsoftAccount.getAccountName() + " and userKey : " + microsoftAccount.getOwner().getUserKey())
             getLogger().warn("MicrosoftAccount information are empty or null");
 
             return null;
@@ -253,6 +259,7 @@ public class OutlookService extends OutlookAPIService {
         PagedResult<OutlookContact> contacts = response.body();
 
         if (contacts != null && contacts.getValue() != null) {
+            //TODO cha by Djer |POO| Evite les multiples return dans un même méthode
             return contacts.getValue().length;
         }
 
@@ -298,6 +305,7 @@ public class OutlookService extends OutlookAPIService {
      * @return List of message
      * @throws IOException Exception
      */
+    //TODO cha by Djer |POO| Utilise List plutot que ArrayList
     private ArrayList<Message> getMessages(final MicrosoftAccount microsoftAccount) throws IOException {
 
         if (microsoftAccount == null) {
@@ -309,11 +317,12 @@ public class OutlookService extends OutlookAPIService {
         }
 
         String email = microsoftAccount.getEmail();
+        //TODO cha by Djer |IDE| Ton IDE te dit que ca n'est pas utiliser. Bug ? A supprimer ?
         String tenantId = microsoftAccount.getTenantId();
         TokenResponse tokens = microsoftAccount.getToken();
 
         if (email.isEmpty() || tokens == null) {
-
+          //TODO cha by Djer |Log4J| Contextualise tes messages (" for accountName : " + microsoftAccount.getAccountName() + " and userKey : " + microsoftAccount.getOwner().getUserKey())
             getLogger().warn("MicrosoftAccount information are empty or null");
 
             return null;

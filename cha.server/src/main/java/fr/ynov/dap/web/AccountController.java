@@ -98,6 +98,7 @@ public class AccountController extends BaseController {
      * @throws AddAccountFailedException Exception
      * @throws IOException Exception
      */
+    //TODO cha by Djer |Spring| Cette méthode doit, normalement, faire un redirecte, tu peux renvoyer "void" (comme pour la add "Microsoft") pour éviter ces "return étranges"
     @RequestMapping(value = "/account/google/add/{googleAccountName}/{userId}")
     public String addGoogleAccount(@PathVariable final String googleAccountName, @PathVariable final String userId,
             final HttpServletRequest request, final HttpSession session, final HttpServletResponse response)
@@ -122,6 +123,7 @@ public class AccountController extends BaseController {
 
                 String url = accountRes.getRedirectUrl();
 
+                //TODO cha by Djer |Spring| Un "redirect:xxx" ne sera pas bien géré dans un @RestController. Par defaut dans un Rest controller les "méthodes mappées" alimentent le body de la réponse. Soit tu sépare les méthode "Rest" des autres. Soit tu utilises un "@Controller", et, sur les méthodes "rest", tu ajoutes un "@ResponseBody".
                 response.sendRedirect(url);
 
                 return "";
@@ -176,6 +178,7 @@ public class AccountController extends BaseController {
         AppUser userAccount = appUserRepository.findByUserKey(userId);
 
         if (userAccount == null) {
+            //TODO cha by Djer |Log4J| Une petite log ? 
             throw new UserException();
         }
 
@@ -188,7 +191,7 @@ public class AccountController extends BaseController {
         session.setAttribute(Constant.SESSION_ACCOUNT_NAME, microsoftAccountName);
 
         String redirectUrl = microsoftAccountService.getLoginUrl(state, nonce);
-
+      //TODO cha by Djer |Spring| Un "redirect:xxx" ne sera pas bien géré dans un @RestController. Par defaut dans un Rest controller les "méthodes mappées" alimentent le body de la réponse. Soit tu sépare les méthode "Rest" des autres. Soit tu utilises un "@Controller", et, sur les méthodes "rest", tu ajoutes un "@ResponseBody".
         response.sendRedirect(redirectUrl);
 
     }
@@ -244,8 +247,10 @@ public class AccountController extends BaseController {
                 appUserRepository.save(currentUser);
 
             } 
+            //TODO cha by Djer |Log4J| (else) Une petite log ? 
 
         } 
+      //TODO cha by Djer |Log4J| (else) Une petite log ? 
 
         return "Vous êtes connecté !";
 

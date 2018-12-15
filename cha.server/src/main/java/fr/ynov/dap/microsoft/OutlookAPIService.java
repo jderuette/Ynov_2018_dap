@@ -23,6 +23,7 @@ public class OutlookAPIService {
 	 /**
      * Logger instance.
      */
+    //TODO cha by Djer |Log4J| Devrait être static final. Instancier un Logger est couteux. Et ici tu n'es pa sur d'avoir un Singleton, tu risques donc de payer ce "cout" plusieurs fois
     private Logger logger = LogManager.getLogger();
 
     /**
@@ -63,6 +64,7 @@ public class OutlookAPIService {
      *
      * @return the logger
      */
+    //TODO cha by Djer |POO| Protected serait suffisant
     public Logger getLogger() {
         return logger;
     }
@@ -72,6 +74,7 @@ public class OutlookAPIService {
      *
      * @return the config
      */
+  //TODO cha by Djer |POO| Protected serait suffisant
     public Config getConfig() {
         return configuration;
     }
@@ -172,6 +175,7 @@ public class OutlookAPIService {
      * @return New token from Microsoft Graph API
      * @throws IOException Exception
      */
+    //TODO cha by Djer |POO| Protected serait suffisant
     public final TokenResponse getToken(final MicrosoftAccount microsoftAccount) throws IOException {
         TokenResponse newTokens = ensureTokens(microsoftAccount);
         if (newTokens != null) {

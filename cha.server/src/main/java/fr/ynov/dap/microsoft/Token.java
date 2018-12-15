@@ -177,12 +177,16 @@ public class Token {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime))
                 || now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+            //TODO cha by Djer |Log4J| Une petite Log ? 
+            //TODO cha by Djer |POO| Evite les mutliples return dans une même méthode
             return false;
         }
 
         // Check nonce
         if (!nonc.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO cha by Djer |Log4J| Une petite Log ? 
+            //TODO cha by Djer |POO| Evite les mutliples return dans une même méthode
             return false;
         }
 
@@ -211,9 +215,12 @@ public class Token {
         try {
             newToken = mapper.readValue(decodedBytes, Token.class);
             if (!newToken.isValid(nonce)) {
+              //TODO cha by Djer |Log4J| Une petite Log ? 
+                //TODO cha by Djer |POO| Evite les mutliples return dans une même méthode
                 return null;
             }
         } catch (Exception e) {
+          //TODO cha by Djer |Log4J| "e.printStackTrace" affiche directement dnas la console. Utilise une log à la place (en précisantl a cause)
             e.printStackTrace();
         }
 

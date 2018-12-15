@@ -26,13 +26,14 @@ public class App
    *
    * @param args the arguments
    */
+  //TODO cha by Djer |POO| Il manque aussi la gestion des exceptions, mais là je ne vais pas le corriger
   public static void main(String[] args)
   {
       if(args[0] == "account"){
     	  
     	if(args[1] == "add") {
     		route = localhost + "/add/account/add?userKey=" + args[2];
-    	}
+    		//TODO cha by Djer |POO| Tu avais un acollade fermante en trop ici ....
       	}else if(args[1] == "google"){
           route = localhost + "/account/google/add/" + args[2] + "?userKey=" + args[3];
         }else if(args[1] == "microsoft") {
@@ -54,6 +55,8 @@ public class App
           URL path = new URL(route);
           System.out.println(request(path));
         }
+      //TODO cha by Djer |POO| Et il manquait une acollade fermante ici
+      }
   }
 
   /**

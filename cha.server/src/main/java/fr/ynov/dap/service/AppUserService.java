@@ -26,6 +26,7 @@ public class AppUserService {
 	 * @param userKey the user key
 	 * @return the map
 	 */
+	//TODO cha by Djer |MVC| Ressemble plus à une méthode de Controller qu'a un Service. Si service renvoie un objet "metier" (une instance de AppUser). SI controller, déplace dans le package "controlelr" (cette classe peut éventuellement être un "helper")
 	public Map<String, Object> addAppUser(String userKey) {		
 		Map<String, Object> map = new HashMap<>();
 		
