@@ -35,6 +35,7 @@ public class ContactService {
          .setPersonFields("names,emailAddresses")
          .execute();
 
+    //TODO for by Djer |POO| Ce commentaire n'est plus juste
     // Print display name of connections if available.
     List<Person> connections = response.getConnections();
     if (connections != null && connections.size() > 0) {

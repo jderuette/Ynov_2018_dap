@@ -21,6 +21,7 @@ import fr.ynov.dap.dap.repository.AppUserRepository;
 @RestController
 //TODO for by Djer |SOA| (ancine TO-DO) Séparation service/Controller ?
 public class CalendarService {
+    //TODO fof by Djer |POO| Pourquoi public ?
 	@Autowired
 	public AppUserRepository appRepo;
 	
@@ -40,12 +41,14 @@ public class CalendarService {
         .setMaxResults(1).setTimeMin(now)
         .setSingleEvents(true).execute();
     if (events.getItems().size() == 0) {
-      //TODO for by Djer |POO| (ancine TO-DO) Evite les multiples return dans une même méthode
+      //TODO for by Djer |POO| (ancien TO-DO) Evite les multiples return dans une même méthode
+        //TODO for by DJer |Log4J| Une petite log ?
       return null;
     } else {
       CalendarModel event = new CalendarModel(events.getItems().get(0).getSummary(), 
           events.getItems().get(0).getStart(), events.getItems().get(0).getEnd(), 
           events.getItems().get(0).getStatus());
+      //TODO for by Djer |API Google| gestion de "mon" status ? 
       return event.toString();
     }
   }
@@ -60,7 +63,7 @@ public class CalendarService {
   private Calendar getService(String userKey) throws IOException, GeneralSecurityException {
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     Calendar service = new Calendar.Builder(HTTP_TRANSPORT, 
-            //TODO for by Djer Utilise de l'injection pour acceder à la config !
+            //TODO for by Djer |IOC| (ancien TO-DO) Utilise de l'injection pour acceder à la config !
         App.config.GetJsonFactory(), GoogleService.getCredentials(HTTP_TRANSPORT, userKey))
         .setApplicationName(App.config.GetApplicationName())
         .build();

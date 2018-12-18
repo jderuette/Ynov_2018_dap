@@ -43,6 +43,7 @@ public class PageCredentials {
 		
 		model.addAttribute("credentials",credentials);
 		
+		//TODO for by Djer |API Microsoft| Credentials Microsoft ?
 		return credentials.toString();
 	}
 }

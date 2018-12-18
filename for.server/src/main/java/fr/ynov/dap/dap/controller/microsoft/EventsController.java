@@ -22,7 +22,8 @@ public class EventsController {
 
   @RequestMapping("/events")
   public String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-    HttpSession session = request.getSession();
+    //TODO for by Djer |Rest API| Trop dépendant de la session, fonctionenra très mal sur l'API prévue
+      HttpSession session = request.getSession();
     Token tokens = (Token)session.getAttribute("tokens");
     if (tokens == null) {
       // No tokens in session, user needs to sign in
@@ -51,6 +52,7 @@ public class EventsController {
           .execute().body();
       model.addAttribute("events", events.getValue());
     } catch (IOException e) {
+      //TODO for by Djer |Log4J| Une petite Log ?
       redirectAttributes.addFlashAttribute("error", e.getMessage());
       return "redirect:/index.html";
     }

@@ -14,6 +14,8 @@ public class AppUser {
 	@Column(unique=true)
 	String userKey;
 	
+	//TODO for by Djer |POO| Ne mélange pas tes attributs et tes getters/setter (ordre : constantes, attributs, initialisateur static, constructeur, méthpde métier, méthode "génériques" (toString, hashCode,...) getter/setter)
+	
 	public String getUserKey() {
 		return userKey;
 	}

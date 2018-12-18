@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.google.api.services.calendar.model.EventDateTime;
 
-//TODO for by Djer Si tu implemente serializable, il te FAUT un serialVersionUID !
+//TODO for by Djer |POO| (ancien TO-DO) Si tu implemente serializable, il te FAUT un serialVersionUID !
 public class CalendarModel implements Serializable{
 
 	private String eventName;
@@ -95,6 +95,7 @@ public class CalendarModel implements Serializable{
 	/**
 	 * Retourne une String des infos de l'évennement
 	 */
+	//TODO for by Djer |IDE| Demande a ton IDE de généré cela, il te proposera d'utiliser un StringBuilder au lieu de faire de la concaténation de String
     public String toString() {
         return "Event [Title=" + this.eventName + ", StartDate=" + this.eventDate + ", EndDate=" + this.eventEndDate + ", EventStatus=" + this.eventStatus
                 + "]";

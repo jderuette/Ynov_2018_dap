@@ -27,10 +27,13 @@ import fr.ynov.dap.dap.service.PagedResult;
 @Controller
 public class Welcome {
 	
+  //TODO for by Djer |POO| Attention, devrait être privé. Si tu ne pécises pas l'attribut à la même porté que la classe (donc "public" ici) !
 	@Autowired
 	AppUserRepository userRepo;
+	//TODO for by Djer |POO| Attention, devrait être privé. Si tu ne pécises pas l'attribut à la même porté que la classe (donc "public" ici) ! De plus tu n'utilises pas cetet attribut, mais ton IDE ne peu pas te l'indiqué car il est public
 	@Autowired
 	GoogleUserRepository googleRepo;
+	//TODO for by Djer |POO| Attention, devrait être privé. Si tu ne pécises pas l'attribut à la même porté que la classe (donc "public" ici) !
 	@Autowired
 	MicrosoftUserRepository msRepo;
 
@@ -85,11 +88,14 @@ public class Welcome {
 		googleRepo.findAll().forEach((temp) ->
 		{
 			try {
+			    //TODO for by Djer |POO| Cette méthode attend un **userKey** !!
 				mailCount += gmail.GetEmailNumber(temp.getAccountName());
 			} catch (IOException e) {
+			    //TODO for by Djer |Log4J| Utilise une log plutot que le "e.printStackTrace()". Traite les TO-DO au fur et à mesure
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (GeneralSecurityException e) {
+			  //TODO for by Djer |Log4J| Utilise une log plutot que le "e.printStackTrace()". Traite les TO-DO au fur et à mesure
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

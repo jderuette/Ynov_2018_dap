@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+<!-- TODO for by Djer |Maven| Il y aun ordre attendu pour un pom.xml, le bloc "parent" devrait être juste avant tes "properties" -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -20,6 +20,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <checkstyleVersion>6.18</checkstyleVersion>
   </properties>
+  
+  <!-- TODO for by Djer |Maven| Il y a un ordre attendu pour un pom.xml, il devrait y avoir des dependencies ic -->
   
   <build>
     <plugins>
@@ -142,6 +144,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- TODO for by Djer |Maven| Tu n'en a plus besoin depuis que tu es sur thymeleaf -->
   <dependency>
     <groupId>javax.servlet.jsp</groupId>
     <artifactId>javax.servlet.jsp-api</artifactId>
@@ -149,12 +152,14 @@
     <scope>provided</scope>
   </dependency>
 
+<!-- TODO for by Djer |Maven| Tu n'en a plus besoin depuis que tu es sur thymeleaf -->
   <dependency>
     <groupId>jstl</groupId>
     <artifactId>jstl</artifactId>
     <version>1.2</version>
   </dependency>
 
+<!-- TODO for by Djer |Maven| La grande majporité des "modules communs spring" sont déja importés par Spring boot (c'est un des principaux rôle des "starter") -->
   <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-core</artifactId>
@@ -221,18 +226,21 @@
     <version>4.3.20.RELEASE</version>
   </dependency>
 
+<!-- TODO for by Djer |Maven| Tu n'en a plus besoin depuis que tu es sur thymeleaf -->
   <dependency>
     <groupId>org.apache.tiles</groupId>
     <artifactId>tiles-core</artifactId>
     <version>3.0.5</version>
   </dependency>
 
+<!-- TODO for by Djer |Maven| Tu n'en a plus besoin depuis que tu es sur thymeleaf -->
   <dependency>
     <groupId>org.apache.tiles</groupId>
     <artifactId>tiles-jsp</artifactId>
     <version>3.0.5</version>
   </dependency>
 
+<!-- TODO for by Djer |Maven| Pas besoin, nous utilisons Log4J à la place -->
   <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-log4j12</artifactId>
@@ -242,6 +250,7 @@
 	   <artifactId>google-api-client</artifactId>
 	   <version>1.25.0</version>
    </dependency>
+   <!-- TODO for by Djer |Maven| Tu n'en a plus besoin depuis que Google est en mode "serveur web" -->
 	<dependency>
 	   <groupId>com.google.oauth-client</groupId>
 	   <artifactId>google-oauth-client-jetty</artifactId>
@@ -250,10 +259,12 @@
    <dependency>
    <groupId>org.apache.logging.log4j</groupId>
    <artifactId>log4j-api</artifactId>
+   <!-- TODO for by Djer |Maven| la version par defaut de Spring-boot pose des problemes aux outils d'audit de code (lorsque lancé par la commande "site" de Maven) -->
  </dependency>
  <dependency>
    <groupId>org.apache.logging.log4j</groupId>
    <artifactId>log4j-core</artifactId>
+   <!-- TODO for by Djer |Maven| la version par defaut de Spring-boot pose des problemes aux outils d'audit de code (lorsque lancé par la commande "site" de Maven) -->
  </dependency>
  <dependency>
   <groupId>com.fasterxml.jackson.core</groupId>
@@ -298,6 +309,7 @@
   <artifactId>logging-interceptor</artifactId>
   <version>3.2.0</version>
 </dependency>
+<!-- TODO for by Djer |Maven| Devrait être à proximité des autre dépendance "Google services" -->
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-people</artifactId>
@@ -310,7 +322,8 @@
     <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
-    <version>5.1.6</version>
+    <!-- TODO for by Djer |Maven| J'ai commenté ta version qui n'est pas compatible avec MySQL 8 -->
+    <!-- <version>5.1.6</version> -->
     <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -340,6 +353,8 @@
 	       <artifactId>findbugs-maven-plugin</artifactId>
 	       <version>3.0.5</version>
 	   </plugin>
+	   <!-- TODO for by Djer |Audit Code| Raport PMD ? -->
+	   <!-- TODO for by Djer |Audit Code| Raport checkstyle ? -->
 	</plugins>
 </reporting>
   

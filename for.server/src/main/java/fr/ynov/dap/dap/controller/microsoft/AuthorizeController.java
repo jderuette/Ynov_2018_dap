@@ -53,6 +53,7 @@ public class AuthorizeController {
 
             response.sendRedirect(redirectUrl);
         }
+        //TODO for by Djer |Log4J| (else) une petite Log ?
     }
 	
 	
@@ -86,6 +87,7 @@ public class AuthorizeController {
 		    	    user = outlookService.getCurrentUser().execute().body();
 		    	    session.setAttribute("userEmail", user.getMail());
 		    	  } catch (IOException e) {
+		    	    //TODO for by Djer |Log4J| Une petite Log ?
 		    	    session.setAttribute("error", e.getMessage());
 		    	  }
 	    	  session.setAttribute("userTenantId", idTokenObj.getTenantId());
@@ -100,10 +102,12 @@ public class AuthorizeController {
 	                userRepo.save(appUser);
 	    		}
 	    	} else {
+	    	  //TODO for by Djer |Log4J| Une petite Log ?
 	    	  session.setAttribute("error", "ID token failed validation.");
 	    	}
 	    }
 	    else {
+	      //TODO for by Djer |Log4J| Une petite Log ?
 	      session.setAttribute("error", "Unexpected state returned from authority.");
 	    }
 	    return "redirect:/mail";

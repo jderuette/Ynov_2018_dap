@@ -42,8 +42,10 @@ public class GoogleService {
 	
 	public static final Logger LOG = LogManager.getLogger();
 	
+	//TODO for by Djer |POO| Attention, devrait être privé. Si tu ne pécises pas l'attribut à la même porté que la classe (donc "public" ici) !
 	@Autowired
 	AppUserRepository userRepo;
+	//TODO for by Djer |POO| Attention, devrait être privé. Si tu ne pécises pas l'attribut à la même porté que la classe (donc "public" ici) ! De plus tu n'utilises pas cetet attribut, mais ton IDE ne peu pas te l'indiqué car il est public
 	@Autowired
 	GoogleUserRepository googleRepo;
 
@@ -54,7 +56,7 @@ public class GoogleService {
      * @throws IOException If the credentials.json file cannot be found.
      */
   static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String userKey) throws IOException {
-    //TODO for by Djer Une GROSSE partie de ce code est déja dans le "getFlow".
+    //TODO for by Djer |POO| (ancien TO-DO) Une GROSSE partie de ce code est déja dans le "getFlow".
       // Load client secrets.
       InputStreamReader inputStrReader = new InputStreamReader(new FileInputStream(App.config.getCredentialsFilePath()), Charset.forName("UTF-8"));
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(App.config.GetJsonFactory(), inputStrReader);
@@ -114,6 +116,7 @@ public String oAuthCallback(@RequestParam final String code, final HttpServletRe
         }
         // onSuccess(request, resp, credential);
     } catch (IOException e) {
+        //TODO for by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
         LOG.error("Exception while trying to store user Credential", e);
         throw new ServletException("Error while trying to connect Google Account");
     }
@@ -153,6 +156,7 @@ private String getAccountName(final HttpSession session) throws ServletException
     }
 
     if (null == accountName) {
+        //TODO for by Djer |POO| Attention, tes message sont faux, c'est le "accountName", pas le "userKey". Au lieu de copier/coller tu aurais pu factoriser
         LOG.error("userKey in Session is NULL in Callback");
         throw new ServletException("Error when trying to add Google acocunt : userKey is NULL in User Session");
     }
@@ -235,7 +239,7 @@ public String addAccount(@PathVariable final String accountName, @RequestParam f
             response = "redirect:" + authorizationUrl.build();
         }
     } catch (IOException e) {
-    	
+    	//TODO for by Djer |Log4J| Une petite log ?
     }
     // only when error occurs, else redirected BEFORE
     return response;

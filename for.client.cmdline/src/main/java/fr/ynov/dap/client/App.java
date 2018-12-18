@@ -20,14 +20,16 @@ public class App {
  */
   public static void main(String[] args) throws IOException, URISyntaxException {
     if(args.length > 0) {
-        //TODO for by Djer |POO| ton control "args[1] != null" est dans toutes les conditions, tu pourrais le faire uen fois (avec message d'erreur spécifique en bonnus)
+        //TODO for by Djer |POO| ton control "args[1] != null" est dans toutes les conditions, tu pourrais le faire une fois (avec message d'erreur spécifique en bonnus)
     	if(args[0].equals("addAccount") && args[1] != null)
     	{
+    	    //TODO for by Djer |Rest API| Devrait être la création d'utilisateur ? (/user/add/{userKey})
             URL addAccountURI = new URL(link.ADD_ACCOUNT + args[1]);
             makeRequest(addAccountURI);
     	}
     	else if(args[0].equals("addGoogleAccount") && args[1] != null) {
         System.out.println(args[1]);
+        //TODO for by Djer |Rest API| Pour créer un compte il faut un accountName ET un userKey ...
         URI addAccountURI = URI.create(link.ADD_GOOGLE_ACCOUNT + args[1]);
         Desktop.getDesktop().browse(addAccountURI);
       }

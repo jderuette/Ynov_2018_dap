@@ -1,6 +1,7 @@
 package fr.ynov.dap.dap;
 
 import java.io.FileInputStream;
+//TODO for by Djer |IDE| Configure les "save action" de ton IDE pour qu'il organise les imports (et formate ton code) lors de la sauvegarde)
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
 @EnableJpaRepositories
+//TODO for by Djer |Design Patern| C'est domage qu'il ne soit pas possible de cofdngiurer le "path" du fichier "dap.properties"
 public class Config {
 
     private static final String APPLICATION_NAME = "DaP";
@@ -27,14 +29,19 @@ public class Config {
 
     private String oauth2CallbackUrl = OAUTH2_CALLBACK_URL;
 
-    //TODO for by Djer Evite de mélanger de la conf "dev" et de la conf "admin systeme"
     private static final List<String> SCOPES = new ArrayList<String>();
+    //TODO for by Djer |Design Patern| Utilise "file.separator"
     private static final String CONFIG_FILE_PATH = System.getProperty("user.home") + "\\dap.properties";
+  //TODO for by Djer |Design Patern| Utilise "file.separator"
     private static final String CREDENTIALS_FILE_PATH = System.getProperty("user.home") + "\\credentials.json";
+  //TODO for by Djer |Design Patern| Utilise "file.separator"
     private static final String MICROSOFT_CREDENTIALS_FILE_PATH = System.getProperty("user.home") + "\\auth.properties";
 
     static private String applicationName = APPLICATION_NAME;
+    //TODO for by Djer |Design Patern| (ancien TOP-DO) Evite de mélanger de la conf "dev" et de la conf "admin systeme"
     private List<String> scopes = SCOPES;
+    //TODO for by Djer |POO| "private" devrait être AVANT static (cf remarque CheckStyle)
+    //TODO for by Djer |POO| Pourquoi les attributs sont-ils statics ? 
     static private String credentialsFilePath = CREDENTIALS_FILE_PATH;
     static private String microsoftCredentialsFilePath = MICROSOFT_CREDENTIALS_FILE_PATH;
     static private String configFilePath = CONFIG_FILE_PATH;

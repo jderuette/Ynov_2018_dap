@@ -39,6 +39,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO for by Djer |Log4J| une petite log ?
         return null;
       }
     }
@@ -49,6 +50,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO for by Djer |Log4J| une petite log ?
         return null;
       }
     }
@@ -60,6 +62,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO for by Djer |Log4J| une petite log ?
         return null;
       }
     }
@@ -90,6 +93,7 @@ public class AuthHelper {
       }
     }
     else {
+        //TODO for by Djer |IDE| TOn IDE te dit que c'est du code mort. En effet tu fait un "new" pour authConfigStream, il est donc impossible de passer dans le "else"
       throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
     }
   }
@@ -130,6 +134,7 @@ public class AuthHelper {
 	    return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 	        "authorization_code", authCode, getRedirectUrl()).execute().body();
 	  } catch (IOException e) {
+	    //TODO for by Djer |Log4J| Une petite log ?
 	    Token error = new Token();
 	    error.setError("IOException");
 	    error.setErrorDescription(e.getMessage());
@@ -167,6 +172,7 @@ public class AuthHelper {
 	      return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(), 
 	          "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 	    } catch (IOException e) {
+	      //TODO for by Djer |Log4J| Une petite log ?
 	      Token error = new Token();
 	      error.setError("IOException");
 	      error.setErrorDescription(e.getMessage());
