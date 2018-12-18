@@ -32,6 +32,7 @@ public class PeopleService extends GoogleServices
   /**
    * Logger pour afficher des infos
    */
+  //TODO dea by Djer |Log4| Devrait être static
   private final Logger LOGGER = LogManager.getLogger();
 
   /**

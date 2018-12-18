@@ -33,6 +33,7 @@ import fr.ynov.dap.data.GoogleAccount;
  *
  */
 @Controller
+//TODO dea by Djer |POO| Devrait être dans le package "web". Et la partie service et "web" devrait être séparé
 public class GoogleAccountService extends GoogleServices
 {
   /**
@@ -49,6 +50,7 @@ public class GoogleAccountService extends GoogleServices
   /**
    * Le logger
    */
+  //TODO dea by Djer |Log4J| Devrait être final
   private final Logger LOGGER = LogManager.getLogger();
   /**
    * L'indice de début de sélection pour les données sensibles

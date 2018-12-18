@@ -8,6 +8,7 @@ package fr.ynov.dap.web;
  * @author antod
  *
  */
+//TODO dea by Djer |POO| Cette classe devrait plutot s'appeler "CredetialDap". Un "dataStore" est un "empalcment" pour stocker des données. un "Credential" est une "identification"
 public class DataStoreDap
 {
   /**

@@ -15,6 +15,7 @@
     </tr>
   </thead>
   <tbody>
+  <!-- TODO dea by Djer |Thymleaf| Tu pourrais mettre ton "th:each" sur le TR juste en dessous -->
 	<th:block th:each="contact : ${contacts}">
       <tr>
         <td><span th:text="${contact.givenName}"></span> <span th:text="${contact.surname}"></span></td>

@@ -50,6 +50,8 @@ public class Welcome
    * @throws IOException
    * @throws GeneralSecurityException
    */
+  //TODO dea by Djer |Spring| Si tu n'a pas besoin du ModelMap, ne le met pas dans la signature de ta méthdoe
+  //TODO dea by Djer |Gestion Exception| Cette méthode ne lève plus d'exceptions
   @RequestMapping("/")
   public String welcome(ModelMap model) throws IOException, GeneralSecurityException
   {
@@ -96,6 +98,7 @@ public class Welcome
       {
         googleAccount = googleAccountList.get(j);
 
+        //TODO dea by Djer |JPA| Pas utile, tu as défini un "lien" dans ton entité, pour CE user il n'y aura que des compte Google qui LUI sont rattachés (comme tu as fais pour la partie "Microsoft account")
         // On itère sur le keySet pour récupérer les bons comptes google
         for (int k = 0; k < keySet.length; k++)
         {

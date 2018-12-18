@@ -28,6 +28,7 @@ public abstract class ServerCaller
   /**
    * Variable utilisée pour logger
    */
+  //TODO dea by Djer |Log4J| Devrait être final
   private static Logger logger = LogManager.getLogger();
 
   /**
@@ -60,10 +61,12 @@ public abstract class ServerCaller
       // Récupère les infos dans le stringBuilder
       while ((line = reader.readLine()) != null)
       {
+          //TODO dea by Djer |IDE| Checkstkyle de déconseille de faire des "+" dans un String Builder, utilise un deuxième "append()"
         stringBuilder.append(line + "\n");
       }
     } catch (Exception e)
     {
+        //TODO dea by Djer |Log4J| Utilise de deuxième parametre (cause)
       logger.error("Une erreur est survenue lors de l'appel a l'url : " + e.getMessage());
       e.printStackTrace();
     }
@@ -83,6 +86,7 @@ public abstract class ServerCaller
       Desktop.getDesktop().browse(uri);
     } catch (Exception e)
     {
+      //TODO dea by Djer |Log4J| Utilise de deuxième parametre (cause)
       logger.error("Une erreur est survenue lors de la tentative d'ouverture du navigateur : " + e.getMessage());
       e.printStackTrace();
     }

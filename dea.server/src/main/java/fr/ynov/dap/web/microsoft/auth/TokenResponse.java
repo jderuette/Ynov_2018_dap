@@ -4,6 +4,8 @@ package fr.ynov.dap.web.microsoft.auth;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,11 +48,13 @@ public class TokenResponse
    * Variable accessToken
    */
   @JsonProperty("access_token")
+  //TODO dea by Djer |JPA| lorsque tu essaye de sauvegarder un "micrsofot account", (et le"response Token" associé" tu as uen exception "Data too long for column 'access_token' at row 1". Par defaut les "String" en JPA ont une "petite taille". Tu peux le modifier avec un "@Column(length=xxxxx)"
   private String accessToken;
   /**
    * Variable refreshToken
    */
   @JsonProperty("refresh_token")
+  //TODO dea by Djer |JPA| Ici aussi adapte la taille de la colonne
   private String refreshToken;
   /**
    * Variable idToken

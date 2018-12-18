@@ -35,12 +35,14 @@ public class AppUser
   /**
    * Liste des comptes google
    */
+  //TODO dea by Djer |JPA| Evite d'initialiser des attributs "gérés par JPA", ca n'est pas utile (JPA écrasera cette valeur)
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
   private List<GoogleAccount> googleAccounts = new ArrayList<GoogleAccount>();
 
   /**
    * Liste des comptes microsoft
    */
+//TODO dea by Djer |JPA| Evite d'initialiser des attributs "gérés par JPA", ca n'est pas utile (JPA écrasera cette valeur)
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
   private List<MicrosoftAccount> microsoftAccounts = new ArrayList<MicrosoftAccount>();
 

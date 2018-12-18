@@ -22,6 +22,7 @@ public class LauncherClient
   /**
    * Variable pour logger
    */
+    //TODO dea by Djer |log4J| Devrait être static
   private static Logger logger = LogManager.getLogger();
 
   /**
@@ -77,6 +78,7 @@ public class LauncherClient
       // Si on veut utiliser le service d'ajout d'utilisateur
       else if (service.equals("addUser"))
       {
+          //TODO dea by Djer |POO| Ajout d'utilisateur ? (ou de compte ? )
         addAccount(user);
       }
 
@@ -134,6 +136,7 @@ public class LauncherClient
    */
   private static void addAccount(String user)
   {
+      //TODO dea by Djer |API Microsoft| Ajout de comtpe Microsoft ? 
     AccountServiceCaller.addAccount(user);
   }
 

@@ -43,6 +43,7 @@ public class MailControllerMicrosoft
   /**
    * Variable pour logger
    */
+//TODO dea by Djer |log4J| Devrait être final
   private final Logger LOGGER = LogManager.getLogger();
 
   /**
@@ -99,6 +100,7 @@ public class MailControllerMicrosoft
 
         } catch (Exception e)
         {
+          //TODO dea by Djer |Log4J| Utilise "e" comme deuxième argument, ainsi Log4J pourra gérer le message ET la pile
           LOGGER.error("error", e.getMessage());
         }
       } else

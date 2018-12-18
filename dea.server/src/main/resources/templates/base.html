@@ -22,26 +22,26 @@
           <button type="button" class="navbar-toggle collapsed"
             data-toggle="collapse" data-target="#navbar" aria-expanded="false"
             aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span> <span
+            <span class="sr-only">Toggle navigation</span><!-- TODO dea by Djer |Thymleaf| Internationnalisation --> <span
               class="icon-bar"></span> <span class="icon-bar"></span> <span
               class="icon-bar"></span>
           </button>
-          <a class="/javaOutlookTutorial">Java Outlook Tutorial</a>
+          <a class="/javaOutlookTutorial">Java Outlook Tutorial</a><!-- TODO dea by Djer |Thymleaf| Internationnalisation -->
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="${current == 'index' ? 'active' : '' }">
-              <a href="/index">Home</a>
+              <a href="/index">Home</a><!-- TODO dea by Djer |Thymleaf| Internationnalisation -->
             </li>
               <li th:if="${userConnected == true}" class="${current == 'mail' ? 'active' : '' }">
-                <a href="/mail">Mail</a>
+                <a href="/mail">Mail</a><!-- TODO dea by Djer |Thymleaf| Internationnalisation -->
               </li>
           </ul>
           <div th:if="${userConnected == true}" >
-            <p class="navbar-text navbar-right">Signed in as ${userName}</p>
+            <p class="navbar-text navbar-right">Signed in as ${userName}</p><!-- TODO dea by Djer |Thymleaf| Internationnalisation -->
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <a href="/logout">Logout</a>
+                <a href="/logout">Logout</a><!-- TODO dea by Djer |Thymleaf| Internationnalisation -->
               </li>
             </ul>
             </div>

@@ -36,6 +36,7 @@ public class AuthorizeController
   /**
    * Le logger
    */
+    //TODO dea by Djer |log4J| Devrait être static
   private final Logger LOGGER = LogManager.getLogger();
 
   /**
@@ -81,7 +82,9 @@ public class AuthorizeController
             appUserRepository.save(appUser);
           } catch (Exception e)
           {
+              //TODO dea by Djer |Log4J| Tu pourrais extraire le userKey et accountName avant (quite à laisser remonter la ServletException) tu aurias du contexte à ajouter dans ta log
             LOGGER.error("error in AuthorizeController", e.getMessage());
+            //TODO dea by Djer |Gestion Exception| Attention tu "étouffes" l'exception. Place un "flag" pour indiquer qu'il y a eut une erreur pour rediriger l'utilisateur vers une page "oops on eut un PB"
           }
         } else
         {
@@ -133,6 +136,7 @@ public class AuthorizeController
     if (null == attribute)
     {
       LOGGER.error(attributeName + " in Session is NULL in Callback");
+      //TODO dea by Djer |Log4J| Ton message n'est plsu tout à fait juste, cette méthode peut aussi être appelé par du code "Microsoft"
       throw new ServletException(
           "Error when trying to add Google acocunt : " + attributeName + " is NULL is User Session");
     }

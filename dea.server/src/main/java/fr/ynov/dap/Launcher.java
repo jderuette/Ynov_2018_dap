@@ -25,6 +25,7 @@ public class Launcher
   /**
    * Variable pour logger des informations
    */
+    //TODO dea by Djer |Log4J| Devrait être static
   private Logger logger = LogManager.getLogger();
 
   /**
@@ -60,7 +61,7 @@ public class Launcher
    * 
    * @return
    */
-  @Bean
+  //@Bean
   public Config loadConfig()
   {
     Config config = new Config();
@@ -68,6 +69,19 @@ public class Launcher
     config.setApplicationName("Application de Anthony");
     config.setRacineFolder(System.getProperty("user.home") + System.getProperty("file.separator") + "eclipse-workspace"
         + System.getProperty("file.separator") + "data");
+    config.setCredentialFolder("");
+
+    return config;
+  }
+  
+  @Bean
+  public Config loadConfigDjer()
+  {
+    Config config = new Config();
+
+    config.setApplicationName("Application de Jérémie");
+    config.setRacineFolder(System.getProperty("user.home") + System.getProperty("file.separator") + "dap"
+        + System.getProperty("file.separator") + "dea");
     config.setCredentialFolder("");
 
     return config;

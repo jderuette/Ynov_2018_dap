@@ -42,6 +42,7 @@ public class EventsController
   /**
    * Variable pour logger
    */
+  //TODO dea by Djer |log4J| Devrait être final
   private final Logger LOGGER = LogManager.getLogger();
 
   /**
@@ -53,6 +54,8 @@ public class EventsController
    * @param userKey
    * @return
    */
+  //TODO dea by Djer |Spring| Comme tu n'utilises pas redirectAttributes, ne l'ajoutep as dans la signature de ta méthode
+  //TODO dea by Djer |POO| nom de méthde pas très claire "nextEvent" serait plus adapté (idem pour l'URI). Pour URI éventuellement un "/events/next"
   @RequestMapping("/events")
   public String events(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
       @RequestParam String userKey)
@@ -86,6 +89,7 @@ public class EventsController
 
         try
         {
+            //TODO dea by Djer |API Microsoft| Je ne pense pas que Microsofot te renvoie les "à partir de now" par defaut (utilsie le paramètre "filter")
           PagedResult<Event> events = outlookService.getEvents(sort, properties, maxResults, "").execute().body();
 
           allEvents = events.getValue();
@@ -96,6 +100,7 @@ public class EventsController
           }
         } catch (Exception e)
         {
+          //TODO dea by Djer |Log4J| Utilise "e" comme deuxième argument, ainsi Log4J pourra gérer le message ET la pile
           LOGGER.error("error", e.getMessage());
         }
       } else

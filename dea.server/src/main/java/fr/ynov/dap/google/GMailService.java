@@ -34,6 +34,7 @@ public class GMailService extends GoogleServices
   /**
    * Variable pour logger
    */
+  //TODO dea by Djer |Log| Devrait etre static
   private final Logger LOGGER = LogManager.getLogger();
 
   /**

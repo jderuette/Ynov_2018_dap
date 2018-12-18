@@ -76,6 +76,7 @@ public class CalendarController
 
       try
       {
+          //TODO dea by Djer |API Google| getStart().getDateTime() est null pour les évènnements qui durent "toutes la journée". Extrait "LA" date de l'évènnement avant de faire tes comapraison, cela te facilitera la vie
         if (googleEvent.getStart().getDateTime().getValue() < microsoftEvent.getStart().getDateTime().getTime())
         {
           upcomingEvent.setEventName(googleEvent.getSummary());
@@ -89,6 +90,7 @@ public class CalendarController
         }
       } catch (Exception e)
       {
+          //TODO dea by Djer |Gestion Exception| Ne fait pas de "supositions" sur ce qui à provoqué une "Exception". Ici tu semble suposé que c'est parceque "getStart().getDateTime()" est null. Dans un des UseCasen c'es "microsoftEvent" qui est null... Tu peux envisagé de faire des "supisitions" sur des exceptions bien précises, mais sur "Exception"
         if (googleEvent.getStart().getDate().getValue() < microsoftEvent.getStart().getDateTime().getTime())
         {
           upcomingEvent.setEventName(googleEvent.getSummary());
@@ -135,6 +137,7 @@ public class CalendarController
 
       // On récupère le prochain évènement
       if (null == nearestEvent
+              //TODO dea by Djer |API Google| Attention à la différece en getStart().getDate() et getStart().getDateTime()
           || nearestEvent.getStart().getDate().getValue() < userEvent.getStart().getDate().getValue())
       {
         nearestEvent = userEvent;

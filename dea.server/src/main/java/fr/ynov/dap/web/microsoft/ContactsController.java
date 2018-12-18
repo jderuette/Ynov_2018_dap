@@ -73,6 +73,7 @@ public class ContactsController
         // Only return the properties we care about
         String properties = "GivenName,Surname,CompanyName,EmailAddresses";
         // Return at most 10 contacts
+        //TODO Dea by Djer |API Microsoft| Attention tu ne comtpes pas bien du coup. Soit passer se apramètre a beaucoups (masque le probleme) soit utiliser la pagination pour parcourir tout les résultats, soit utilsier ta méthdoe "getContacts()" qui utilise le pramètre "count=true" dans ton OutlookService 
         Integer maxResults = 10;
 
         try
@@ -87,6 +88,7 @@ public class ContactsController
           }
         } catch (Exception e)
         {
+            //TODO dea by Djer |Log4J| Utilise "e" comme deuxième argument, ainsi Log4J pourra gérer le message ET la pile
           LOGGER.error("error", e.getMessage());
         }
       } else

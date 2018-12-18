@@ -8,23 +8,28 @@ package fr.ynov.dap;
  * @author antod
  *
  */
+//TODO dea by Djer |Design Patern| Externalisation de la configuration ?
 public class Config
 {
   /**
    * Nom du dossier où se trouvent les credentials
    */
+    //TODO dea by Djer |POO| Devrait être static (en plus est écris en MAJUSCULE)
   private final String CREDENTIALS_FOLDER = "credentials";
   /**
    * Nom du chemin des infos du client
    */
+//TODO dea by Djer |POO| Devrait être static (en plus est écris en MAJUSCULE)
   private final String CLIENT_SECRET_DIR = "tokens";
   /**
    * Nom de l'application
    */
+//TODO dea by Djer |POO| Devrait être static (en plus est écris en MAJUSCULE)
   private final String APPLICATION_NAME = "HoC DaP";
   /**
    * Chemin vers le dossier source de l'application
    */
+//TODO dea by Djer |POO| Devrait être static (en plus est écris en MAJUSCULE)
   private final String APPLICATION_FOLDER = System.getProperty("user.home") + System.getProperty("file.separator");
 
   /**
@@ -131,6 +136,7 @@ public class Config
    * 
    * @param path
    */
+  //TODO dea by Djer |POO| Pourrais être renomé (mais risque de perte de rétro-compatibilité). Devrait être déprécicié un setter avec le "bon nom" devrait etre (créer et) recommandé à la place
   public void setRacineFolder(String path)
   {
     this.applicationFolder = path;
@@ -141,6 +147,7 @@ public class Config
    * 
    * @return
    */
+//TODO dea by Djer |POO| Pourrais être renomé (mais risque de perte de rétro-compatibilité). Devrait être déprécicié, un setter avec le "bon nom" devrait etre (créer et) recommandé à la place
   public String getRacineFolder()
   {
     return applicationFolder;
