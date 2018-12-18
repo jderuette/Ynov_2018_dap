@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
+//TODO mbf by Djer |MVC| Séparation service/Controller ?
 public class EventsController {
 
     @RequestMapping("/events")
@@ -48,6 +49,7 @@ public class EventsController {
                     .execute().body();
             model.addAttribute("events", events.getValue());
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/home";
         }

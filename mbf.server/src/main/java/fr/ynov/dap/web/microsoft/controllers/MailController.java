@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+//TODO mbf by Djer |MVC| Séparation service/Controller ?
 public class MailController {
 
     @RequestMapping("/mails")
@@ -46,15 +47,18 @@ public class MailController {
         // Return at most 10 messages
 
         try {
+            //TODO mbf by Djer |API Microsoft| Attention tu ne comptes que les 10 premiers contacts !
             PagedResult<Message> messages = outlookService.getMessages(
                     folder, sort, properties, 10)
                     .execute().body();
             model.addAttribute("messages", messages.getValue());
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/home";
         }
 
         return "mail";
     }
+    //TODO mbf by Djer |API Microsoft| Nombre d'email non lus dans la boite principal ?
 }

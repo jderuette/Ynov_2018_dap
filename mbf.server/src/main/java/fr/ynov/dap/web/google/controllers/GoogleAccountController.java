@@ -53,6 +53,7 @@ public class GoogleAccountController extends GoogleService {
     /**
      * The logger of the GoogleAccount class.
      */
+    //TODO mbf by Djer |Log4J| Devrait être static (pas besoin d'un par instance) et final (la (pseudo)référence n'a pas besoin de changer)
     private Logger logger = Logger.getLogger(GoogleAccountController.class.getName());
 
     @Autowired
@@ -83,6 +84,7 @@ public class GoogleAccountController extends GoogleService {
                 logger.warning("Trying to store a NULL AccessToken for user : " + accountName);
             }
 
+            //TODO mbf by Djer |Log4J| Tu devrais plutot vérifier le level "FINE" vue que c'est celui que tu utilise
             if (logger.isLoggable(Level.ALL) && (null != credential && null != credential.getAccessToken())) {
                 logger.fine("New user credential stored with accountName : " + accountName + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
@@ -96,6 +98,7 @@ public class GoogleAccountController extends GoogleService {
             appUserRepository.save(appuser);
 
         } catch (IOException e) {
+            //TODO mbf by Djer |Log4J| Evite d'ajouter le message de l'exception à ton propre message. Ajoute la "cause" de ton message (l'exception catchée) comme deuxième paramètre
             logger.severe("Failed to run the user account authentication with the following message: " + e.getMessage());
         }
 
@@ -135,6 +138,7 @@ public class GoogleAccountController extends GoogleService {
             }
 
         } catch (IOException e) {
+            //TODO mbf by Djer |Log4J| Contextualise ton message (for userKey : " + userKey) et évite d'ajouter le message de l'exeption à ton propre message
             logger.severe("Error while loading credential (or google Flow) " + e.getMessage());
         }
         // only when error occurs, else redirected BEFORE

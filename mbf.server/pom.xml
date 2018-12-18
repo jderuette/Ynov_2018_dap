@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<!-- TODO mbf by Djer Il y a un "ordre attendu" pour le pom.xml, cf memo Maven -->
+<!-- TODO mbf by Djer |Maven| Il y a un "ordre attendu" pour le pom.xml, cf memo Maven -->
     <groupId>fr.ynov.dap</groupId>
     <artifactId>mbf.server</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -19,6 +19,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
     </properties>
+    
+    <!-- TODO mbf by Djer |Maven| Il y a un ordre attendu dans le pom.xml. Tes dependenhces devraient être ici -->
 
     <build>
         <plugins>
@@ -30,6 +32,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
+                            <!-- TODO mbf by Djer |Maven | Il n'y a pas de classe à cette emplacement -->
                             <mainClass>fr.ynov.dap.client.Launcher</mainClass>
                         </manifest>
                     </archive>
@@ -56,7 +59,9 @@
             </plugin>
         </plugins>
     </build>
-
+    
+    <!-- TODO mbf by Djer |Audit Code| Reporting avec les remarques PMD ?  -->
+	<!-- TODO mbf by Djer |Audit Code| Reporting avec les remarques Checkstyle ?  -->
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -79,6 +84,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- TODO mbf by Djer |Maven| Plus utile depui que tu utilises MySQL -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -98,6 +104,7 @@
             <artifactId>google-api-services-gmail</artifactId>
             <version>v1-rev96-1.25.0</version>
         </dependency>
+        <!-- TODO mbf by Djer |Maven| Plus utile depuis que Google est en mode "serveur Web" (attention si tu enleve cette dépendance ton "new LocalReciever" ne fonctionnera plus, mais il faut que tu modifie la classe qui l'utilise) -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -126,18 +133,20 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.7.4</version>
+            <!-- TODO mbf by Djer |Maven| Pourquoi surcharges-tu la version de Jakcson proposé apr Spring-boot ? -->
+            <!-- TODO mbf by Djer |Maven| JE me permet de laisser la version apr defaut de Spring-boot car j'ai une erreur "com.fasterxml.jackson.databind.exc.InvalidDefinitionException" -->
+            <!-- <version>2.7.4</version> -->
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.7.4</version>
+            <!-- <version>2.7.4</version> -->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.4</version>
+            <!-- <version>2.7.4</version> -->
         </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>

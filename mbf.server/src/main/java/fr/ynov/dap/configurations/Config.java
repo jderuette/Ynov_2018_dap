@@ -1,5 +1,7 @@
 package fr.ynov.dap.configurations;
 
+
+//TODO mbf by Djer |Design Patern| Externalisation de la configuration ?
 public class Config {
     /**
      * The application name

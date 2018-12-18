@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+//TODO mbf by Djer |Rest API| Il serait mieu qu ce soit un RestControlelr (plus facile pour les appels/retour vai une API)
 public class AppUserController {
 
     @Autowired
@@ -25,6 +26,7 @@ public class AppUserController {
         userRepository.save(newUser);
 
         model.addAttribute("users",userRepository.findAll());
+        //TODO mbf by Djer |Rest API| Dans le cadre d'une API Rest se sont les utilisateurs "finaux" qui vont s'ajouter eux-même, il ne faut PAS leur exposer la liste de tous les comptes !
         model.addAttribute("accounts",gAccountRepository.findAll());
 
         return "createNewUser";

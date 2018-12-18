@@ -43,6 +43,7 @@ public class GoogleService {
     /**
      * The logger of the GoogleService class.
      */
+  //TODO mbf by Djer |Log4J| Devrait être static final
     private Logger logger = Logger.getLogger(GoogleService.class.getName());
 
     /**
@@ -60,6 +61,7 @@ public class GoogleService {
      */
     protected final Credential getCredentials(final String userKey) throws IOException {
         // Load client secrets.
+        //TODO mbf by Djer |API Google| Attention, le "new LocalServerReceiver" créer un serveur Web, à l'intérieru de ton serveru Web. Ca n'est pas utile (et dangereux). Tu peux simplement faire un getFlow().loadCredential(accountname)
         return new AuthorizationCodeInstalledApp(getFlow(), new LocalServerReceiver()).authorize(userKey);
     }
 
@@ -75,8 +77,10 @@ public class GoogleService {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         } catch (GeneralSecurityException e) {
+          //TODO mbf by Djer |Log4J| Evite d'ajouter le message de l'exeption à ton propre message
             logger.severe("GeneralSecurityException: Failed to get trusted Http transport connection with the following message:  " + e.getMessage());
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Evite d'ajouter le message de l'exeption à ton propre message
             logger.severe("Failed to get trusted Http transport connection with the following message: " + e.getMessage());
         }
         InputStream in = Launcher.class.getResourceAsStream(configuration.getCredentialsFilePath());
@@ -84,6 +88,7 @@ public class GoogleService {
         try {
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Evite d'ajouter le message de l'exeption à ton propre message
             logger.severe("Failed to load the client secrets with the following message: " + e.getMessage());
         }
 
@@ -94,6 +99,7 @@ public class GoogleService {
                 .setAccessType("offline")
                 .build();
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Evite d'ajouter le message de l'exeption à ton propre message
             logger.severe("Failed to get the GoogleAuthorizationCodeFlow with the following message: " + e.getMessage());
         }
         return flow;

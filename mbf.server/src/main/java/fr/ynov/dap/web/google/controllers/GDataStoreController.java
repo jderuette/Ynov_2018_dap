@@ -19,6 +19,7 @@ public class GDataStoreController {
 
     @RequestMapping("/datastore")
     public final String datastore(ModelMap model) throws IOException {
+        //TODO mbf by Djer |POO| utilise la version paramètré, ici ta clef est un String, et ta valeur est un StoredCredential
         HashMap mappedCredentials = new HashMap();
         DataStore<StoredCredential> credentials = service.getDataStoreCredential();
 

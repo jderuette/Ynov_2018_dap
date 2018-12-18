@@ -20,6 +20,7 @@ public class MicrosoftAccountController {
     @RequestMapping("/account/add/microsoft/{accountName}")
     public final String addAccount(@PathVariable final String accountName, @RequestParam("userKey") final String userKey, final HttpServletRequest request,
                                    final HttpSession session) {
+        //FIXME mbf by Djer |API Microsoft| C'est ennuyeux :/
         return "API route ot implemented yet";
     }
 }

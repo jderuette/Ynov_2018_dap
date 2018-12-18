@@ -20,6 +20,7 @@ public class NetworkManager {
     /**
      * The logger of the NetworkManager class.
      */
+    //TODO mbf by Djer |log4J| Devrait être final (pas besoin d'en avoir un par instance, la catégorie est lié à la classe, pas à l'instance)
     private static Logger logger = Logger.getLogger(NetworkManager.class.getName());
 
     /**
@@ -28,6 +29,7 @@ public class NetworkManager {
      */
     public static void addUser(final String userKey){
         try {
+            //TODO mbf by Djer |API Google| Devrait /user/add
             Desktop.getDesktop().browse(URI.create(WebService.getBaseUrl() + "/account/add/" + userKey));
         } catch (IOException e) {
             logger.severe("Failed to open the browser with the following error message: " + e.getMessage());

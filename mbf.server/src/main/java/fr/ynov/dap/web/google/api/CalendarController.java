@@ -33,5 +33,6 @@ public class CalendarController {
     @RequestMapping("/event/upcomingEvent")
     public final ServiceResponse<Event> getUpcomingEvent(@RequestParam("userKey") final String userKey) throws IOException, GeneralSecurityException {
         return calendarService.getUpcomingEvent(userKey);
+        //TODO mbf by Djer |API Google| gestion de "mon" status sur l'évènnement ?
     }
 }

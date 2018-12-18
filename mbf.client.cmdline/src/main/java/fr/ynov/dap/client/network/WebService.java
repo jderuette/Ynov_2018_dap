@@ -22,6 +22,7 @@ public class WebService {
     /**
      * The base url of the Api server
      */
+    //TODO mbf by DJer |POO| Place des constante ne premier (ordre : Constantes, attributs, initialisateurs statics, constructeurs, méthodes métier, méthode "génériques" (toString, hashCode,..) getter/setter)
     private static final String BASE_URL = "http://localhost:8080";
 
     /**

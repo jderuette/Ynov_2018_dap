@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+//TODO mbf by Djer |MVC| Séparation service/Controller ?
 public class ContactsController {
 
     @RequestMapping("/contacts")
@@ -48,6 +49,7 @@ public class ContactsController {
                     .execute().body();
             model.addAttribute("contacts", contacts.getValue());
         } catch (IOException e) {
+          //TODO mbf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/home";
         }

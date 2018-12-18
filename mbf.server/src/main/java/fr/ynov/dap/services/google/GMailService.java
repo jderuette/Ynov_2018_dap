@@ -5,6 +5,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Label;
 import fr.ynov.dap.data.google.AppUser;
+//TODO mbf by Djer |IDE| Configure les "save action" de ton IDE pour qu'il organise les imports (et format ton code) lors de la sauvegarde
 import fr.ynov.dap.data.google.GoogleAccount;
 import fr.ynov.dap.repositories.AppUserRepository;
 import fr.ynov.dap.services.google.responses.ServiceResponse;
@@ -27,6 +28,7 @@ public class GMailService extends GoogleService {
     /**
      * The logger of the GMailService class.
      */
+    //TODO mbf by Djer |Log4J| Devrait être static final
     private Logger logger  = Logger.getLogger(GMailService.class.getName());
 
     /**
@@ -48,15 +50,18 @@ public class GMailService extends GoogleService {
      * @param userKey This is the login of the user.
      * @return It returns the response of the request.
      */
+    //TODO mbf by Djer |POO| Attention le nomage de cette méthode n'est pas logique (idem pour la route de controlelr qui consome cette méthode). Ne renvoie pas un nombre d'email non lu, mais un Label (à partir duquel on peu extraire le nombre d'email). Renome la méthode et/ou change le retour
     public final ServiceResponse<Label> getUnreadEmail (final String userKey) {
         ServiceResponse<Label> response = new ServiceResponse<>();
 
+        //TODO mbf by Djer |IDE| Ton IDE (devrait) t'indique que cette variable n'est pas utilisée. Bug ? A supprimer ? 
         AppUser appUser = appUserRepository.findByName(userKey);
 
         try {
             Label label = getService(userKey).users().labels().get("me", "INBOX").execute();
             response.setData(label);
         } catch (IOException | GeneralSecurityException e) {
+          //TODO mbf by Djer |Log4J| Contextualise ton message (for userKey : " + userKey) et évite d'ajouter le message de l'exeption à ton propre message
             logger.severe("Failed to get unread email from GMail service with the following error: " + e.getMessage());
         }
         return response;

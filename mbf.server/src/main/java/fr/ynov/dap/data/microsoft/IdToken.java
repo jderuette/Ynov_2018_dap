@@ -137,12 +137,16 @@ public class IdToken {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime)) ||
                 now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+            //TODO mbf by Djer |Log4J| Une petite log ? 
+            //TODO mbf by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
         // Check nonce
         if (!nonce.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO mbf by Djer |Log4J| Une petite log ? 
+            //TODO mbf by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 

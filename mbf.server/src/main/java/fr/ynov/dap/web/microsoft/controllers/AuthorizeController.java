@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Controller
+//TODO mbf by Djer |MVC| Séparation service/Controller ?
 public class AuthorizeController {
 
     @RequestMapping(value="/authorize", method= RequestMethod.POST)
@@ -49,12 +50,15 @@ public class AuthorizeController {
                 }
                 session.setAttribute("userTenantId", idTokenObj.getTenantId());
             } else {
+                //TODO mbf by Djer |Log4J| Une petite log ?
                 session.setAttribute("error", "ID token failed validation.");
             }
         }
         else {
+          //TODO mbf by Djer |Log4J| Une petite log ?
             session.setAttribute("error", "Unexpected state returned from authority.");
         }
+        //TODO mbf by Djer |API Microsoft| Tu dois sauvegarder les informations dans la BDD si tu veux pouvoir les réutiliser via l'API (qui aura comme clef uniquement un "userKey")
         return "/home";
     }
 

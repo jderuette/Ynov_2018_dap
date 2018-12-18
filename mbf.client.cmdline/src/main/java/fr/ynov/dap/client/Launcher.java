@@ -37,10 +37,12 @@ public class Launcher {
                 if (arguments.length > 1){
                     getUserData(arguments[1]);
                 } else {
+                    //TODO mbf by Djer |Log4J| Afficher un message à l'utilsiateur en ligne de commande est l'un des **rare** cas ou le SysOut est approprié (le logger va ajouter des détails qui vont "parasiter" l'utilsiateur, tu pourrais aussi configurer le logger "console" mais ca resterait un peu "étrange")
                     logger.info("Please provide the userKey after the 'view' command keyword and try again;\tThank you");
                 }
             } else if (arguments[0].equals("add")){
                 if (arguments.length > 1){
+                    //TODO mbf by Djer |Rest API| Attention, ancienne méthode pour "ajouter un compte Google" (ET un utilisateur)
                     NetworkManager.addUser(arguments[1]);
                 } else {
                     logger.info("Please provide the userKey after the 'add' command keyword and try again;\tThank you");
@@ -49,6 +51,9 @@ public class Launcher {
                 logger.info("Hello dear user. \t Please provide a command keyword and try again; Thank you");
             }
         }
+            
+            //TODO mbf by Djer |API Google| ajout de comtpe Google ?
+          //TODO mbf by Djer |API Microsoft| ajout de comtpe Microsoft ?
     }
 
     /**
