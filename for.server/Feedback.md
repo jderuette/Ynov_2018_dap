@@ -1,9 +1,8 @@
 # Général
-- Suit les recommandation de ton IDE, elles sont juste à 99.99%
+- Suit les recommandations de ton IDE, elles sont juste à 99.99%
 - Configure et suis les conseilles des outils d'audit de code
 - Ton client ne fonctionne pas (ajout d'utilisateurs, ajout de comptes au moins)
 - Ta doc technique est TRÈS superficiel (et en partie fausse !)
-
 
 # Remarques
 - Spring lorsque tu as besoin de la config, utilise l'injection, plutôt que faire référence à un attributs static de ta classe main. TU créer une dépendance forte entre ta classe Main, et tes services/controllers !
