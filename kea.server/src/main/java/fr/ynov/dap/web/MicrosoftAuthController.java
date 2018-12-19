@@ -54,6 +54,7 @@ public class MicrosoftAuthController {
       @RequestParam("state") final UUID state, final HttpServletRequest request)
       throws IOException {
     HttpSession session = request.getSession();
+    //TODO kea by Djer |IDE| Ton IDE t'indique que ca n'est pas utilisé. Bug ? A supprimer ?
     UUID expectedState = (UUID) session.getAttribute("expected_state");
     UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
     //the expectedState and expectedNonce are null but the token and authCode aren't
@@ -82,6 +83,8 @@ public class MicrosoftAuthController {
     UUID state = UUID.randomUUID();
     UUID nonce = UUID.randomUUID();
     response = microsoftAuthService.getLoginUrl(state, nonce);
+    
+    //TODO kea by Djer |API Microsoft| Fait le "save" dans le "/authorize", ton utilsiateur pourrait refuser de te laisser acces à ces informations et tu auras un comtpe "fantome"
     if (appUserRepo.findByUserKey(userKey) == null) {
       AppUser user = new AppUser(userKey);
       appUserRepo.save(user);

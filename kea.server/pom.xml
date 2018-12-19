@@ -137,6 +137,7 @@
                     <skipEmptyReport>false</skipEmptyReport>
                     <minimumTokens>75</minimumTokens>
                     <rulesets>
+                    <!-- TODO kea by Djer |Maven| Il n'y a pas de fichier ici -->
                         <ruleset>/pmd/dap_pmd.xml</ruleset>
                     </rulesets>
                 </configuration>
@@ -178,6 +179,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <!-- TODO kea by Djer |Maven| Tu n'en as plus besoin depuis que tu utilises thymeleaf -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
@@ -192,11 +194,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
         </dependency>
+         <!-- TODO kea by Djer |Maven| Tu n'en as plus besoin depuis que tu utilises thymeleaf -->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+         <!-- TODO kea by Djer |Maven| Spring Boot gère la très grande majorié des dépendance "interne" de Spring, notament via les "starter" (c'est son travail principal). Tu n'as pas besoin de déclarer ces dépendances -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -242,11 +246,13 @@
             <artifactId>spring-webmvc-portlet</artifactId>
             <version>2.5</version>
         </dependency>
+        <!-- TODO kea by Djer |Maven| Tu n'en as plus besoin depuis que tu utilises thymeleaf -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-core</artifactId>
             <version>3.0.4</version>
         </dependency>
+        <!-- TODO kea by Djer |Maven| Tu n'en as plus besoin depuis que tu utilises thymeleaf -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-jsp</artifactId>
@@ -282,6 +288,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- TODO kea by Djer |Maven| Tu n'en as plus besoin depuis que tu utilises MySQL -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

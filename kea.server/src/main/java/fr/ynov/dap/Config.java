@@ -81,7 +81,9 @@ public class Config {
     microsoftAuthority = "https://login.microsoftonline.com";
     microsoftAuthorizeUrl = microsoftAuthority
         + "/common/oauth2/v2.0/authorize";
+
     microsoftAppId = null;
+  //TODO kea by Djer |Design Patern| Pourquoi ne pas lui donner une valeur par defaut (/authorize semble approprié)
     microsoftRedirectUrl = null;
     microsoftAppPassword = null;
   }

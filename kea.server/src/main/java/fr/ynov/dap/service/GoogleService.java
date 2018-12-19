@@ -44,6 +44,7 @@ public abstract class GoogleService {
   /**
    * the current User authentified.
    */
+  //TODO kea by Djer |POO| Attnetion très risqué, ton service est un Singleton (ce qui est plutot normal), doc il est partagé entre tous les utilisateurs. Si un utilisateur n'util
   private String gUser = "me";
   /**
    * the clientSecret Directory.
@@ -54,6 +55,7 @@ public abstract class GoogleService {
    * get all google scopes.
    * @return a list of String
    */
+  //TODO kea by DJer |POO| Pourquoi public ? A la limite "protected". Tu peux même le supprimer, pour le moment aucune classe ne l'utilise
   public List<String> getScopes() {
     return scopes;
   }
@@ -78,6 +80,7 @@ public abstract class GoogleService {
 
   /**
    * Initialize the list of scopes used in the application.
+   * TODO kea by Djer |Gestion Exception| Ces exceptions ne sont pas (plus) levée par le code
    * @throws InstantiationException nothing special
    * @throws IllegalAccessException nothing special
    */
@@ -88,6 +91,7 @@ public abstract class GoogleService {
     this.scopes = myscopes;
   }
 
+  //TODO kea by Djer |POO| Evite de melanger des getter/setter au milieu de tes méthodes métiers
   /**
    * returns the current user.
    * @return a String that contains "me"

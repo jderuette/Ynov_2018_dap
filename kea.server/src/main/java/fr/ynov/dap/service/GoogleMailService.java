@@ -49,10 +49,9 @@ public class GoogleMailService extends GoogleService {
    * @throws IOException nothing special
    */
   private Gmail getService(final String userKey) throws IOException {
+    //TODO kea by Djer |POO| Comme pour CalendatService tu ne peux pas en avoir un isntance partagée entre tous tes comptes Google
     if (gmailService == null) {
-      //TODO kea by Djer Attention ne multi-compte tu vas avoir des probleme,
-      // car tu va "mettre en cache" le service du premier utilisateur.
-      // Et tout les autre ne verront QUE les informations de ce premier utilisateur.
+      //TODO kea by Djer |POO| (ancien TO-DO) Attention en multi-compte tu vas avoir des problemes, car tu va "mettre en cache" le service du premier utilisateur. Et tout les autres ne verront QUE les informations de ce premier utilisateur.
       gmailService = new Gmail.Builder(getCustomConfig().getHttpTransport(),
           JSON_FACTORY,
           getCredentials(userKey))
@@ -72,6 +71,7 @@ public class GoogleMailService extends GoogleService {
     ListMessagesResponse listMessagesResponse = gmailService.users().messages()
         .list(getUser())
         .setQ(
+                //TODO kea by Djer |POO| Pourquoi faire des concaténation ? Elles ne sont pas utiles ici
             "in:unread -category:" + "{social promotions updates forums}" + "")
         .execute();
     List<Message> messages = new ArrayList<Message>();
@@ -115,6 +115,7 @@ public class GoogleMailService extends GoogleService {
    * get the singleton logger.
    * @return the logger
    */
+//TODO kea by Djer |POO| Pourquoi public ? MailController l'utilise, mais il ne devrait pas, il doit logger dans sa propre catégorie
   public Logger getLogger() {
     return LOGGER;
   }

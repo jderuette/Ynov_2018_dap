@@ -43,11 +43,13 @@ public class GoogleCalendarService extends GoogleService {
   /**
    * Creates a new service if it has never been created
    * else it returns the service instantiated previously.
+   * TODO kea by Djer |POO| Tu devrais renomer ce paramètre en "accountName"
    * @param userKey the user that wants to access his account datas
    * @return the Calendar service
    * @throws IOException nothing special
    */
   public Calendar getService(final String userKey) throws IOException {
+      //TODO kea by Djer |POO| Attnetion, tu ne peux pas avoir qu'une seul instance du Calendar Google, chaque instance est prpopre à chaque account ! Ce service sera potentiellement utilisé avec différents compte Google, par différents utilisateurs
     if (calendarService == null) {
       calendarService = new Calendar.Builder(
           getCustomConfig().getHttpTransport(), JSON_FACTORY,
@@ -59,12 +61,14 @@ public class GoogleCalendarService extends GoogleService {
   }
 
   /**
+   * TODO kea by DJer |JavaDoc| Cette description n'est pas (plus) juste
    * Uses the Calendar Service to get the 2
    * next events and the date of beginning.
    * @param userKey the user that wants to access his account datas
    * @return an event list
    * @throws IOException nothing special
    */
+  //TODO kea by Djer |POO| Le "n" de next devrait être en majuscule
   public Event getnextEvent(final String userKey) throws IOException {
     calendarService = getService(userKey);
     Event evenement = null;
@@ -73,6 +77,8 @@ public class GoogleCalendarService extends GoogleService {
         .setMaxResults(1).setOrderBy("startTime").setSingleEvents(true)
         .execute();
     List<Event> items = events.getItems();
+    //TODO kea by Djer |POO| Tu ne récupère pas la valeur de retour de cette méthode !
+    //TODO kea by Djer |POO| Tu vas avoir une erreur si la liste est vide (car tune le vérifie que ensuite)
     eventToString(items.get(0));
     if (items.isEmpty()) {
       LOGGER.info("Aucun evenements trouves");
@@ -101,6 +107,7 @@ public class GoogleCalendarService extends GoogleService {
    * get the singleton logger.
    * @return the logger
    */
+  //TODO kea by Djer |POO| Pourquoi public ? Aucune classe n'utilise cette méthode, tu peux la supprimer
   public Logger getLogger() {
     return LOGGER;
   }

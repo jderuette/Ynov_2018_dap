@@ -39,6 +39,7 @@ public class CalendarController {
    * get the calendarService.
    * @return the calendarService
    */
+//TODO kea by Djer |POO| Pourquoi public ? Aucune autre classe n'utilise ce getter, tu peux le supprimer.
   public GoogleCalendarService getCalendarService() {
     return calendarService;
   }
@@ -49,6 +50,7 @@ public class CalendarController {
      * @param appUser the userKey specified in URL
      * @throws IOException nothing special
      */
+  //TODO kea by Djer |Rest API| Dans une API Rest il vaut mieux renvoyer du JSON (ou du XML) plutot que du HTML. C'est au client de géré l'affichage (éventuellement à la vue). Avec Spring tu peux renvoyer l'objet, il s'occupera de le transformer en JSON lors d'un appel "Rest"
   @RequestMapping("/events/nextEvent/{appUser}")
   @ResponseBody
   public String eventsToString(final @PathVariable String appUser)
@@ -66,6 +68,7 @@ public class CalendarController {
     if (stringRes.equals("")) {
       stringRes = "Aucun évènements à venir !";
     }
+    //TODO kea by Djer |API Google| Gestion de "mon" status ?
     return stringRes;
   }
 }

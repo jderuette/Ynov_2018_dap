@@ -97,6 +97,7 @@ public class MailController {
    * get the gmailService.
    * @return the gmailService
    */
+//TODO kea by Djer |POO| Pourquoi public ? Aucune autre classe n'utilise ce getter, tu peux le supprimer.
   public GoogleMailService getGmailService() {
     return gmailService;
   }

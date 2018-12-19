@@ -39,6 +39,7 @@ public class AppUserController {
     if (userKey != null && appUserRepo.findByUserKey(userKey) == null) {
       appUserRepo.save(newAppUser);
     } else {
+        //TODO kea by Djer |POO| Ce code est utile ? (hormis pou généré une excetion si j'essaye d'ajouter deux fois de suite un userKey qui existe deja)
       newAppUser = new AppUser("testuser");
       appUserRepo.save(newAppUser);
     }
@@ -80,6 +81,7 @@ public class AppUserController {
    * get the calendarService.
    * @return the calendarService
    */
+  //TODO kea by Djer |POO| Pourquoi public ? Aucune autre classe n'utilise ce getter, tu peux le supprimer.
   public AppUserRepository getAppUserRepo() {
     return appUserRepo;
   }

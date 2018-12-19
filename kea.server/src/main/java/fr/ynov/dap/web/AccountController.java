@@ -65,6 +65,7 @@ public class AccountController {
       final Credential credential = flow.createAndStoreCredential(response,
           googleAccountName);
       if (null == credential || null == credential.getAccessToken()) {
+          //TODO kea by Djer |Log4J| Pourquoi utiliser le logger de accountService ? Le controlelr devrait avoir son propre logger (avec SA catégorie)
         accountService.getLogger().warn("Trying to store a NULL"
             + " AccessToken for user : " + googleAccountName);
       }
@@ -75,6 +76,7 @@ public class AccountController {
         }
       }
     } catch (IOException e) {
+        //TODO kea by Djer |Log4J| Contextualise ausi ce message (" for google AccountName :" + googleAccountName)
       accountService.getLogger()
           .error("Exception while trying" + " to store user Credential", e);
       throw new ServletException(
@@ -95,6 +97,7 @@ public class AccountController {
    * @return the view to Display (on Error)
    */
   @RequestMapping("/add/gaccount/{accountName}")
+  //TODO kea by Djer |Spring| dans l'annotation @RequestParam "required" est à true par defaut, ca n'est pas utile de le préciser
   public String addAccount(
       @RequestParam(value = "userKey", required = true) final String userKey,
       @PathVariable final String accountName, final HttpServletRequest request,
@@ -122,10 +125,12 @@ public class AccountController {
           appUserRepo.save(user);
           GoogleAccount gAccount = new GoogleAccount();
           gAccount.setGoogleAccountName(accountName);
+          //TODO kea by Djer |JPA| il n'est pas utile de fair ton save ne 2 fois.  appUserRepo.save(user); te renvoie une instance de appuser, pas la peine de re-faire un find. Tu devrait initialiser ton AppUser, puis lui ajouter le compte Google, et faire un unique save à la fin, JPA va s'occuper de créer/modifier les différntes entités
           user = appUserRepo.findByUserKey(userKey);
           user.addGoogleAccount(gAccount);
           appUserRepo.save(user);
         } else {
+            //TODO kea by Djer |POO| Ce code est très simillaire à celui de la fin du "if". Dans le if créé le user si besoin, ensuite (sans "else) ajoute et sauvegarde le compte, avec une varaible "user" en dehors du if
           AppUser user = appUserRepo.findByUserKey(userKey);
           GoogleAccount gAccount = new GoogleAccount();
           gAccount.setGoogleAccountName(accountName);
@@ -134,6 +139,7 @@ public class AccountController {
         }
       }
     } catch (IOException e) {
+        //TODO kea by Djer |Log4J| Message faux. Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
       accountService.getLogger()
           .error("Error while loading credential (or Google Flow)", e);
     }

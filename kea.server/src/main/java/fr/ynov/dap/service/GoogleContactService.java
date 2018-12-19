@@ -17,6 +17,8 @@ import com.google.api.services.people.v1.model.Person;
  */
 @Service
 public class GoogleContactService extends GoogleService {
+    
+    //TODO kea by Djer |POO| Attention à l'ordre : constantes, attributs, initialisateurs static, constructeurs, méthode métier, méthode générique (toString, hashCode,...), getter/setter
   /**
    * The constructor to use the service.
    * @throws InstantiationException nothing special
@@ -45,6 +47,7 @@ public class GoogleContactService extends GoogleService {
    * @throws IOException nothing special
    */
   public PeopleService getService(final String userKey) throws IOException {
+    //TODO kea by Djer |POO| Comme pour CalendatService tu ne peux pas en avoir un isntance partagée entre tous tes comptes Google
     if (contactsService == null) {
       contactsService = new PeopleService.Builder(
           getCustomConfig().getHttpTransport(), JSON_FACTORY,
@@ -79,6 +82,7 @@ public class GoogleContactService extends GoogleService {
    * @return a person
    * @throws IOException nothing special
    */
+  //TODO kea by Djer |POO| Il devrait y avoir un majuscule a ton "p" de "profile"
   public Person getprofile(final String userKey) throws IOException {
     contactsService = getService(userKey);
     Person profile = null;
@@ -91,6 +95,7 @@ public class GoogleContactService extends GoogleService {
    * get the singleton logger.
    * @return the logger
    */
+//TODO kea by Djer |POO| Pourquoi public ? ContactController l'utilise, mais il ne devrait pas, il doit logger dans sa propre catégorie
   public Logger getLogger() {
     return LOGGER;
   }

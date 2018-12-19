@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @SpringBootApplication
+//TODO kea by Djer |Spring| Cette anotation dit "la classe est un composant dont le nom logique est "config"". Cette calsse est déja un coposant via l'annotation @SpringBootApplication et son nom "logique" serait plutot "laucnher" (voir pas de nom du tout et laisser Spring se débrouiller) 
 @Component("config")
 public class Launcher {
 
@@ -24,6 +25,7 @@ public class Launcher {
    * @throws IOException nothing special
    * @throws GeneralSecurityException nothing special
    */
+    //TODO kea by Djer |Spring| Comme tu as ajouté uen annotation "@Componnent" sur ta Classe Config tu n'a plus besoin de ce code. Spring va automatiquement faire un Singleton de ton @Componnent et du coups il le connetra lorsqu'il aura besoin de l'injecter dans d'autres classes
   @Bean
   //@Primary
   public Config loadConfig() throws IOException, GeneralSecurityException {

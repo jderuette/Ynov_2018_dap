@@ -37,6 +37,7 @@ public class MicrosoftAuthService {
   /**
    * Logger is the object we use to log important informations or report bugs.
    */
+  //TODO kea by Djer |Log4J| Attention le logger de cette classe log dans la catégorie de "GoogleService"
   private static final Logger LOGGER = (Logger) LogManager
       .getLogger(GoogleService.class);
 
@@ -69,6 +70,7 @@ public class MicrosoftAuthService {
    */
   private void init() throws IOException {
     String authConfigFile = "auth.properties";
+    //TODO kea by Djer |Design Patern| L'emplacement du fichie devrait être dans la configuration (pour pouvoir en définir un autre si besoin)
     InputStream authConfigStream = new FileInputStream(new File(System.getProperty("user.home")
         + "/Documents/credentials/auth.properties"));
         /*MicrosoftAuthService.class.getClassLoader()
@@ -79,6 +81,7 @@ public class MicrosoftAuthService {
       try {
         authProps.load(authConfigStream);
         if (customConfig != null) {
+            //TODO kea by Djer |Design Patern| Attention tu perd le "zéro" du pricniep ZeroConf, tuy risque d'écraser une valeur par "null", si l'administrateur n'a pas définie une des propriété dans le fichier
           customConfig.setMicrosoftAppId(authProps.getProperty("appId"));
           customConfig
               .setMicrosoftAppPassword(authProps.getProperty("appPassword"));
@@ -91,6 +94,7 @@ public class MicrosoftAuthService {
         authConfigStream.close();
       }
     } else {
+        //TODO kea by Djer |IDE| Ton IDE (devrait) t'indique que c'est du code mort. En effet tu fait un "new" sur authConfigStream il ne pourra JAMAIS être null (il peut éventuellement pointer vers un fichier inexistant)
       throw new FileNotFoundException(
           "Property file '" + authConfigFile + "' not found in the classpath.");
     }

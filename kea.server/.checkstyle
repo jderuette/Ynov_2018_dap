@@ -4,7 +4,7 @@
   <local-check-config name="dap_checkstyle_checks" location="pmd/dap_checkstyle_checks.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="dap_checkstyle_checks" local="true">
+  <fileset name="all" enabled="true" check-config-name="kea Custom dap (server)" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="DerivedFiles" enabled="true"/>

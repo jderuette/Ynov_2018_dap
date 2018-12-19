@@ -4,6 +4,7 @@
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
 <title th:text="#{app.contacts}"></title>
+<!-- TODO kea by Djer |Thymleaf| un "div" n'est pas autorisé dans un "head" en HTML. Tu peux utiliser "th:block" qui va créer un "block vide" (simplement le contenu du block sera présent) -->
 <div th:replace="~{fragments/ressources :: ressources}"></div>
 </head>
 <body>
@@ -14,6 +15,7 @@
 	</h1>
 	<div class="container">
 		<div>
+		<!-- TODO kea by DJer |Thymleaf| il manque le $ devant l'acollade ouvrante -->
 			<span th:text="#{email.yh}"></span><span th:text="{nbContacts}"></span>
 			<span th:text="#{contacts.contacts}"></span>
 		</div>
