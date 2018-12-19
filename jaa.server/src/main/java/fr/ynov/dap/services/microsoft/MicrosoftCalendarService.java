@@ -33,6 +33,7 @@ public class MicrosoftCalendarService extends MicrosoftService {
 
         String sortByStartTimeInDescendingOrder = "start/dateTime DESC";
         String properties = "organizer,subject,start,end,isOrganizer";
+        //TODO jaa by Djer |POO| Attention ton "MAX_RESULTS" vaut 10. un "max" à "1" devrait suffir
         Integer maxResults = MAX_RESULTS;
 
         try {
@@ -40,10 +41,12 @@ public class MicrosoftCalendarService extends MicrosoftService {
               sortByStartTimeInDescendingOrder, properties, maxResults)
               .execute().body();
           if (events.getValue() == null) {
+              //TODO jaa by Djer |POO| Evite les multiples returns dans une même méthode
               return null;
           }
           return events.getValue()[0];
         } catch (IOException ioe) {
+            //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName()) 
             getLog().error("An occured while trying to get microsoft events from the API.", ioe);
             throw new ServiceException("Get Microsoft events failed.", ioe);
         }

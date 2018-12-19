@@ -9,6 +9,7 @@ public class AuthorizationException extends Exception {
     /**
      * Needed because it extends Exception class.
      * Apparently, it's used for the serialization.
+     * TODO jaa by Djer |POO| (info) C'est utile car les exceptions sont Serializable
      */
     private static final long serialVersionUID = -5428795312657630298L;
 

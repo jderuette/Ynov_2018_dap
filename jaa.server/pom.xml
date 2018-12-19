@@ -17,6 +17,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+<!-- TODO jaa by DJer |Maven| Il y a un ordre attendu dans un pom.xml, le "parent" va avant les properties -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -38,6 +39,7 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.23.0</version>
 		</dependency>
+		<!-- TODO jaa by Djer |maven| Plus utile depuis que Google est en mode "serveur web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>

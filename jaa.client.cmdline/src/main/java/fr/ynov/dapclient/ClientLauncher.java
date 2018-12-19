@@ -26,11 +26,13 @@ public final class ClientLauncher {
     /**
      * Logger used for logs.
      */
+    //TODO jaa by Djer |Log4J| Devrait être final, ca n'est pas utile d'en avoir un par instance (la catégorie est par classe). Dans un "launcher" tu as peu de chance d'avoir pluisuer instance du launcher mais enleve le static et/ou final uniquement lorsque c'est nécéssaire. Ainsi tu indiques clairement ton intention
     private static Logger log = LogManager.getLogger();
 
     /**
      * Ip address and port of the server.
      */
+    //TODO jaa by Djer |POO| Place tes constantnes d'abord. Cela te permetra d'initialiser cette varaibles avec la valeur par defaut. Puis d'utiliser QUE ta variable dans ton code (cf ma remarques sur ton "aide"). C'est notament pour cela qu'on recommande de placer les constantes en premier (puis les attributs, puis les initialisateur static, puis les constructeurs, puis les méthdoes métiers, puis les méthodes génériques (toString, hashCode,..) puis les getter/setter
     private static String address = "http://localhost:8080";
     /**
      * Timeout for HttpURLConnection.
@@ -77,6 +79,7 @@ public final class ClientLauncher {
 
         if (args[0].equalsIgnoreCase("help")) {
             final String help = "Help:\n" + "Register a new user: [add] [userName] "
+        //TODO jaa by Djer |POO| utiliser la constante dans ton "aide" risque dêtre confusant si l'utilisateur à changé l'URL par defaut. Ca n'est pas possible dans ton code actuel, mais si jamais tu change la façon dont on peu configurer l'URL (qui serait pris en compte, sans parser les arguments) ces messages deviendront "faux"
                     + "[ip:port] (by default, ip:port=" + DEFAULT_SERVER_URL + ")\n"
 
                     + "Register a new Google Account (you have to add a new user first!!): "
@@ -118,6 +121,7 @@ public final class ClientLauncher {
             }
 
             displayNumberOfMails(userKey, user);
+            //TODO jaa by Djer |POO| Evite les multiples return dans une même méthode. (tu risque d'en oublier, et d'afficher des messages iniapropriés, cf ma remarques plus bas)
             return;
         }
 
@@ -160,7 +164,8 @@ public final class ClientLauncher {
             displayNextEvent(userKey);
             return;
         }
-
+        
+        //TODO jaa by Djer |POO| Attention se message risquede s'afficher trop souvent. Il te faudrait des "switch" au dessus (ou des else if)? Notament pour "addmicrosoft" et "addgoogle" il n'y aps de "return"
         System.out.println("Unkown parameter. Please, type \"help\" to open the help.");
     }
 
@@ -179,6 +184,7 @@ public final class ClientLauncher {
             conn.setConnectTimeout(TIMEOUT_IN_MILLISECONDS);
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                //TODO jaa by Djer |Log4J| Une petite Log ? 
                 System.out.println("Erreur : " + conn.getResponseCode());
             }
 
@@ -193,6 +199,7 @@ public final class ClientLauncher {
 
         } catch (MalformedURLException e) {
 
+            //TODO jaa by Djer |Log4J| Pas utile le SysOut. Tu as conserver le fichier de configuration que je vous avais fourni (src/main/resources/lojg4j2.xml) donc les messages sont ajoutés dans la console (<AppenderRef ref="console" />)
             System.out.println(ERROR_MESSAGE + e.getMessage());
             log.error(e);
 
@@ -238,6 +245,7 @@ public final class ClientLauncher {
     private static void addNewUser(final String userKey) {
         log.debug("addNewUser called. UserKey=" + userKey);
         try {
+            //TODO jaa by Djer |Rest API| Depusi qu'on a séparé user et "accounts", la route User n'a plus besoin de s'ouvrire dans le naviguateur, elle est (re)devenu un pure route d'API bien classique
             URL url = new URL(address + "/user/add/" + userKey);
             Desktop.getDesktop().browse(url.toURI());
             log.debug("Browser opened at:" + url);
@@ -266,6 +274,7 @@ public final class ClientLauncher {
     private static void displayNextEvent(final String userKey) {
         log.debug("displayNextEvent called. UserKey=" + userKey);
         String response = getResponse(address + "/calendar/event/next?userKey=" + userKey);
+        //TODO jaa by Djer |POO| (re) jette un oeil à la JavaDoc de @Expose. En utilisant "new Gson()" ces anotations ne sont pas utilisées. Cela ne pose pas de "bug" mais tes anotations sont inutilées
         Gson gson = new Gson();
         Event event = gson.fromJson(response, Event.class);
 
@@ -348,6 +357,7 @@ public final class ClientLauncher {
      * @param accountName the name of the Microsoft account.
      */
     private static void addNewMicrosoftAccount(final String userKey, final String accountName) {
+        //TODO jaa by Djer |POO| Evite les copier/coller, ce code es très simillaire a celui de "addNewGoogleAccount" et une des rare chose qui change, tu as oublié de le changer (le texte contient encore "Google")
         StringBuilder st = new StringBuilder().append("Trying to add a Google Account. UserKey=")
                 .append(userKey).append(" accountName=").append(accountName);
         log.debug(st.toString());

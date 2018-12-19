@@ -108,6 +108,7 @@ public class GoogleAccountController extends GoogleService {
             appUser.addGoogleAccount(googleAccount);
             repository.save(appUser);
         } catch (IOException e) {
+            //TODO jaa by Djer |Log4J| Contextualisse tes messages
             log.error("Exception while trying to store user Credential", e);
             model.addAttribute("error", "Error while trying to store Google Account Credential.");
             return "redirect:/accountAdded";
@@ -214,6 +215,7 @@ public class GoogleAccountController extends GoogleService {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+          //TODO jaa by Djer |Log4J| Contextualisse tes messages
             log.error("Error while loading credential (or Google Flow)", e);
             model.addAttribute("error", "Error while loading credential (or Google Flow)");
             response = "redirect:/accountCreated";

@@ -4,6 +4,7 @@ package fr.ynov.dap.models;
  * Accout data that will be displayed on the Admin Controller.
  */
 public class AccountData {
+    //TODO jaa by Djer |POO| les type "interne" (classes, enum) devrait plutot être vers la fin de ton fichier (après les getter/setter) 
     /**
      * Account type enum.
      */
@@ -121,6 +122,7 @@ public class AccountData {
         this.expirationTimeMilliseconds = expiration;
     }
 
+    //TODO jaa by Djer |POO| Tes attaributs devraient être vers le début de ton fichier
     /**
      * Account name.
      */

@@ -26,6 +26,7 @@ public final class GCalendarService extends GoogleService {
     /**
      * Logger used for logs.
      */
+    //TODO jaaa by Djer |Log4J| Devrait être final, pas besoin de 1 par instance (ici tu as un Singleton donc peu probable, cependant laisser le static final précise ton intention)
     private static Logger log = LogManager.getLogger();
 
     /**
@@ -49,12 +50,15 @@ public final class GCalendarService extends GoogleService {
                     .build();
             return service;
         } catch (GeneralSecurityException e) {
+            //TODO jaa by Djer |Log4J| Lorsque tu log une exception, essaye toujours d'ajouter un message (avec du contexte ("Error while creating Calendar service for userkey : " + userKey)
             log.error(e);
             throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
         } catch (IOException e) {
+          //TODO jaa by Djer |Log4J| Ajoute un emssage (et du contexte)
             log.error(e);
             throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
         } catch (Exception e) {
+          //TODO jaa by Djer |Log4J| Ajoute un emssage (et du contexte)
             log.error(e);
             throw new ServiceException("can't get the Calendar service. Error: " + e.getMessage(), e);
         }
@@ -70,6 +74,7 @@ public final class GCalendarService extends GoogleService {
         final Integer maxResults = 1;
         DateTime now = new DateTime(System.currentTimeMillis());
         log.info("getNextEvent called. userKey=" + userKey + "; with maxResults="
+                //TODO jaa by Djer |POO| Indiquer "DateNow" n'est pas très utile, "from : " serait plus claire
                 + maxResults + "; DateNow=" + now.toString());
         Events events = getService(userKey).events().list("primary")
                 .setMaxResults(maxResults)
@@ -78,8 +83,10 @@ public final class GCalendarService extends GoogleService {
                 .setSingleEvents(true)
                 .execute();
         List<Event> items = events.getItems();
+      //TODO jaa by Djer |Log4J| Contextualise chacunsde tes messages (" for userKey : " + userKey). Sur un serveur tu peux avoir plusieurs traitement en paralelle, et tu ne sauras pas interpreter ce messages dans les logs
         log.info("found event(s)=" + events.toString());
         if (items.isEmpty()) {
+            //TODO jaa by Djer |POO| Evite les multipels return dans une même méthode
             return null;
         }
 

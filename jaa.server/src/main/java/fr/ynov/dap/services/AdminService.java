@@ -86,6 +86,7 @@ public class AdminService {
                         microsoftAccount.getIdToken().getExpirationTime()));
                 account.setTenantId(microsoftAccount.getIdToken().getTenantId());
             } catch (IOException e) {
+              //TODO jaa by Djer |Log4J| Contextualise tes messages
                 log.error("Error occured during the microsoftAccount reading", e);
                 throw new ServiceException("Faild to get some properties of Microsoft Account", e);
             }
@@ -107,6 +108,7 @@ public class AdminService {
         try {
             googleMap = googleDataStoreService.getStoreCredentialMap();
         } catch (GeneralSecurityException | IOException e) {
+            //TODO jaa by Djer |Log4J| Contextualise tes messages
             log.error("Fail to get StoreData", e);
             throw new ServiceException("An error occured while retrieve Google StoreDara", e);
         }

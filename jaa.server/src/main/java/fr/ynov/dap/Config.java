@@ -6,6 +6,7 @@ import java.io.File;
  * Config class.
  *
  */
+//TODO jaa by Djer |Design Patern| Externalisation de la configuration ?
 public class Config {
     /**
      * Microsoft auth.properties default name.

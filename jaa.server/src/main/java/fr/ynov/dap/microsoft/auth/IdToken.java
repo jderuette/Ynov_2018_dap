@@ -19,6 +19,7 @@ public class IdToken {
     /**
      * One thousand. Used to fix a checkstyle syntax issue.
      */
+    //TODO jaa by Djer |POO| Ne dit pas ce que c'est, on le voit bien. Dit ce que ca represente ("MILLISECONDES_PER_SECONDE" par exemple)
     private static final int ONE_THOUSAND = 1000;
 
     // NOTE: This is just a subset of the claims returned in the
@@ -251,10 +252,14 @@ public class IdToken {
         Boolean isExpirationInAnIncorrectInterval = now.after(this.getUnixEpochAsDate(this.expirationTime))
                 || now.before(this.getUnixEpochAsDate(this.notBefore));
         if (isExpirationInAnIncorrectInterval) {
+          //TODO jaa by Djer |Log4J| Une petite log ?
+            //TODO jaa by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
         if (!n.equals(this.getNonce())) {
+          //TODO jaa by Djer |Log4J| Une petite log ?
+          //TODO jaa by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 

@@ -67,6 +67,8 @@ public class GoogleAccount {
     /**
      *  Default Constructor.
      */
+
+    //TODO jaa by Djer |POO| Les constructeurs vont avant les getter/setter
     public GoogleAccount() {
     }
 

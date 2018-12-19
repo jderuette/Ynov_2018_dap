@@ -34,6 +34,7 @@ public abstract class GoogleService {
     /**
      * Logger used for logs.
      */
+  //TODO jaaa by Djer |Log4J| Devrait être final
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -45,6 +46,7 @@ public abstract class GoogleService {
      * AppUser getter.
      * @return used by the child googleServices.
      */
+    //TODO jaa by Djer |POO| Ne mélange pas des attributs et tes getters/setters
     protected AppUserRepository getRepository() {
         return repository;
     }
@@ -78,6 +80,7 @@ public abstract class GoogleService {
      * @throws AuthorizationException exception
      */
 
+    //TODO jaa by Djer |POO| Ce paramètre devrait plutot s'appeller "accountName" ?
     protected Credential getCredentials(final String userKey) throws AuthorizationException {
         GoogleAuthorizationCodeFlow flow;
         Credential credential;
@@ -120,6 +123,7 @@ public abstract class GoogleService {
         try {
             clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, authConfigStream);
         } catch (IOException ioe) {
+            //TODO jaa by Djer |log4J| Contextualise tes messages (" from path : " + config.getCredentialsFilePath())
             logger.error("failed to get client secrets", ioe);
         }
 
@@ -133,6 +137,7 @@ public abstract class GoogleService {
                     .setAccessType("offline")
                     .build();
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" storing to  : " + config.getCredentialFolder())
             logger.error("failed to getFlow", ioe);
         }
         return flow;

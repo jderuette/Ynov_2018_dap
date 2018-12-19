@@ -41,6 +41,7 @@ public class MicrosoftContactService extends MicrosoftService {
               .execute().body();
           return contacts;
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             getLog().error("An occured while trying to get microsoft contacts from the API.", ioe);
             throw new ServiceException("Get Microsoft contacts failed.", ioe);
         }
@@ -53,6 +54,7 @@ public class MicrosoftContactService extends MicrosoftService {
      * @throws ServiceException exception of the service.
      */
     public Integer getNumberOfContacts(final MicrosoftAccount account) throws ServiceException {
+        //TODO jaa by Djer |API Microsoft| Es-tu sur que "count" est valorisé sans le "?count=true" ?
         Integer numberOfContacts = getContacts(account).getCount();
         return numberOfContacts;
     }

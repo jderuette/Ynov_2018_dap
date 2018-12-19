@@ -57,6 +57,7 @@ public abstract class MicrosoftService {
     /**
      * userKey of the AppUser. It's used to get credentials data.
      */
+    //TODO jaa by Djer |POO| Attention, sera un Singleton, donc partagé entre tous les utilisateurs, tu as le risque pour que (de temsp en temps) une méthode soit appelé avec un userKey d'un autre utilisateur. Ne met jamais de variable d'état dans un service (surtout si c'est un Singleton, mais en général les services sont des Singleton)
     private String userKey;
 
     /**
@@ -77,12 +78,15 @@ public abstract class MicrosoftService {
         try {
             return account.getIdToken().getEmail();
         } catch (JsonParseException jpe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to parse json while retrieving the email.", jpe);
             throw new ServiceException("Failed to parse the email", jpe);
         } catch (JsonMappingException jme) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to map json while retrieving the email.", jme);
             throw new ServiceException("Fail to map json the email.", jme);
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Incorrect stored value while retrieving the email.", ioe);
             throw new ServiceException("Inccorect stored the email", ioe);
         }
@@ -110,12 +114,15 @@ public abstract class MicrosoftService {
 
             return tokens;
         } catch (JsonParseException jpe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to parse json while retrieving the tenantId.", jpe);
             throw new ServiceException("Failed to parse the tenantId", jpe);
         } catch (JsonMappingException jme) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to map json while retrieving the tenantId.", jme);
             throw new ServiceException("Fail to map json the tenantId.", jme);
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Incorrect stored value while retrieving the tenantId.", ioe);
             throw new ServiceException("Incorrect stored the tenantId", ioe);
         }
@@ -129,6 +136,7 @@ public abstract class MicrosoftService {
      */
     private void saveNewTokenToRepository(final MicrosoftAccount account, final TokenResponse tokens)
             throws JsonProcessingException {
+        //TODO jaa by Djer |POO| N'utilise pas l'attribut "userkey" (tu n'es pas sur qu'il ai été mis à jours), récupère celui de l'acount (account.getOwner().getuserKey())
         AppUser appUser = repository.findByUserKey(userKey);
         appUser.getMicrosoftAccountByName(account.getAccountName()).setTokenResponse(tokens);
         repository.save(appUser);
@@ -144,12 +152,15 @@ public abstract class MicrosoftService {
         try {
             return account.getIdToken().getTenantId();
         } catch (JsonParseException jpe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to parse json while retrieving the tenantId.", jpe);
             throw new ServiceException("Failed to parse the tenantId", jpe);
         } catch (JsonMappingException jme) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Failed to map json while retrieving the tenantId.", jme);
             throw new ServiceException("Fail to map json the tenantId.", jme);
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             log.error("Incorrect stored value while retrieving the tenantId.", ioe);
             throw new ServiceException("Inccorect stored the tenantId", ioe);
         }

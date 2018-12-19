@@ -23,6 +23,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Auth Helper used for the Microsoft authentication.
  */
 @Component
+//TODO jaa by Djer |Spring| "Component" est très générique. Ici tu as un "helper", un "@Service" serait plsu précis (et fera senssiblement la même chose que le @Component)
+//TODO jaa by Djer |POO| Un "composant" Spring avec quasiment que du static ca n'est pas très utile. Maintenant que c'est un composnt Spring, ca sera un Singleton, tu peux donc faire du "vrai objet" et utiliser du "non" static" sans risque de "performance". Avec des vrais attributs tu gagneras en plus la possibilté de les modifier facilement, et si besoin plus tard, d'en avoir plusieurs versions (en désactivant le singleton)
 public final class AuthHelper {
     /**
      * Config.
@@ -32,6 +34,7 @@ public final class AuthHelper {
      * Config instantiate thanks to the dependency injection.
      * @param conf config file.
      */
+    //TODO jaa by Djer |Spring| Pour rester cohérant avec le reste de ton code, met le @Autowired sur l'atribut (injection apr attributs). Ici tu fait, exceptionnellement, de l'injection par constructeur
     @Autowired
     private AuthHelper(final Config conf) {
         config = conf;
@@ -40,6 +43,7 @@ public final class AuthHelper {
     /**
      * Authority.
      */
+    //TODO jaa by Djer |POO| Place tes constantes au début de la classe
     private static final String AUTHORITY = "https://login.microsoftonline.com";
 
     /**
@@ -88,6 +92,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO jaa by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -103,6 +108,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO jaa by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -118,6 +124,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO jaa by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -149,6 +156,7 @@ public final class AuthHelper {
             Properties authProps = new Properties();
             try {
                 authProps.load(authConfigStream);
+                //TODO jaa by Djer |Design Patern| Attention, tu "perd" le "zero" du ZeroConf. Met des valeurs par defaut, et ne remplace ton attribut QUE s'il y a une valeur (non null) dans la config
                 appId = authProps.getProperty("appId");
                 appPassword = authProps.getProperty("appPassword");
                 redirectUrl = authProps.getProperty("redirectUrl");
@@ -156,6 +164,7 @@ public final class AuthHelper {
                 authConfigStream.close();
             }
         } else {
+            //TODO jaa by Djer |IDE| Ton IDE te dit que c'est du code mort. En effet tu fait une "new" sur authConfigStream, il ne pourra donc JAMAIS être null (il pourait cependant pointer vers un fichier "inexistant")
             throw new FileNotFoundException("Property file '"
                 + authPropertiesFilePath + "' not found in the classpath.");
         }
@@ -202,6 +211,7 @@ public final class AuthHelper {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
                     authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
+          //TODO jaa by Djer |Log4J| Une petite log ?
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
@@ -234,6 +244,7 @@ public final class AuthHelper {
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
             } catch (IOException e) {
+              //TODO jaa by Djer |Log4J| Une petite log ?
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());

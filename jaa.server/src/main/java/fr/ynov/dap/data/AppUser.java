@@ -36,6 +36,7 @@ public class AppUser {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
     private List<GoogleAccount> googleAccounts;
 
+    //TODO jaa by Djer |POO| Evite de mélanger des getter/setter et les attributs
     /**
      * Get the list of GoogleAccount owned by this AppUser.
      * @return List of GoogleAccount.
@@ -133,6 +134,7 @@ public class AppUser {
      */
     public MicrosoftAccount getMicrosoftAccountByName(final String accountName) {
         if (!getMicrosoftAccountNames().contains(accountName)) {
+            //TODO jaa by DJer |POO| Evite les multiples return dans une même méthode
             return null;
         }
 

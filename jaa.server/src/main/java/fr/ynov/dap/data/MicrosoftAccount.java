@@ -27,6 +27,7 @@ public class MicrosoftAccount {
      * Length of the string to save on the database.
      * It's used to specify the length of long string, like the authCode.
      */
+    //TODO jaa by Djer |JPA| Cumulée tes colonnes sont trop grande pour mon MySQL, et si je reduit les données ne rentre plus. Utilise un BLOB, ou stocke dans uen autre table (OneToOne avec un @Entity)
     private static final int STRING_LENGTH = 8192;
 
     /**
@@ -34,6 +35,7 @@ public class MicrosoftAccount {
      */
     @Id
     @GeneratedValue
+    //TODO jaa by Djer |IDE| Ton ide t'indique que ca n'est pas utilisé. Tu n'as pas créer les getter/setters
     private Integer id;
 
     /**
@@ -84,6 +86,7 @@ public class MicrosoftAccount {
      * TokenResponse from the Microsoft API.
      */
     @Column(length = STRING_LENGTH)
+    //TODO jaa by Djer |JPA| Tu devrais "transformer" TokenResponse en entité (ajouter un @entity, et configure les attributs nécéssaire avec un @Column, @Id,...). Tu aurais ainsi des données structurée dans ta BDD
     private String tokenResponse;
 
     /**
@@ -110,6 +113,7 @@ public class MicrosoftAccount {
      * IdToken from the Microsoft API.
      */
     @Column(length = STRING_LENGTH)
+    //TODO jaa by Djer |JPA| le IdToken est est très temporaire, ca ne parait pas utile de le stocker. Si vraiment tu souhaites le stocker, transforme "IdToken" en entity. SI tu le stock, il faut que tu le mette à jour à chaque fois que nécéssaire (mais ca n'est pas très utile à priori)
     private String idToken;
 
     /**
@@ -129,6 +133,7 @@ public class MicrosoftAccount {
      * @throws JsonProcessingException exception if the serialization fails.
      */
     public void setIdToken(final IdToken idTok) throws JsonProcessingException {
+        //TODO jaa by Djer |IDE| Ton IDE t'indique que ca n'est pas utilisé. Bug ? A supprimer ?
         String tokenTest = (String) new ObjectMapper().writeValueAsString(idTok);
         this.idToken = (String) new ObjectMapper().writeValueAsString(idTok);
     }

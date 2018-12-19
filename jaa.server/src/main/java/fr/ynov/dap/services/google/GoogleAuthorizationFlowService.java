@@ -16,6 +16,7 @@ import com.google.api.client.util.store.DataStore;
  * Google Authorization Flow service.
  */
 @Service
+//TODO jaa by DJer |POO| Le nom de cette classe "ment" un peu. Elle ne gère pas le "flow" (c'est le parent qui le fait), en revanche elle manipule des credentials. "GoogleCredentialService" serait plus juste
 public class GoogleAuthorizationFlowService extends GoogleService {
 
     /**

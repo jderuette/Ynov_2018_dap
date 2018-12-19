@@ -52,6 +52,7 @@ public class CalendarController extends DapController {
         Event convertedMicrosoftEvent = convertMicrosoftEvent(microsoftEvent);
 
         if (googleEvent == null && convertedMicrosoftEvent == null) {
+            //TODO jaa by Djer |POO| Evite les multiples returns dans une même méthode
             return null;
         }
 
@@ -63,6 +64,7 @@ public class CalendarController extends DapController {
             return googleEvent;
         }
 
+        //TODO jaa by DJer |API Google| Attention "getStart().getDateTime()" est null pour les évènnements qui durent "toute la journée" (il faut alors utiliser getStart().getDate())
         if (googleEvent.getStart().getDateTime().getValue()
                 < convertedMicrosoftEvent.getStart().getDateTime().getValue()) {
             return googleEvent;
@@ -81,6 +83,7 @@ public class CalendarController extends DapController {
             return null;
         }
 
+        //TODO jaa by Djer |POO| Evite d'utiliser l'Event d'un autre fournisseur. Créer toi un "Event" générique. En plus tu pourras géré la particularité du getDate() VS getDateTime() de l'API de Google
         Event convertedEvent = new Event();
         convertedEvent.setSummary(microsoftEvent.getSubject());
         long microsoftStartTime = microsoftEvent.getStart().getDateTime().getTime();

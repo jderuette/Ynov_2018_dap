@@ -42,6 +42,7 @@ public class MicrosoftMailService extends MicrosoftService {
                 .body();
             return messages;
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             getLog().error("An occured while trying to get microsoft mails from the API.", ioe);
             throw new ServiceException("Get Microsoft mails failed.", ioe);
         }
@@ -75,6 +76,7 @@ public class MicrosoftMailService extends MicrosoftService {
                 .body();
             return messages.getCount();
         } catch (IOException ioe) {
+          //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
             getLog().error("An occured while trying to get microsoft mails from the API.", ioe);
             throw new ServiceException("Get Microsoft mails failed.", ioe);
         }
@@ -116,6 +118,7 @@ public class MicrosoftMailService extends MicrosoftService {
                 PagedResult<Message> emailsPage = getMails(account);
                 messages = new ArrayList<>(Arrays.asList(emailsPage.getValue()));
             } catch (ServiceException se) {
+              //TODO jaa by Djer |log4J| Contextualise tes messages (" for userKey : " + account.getOwner().getgetUserKey() + " and accountName : " + account.getAccountName())
                 getLog().error("Faild to get microsoft emails", se);
                 throw new ServiceException("Failed to get microsoft emails.", se);
             }
