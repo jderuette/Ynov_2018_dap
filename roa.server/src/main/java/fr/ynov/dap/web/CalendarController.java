@@ -31,6 +31,7 @@ public class CalendarController {
     @RequestMapping("/Calendar/event")
     public final String getNextEvent(final @RequestParam("userKey") String user)
             throws IOException, GeneralSecurityException {
+        //TODO roa by Djer |roa| Intégroger les comtpes Microsoft ? 
         return calendar.getNextEvent(user);
     }
 }

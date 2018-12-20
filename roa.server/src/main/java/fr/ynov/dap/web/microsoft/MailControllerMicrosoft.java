@@ -20,6 +20,7 @@ import fr.ynov.dap.services.microsoft.TokenResponse;
 
 
 @Controller
+//TODO roa by Djer |MVC| Séparation Controller / services ?
 public class MailControllerMicrosoft {
 
   @RequestMapping("/mail")
@@ -27,6 +28,7 @@ public class MailControllerMicrosoft {
     HttpSession session = request.getSession();
     TokenResponse tokens = (TokenResponse)session.getAttribute("tokens");
     if (tokens == null) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       // No tokens in session, user needs to sign in
       redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
       return "redirect:/index";
@@ -55,6 +57,7 @@ public class MailControllerMicrosoft {
           .execute().body();
       model.addAttribute("messages", messages.getValue());
     } catch (IOException e) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       redirectAttributes.addFlashAttribute("error", e.getMessage());
       return "redirect:/index";
     }

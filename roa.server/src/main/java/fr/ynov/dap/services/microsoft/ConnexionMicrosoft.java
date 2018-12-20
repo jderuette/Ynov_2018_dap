@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Service
+//TODO roa by Djer |POO| Si pas (plus) utile supprime cette classe
 public class ConnexionMicrosoft {
   
 }

@@ -27,8 +27,8 @@
  <!-- Now we'll customize a rule's property value -->
  <rule ref="category/java/design.xml/CyclomaticComplexity">
   <properties>
-   <property name="methodReportLevel" value="2" />
-   <property name="classReportLevel" value="2" />
+   <property name="methodReportLevel" value="5" />
+   <property name="classReportLevel" value="5" />
   </properties>
  </rule>
  <rule ref="rulesets/java/codesize.xml/NPathComplexity"></rule>

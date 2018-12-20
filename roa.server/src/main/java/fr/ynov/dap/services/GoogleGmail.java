@@ -43,6 +43,7 @@ public class GoogleGmail {
      * @return liste des labels
      * @param user identifiant de l'utilisateur
      */
+  //TODO roa by Djer |SOA| Dans tes services, renvoie de préférences des objets. Laisse au controller (via la Vue) ou au client le travail du formatage. En plus avec Spring si un RestController renvoie un objet, Spring le tranforme automatiquement (en JSON par défaut)
     public final List<String> getListLabel(final String user) throws IOException, GeneralSecurityException {
         // Se connecte à l'API gmail avec les credentials sauvegardés
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -55,10 +56,13 @@ public class GoogleGmail {
         List<Label> labels = listResponse.getLabels();
         List<String> listeLabel = new ArrayList<String>();
         if (labels.isEmpty()) {
+          //TODO roa by Djer |Rest API| Pas de SysOut sur un serveur
             System.out.println("No labels found.");
         } else {
+          //TODO roa by Djer |Rest API| Pas de SysOut sur un serveur
             System.out.println("Labels:");
             for (Label label : labels) {
+              //TODO roa by Djer |Rest API| Pas de SysOut sur un serveur
                 System.out.printf("- %s\n", label.getName());
                 listeLabel.add(label.getName());
             }
@@ -79,13 +83,16 @@ public class GoogleGmail {
         AppUser user = repository.findByUserKey(userKey);
         List<String> accountNames = user.getAccountNames();
         Integer nbMailNonLu = 0;
+        //TODO roa by Djer |POO| "string" n'est pas ... optimal comme nom de variable. "accountName" ?
         for (String string : accountNames) {
             Gmail service = new Gmail.Builder(httpTransport, jsonFactory,
                     connexionGoogle.getCredentials(httpTransport, string))
                             .setApplicationName(Config.getApplicationName()).build();
             // récupère le nombre de mail avec le label "unread"
+            //TODO roa by Djer |API Google| Si tu utilise "string" ici cela m'oblige à mettre mon "google ID" (ou mon adresse mail Google) lorsque je cré mon compte (sinon j'ai un message d'erreur de "délagation")
             Label llabel = service.users().labels().get(string, "UNREAD").execute();
             nbMailNonLu += llabel.getMessagesUnread();
+          //TODO roa by Djer |Rest API| Pas de SysOut sur un serveur
             System.out.println(nbMailNonLu);
         }
         return nbMailNonLu;

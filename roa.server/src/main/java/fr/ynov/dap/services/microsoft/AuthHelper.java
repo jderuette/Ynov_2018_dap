@@ -63,6 +63,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO roa by Djer |Log4J| Une petite log ?
         return null;
       }
     }
@@ -77,6 +78,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO roa by Djer |Log4J| Une petite log ?
         return null;
       }
     }
@@ -91,6 +93,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO roa by Djer |Log4J| Une petite log ?
         return null;
       }
     }
@@ -104,6 +107,7 @@ public class AuthHelper {
     StringBuilder sb = new StringBuilder();
     for (String scope: scopes) {
       sb.append(scope);
+      //TODO roa by Djer |Audit Code| Ton outils d'audit de code t'indique que pour un caractère unique du devrait utiliser les simple quote. En effet la Java va créer une chaine de caractère avec un seul caractère ce qui n'est pas très efficace (mais pas très couteux non plus)
       sb.append(" ");
     }
     return sb.toString().trim();
@@ -113,6 +117,7 @@ public class AuthHelper {
  * @throws IOException problèe de lecture du fichier
  */
   private static void loadConfig() throws IOException {
+    //TODO roa by Djer |Design Patern| Externalisation de la configuration ?
     String authConfigFile = "auth.properties";
     InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -120,6 +125,7 @@ public class AuthHelper {
       Properties authProps = new Properties();
       try {
         authProps.load(authConfigStream);
+        //TODO rao by Djer |Design Patern| Attention lorsque tu aura externalisé, défini une valeur par defaut et n'écrase que si pas "null" dans le fichier pour conserver le ZeroConf
         appId = authProps.getProperty("appId");
         appPassword = authProps.getProperty("appPassword");
         redirectUrl = authProps.getProperty("redirectUrl");
@@ -178,6 +184,7 @@ public class AuthHelper {
       return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(),
           "authorization_code", authCode, getRedirectUrl()).execute().body();
     } catch (IOException e) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       TokenResponse error = new TokenResponse();
       error.setError("IOException");
       error.setErrorDescription(e.getMessage());
@@ -219,6 +226,7 @@ public class AuthHelper {
         return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
             "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
       } catch (IOException e) {
+        //TODO roa by Djer |Log4J| Une petite log ?
         TokenResponse error = new TokenResponse();
         error.setError("IOException");
         error.setErrorDescription(e.getMessage());

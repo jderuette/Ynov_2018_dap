@@ -29,6 +29,7 @@ public class MailController {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
+    //TODO roa by Djer |Rest API| Evite les majuscule dans les URL, le support par les navigauteurs est "hasardeux"
     @RequestMapping("/Gmail/listLabel")
     public final List<String> getListLabel(final @RequestParam("userKey") String userKey)
             throws IOException, GeneralSecurityException {

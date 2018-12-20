@@ -77,6 +77,7 @@ public class IdToken {
         return null;
       }
     } catch (Exception e) {
+      //TODO roa by Djer |Log4J| Une petite log ? "e.printStackTrace()" Afficeh direectement dans la console, contrairement aux log qui sont configurables
       e.printStackTrace();
     }
     return newToken;
@@ -171,6 +172,8 @@ public class IdToken {
     // Check expiration and not before times
     if (now.after(this.getUnixEpochAsDate(this.expirationTime)) ||
         now.before(this.getUnixEpochAsDate(this.notBefore))) {
+      //TODO roa by Djer |Log4J| Une petite log ?
+        //TODO roa by Djer |POO| Evite les multiples returns dans une même méthode
       // Token is not within it's valid "time"
       return false;
     }
@@ -178,6 +181,8 @@ public class IdToken {
     // Check nonce
     if (!nonce.equals(this.getNonce())) {
       // Nonce mismatch
+      //TODO roa by Djer |Log4J| Une petite log ?
+      //TODO roa by Djer |POO| Evite les multiples returns dans une même méthode
       return false;
     }
 

@@ -37,12 +37,14 @@ public class ContactsController {
    * @return template
    */
   @RequestMapping("/contacts")
+  //TODO roa by Djer |MVC| Séparation Controller / services ?
   public String contacts(final Model model, final HttpServletRequest request,
     final RedirectAttributes redirectAttributes) {
     HttpSession session = request.getSession();
     TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
     if (tokens == null) {
       // No tokens in session, user needs to sign in
+      //TODO roa by Djer |Log4J| Une petite log ?
       redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
       return "redirect:/index.html";
     }
@@ -67,6 +69,7 @@ public class ContactsController {
           .execute().body();
       model.addAttribute("contacts", contacts.getValue());
     } catch (IOException e) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       redirectAttributes.addFlashAttribute("error", e.getMessage());
       return "redirect:/index.html";
     }

@@ -48,6 +48,8 @@ public abstract class ConnexionGoogle {
         scope.add(CalendarScopes.CALENDAR_READONLY);
         scope.add(GmailScopes.GMAIL_LABELS);
         //chargement des credentials
+        //TODO roa by Djer |Design Patern| Externalisation du fichier ? (utilise un InputStream)
+        //TODO roa by Djer |POO| Evite d'utiliser une "autre classe" pour le getResourceAsStream, utilise la classe en cours, sinon du cré un dépendance (pas très utile)
         InputStream in = GoogleCalendar.class.getResourceAsStream(Config.getCredentialFilePath());
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in));
         //interogation de l'API google et récupération des credentials et secrets

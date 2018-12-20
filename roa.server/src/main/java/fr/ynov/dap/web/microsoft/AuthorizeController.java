@@ -80,19 +80,25 @@ public class AuthorizeController {
           user = outlookService.getCurrentUser().execute().body();
           session.setAttribute("userEmail", user.getMail());
         } catch (IOException e) {
+          //TODO roa by Djer |Log4J| Une petite log ?
           session.setAttribute("error", e.getMessage());
         }
         session.setAttribute("userTenantId", idTokenObj.getTenantId());
         model.addAttribute("authCode", code);
         model.addAttribute("idToken", idToken);
         model.addAttribute("accessToken", tokenResponse.getAccessToken());
+      //FIXME roa by Djer |JPA| C'est par ici que tu devrait suavegarder les "tokens" Microsoft en BDD
       } else {
+        //TODO roa by Djer |Log4J| Une petite log ?
         session.setAttribute("error", "ID token failed validation.");
       }
     } else {
+      //TODO roa by Djer |Log4J| Une petite log ?
       session.setAttribute("error", "Unexpected state returned from authority.");
+    //TODO roa by Djer |Rest API| Pas de SysOut sur un serveur
       System.out.println("error state: " + state.toString());
     }
+    
     return "mail";
   }
 

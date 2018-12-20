@@ -43,6 +43,8 @@ public class CredentialsService {
         for (Integer i = 0; i < credentials.size(); i++) {
             listCredentials.put(keys.get(i), listStoredCredentials.get(i));
         }
+        
+        //TODO roa by Djer |API Microsoft| Récupération des infos sur les comptes Microsoft ? 
         return listCredentials;
     }
 }

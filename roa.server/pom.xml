@@ -42,6 +42,7 @@
    <groupId>org.springframework.boot</groupId>
    <artifactId>spring-boot-starter-data-jpa</artifactId>
   </dependency>
+  <!-- TODO roa by Djer |Maven| Plus utile depuis que tu utilises MySQL -->
   <dependency>
    <groupId>com.h2database</groupId>
    <artifactId>h2</artifactId>
@@ -57,6 +58,7 @@
    <artifactId>google-api-client</artifactId>
    <version>1.23.0</version>
   </dependency>
+  <!-- TODO roa by Djer |Maven| Plus utile depuis que Google est en mode "serveur web" -->
   <dependency>
    <groupId>com.google.oauth-client</groupId>
    <artifactId>google-oauth-client-jetty</artifactId>
@@ -87,26 +89,31 @@
    <artifactId>log4j-jcl</artifactId>
    <version>2.9.1</version>
   </dependency>
+  
   <dependency>
    <groupId>mysql</groupId>
    <artifactId>mysql-connector-java</artifactId>
+   <!-- TODO roa by Djer |Maven| Pourquoi ne pas laissé la version proposé par Spring Boot ? -->
    <version>5.1.46</version>
   </dependency>
   <dependency>
    <groupId>com.fasterxml.jackson.core</groupId>
    <artifactId>jackson-core</artifactId>
+   <!-- TODO roa by Djer |Maven| Pourquoi ne pas laissé la version proposé par Spring Boot ? -->
    <version>2.9.4</version>
   </dependency>
 
   <dependency>
    <groupId>com.fasterxml.jackson.core</groupId>
    <artifactId>jackson-annotations</artifactId>
+   <!-- TODO roa by Djer |Maven| Pourquoi ne pas laissé la version proposé par Spring Boot ? -->
    <version>2.9.4</version>
   </dependency>
 
   <dependency>
    <groupId>com.fasterxml.jackson.core</groupId>
    <artifactId>jackson-databind</artifactId>
+   <!-- TODO roa by Djer |Maven| Pourquoi ne pas laissé la version proposé par Spring Boot ? -->
    <version>2.9.4</version>
   </dependency>
   <dependency>
@@ -136,6 +143,7 @@
       <manifest>
        <addClasspath>true</addClasspath>
        <classpathPrefix>lib/</classpathPrefix>
+       <!-- TODO roa by Djer |Maven| Ce n'est plus la bonne classe -->
        <mainClass>fr.ynov.dap.dap.App</mainClass>
       </manifest>
      </archive>
@@ -163,6 +171,7 @@
      </descriptorRefs>
      <archive>
       <manifest>
+      <!-- TODO roa by Djer |Maven| Ce n'est pas la bonne classe -->
        <mainClass>fr.houseofcode.dataAccessProject.App</mainClass>
       </manifest>
      </archive>
@@ -195,6 +204,7 @@
          implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
         <transformer
          implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+         <!-- TODO roa by Djer |Maven| start-class n'est pas définie -->
          <mainClass>${start-class}</mainClass>
         </transformer>
        </transformers>

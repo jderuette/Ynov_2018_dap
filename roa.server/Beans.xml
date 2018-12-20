@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- TODO roa by Djer inutile et en doublon avec l'annotation @Bean de App. 
+	<!-- TODO roa by Djer |Spring| Il vaut mieu éviter de mélanger les Annotation et la configuration XML dans un même projet. Cf class Config pour comment exposer ta config
 		Evite de mélanger configuration Spring XML et configuration Spring Annotations -->
 	<bean id="Config" class="fr.ynov.dap.dap.Config" scope="singleton">
 	</bean>

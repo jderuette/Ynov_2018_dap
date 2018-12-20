@@ -3,6 +3,8 @@ package fr.ynov.dap;
  * Classe de configuration.
  * @author alex
  */
+//TODO roa by Djer |Design Patern| Pour le princiep ZeroConf, crée plutot une "vrai classe" (sans "static de partout), avec des constante pour elsvaleur par defaut, et des attributs pour la modifications.
+//TODO roa by Djer |Spring| Pour demander a Spring de "créer une config par dafaut", tu as 2 options, une méthode, anoté par @Bean qui créer (et configure) une instance de Config (dnas ton launcher par exemple). Annoter avec @Configuration ta classe config (ou n'importe quelle annotation "spring" qui créra un Singleton pour toi). L'option @Configuration est moins flexible
 public abstract class Config {
   /**
    * Chemin de récupération des credentials pour la connexion à google.

@@ -23,6 +23,7 @@ import fr.ynov.dap.services.microsoft.TokenResponse;
  *
  */
 @Controller
+//TODO roa by Djer |MVC| Séparation Controller / services ?
 public class EventsController {
   /**
    * nombre maximal de résultat renvoyé.
@@ -41,6 +42,7 @@ public class EventsController {
     HttpSession session = request.getSession();
     TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
     if (tokens == null) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       // No tokens in session, user needs to sign in
       redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
       return "redirect:/index.html";
@@ -66,6 +68,7 @@ public class EventsController {
           .execute().body();
       model.addAttribute("events", events.getValue());
     } catch (IOException e) {
+      //TODO roa by Djer |Log4J| Une petite log ?
       redirectAttributes.addFlashAttribute("error", e.getMessage());
       return "redirect:/index.html";
     }

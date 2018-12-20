@@ -72,10 +72,12 @@ public class GoogleAccountController extends ConnexionGoogle {
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
             final Credential credential = flow.createAndStoreCredential(response, userId);
             if (null == credential || null == credential.getAccessToken()) {
+              //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
                 LogManager.getLogger().warn("Trying to store a NULL AccessToken for user : " + userId);
             }
             if (LogManager.getLogger().isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
+                  //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
                     LogManager.getLogger().debug("New user credential stored with userId : " + userId
                             + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
@@ -84,8 +86,11 @@ public class GoogleAccountController extends ConnexionGoogle {
             GoogleAccount account = new GoogleAccount();
             account.setAccountName(userId);
             repository.findByUserKey(userKey).adGoogleAccount(account);
+            //TODO roa by Djer |JPA| Attention, tu save "ce qui est lut en BDD". lors du "repository.findByUserKey(userKey)" conserve la valeur de retour (dans un "currentUser") puis ajoute le compte, et enfin "save" le "currentuser" qui aura été modifié
             repository.save(repository.findByUserKey(userKey));
         } catch (IOException e) {
+          //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
+            //TODO roa by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + userId)
             LogManager.getLogger().error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying " + "to connect Google Account");
         }
@@ -104,6 +109,7 @@ public class GoogleAccountController extends ConnexionGoogle {
             param = (String) session.getAttribute(nomParam);
         }
         if (null == param) {
+          //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
             LogManager.getLogger().error("userId in Session is NULL in Callback");
             throw new ServletException("Error when trying to add " + "Google account : userId is NULL is User Session");
         }
@@ -126,6 +132,7 @@ public class GoogleAccountController extends ConnexionGoogle {
             throw new MissingServletRequestParameterException("code", "String");
         }
         if (null != responseUrl.getError()) {
+          //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
             LogManager.getLogger().error("Error when trying" + " to add Google acocunt : " + responseUrl.getError());
             throw new ServletException("Error when trying" + " to add Google acocunt");
         }
@@ -175,6 +182,7 @@ public class GoogleAccountController extends ConnexionGoogle {
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+          //TODO roa by Djer |log4J| Ne récupère pas une instance de logger "à la volé", utilise une constante de classe
             LogManager.getLogger().error("Error while loading credential (or Google Flow)", e);
         }
         return response;

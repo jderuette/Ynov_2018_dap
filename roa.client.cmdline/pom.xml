@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 	
-	<!-- TODO roa by Djer le client n'a pas besoin de SpringBoot -->
+	<!-- TODO roa by Djer |Maven| le client n'a pas besoin de SpringBoot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -26,7 +26,7 @@
 
 
 	<dependencies>
-	<!-- TODO roa by Djer le client n'a pas besoin de la majorité de ces dépendances -->
+	<!-- TODO roa by Djer |Maven| le client n'a pas besoin de la majorité de ces dépendances -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -70,8 +70,7 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
-			<!-- TODO roa by Djer évite de "mélanger" des version, log4J-JCL étant "proche" de Log4J-core 
-			il vaut mieux utiliser la même version (ou bien savoir ce que tu fais !!)
+			<!-- TODO roa by Djer |Maven| (ancien TO-DO) évite de "mélanger" des version, log4J-JCL étant "proche" de Log4J-core il vaut mieux utiliser la même version (ou bien savoir ce que tu fais !!). Tu devrais utulisé la version 2.9.1 (celle  proposé par spring-Boot est 2.10.0 qui pose des problems aux ouils d'audit de code)
 			<version>2.11.1</version>
 			-->
 		</dependency>
@@ -87,8 +86,9 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<!-- TODO roa by Djer Pas vrai, elle n'est PAS ici ! -->
-							<mainClass>fr.ynov.dap.dap.App</mainClass>
+							<!-- TODO roa by Djer |maven| (ancien TO-DO) Pas vrai, elle n'est PAS ici ! (j'ai modifié) -->
+							<!-- <mainClass>fr.ynov.dap.dap.App</mainClass> -->
+							<mainClass>fr.ynov.dap.clientapi.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -116,8 +116,9 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-						<!-- TODO roa by Djer Pas vrai, elle n'est PAS ici ! -->
-							<mainClass>fr.houseofcode.dataAccessProject.App</mainClass>
+						<!-- TODO roa by Djer |Maven| (ancineTO-DO) Pas vrai, elle n'est PAS ici ! (j'ai modifié) -->
+							<!-- <mainClass>fr.houseofcode.dataAccessProject.App</mainClass> -->
+							<mainClass>fr.ynov.dap.clientapi.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

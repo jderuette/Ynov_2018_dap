@@ -40,11 +40,14 @@ public class App {
     switch (args[0]) {
     case "userAdd":
       System.out.println(executeURL("http://localhost:8080/user/add/" + args[1]));
+      //TODO roa by Djer |POO| Tu as oublié un "break" ici
     case "add":
       if (args.length <= 2) {
         System.out.println("pas assez d'argument");
         break;
       }
+      //TODO roa by djer |Rest API| jout de comtpe Google VS Microsoft ?
+      //TODO roa by Djer |Rest API| Cette route n'est plus valide (maintenant c'est /add/account/{accountName})
       URL url = new URL("http://localhost:8080/account/add/" + args[1]
         + "?userKey=" + args[2]);
       Desktop.getDesktop().browse(url.toURI());
