@@ -16,6 +16,8 @@ public class GeneralEvent {
      */
     private String organisator;
 
+    //TODO phd by Djer |POO| Ne mélange pas tes attribtus et tes getters/setters
+
     /**
      * @return the subject
      */

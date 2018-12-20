@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: client
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Dom
+Built-By: djer1
 Implementation-Vendor-Id: fr.ynov.dap
 Class-Path: lib/spring-boot-starter-web-2.0.5.RELEASE.jar lib/spring-b
  oot-starter-2.0.5.RELEASE.jar lib/spring-boot-2.0.5.RELEASE.jar lib/s
@@ -21,11 +21,11 @@ Class-Path: lib/spring-boot-starter-web-2.0.5.RELEASE.jar lib/spring-b
  LEASE.jar lib/spring-beans-5.0.9.RELEASE.jar lib/spring-webmvc-5.0.9.
  RELEASE.jar lib/spring-aop-5.0.9.RELEASE.jar lib/spring-context-5.0.9
  .RELEASE.jar lib/spring-expression-5.0.9.RELEASE.jar lib/log4j-api-2.
- 9.1.jar lib/log4j-core-2.9.1.jar lib/log4j-jcl-2.11.1.jar lib/commons
- -logging-1.2.jar lib/log4j-jul-2.11.1.jar lib/okhttp-2.7.5.jar lib/ok
- io-1.6.0.jar lib/gson-2.8.5.jar lib/json-20180813.jar lib/jackson-cor
- e-2.9.7.jar
-Build-Jdk: 1.8.0_171
+ 9.1.jar lib/log4j-core-2.9.1.jar lib/log4j-jcl-2.9.1.jar lib/commons-
+ logging-1.2.jar lib/log4j-jul-2.9.1.jar lib/okhttp-2.7.5.jar lib/okio
+ -1.6.0.jar lib/gson-2.8.5.jar lib/json-20180813.jar lib/jackson-core-
+ 2.9.7.jar
+Build-Jdk: 1.8.0_191
 Implementation-URL: http://maven.apache.org
 Created-By: Maven Integration for Eclipse
 Main-Class: fr.ynov.dap.client.Launcher

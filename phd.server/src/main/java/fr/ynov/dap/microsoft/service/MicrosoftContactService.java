@@ -34,6 +34,7 @@ public class MicrosoftContactService {
     * @return .
     * @throws IOException .
     */
+    //TODO phd by Djer |POO| Devrait être privée
     public int getNbContact(final String accessToken, final String email) throws IOException {
 
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(accessToken, email);
@@ -54,6 +55,7 @@ public class MicrosoftContactService {
     * @return .
     * @throws IOException .
     */
+    //TODO phd by Djer |Spring| @RequestParam n'est plus utile ici
     public int getNbContactAllAccount(@RequestParam("userId") final String userId) throws IOException {
         AppUser user = userRepository.findByName(userId);
         List<MicrosoftAccountData> accounts = user.getAccountsMicrosoft();

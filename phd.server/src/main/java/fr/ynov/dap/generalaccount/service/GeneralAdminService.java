@@ -49,6 +49,7 @@ public class GeneralAdminService extends GoogleService {
      *
      * @return .
      */
+    //TODO phd by Djer |POO| Devrait être privé
     public Iterable<MicrosoftAccountData> getDataStoreMicrosoft() {
 
         return microsoftRepository.findAll();

@@ -16,6 +16,7 @@ import fr.ynov.dap.service.GoogleService;
 @RestController
 public class CreateUserController extends GoogleService {
     /**
+     * TODO phd by Djer |JavaDoc| . (point)
      * .
      */
     @Autowired
@@ -29,6 +30,7 @@ public class CreateUserController extends GoogleService {
         AppUser appUser = new AppUser();
         appUser.setName(userId);
         appUserRepository.save(appUser);
+        //TODO phd by Djer |MVC| Au moin un petit message "OK" (en appelant par le naviguateur on a une page blache, et via l'API on aurait juste "pas de réponse) ce qui est perturbant
     }
 
 }

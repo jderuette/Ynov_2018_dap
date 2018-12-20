@@ -43,6 +43,7 @@ public class ContactsController {
      * @throws IOException .
      * @param userId .
      */
+  //TODO phd by Djer |Spring| Tu pourrais mettre "/microsoft" en @RequestMapping de la **classe**, ca sera alors un prefixe a toutes les routes définie par les méthodes de la classe
     @RequestMapping("/microsoft/contacts")
     public String contacts(final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectAttributes, @RequestParam("userId") final String userId)
@@ -51,10 +52,12 @@ public class ContactsController {
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
             // No tokens in session, user needs to sign in
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
         }
 
+        //TODO phd by Djer |JPA| Evite d'utiliser la session, ces données ne sont ajouté que lorsque'on ajoute un compte. utilise tes données en BDD (en demandant à l'utilisateur son userKey (éventuellement via l'URL)). Deplsu ce travail serait dans le service ce qui allègerait ton controller
         String tenantId = (String) session.getAttribute("userTenantId");
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
@@ -72,6 +75,7 @@ public class ContactsController {
             model.addAttribute("contacts", contacts.getValue());
             model.addAttribute("nbContacts", nbContact);
         } catch (IOException e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/index.html";
         }
@@ -83,19 +87,21 @@ public class ContactsController {
     }
 
     /**
-     *
+     * TODO phd by Djer |JavaDoc| Ta documentation ne m'aide pas trop à voir la différence avec la méthode mappée sur /microsoft/contacts ...
      * @param model .
      * @param request .
      * @param redirectAttributes .
      * @return .
      * @throws IOException .
      */
+  //TODO phd by Djer |Spring| Tu pourrais mettre "/microsoft" en @RequestMapping de la **classe**, ca sera alors un prefixe a toutes les routes définie par les méthodes de la classe
     @RequestMapping("/microsoft/contactCurrent")
     public String contactCurrent(final Model model, final HttpServletRequest request,
             final RedirectAttributes redirectAttributes) throws IOException {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
@@ -118,6 +124,7 @@ public class ContactsController {
             model.addAttribute("contacts", contacts.getValue());
             model.addAttribute("nbContacts", nbContact);
         } catch (IOException e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/index.html";
         }

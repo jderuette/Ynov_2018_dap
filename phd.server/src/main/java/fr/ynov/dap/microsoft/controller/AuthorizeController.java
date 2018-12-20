@@ -63,6 +63,7 @@ public class AuthorizeController {
         AppUser userAccount = appUserRepository.findByName(userId);
 
         if (userAccount == null) {
+            //TODO phd by Djer |Log4J| Tu peux mettre ce message dasn un seul paramttre. Contextualise tes messages (" for userKey : " + userId + " and accountName : " + microsoftAccountName)
             LOG.error("Error", "This user does not exist");
         }
 
@@ -112,6 +113,7 @@ public class AuthorizeController {
                 AppUser currentUser = appUserRepository.findByName(userId);
 
                 if (currentUser == null) {
+                  //TODO phd by Djer |Log4J| Tu peux mettre ce message dasn un seul paramttre. Contextualise tes messages (" for userKey : " + userId + " and accountName : " + microsoftAccountName)
                     LOG.error("Error", "The currentUser does not exits");
                 }
 
@@ -134,19 +136,23 @@ public class AuthorizeController {
                     msAccount.setUserEmail(user.getMail());
 
                     if (null != msAccount) {
+                        //TODO phd by Djer |JPA| Attention, tu as déja ajouté le account ligne 126. Avec de la chance JPA va détecter que tu ajoutes deux fois la même (peudo)référence, mais c'est pas certains et pas très clean. En modifaint le account, cela va automatiquement modifier celui dans la liste (le "add" ajoute par référence)
                         currentUser.adMicrosoftAccount(msAccount);
                         appUserRepository.save(currentUser);
                     }
 
                 } catch (IOException e) {
+                  //TODO phd by Djer |Log4J| Une petite log ?
                     session.setAttribute("error", e.getMessage());
                 }
 
                 session.setAttribute("userTenantId", idTokenObj.getTenantId());
             } else {
+              //TODO phd by Djer |Log4J| Une petite log ?
                 session.setAttribute("error", "ID token failed validation.");
             }
         } else {
+          //TODO phd by Djer |Log4J| Une petite log ?
             session.setAttribute("error", "Unexpected state returned from authority.");
         }
 

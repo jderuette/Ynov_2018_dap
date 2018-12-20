@@ -38,6 +38,7 @@ public class GeneralAdminController {
     public String admin(final ModelMap model) throws IOException, GeneralSecurityException {
         Map<String, StoredCredential> map = generalAdminService.getCredentialsAdminDetails();
         Iterable<MicrosoftAccountData> iterable = generalAdminService.getDataStoreMicrosoft();
+        //TODO phd by Djer |POO| Donne de "vrai" nom a tes variables (pour conserver de la clarté dans tes vues)
         model.addAttribute("map", map);
         model.addAttribute("iterable", iterable);
         model.addAttribute("googleType", "Google");

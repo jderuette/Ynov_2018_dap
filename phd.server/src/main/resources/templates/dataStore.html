@@ -12,12 +12,13 @@
 
 </head>
 <body>
-	<h1>welcome</h1>
+	<h1>welcome</h1><!-- TODO phd by Djer |Thymleaf| Internationalisation ? -->
 	<table>
 		<tr th:each="m : ${map}">
 			<td th:text="${m.key}">Name</td>
 			<td th:text="${m.value.getAccessToken()}">Credentials</td>
 	</table>
+	<!-- TODO phd by Djer |Thymleaf| Fin de quel TR ? -->
 	</tr>
 </body>
 </html>

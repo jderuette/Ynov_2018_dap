@@ -169,6 +169,7 @@
         </plugins>
     </build>
 
+<!-- TODO phd by Djer |Maven| Il y a un ordre attendu dans un pom.xml, tes dépendances devraient être avant la section build -->
 
     <dependencies>
     
@@ -187,6 +188,7 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+<!-- TODO phd by Djer |Maven| Plus utile depuis que tu utilise MySQL -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -210,6 +212,7 @@
             <version>1.25.0</version>
         </dependency>
 
+<!-- TODO phd by Djer |Maven| Plus utile depuis que Google est en mdoe "serveur web" -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -231,21 +234,25 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
+            <!-- TODO phd by Djer |Maven| La version par defaut de Spring-Boot pose des problemes aux outils d'analyse de code, utilise la vers 2.9.1 -->
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <!-- TODO phd by Djer |Maven| La version par defaut de Spring-Boot pose des problemes aux outils d'analyse de code, utilise la vers 2.9.1 -->
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
+            <!-- TODO phd by Djer |Maven| La version par defaut de Spring-Boot pose des problemes aux outils d'analyse de code, utilise la vers 2.9.1 -->
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
+            <!-- TODO phd by Djer |Maven| La version par defaut de Spring-Boot pose des problemes aux outils d'analyse de code, utilise la vers 2.9.1 -->
         </dependency>
 
         <dependency>
@@ -260,12 +267,14 @@
             <version>20180813</version>
         </dependency>
         
+        <!-- TODO phd by Djer |Maven| Plus utile depuis que tu utilise thymeleaf -->
          <dependency>
     <groupId>javax.servlet</groupId>
     <artifactId>javax.servlet-api</artifactId>
     <scope>provided</scope>
   </dependency>
 
+<!-- TODO phd by Djer |Maven| Plus utile depuis que tu utilise thymeleaf -->
   <dependency>
     <groupId>javax.servlet.jsp</groupId>
     <artifactId>javax.servlet.jsp-api</artifactId>
@@ -273,18 +282,21 @@
     <scope>provided</scope>
   </dependency>
 
+<!-- TODO phd by Djer |Maven| Plus utile depuis que tu utilise thymeleaf -->
   <dependency>
     <groupId>jstl</groupId>
     <artifactId>jstl</artifactId>
     <version>1.2</version>
   </dependency>
 
+<!-- TODO phd by Djer |Maven| Plus utile depuis que tu utilise thymeleaf -->
   <dependency>
     <groupId>org.apache.tiles</groupId>
     <artifactId>tiles-core</artifactId>
     <version>${apache.tiles.version}</version>
   </dependency>
 
+<!-- TODO phd by Djer |Maven| plus utile depuis que tu utilise thymeleaf -->
   <dependency>
     <groupId>org.apache.tiles</groupId>
     <artifactId>tiles-jsp</artifactId>

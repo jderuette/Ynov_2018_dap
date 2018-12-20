@@ -52,6 +52,7 @@ public class GoogleService {
     @Autowired
     private Config config;
 
+    //TODO phd by Djer |POO| Les getter/setter vont en génral vers la fin de la classe
     /**
      * @return the config
      */

@@ -38,7 +38,7 @@ public class CalendarService extends GoogleService {
 
     /**.
      * Return the service of calendar according userId param
-     * @param userId .
+     * @param userId . TODO phd by Djer |JavaDoc| Il faut lire "accountName" ici je supose ?
      * @return .
      * @throws GeneralSecurityException .
      * @throws IOException .
@@ -74,6 +74,7 @@ public class CalendarService extends GoogleService {
                 Date eventBegin = new Date(event.getStart().getDateTime().getValue());
                 Date eventFinish = new Date(event.getEnd().getDateTime().getValue());
                 mHashMap.put("eventUncomming", event.getSummary());
+                //TODO phd by Djer |IDE| Pourquoi ne pas utiliser l'alternative "non dépréciée" ?
                 mHashMap.put("eventBegin", eventBegin.toLocaleString());
                 mHashMap.put("eventFinish", eventFinish.toLocaleString());
                 mHashMap.put("eventStatus", event.getAttendees());
@@ -101,11 +102,13 @@ public class CalendarService extends GoogleService {
             event = getNextEvent(accountData.getAccountName());
             listEvent.add(event);
         }
+      //TODO phd by Djer |POO| Nom de variable qui prete à confusion, il s'agit en faite de "now". Relis ton algo qui cherche le plus récent et tu veras qu'il ne fonctionne pas bien
         long dateMillisecondsMostRecent = System.currentTimeMillis();
         long dateMilliseconds;
 
         if (listEvent != null) {
             for (int i = 0; i < listEvent.size(); i++) {
+                //TODO phd by Djer |API Google| Attention getStart().getDateTime() est null pour les évènnement qui dure toutes la journée
                 dateMilliseconds = listEvent.get(i).getStart().getDateTime().getValue();
                 if (dateMillisecondsMostRecent > dateMilliseconds) {
                     eventMostRecent = listEvent.get(i);

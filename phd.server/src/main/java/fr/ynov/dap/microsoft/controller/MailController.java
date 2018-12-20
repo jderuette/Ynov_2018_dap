@@ -54,6 +54,7 @@ public class MailController {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
@@ -67,6 +68,7 @@ public class MailController {
             model.addAttribute("messagess", microsoftMailService.getMessagesAllAccount(userId));
 
         } catch (IOException e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectAttributes.addFlashAttribute("logoutLabel", "Disconneting successfull");
             return "redirect:/";
@@ -89,6 +91,7 @@ public class MailController {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
@@ -116,6 +119,7 @@ public class MailController {
                     .body();
             model.addAttribute("messages", messages.getValue());
         } catch (IOException e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/index.html";
         }

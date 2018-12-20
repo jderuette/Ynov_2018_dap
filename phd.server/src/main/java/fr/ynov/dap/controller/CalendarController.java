@@ -31,6 +31,7 @@ public class CalendarController {
      * @throws GeneralSecurityException .
      * @throws IOException .
      */
+    //TODO phd by Djer |Spring| Tu pourrias mettre "/google" en @RequestMapping de la **classe**, ca sera alors un prefixe a toutes les routes définie par les méthodes de la classe
     @RequestMapping("/google/getEventUncomming")
     public Map<String, Object> getEvent(@RequestParam("userKey") final String userKey)
             throws GeneralSecurityException, IOException {

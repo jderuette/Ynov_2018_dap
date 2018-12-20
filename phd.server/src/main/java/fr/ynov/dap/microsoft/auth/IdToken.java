@@ -82,6 +82,7 @@ public class IdToken {
                 return null;
             }
         } catch (Exception e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             e.printStackTrace();
         }
         return newToken;
@@ -248,12 +249,16 @@ public class IdToken {
         if (now.after(this.getUnixEpochAsDate(this.expirationTime))
                 || now.before(this.getUnixEpochAsDate(this.notBefore))) {
             // Token is not within it's valid "time"
+          //TODO phd by Djer |Log4J| Une petite log ?
+            //TODO phd by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 
         // Check nonce
         if (!mNonce.equals(this.getNonce())) {
             // Nonce mismatch
+          //TODO phd by Djer |Log4J| Une petite log ?
+            //TODO phd by Djer |POO| Evite les multiples return dans une même méthode
             return false;
         }
 

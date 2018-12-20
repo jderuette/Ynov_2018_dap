@@ -41,8 +41,11 @@ public class PeopleGService extends GoogleService {
      * @throws IOException .
      * @throws GeneralSecurityException .
      */
+    //TODO phd by Djer |POO| Ton "userId" est en faite un accountName
     public int nbContact(final String userId) throws IOException, GeneralSecurityException {
         return this.getServices(userId).people().connections().list("people/me").setPersonFields("names,emailAddresses")
                 .execute().getTotalPeople();
     }
+
+    //TODO phd by Djer |API Google| Nombre de contact sur TOUS les comtpes Google de l'utilisateur ?
 }

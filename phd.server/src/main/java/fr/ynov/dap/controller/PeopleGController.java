@@ -33,6 +33,7 @@ public class PeopleGController {
     @RequestMapping("/google/getPeople")
     public String getNbContact(@RequestParam("userKey") final String userKey)
             throws IOException, GeneralSecurityException {
+        //TODO phd by Djer |Rest API| Renvoie des données, et laisse le client effectué l'affichage
         return "Nb contact : " + peopleService.nbContact(userKey);
     }
 

@@ -33,10 +33,13 @@ public class DataStoreController extends GoogleService {
         final GoogleAuthorizationCodeFlow flow = super.getFlow();
         DataStore<StoredCredential> datastore = flow.getCredentialDataStore();
         Map<String, StoredCredential> map = new HashMap<String, StoredCredential>();
+        //TODO phd by Djer |POO| "stringValue" dit ce que c'est mais pas ce que sa represente, ici il s'agit du "userId" (du point de vue Google) et de l'accountName (du point de vue dap)
         for (String stringValue : datastore.keySet()) {
+            //TODO phd by Djer |Audit Code| PMD te dit que ca n'est pas utile d'appelr "toString" sur un String ....
             map.put(stringValue.toString(), datastore.get(stringValue));
         }
 
+        //TODO phd by Djer |POO| "map" n'est pas très paralant, credentialList ou "credentials" ou "googleCredential" serait plus parlant
         model.addAttribute("map", map);
         return "dataStore";
     }

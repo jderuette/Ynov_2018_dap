@@ -27,6 +27,7 @@
 				<td th:text="${contact.givenName}"></td>
 				<td th:text="${contact.surname}"></td>
 				<td th:text="${contact.companyName}"></td>
+				<!-- TODO phd by Djer |Thymleaf| Soit un "th:ul" soit un "th:block" mais il faut choisir ! -->
 				<td><ul:block th:each="email : ${contact.emailAddresses}">
 						<li th:text="${email.address}"></li>
 					</ul:block></td>

@@ -46,6 +46,7 @@ public class AppUser {
     /**
      * @param account .
      */
+  //TODO phd by Djer |POO| Il manque un "d" a ton "add"
     public void adGoogleAccount(final GoogleAccountData account) {
         account.setOwner(this);
         this.getGoogleAccounts().add(account);
@@ -54,6 +55,7 @@ public class AppUser {
     /**
      * @param account Microsoft
      */
+    //TODO phd by Djer |POO| Il manque un "d" a ton "add"
     public void adMicrosoftAccount(final MicrosoftAccountData account) {
         account.setOwner(this);
         this.getAccountsMicrosoft().add(account);

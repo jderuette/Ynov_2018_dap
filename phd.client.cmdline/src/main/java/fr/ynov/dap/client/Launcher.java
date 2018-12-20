@@ -53,7 +53,9 @@ public final class Launcher {
                 }
             }
         }
-
+        //TODO phd by Djer |Rest API| Ajout d'utilisateur ?
+      //TODO phd by Djer |API Google| Ajout de comtpe Google ?
+      //TODO phd by Djer |API Microsoft| Ajout de compte Microsoft ?
     }
 
     /**
@@ -71,7 +73,7 @@ public final class Launcher {
 
             @Override
             public void onError(final IOException e) {
-
+                    //TODO phd by Djer |Log4J| Une petite log ?
             }
         }, url);
 

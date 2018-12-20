@@ -22,12 +22,14 @@ public class TokenResponse {
     /**
      *
      */
+    //TODO phd by Djer |JPA| Es-tu sure que descolonens "String" de cette taill là rentre dans une table d'une BDD MySQL ?
     private static final int MAX_LENGTH = 1000000;
     /**
      *
      */
     @Id
     @GeneratedValue
+    //TODO phd by Djer |JPA| Name et nullable, ont déja ces valeur via l'annotation @Id
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
     /**

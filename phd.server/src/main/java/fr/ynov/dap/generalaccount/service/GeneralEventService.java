@@ -44,7 +44,9 @@ public class GeneralEventService {
         Event eventCalendar = calendarService.getNextEventForAll(userId);
         GeneralEvent generalEvent = new GeneralEvent();
         if (eventMicrosoft != null && eventCalendar != null) {
+            //TODO phd by Djer |API Google| Attention le getStart().getDateTime() est null piour un évènnement qui dure "toutes la journée", il faut alors utiliser getStart().getDate()
             if (eventMicrosoft.getStart().getDateTime().getTime() < eventCalendar.getStart().getDateTime().getValue()) {
+                //TODO phd by Djer |POO| Une methode utilitaire sur GeneralEvent : "from(Event)" (une pour Microsfot et une pour Google), ou un constructeur, rendrait ton code plus lisible et éviterai de dupliquer le code "d'initialisation"
                 generalEvent.setSubject(eventMicrosoft.getSubject());
                 generalEvent.setOrganisator(eventMicrosoft.getOrganizer().getEmailAddress().getAddress());
                 generalEvent.setEventStart(eventMicrosoft.getStart().toString());
@@ -70,6 +72,8 @@ public class GeneralEventService {
             generalEvent.setEventStart(eventCalendar.getStart().getDateTime().toString());
             generalEvent.setEventEnd(eventCalendar.getEnd().getDateTime().toString());
         }
+
+        //TODO phd by Djer |API Google| Gestion de "mon" status ?
 
         return generalEvent;
     }

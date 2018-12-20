@@ -47,6 +47,8 @@ public class GoogleAccountController extends GoogleService {
     /**
      * .
      */
+    //TODO phd by Djer |Log4J| Devrait être static (pas besoin d'une instance par classe, car toutes les instances partageront la même catégorie) et final (pas besoin de modifier la (pseudo) référence)
+    //TODO phd by Djer |Log4J| Utilise le nom pleinnement qualifé pour la caégorie, cela permet de faire des "filtres" sur le package. Avec log4J, si tu ne précise pas de catégorie il va automatiquement utiliser le nom pleinnement qualifié de la classe qui déclare le logger
     private Logger logger = Logger.getLogger("GoogleAccount");
 
     /**
@@ -85,6 +87,7 @@ public class GoogleAccountController extends GoogleService {
             if (null == credential || null == credential.getAccessToken()) {
                 logger.warning("Trying to store a NULL AccessToken for user : " + userKey);
             } else {
+                //TODO phd by Djer |Log4J| Si tu log en "severe" en général on ne vérifie pas si c'est loggable (c'est quasiment tout le temsp le cas). Si toutes fois tu souhaites vérifié, vérifie bien le level "severe" et pas "all"
                 if (logger.isLoggable(Level.ALL)) {
                     logger.severe("New user credential stored with userId : " + accountName + "partial AccessToken : "
                             + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR, SENSIBLE_DATA_LAST_CHAR));
@@ -94,6 +97,7 @@ public class GoogleAccountController extends GoogleService {
                 account.setAccountName(accountName);
 
                 AppUser appuser = appUserRepository.findByName(userKey);
+                //TODO phd by Djer |POO| Récupère la valeur et fait un "if" si tu veux vérifier si le comtpe existe déja
                 appuser.getGoogleAccounts().stream().anyMatch(u -> u.getAccountName() == accountName);
                 appuser.adGoogleAccount(account);
                 appUserRepository.save(appuser);
@@ -101,10 +105,12 @@ public class GoogleAccountController extends GoogleService {
 
             }
         } catch (IOException e) {
+            //TODO phd by Djer |log4J| Evite de le logger que le message de l'exception (pas toujours très pertinent). Crée ton propre message (avec du CONTEXTE) et ajoute l'exception en deuxième paramètre, il y aura ainsi le message de l'exception ET la pile
             logger.severe(e.getMessage());
             throw new ServletException("Erreur lors de la connection au compte Google, le compte est déjà liée.");
         }
 
+        //TODO phd by Djer |Spring| Attention tu es dans un controller (pas un restController). Les chaines de texte renvoyées par les méthode "mappée" vont chercher a résoudre une "VUE". Tu peux sur cette méthode réjouté une anotation @ResponseBody pour retrovuer le comportement d'un "RestController" ou renvoyer le nom d'une vue (accountAdded par exemple)
         return "Vous êtes bien connecté(e). Le compte " + accountName + " est bien liée avec l'utilisateur : "
                 + userKey;
     }
@@ -228,8 +234,10 @@ public class GoogleAccountController extends GoogleService {
                 }
             }
         } catch (IOException e) {
+            //TODO phd by Djer |log4J| Créé ton propre message (contextualisé) et ajoute l'exception en plus
             logger.severe(e.getMessage());
         }
+        //TODO phd by Djer |POO| Ce commentaire n'est plus vrai
         // only when error occurs, else redirected BEFORE
         return response;
     }

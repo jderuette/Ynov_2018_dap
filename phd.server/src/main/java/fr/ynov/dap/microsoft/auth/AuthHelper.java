@@ -39,6 +39,7 @@ public final class AuthHelper {
     /**.
      * AUTH_PROPERTIES_FILE_PATH  is a variable containing the file path of the auth.properties
      */
+  //TODO phd by Djer |Design Patern| Permettre de modifier l'empalcement du fichier de conf ?
     private static final String AUTH_PROPERTIES_FILE_PATH = System.getProperty("user.home")
             + System.getProperty("file.separator") + "dap" + System.getProperty("file.separator") + "auth.properties";
 
@@ -78,6 +79,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO phd by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -94,6 +96,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO phd by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -110,6 +113,7 @@ public final class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO phd by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -124,6 +128,7 @@ public final class AuthHelper {
     private static String getScopes() {
         StringBuilder sb = new StringBuilder();
         for (String scope : scopes) {
+            //TODO phd by Djer |Audit Code| Ton outils d'audit de code t'indique que ca n'est pas top. En effet pour un caractère unique il vaut mieux utiliser les simple quote (cela évite que Java convertisse en chaine de caractère, une chaine d'un seul caractère)
             sb.append(scope + " ");
         }
         return sb.toString().trim();
@@ -137,6 +142,7 @@ public final class AuthHelper {
         InputStreamReader authConfigStreamReader = new InputStreamReader(new FileInputStream(AUTH_PROPERTIES_FILE_PATH),
                 Charset.forName("UTF-8"));
 
+        //TODO phd by Djer |POO| Pour simplifier ton algo, tu pourrais extraire la "récupération du fichier et transformation en properties" ca évitera plusieurs lignes de code dupliquée (et préciserais mieu ton intention)
         if (authConfigStreamReader != null && authConfigStreamReader.ready()) {
             Properties authProps = new Properties();
             LOG.info("past the auth.properties in : " + AUTH_PROPERTIES_FILE_PATH);
@@ -208,6 +214,7 @@ public final class AuthHelper {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
                     authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
+            //TODO phd by Djer |Log4J| Une petite log ?
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
@@ -246,6 +253,7 @@ public final class AuthHelper {
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
             } catch (IOException e) {
+              //TODO phd by Djer |Log4J| Une petite log ?
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());

@@ -58,6 +58,7 @@ public class EventsController {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
@@ -80,6 +81,7 @@ public class EventsController {
         StringBuilder stringBuilderFilter = new StringBuilder();
         stringBuilderFilter.append(filterDate);
         String dateNow = Instant.now().toString();
+        //TODO phd by Djer |Audit Code| Ton outils d'audit de code te conseil de chainer les appels à append()
         stringBuilderFilter.append("'");
         stringBuilderFilter.append(dateNow);
         stringBuilderFilter.append("'");
@@ -91,6 +93,7 @@ public class EventsController {
                     .getNextEvents(sort, properties, maxResults, stringBuilderFilter.toString()).execute().body();
             model.addAttribute("events", events.getValue());
         } catch (IOException e) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/index.html";
         }
@@ -116,6 +119,7 @@ public class EventsController {
         HttpSession session = request.getSession();
         TokenResponse tokens = (TokenResponse) session.getAttribute("tokens");
         if (tokens == null) {
+          //TODO phd by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";

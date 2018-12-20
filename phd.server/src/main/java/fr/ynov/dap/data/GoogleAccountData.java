@@ -18,6 +18,8 @@ public class GoogleAccountData {
     @Column(unique = true)
     private String accountName;
 
+    //TODO phd by Djer |POO| Ne mélange pas des getter/setter avec tes attributs. ordre : constantes, attributs, initialisateur statics, constructeurs, méthodes métiers, méthodes génériques (toString, hashCode,...) getter/setter
+
     /**
      * @return the accountName
      */

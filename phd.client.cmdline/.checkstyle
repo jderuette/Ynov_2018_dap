@@ -4,7 +4,7 @@
   <local-check-config name="checkstyle client" location="checkstyle/dap_checkstyle_checks.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="checkstyle client" local="true">
+  <fileset name="all" enabled="true" check-config-name="phd Custom dap (client)" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
 </fileset-config>

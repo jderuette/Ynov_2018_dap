@@ -198,7 +198,7 @@
         </plugins>
     </build>
 
-
+<!-- TODO phd by Djer |Maven| Il y a un ordre attendu dans un pom.xml, tes dépendances devraient être avant la section build -->
     <dependencies>
 
         <dependency>
@@ -221,13 +221,17 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
-            <version>2.11.1</version>
+            <!-- TODO phd by Djer |Maven| (ancien TO-DO) risqué d'utiliser en 2.11.1 alors que tes autres modules "Log4J" sont en 2.9.1 (je l'ai changé) -->
+            <!-- <version>2.11.1</version> -->
+            <version>2.9.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
-            <version>2.11.1</version>
+            <!-- TODO phd by Djer |Maven| (ancien TO-DO) risqué d'utiliser en 2.11.1 alors que tes autres modules "Log4J" sont en 2.9.1 (je l'ai changé) -->
+            <!-- <version>2.11.1</version> -->
+            <version>2.9.1</version>
         </dependency>
 
         <dependency>

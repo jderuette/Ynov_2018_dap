@@ -58,6 +58,7 @@ public class MicrosoftMailService {
      * @return .
      * @throws IOException .
      */
+  //TODO phd by Djer |Spring| @RequestParam n'est plus utile ici
     public int getNbMailAllAccount(@RequestParam("userId") final String userId) throws IOException {
         AppUser user = userRepository.findByName(userId);
         List<MicrosoftAccountData> accounts = user.getAccountsMicrosoft();
@@ -76,6 +77,7 @@ public class MicrosoftMailService {
      * @return .
      * @throws IOException .
      */
+  //TODO phd by Djer |Spring| @RequestParam n'est plus utile ici
     public List<PagedResult<Message>> getMessagesAllAccount(@RequestParam("userId") final String userId)
             throws IOException {
         AppUser user = userRepository.findByName(userId);

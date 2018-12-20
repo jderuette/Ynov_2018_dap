@@ -5,6 +5,7 @@ package fr.ynov.dap.config;
  * @author Dom.
  *
  */
+//TODO phd by Djer |Design Patern| Externalisation de la configuration (pouvoir modifier les "path" des fichiers de configuration) ?
 public class Config {
     /**.
      * CREDENTIALS_FILE_PATH  is a variable containing the file path of the credentials
@@ -14,6 +15,7 @@ public class Config {
     /**.
      * TOKENS_DIRECTORY_PATH  is a variable containing the directory path of the tokens
      */
+    //TODO phd by Djer |Design Patern| Devrait contenir un chemin aboslu (comme CREDENTIALS_FILE_PATH). Là le dossier Token est relatif au jar éxécuté
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**.
