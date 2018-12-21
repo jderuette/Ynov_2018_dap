@@ -31,8 +31,10 @@ public class GoogleService{
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     
     @Autowired
+    //TODO scb by Djer |POO| précise le modifier, sinon celui de la classe. Ton attrivut est donc ici public. Protected serait suffisant
     Config config;
     
+    //TODO scb by Djer |POO| Précise le modifier. Devrait être privée et du coups ton IDE pourrait t'indiquer que cette attributs n'est plus utilisé
     List<String> allScopes;
 
    /**
@@ -42,6 +44,7 @@ public class GoogleService{
     */
     protected GoogleClientSecrets LoadClientSecret() throws IOException {
         // Load client secrets.
+        //TODO scb by Djer |Design Patern| Pas de SysOut sur un serveur
     	System.out.println(config.getCredentialPath());
         InputStreamReader in = new InputStreamReader(new FileInputStream(config.getCredentialPath()),
                 Charset.forName("UTF-8"));
@@ -75,6 +78,7 @@ public class GoogleService{
                 .build();
     }
     
+    //TODO scb by Djer |POO| Le nom des méthodes ne doivent pas commencer par une majuscule
 	public HashMap<String, StoredCredential> GetCredentialsAsMap() throws IOException, GeneralSecurityException {
 		GoogleAuthorizationCodeFlow flow = this.getFlow();
 		DataStore<StoredCredential> dataStore = flow.getCredentialDataStore();
@@ -82,6 +86,7 @@ public class GoogleService{
 		HashMap<String, StoredCredential> mapDataStore = new HashMap<String, StoredCredential>();
 		for(String key : keys) {
 			mapDataStore.put(key, dataStore.get(key));
+			//TODO scb by Djer |Design Patern| Pas de SysOut sur un serveur
 			System.out.println(key);
 		}
 		return mapDataStore;

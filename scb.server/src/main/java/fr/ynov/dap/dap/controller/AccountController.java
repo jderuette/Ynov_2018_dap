@@ -1,5 +1,6 @@
 package fr.ynov.dap.dap.controller;
 
+//TODO scb by Djer |IDE| Configure les "save actions" de ton IDE pour qu'il organise les imports (et format ton code) lors de la sauvegarde
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -30,6 +31,7 @@ import fr.ynov.dap.dap.models.TokenResponse;
 @Controller
 public class AccountController{
 	
+    //TODO scb by Djer |POO| Attentio cette attribut sera public (même modifier que la classe si rien de préicsé), il devrait être privée
 	@Autowired
 	GoogleAccountService googleAccount;
 	
@@ -49,6 +51,7 @@ public class AccountController{
 							 final HttpServletRequest request,
 			final HttpSession session) throws GeneralSecurityException {
 		
+	  //TODO scb by Djer |MVC| Evite de passer des objets "web" à tes services (request et session).
 		String response = googleAccount.addAccount( userKey,accountName, request, session);
 		return response;
 	}
@@ -66,7 +69,8 @@ public class AccountController{
 	 */
 	@RequestMapping("/oAuth2CallBack")
 	public String oAuth2CallBack(@RequestParam final String code, final HttpServletRequest request, final HttpSession session) throws ServletException, GeneralSecurityException {
-			googleAccount.oAuthCallback(code, request, session);
+		//TODO scb by Djer |MVC| Essaye d'éviter que tes services dépendent d'objet "Web", c'est le role du controller. Extrait les donénes utiles et passe ces données au service	
+	    googleAccount.oAuthCallback(code, request, session);
 			return "redirect:/";
 	}
 	

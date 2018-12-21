@@ -16,6 +16,7 @@ import fr.ynov.dap.dap.models.PagedResult;
 @Service
 public class OutlookContactService {
 
+  //TODO scb by Djer |POO| Pourquoi public ?
 	@Autowired
 	AppUserRepository repository;
 	
@@ -31,6 +32,8 @@ public class OutlookContactService {
 		    String sort = "GivenName ASC";
 		    // Only return the properties we care about
 		    String properties = "GivenName,Surname,CompanyName,EmailAddresses";
+		    //TODO scb by Djer |MVC| Ne manipule pas de Model dans un service, c'est le travai ldu controller !
+		    //TODO scb by Djer |IDE| ton IDE (devrait) te dire que cette variable n'est plus utilisée
 	        ModelAndView model = new ModelAndView("contacts");
 		    try {
 		      PagedResult<Contact> contacts = outlookService.getContacts(
@@ -38,6 +41,7 @@ public class OutlookContactService {
 		          .execute().body();
 		        contactNumber += contacts.getValue().length;
 		    }catch(IOException e) {
+		        //TODO scb by Djer |Log4J| Une petite log ?
 				return null;
 		    }
 		}

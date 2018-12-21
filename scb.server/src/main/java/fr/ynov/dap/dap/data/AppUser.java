@@ -13,6 +13,8 @@ public class AppUser {
 	@Id
 	@GeneratedValue
 	int id;
+	
+	//TODO scb by DJer |POO| Evite de mélanger des attributs et tes getter/setter. Ordre : constantes, attributs, intialisateurs statics, constructeurs, méthodes métiers, méthodes génériques (toString, hashCode) getter/setter
 
 	public int getId() {
 		return id;

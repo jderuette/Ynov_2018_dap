@@ -79,6 +79,7 @@ public class DataAccessController{
 	public String GetNbReadmessage(@RequestParam("userKey") String userid) throws IOException, GeneralSecurityException {
 		Integer gmailUnreadMails = gmailService.getNbUnreadEmails(userid);
 		Integer outlookUnreadMails = outlookMailService.getNbUnreadEmails(userid);
+		//TODO scb by Djer |POO| Tu ne peux pas faire un teste de nullité ainsi. Si "gmailUnreadMails" est null alors tu auras un NullPointerException lorsque tu vérifie l'égalité avec null... Il FAUT utiliser le == dans ce as
 		if(gmailUnreadMails.equals(null)) {
 			return "Fail";
 		}
@@ -99,6 +100,7 @@ public class DataAccessController{
 		CustomEvent e = calendarService.getNextEvent(userid);
 		CustomEvent outlookEvent = outlookCalendarService.GetNextEvent(userid);
 		if(outlookEvent == null && e != null) {
+		    //TODO scb by Djer |POO| Evite les multiples returns dans une même méthode
 			return e;
 		}
 		else if(e == null && outlookEvent != null) {

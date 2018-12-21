@@ -27,15 +27,19 @@ public class App
         	Desktop.getDesktop().browse(uri);
         }else if(args[0].equals("contacts")) {
         	URL url = new URL("http://localhost:8080/contact/nbPeople?userKey="+args[1]);
+        	//TODO scb by DJer |POO| Ce message n'est plus tout a fait juste (les comptes Microsoft sont ausis compté)
         	System.out.println("Nombre de contacts lié a votre compte google"+HttpHelper.ProcessGet(url));
         }else if(args[0].equals("event")) {
         	URL url = new URL("http://localhost:8080/event/nextevent?userKey="+args[1]);
         	System.out.println(HttpHelper.ProcessGet(url));
         }else if(args[0].equals("addGAcc")){
+            //TODO scb by Djer |POO| Tu ne peux pas faire ton test ainsi, s'il n'y a pas de 4ème paramètre tu auras un "ArrayoutOfBoundException" et tu n'entreras jamais dans la condition
+            //TODO scb by Djer |POO| Les tableuax ommencent à l'indice "0" le 3ème argument est args[2]
         	if(args[3] == null) {
         		System.out.println("addGAcc prend comme parametre : *action* *accountName* *userKey*");
         		return; 
         	}
+        	//TODO scb by Djer |Rest API| Cette route ne requier pas de paramètre de requete "userkey"
         	URL url = new URL("http://localhost:8080/user/add/"+args[1]+"?userKey="+args[3]);
         	System.out.println(HttpHelper.ProcessGet(url));
         }

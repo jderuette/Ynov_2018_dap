@@ -37,6 +37,7 @@ public class GmailService extends GoogleService{
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+	//TODO scb by Djer |POO| Pas de modifier donc celui de la classe par defaut (donc public). N'est utilisé que par cette classe, devrait être privée
 	Gmail getService(String user) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -55,6 +56,7 @@ public class GmailService extends GoogleService{
 	 */
 	public Integer getNbUnreadEmails(String user) throws IOException, GeneralSecurityException {
 		AppUser appUser = repository.findByName(user);
+		//TODO scb by Djer |POO| Vérifie si le appUser n'est pas null (cas ou le userKey n'existe pas dans la BDD)
 		List<GoogleAccount> gAccounts = appUser.getAccounts();
 		Integer totalUnreadMessages = 0;
 		for(int i =0; i < gAccounts.size(); i++) {
@@ -71,6 +73,7 @@ public class GmailService extends GoogleService{
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
+	//TODO scb by Djer |JavaDoc| le "user" pour cette méthode est un acocuntName, alors que pour getNbUnreadEmails le "user" est un userKey. Clarifie au MOINS par le nom de variable et la JavaDoc
 	public List<Label> getMailLabels(String user) throws IOException, GeneralSecurityException{
         ListLabelsResponse listResponse = this.getService(user).users().labels().list("me").execute();
         List<Label> labels = listResponse.getLabels();

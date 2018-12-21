@@ -11,11 +11,12 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}"/>
 
-<title>Data Access Project Admin</title>
+<title>Data Access Project Admin</title> <!-- TODO scb by Djer |Thymleaf| Internationalisation ? -->
 
 </head>
 <body>
-<h1> welcome to Contacts</h1>
+<h1> welcome to Contacts</h1> <!-- TODO scb by Djer |Thymleaf| Internationalisation ? -->
+<!-- TODO scb by Djer |Thymleaf| Ta condition semble inversé. heureusement cela ne fonctionne pas car tu as oublié le "th:" devant le if -->
 <table if="${!contacts}">
 <tr>
   <td th:text="#{contact.givenname}">Given Name</td>

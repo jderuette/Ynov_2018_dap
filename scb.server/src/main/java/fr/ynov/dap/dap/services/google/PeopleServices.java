@@ -22,7 +22,8 @@ import fr.ynov.dap.dap.data.GoogleAccount;
 
 @Service
 public class PeopleServices extends GoogleService {
-	@Autowired
+	//TODO scb by Djer |POO| Précise le modifier, ici pulbic alors que private est sufifsant.
+    @Autowired
 	AppUserRepository repository;
 	
 	/**

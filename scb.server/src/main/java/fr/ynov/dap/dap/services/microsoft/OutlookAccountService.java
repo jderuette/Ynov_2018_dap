@@ -27,28 +27,36 @@ import fr.ynov.dap.dap.services.google.GoogleService;
 
 @Service
 public class OutlookAccountService extends GoogleService{
-	@Autowired
+	//TODO scb by Djer |POO| Pourquoi public ?
+    @Autowired
 	AppUserRepository repository;
 	
+  //TODO scb by Djer |POO| Pourquoi public ?
 	@Autowired
 	OutlookAccountRepository outlookRepository;
 	
+	//TODO scb by Djer |POO| Pourquoi public ?
 	@Autowired
 	AuthHelper authHelper;
 	
-	
+	//TODO scb by Djer |POO| Le nom des méthodes ne doivent pas commencer par une majuscule
 	public String AddAccount(String userKey, String accountName, HttpServletRequest request) {
 		AppUser currentUser = repository.findByName(userKey);
 		String loginUrl = getRedirectionUrl(request);
 
 		if(currentUser == null) {
+		  //TODO scb by Djer |POO| Evite les multiples return dans une même méthode
+            //TODO scb by Djer |MVC| Ton controller utilise le retour comme nom d'une Vue. Idéalement renvoie ici une valeur **metier** (un Boolean semble plus adapté ici), et laisse le controller décider quoi faire (et quel vue afficher) en fonction du retour métier du service
 			return "this user doesn't exist";
 		}
 		else {
 			OutlookAccount outlookAccount = outlookRepository.findByName(accountName);
 			if(outlookAccount != null) {
+			  //TODO scb by Djer |POO| Evite les multiples return dans une même méthode
+	            //TODO scb by Djer |MVC| Ton controller utilise le retour comme nom d'une Vue. Idéalement renvoie ici une valeur **metier** (un Boolean semble plus adapté ici), et laisse le controller décider quoi faire (et quel vue afficher) en fonction du retour métier du service
 				return "AccountAlreadyCreated";
 			}
+			//TODO scb vy Djer |Rest API| Ne sauvegarde pas ici, l'utilsiateur peut refuser de partager ces informations et ut auras un "compte fantiome". Sauvegarde dans le "authorize"
 			OutlookAccount account = new OutlookAccount();
 			account.setOwner(currentUser);
 			account.setName(accountName);
@@ -93,6 +101,8 @@ public class OutlookAccountService extends GoogleService{
 	    	  
 	    	  outlookRepository.save(otAccount);
 	    	} 
+	    	//TODO scb by Djer |Log4J| (else) une petite log ?
 	    }
+	  //TODO scb by Djer |Log4J| (else) une petite log ?
 	}
 }

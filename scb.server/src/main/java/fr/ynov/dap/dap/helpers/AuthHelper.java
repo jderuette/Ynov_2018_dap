@@ -48,6 +48,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO scb by Djer |log4J| Une petite log ?
         return null;
       }
     }
@@ -59,6 +60,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO scb by Djer |log4J| Une petite log ?
         return null;
       }
     }
@@ -70,6 +72,7 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO scb by Djer |log4J| Une petite log ?
         return null;
       }
     }
@@ -93,10 +96,10 @@ public class AuthHelper {
   }
 
   public String getLoginUrl(UUID state, UUID nonce) {
-
 	try {
 		loadConfig();
 	}catch(Exception e) {
+	  //TODO scb by Djer |log4J| Une petite log ? Est-ce prévu que loadConfig lève une Exception ?
 		return null;
 	}
     UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(authorizeUrl);
@@ -113,6 +116,7 @@ public class AuthHelper {
   
   public TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
 	  // Create a logging interceptor to log request and responses
+      //TODO scb by Djer |Spring| Pour éviter de devoir appeler le "loadConfig" dans chaque méthode tupeux : soit l'appelr dans le constructeur ("pure JAVA") soit anoté ta méthode "loadConfig" avec @PostConstruct qui est une anotation  qui demande a Spring d'appler cette méthode une fois qu'il a fini de construire l'objet
 	  loadConfig();
 	  HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 	  interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -134,6 +138,7 @@ public class AuthHelper {
 	    return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 	        "authorization_code", authCode, getRedirectUrl()).execute().body();
 	  } catch (IOException e) {
+	    //TODO scb by Djer |log4J| Une petite log ?
 	    TokenResponse error = new TokenResponse();
 	    error.setError("IOException");
 	    error.setErrorDescription(e.getMessage());
@@ -172,6 +177,7 @@ public class AuthHelper {
 	      return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(), 
 	          "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 	    } catch (IOException e) {
+	      //TODO scb by Djer |log4J| Une petite log ?
 	      TokenResponse error = new TokenResponse();
 	      error.setError("IOException");
 	      error.setErrorDescription(e.getMessage());

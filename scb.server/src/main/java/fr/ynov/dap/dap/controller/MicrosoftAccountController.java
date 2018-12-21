@@ -20,6 +20,7 @@ import fr.ynov.dap.dap.services.microsoft.OutlookAccountService;
  */
 @Controller
 public class MicrosoftAccountController {
+    //TODO scb by Djer |POO| Attention précise la porté de chaque attributs ! (ici il est public comme la classe)
 	@Autowired
 	OutlookAccountService outlookAccount;
 	
@@ -37,6 +38,7 @@ public class MicrosoftAccountController {
 			 @RequestParam final String userKey , 
 			 final HttpServletRequest request,
 			 final HttpSession session) {
+	    //TODO scb by Djer |MVC| Evite de passer des objets "web" à tes services (request).
 		String response = outlookAccount.AddAccount(userKey, accountName, request);
 		return response;
 	}

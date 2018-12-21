@@ -33,6 +33,7 @@ public class GoogleAccountService extends GoogleService {
 		super();
 	}
 	
+	//TODO scb by Djer |Log4J| Devrait etre staic final (cela permetrait aussi d'être cohérent avec le nom en majuscule)
 	public Logger LOG = LogManager.getLogger(GoogleAccountService.class);
 
 	/**
@@ -68,8 +69,9 @@ public class GoogleAccountService extends GoogleService {
 			}
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		    //TODO scb by Djer |log4J| Contextualise tes messages (" for accountname : " + accountName)
 			LOG.error("Exception while trying to store user Credential", e);
-			throw new ServletException("Error while trying to conenct Google Account");
+			throw new ServletException("Error while trying to connect Google Account");
 		}
 	}
 
@@ -87,6 +89,7 @@ public class GoogleAccountService extends GoogleService {
 		}
 
 		if (null == accountName) {
+		    //TODO scb by Djer |Log4J| Ce messaage est faux, c'est le "accountName" qui est null
 			LOG.error("userId in Session is NULL in Callback");
 			throw new ServletException("Error when trying to add Google acocunt : accountName is NULL is User Session");
 		}
@@ -142,6 +145,8 @@ public class GoogleAccountService extends GoogleService {
 			final HttpSession session) throws GeneralSecurityException {
 		AppUser currentUser = repository.findByName(userKey);
 		if(currentUser == null) {
+		    //TODO scb by Djer |SOA| Evite de renvoyer du "texte format" dans tes service, c'est le travail du controller (via les Vue) ou du client. Deplus ici cette méthode est appelé par un "Controlelr" Spring va donc chercher une "vue" qui porte ce nom
+		    //TODO scb by Djer |POO| Evite les multiples return dans une même méthode (alimente le "response").  De plus tu as un "else" ensuite donc c'est un peu "redondant"
 			return "This user doesn't exist";
 		}
 		else {
@@ -153,6 +158,7 @@ public class GoogleAccountService extends GoogleService {
 				credential = flow.loadCredential(accountName);
 
 				if (credential != null && credential.getAccessToken() != null) {
+				  //TODO scb by Djer |POO| Evite les multiples return dans une même méthode (alimente le "response")
 					return "Account Already Added";
 				} else {
 					
@@ -175,6 +181,7 @@ public class GoogleAccountService extends GoogleService {
 					response = "redirect:" + authorizationUrl.build();
 				}
 			} catch (IOException e) {
+			    //TODO scb by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 				LOG.error("Error while loading credential (or Google Flow)", e);
 			}
 			// only when error occurs, else redirected BEFORE
@@ -196,6 +203,8 @@ public class GoogleAccountService extends GoogleService {
 			appUser = new AppUser();
 			appUser.setName(userKey);
 			repository.save(appUser);
+			//TODO scb by Djer |POO| Evite les multiples return dans une même méthode
+			//TODO scb by Djer |MVC| Ton controller utilise le retour comme nom d'une Vue. Idéalement renvoie ici une valeur **metier** (un Boolean semble plus adapté ici), et laisse le controller décider quoi faire (et quel vue afficher) en fonction du retour métier du service
 			return "appUser "+userKey+" successfully created";
 		}else {
 			return "appUser "+userKey+" already exist";

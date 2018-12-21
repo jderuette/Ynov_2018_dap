@@ -44,7 +44,6 @@ public class CalendarService extends GoogleService {
         final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
         Calendar serviceCal = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, this.GetCredentials(user))
-              //TODO scb by Djer Et la conf injectée ?
                 .setApplicationName(config.getAppName())
                 .build();
 		return serviceCal;
@@ -59,7 +58,9 @@ public class CalendarService extends GoogleService {
 	 */
 	public CustomEvent getNextEvent(String user) throws IOException, GeneralSecurityException{
 		AppUser appUser = repository.findByName(user);
+		//TODO scb by Djer |POO| Vérifie si le appUser n'est pas null (cas ou le userKey n'existe pas dans la BDD)
 		List<GoogleAccount> gAccounts = appUser.getAccounts();
+		//TODO scb by Djer |IDE| Ton IDE te dit que ca n'est pas utilisé. Bug ? A supprimer ? Je penche sérieusement pour l'option du bug
 		List<CustomEvent> customEvents = new ArrayList<CustomEvent>();
 		for(int i =0; i < gAccounts.size(); i++) {
 			DateTime now = new DateTime(System.currentTimeMillis());
@@ -73,9 +74,12 @@ public class CalendarService extends GoogleService {
 	        CustomEvent event = null;
 
 	        if(items.size() != 0) {
+	            //TODO scb by Djer |API Google| Attention getXXXXX().getDateTime() vaut null pour les évènnement qui dure "toutes la journée, il faut alors utiliser getXXXXX().getDate()
 		        Date start = new Date(items.get(0).getStart().getDateTime().getValue());
 		        Date end = new Date(items.get(0).getEnd().getDateTime().getValue());
+		        //TODO scb by Djer |API Google| .getStatus() est le status de lévènnement, pas "MON" status
 		        event = new CustomEvent(start, end, items.get(0).getSummary(),items.get(0).getStatus());
+		        //TODO scb by Djer |POO| Un parfait exemple de "il fallait PAS faire de multiple return, après on se piège". Tu ne récupèras que l'event du premier Gogole account qui a un event, car ton return "casse" ta boucle for
 		        return event;
 	        }
 		}

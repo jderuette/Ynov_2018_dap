@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- TODO scb by Djer Pas de ressource dans "src", il y a un "dossier" resources pour ca ! 
-les sous dossier de "src/main/java" sont censé être compilé !-->
 <Configuration status="WARN" monitorInterval="30">
 
 	<Properties>

@@ -1,6 +1,6 @@
 package ClientToutBeauToutPropre.CTBTP;
-//TODO scb by Djer non de package ne devrait pas contenir de majuscule (au pire CamelCase)
-//FIXME csb by Djer le package est "incomplet" devrait être du type "fr.ynov.dap.xxxxx.xxxxxx.xxxxx)
+//TODO scb by Djer |POO| (ancien TO-DO) non de package ne devrait pas contenir de majuscule (au pire CamelCase)
+//FIXME scb by Djer |POO| (ancien TO-DO) le package est "incomplet" devrait être du type "fr.ynov.dap.xxxxx.xxxxxx.xxxxx)
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class HttpHelper {
 	
-    //TODO scb by Djer ce n'est pas beau de mentir à un serveur, ce client n'est PAS Mozilla !!
+    //TODO scb by Djer |POO| (ancien TO-DO) ce n'est pas beau de mentir à un serveur, ce client n'est PAS Mozilla !!
 	private static final String USER_AGENT = "Mozilla/5.0";
 
 	

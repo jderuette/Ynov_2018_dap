@@ -32,6 +32,7 @@ public class Config{
     String appName;
     @Value("${appId}")
 	String appId;
+    //TODO scb by Djer |POO| Précise que c'est le "microsoft" password (nom de l'attribut et/ou nom de la propriété)
 	@Value("${appPassword}")
 	String appPassword;
 	@Value("${redirectUrl}")
@@ -41,8 +42,10 @@ public class Config{
 	@Value("${authorizeUrl}")
 	String authorizeUrl;
 	
+	//TODO scb by Djer |POO| Comme dnas uen classe "commune" devrait être renommer en "allGoogleScropes" pour être plus claire
 	public List<String> allScopes = new ArrayList<String>(Arrays.asList(GmailScopes.GMAIL_LABELS, CalendarScopes.CALENDAR_READONLY, PeopleServiceScopes.CONTACTS_READONLY));
 	
+	//TODO scb by Djer |POO| Evite de mélanger des getter/setter au milieu de tes attributs
 	public String getoAuth2CallbackUrl() {
 		return "/oAuth2CallBack";
 	}
@@ -52,6 +55,7 @@ public class Config{
 	public int sensibleDataFirstChar = 0;
 	
 	public String getCredentialPath() {
+	    //TODO scb by Djer |Design Patern| Doamge que se "dossier racine" ne soit pas configurable
 		String path = System.getProperty("user.home") + System.getProperty("file.separator");
 		
 		return path  + credentialPath;
@@ -63,6 +67,7 @@ public class Config{
 		return tokenPath;
 	}
 	public void setTokenPath(String tokenPath) {
+	    //TODO scb by Djer |Design Patern| Devrait être relatif au "dossier racine" comme le credentialPath ?
 		this.tokenPath = tokenPath;
 	}
 	public String getAppName() {
