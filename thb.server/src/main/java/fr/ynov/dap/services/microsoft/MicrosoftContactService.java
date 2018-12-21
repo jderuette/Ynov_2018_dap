@@ -20,6 +20,7 @@ import fr.ynov.dap.data.interfaces.OutlookServiceInterface;
 public class MicrosoftContactService extends MicrosoftService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -35,6 +36,7 @@ public class MicrosoftContactService extends MicrosoftService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return nbUnreadEmails;
 		}
@@ -61,6 +63,7 @@ public class MicrosoftContactService extends MicrosoftService {
 
 		String sort = "GivenName ASC";
 		String properties = "GivenName,Surname,CompanyName,EmailAddresses";
+		//TODO thb by Djer |API Microsoft| Et si j'ai plsu de 1000 contacts ? Tu pourrais utiliser la pagination (avec des pages plus petites) pour être sure d'avoir tous les contacts. Ou tuiliser le parametre "?count=true" dnas l'URL du service pour avoir le total
 		Integer maxResults = 1000;
 
 		try {
@@ -68,6 +71,7 @@ public class MicrosoftContactService extends MicrosoftService {
 
 			return contacts.getValue().length;
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error(e);
 		}
 

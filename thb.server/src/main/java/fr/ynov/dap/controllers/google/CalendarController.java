@@ -30,6 +30,7 @@ public class CalendarController extends ExtendsUtils {
     private CalendarService googleService;
 	
 	/** The microsoft service. */
+	//TODO thb by Djer |POO| Si tu ne précises pas de modifer (privé/protected/public) cette atribut aura la même porté que lcalsse, donc public
 	@Autowired
 	EventService microsoftService;
 
@@ -40,8 +41,11 @@ public class CalendarController extends ExtendsUtils {
 	 * @return the string
 	 */
 	@RequestMapping("/{user}")
+	//TODO thb by Djer |Spring| Par defaut les méthodes mappées dans un **Rest**Controller renvoie le body. C'est redondant de le préciser
     public @ResponseBody String index(@PathVariable String user)  {
 		JSONObject event = new JSONObject(googleService.getNextEventFromAll(user));
+		
+		//TODO thb by Djer |API Microsoft| Si volontairement limité a "google" devrait être présent dans l'URL. Sinon intéroger service Microsoft et sélectionner le bon évènnement
 		return JSONResponse.responseString("event", event.toString());
     }
 	
@@ -52,14 +56,17 @@ public class CalendarController extends ExtendsUtils {
 	 * @return the string
 	 */
 	@RequestMapping("/next")
+	//TODO thb by Djer |Spring| Par defaut les méthodes mappées dans un **Rest**Controller renvoie le body. C'est redondant de le préciser
     public @ResponseBody String nextEvent(@RequestParam(value = "userKey", required = true) String userKey)  {
 		Event nextGoogleEvent = googleService.getNextEventFromAll(userKey);
 		fr.ynov.dap.data.Event nextMicrosoftEvent = microsoftService.getNextEvent(userKey);
 		
 		JSONObject googleEventToJSON = new JSONObject(nextGoogleEvent);
+		//TODO thb by Djer |POO| Plante si pas d'évènnement Microsoft (aucun compte Microsoft de connecté)
 		JSONObject microsoftEventToJSON = new JSONObject(nextMicrosoftEvent);
 		
 		if(nextGoogleEvent != null && nextMicrosoftEvent != null) {
+		    //TODO thb by Djer |API Google| Attention getStart().getDateTime() est null pour les évnènnements qui durent toutes la journée, il faut utilisé getStart().getDate() pour ceux-là
 			Date googleDate = new Date(nextGoogleEvent.getStart().getDateTime().getValue());
 			Date microsoftDate = new Date(nextMicrosoftEvent.getStart().getDateTime().getTime());
 			

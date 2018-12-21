@@ -33,13 +33,16 @@ import fr.ynov.dap.utils.JSONResponse;
  * The Class GoogleAccountController.
  */
 @Controller
+//TODO thb by Djer |SOA| un Controller qui étant u nservice c'est un peu contre nature. La majorité de ce code devrait être dans un "GoogleAccountService"
 public class GoogleAccountController extends GoogleService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
 	/** The Constant SENSIBLE_DATA_FIRST_CHAR. */
+	//TODO thb by Djer |JavaDoc| Ces deuxconstante sont utilisée pour faire un "substring" sur une donnée senssible. Sera afficher de "first" à "last" caractère de  cette chaine senssible
 	private static final Integer SENSIBLE_DATA_FIRST_CHAR = 0; // "Aucune indication ???";
 
 	/** The Constant SENSIBLE_DATA_LAST_CHAR. */
@@ -68,12 +71,14 @@ public class GoogleAccountController extends GoogleService {
 			try {
 				flow = super.getFlow();
 			} catch (GeneralSecurityException e) {
+			    //TODO thb by Djer |Log4J| Evite de logger uniquement le message d'une exception. Log ton propre message (contextualisé, avec unserKey et accountName), et passe l'exception endeuxième paramtre. Log4J s'occupera d'afficher le message de la cause (l'exception) et la pile de l'exception
 				LOG.error(e.getLocalizedMessage());
 			}
 
 			credential = flow.loadCredential(accountName);
 
 			if (credential != null && credential.getAccessToken() != null) {
+			    //TODO thb by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 				LOG.warn("User already added and saved in store");
 				response = JSONResponse.responseString("error", "User already added and saved in store");
 			} else {
@@ -88,8 +93,10 @@ public class GoogleAccountController extends GoogleService {
 				//response = JSONResponse.responseString("redirect", authorizationUrl.build());
 			}
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 			LOG.error("Error while loading credential (or Google Flow)", e);
 		}
+		//TODO thb by Djer |POO| Ce commentaire n'est plus vrai
 		// only when error occurs, else redirected BEFORE
 		return response;
 	}
@@ -117,6 +124,7 @@ public class GoogleAccountController extends GoogleService {
 			try {
 				flow = super.getFlow();
 			} catch (GeneralSecurityException e) {
+			  //TODO thb by Djer |Log4J| Evite de logger uniquement le message d'une exception. Log ton propre message (contextualisé, avec unserKey/userId et accountName), et passe l'exception endeuxième paramtre. Log4J s'occupera d'afficher le message de la cause (l'exception) et la pile de l'exception
 				LOG.error(e.getLocalizedMessage());
 			}
 
@@ -141,6 +149,7 @@ public class GoogleAccountController extends GoogleService {
 
 				appUserRepo.save(user);
 
+				//TODO thb by Djer |Log4J| Message en partie faut, le user créé est "userId", pas "accountName"
 				LOG.info("Create new user " + accountName + " and add new google account");
 			}
 
@@ -152,6 +161,7 @@ public class GoogleAccountController extends GoogleService {
 			}
 			// onSuccess(request, resp, credential);
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages (" for userKey : " + userId + " and accountName : " + accountName)
 			LOG.error("Exception while trying to store user Credential", e);
 			throw new ServletException("Error while trying to connect Google Account");
 		}

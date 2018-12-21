@@ -33,6 +33,7 @@ import fr.ynov.dap.services.microsoft.OutlookServiceBuilder;
 public class MicrosoftAccountController extends MicrosoftAccountService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -46,6 +47,7 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 	 * @param response    the response
 	 * @return the string
 	 */
+	//TODO thb by Djer |Spring| Si tu n'as pas besoin du model, ne le met pas dans la signature de ta méthode
 	@RequestMapping("/account/add/microsoft/{accountName}")
 	public @ResponseBody String addAccount(@PathVariable(value = "accountName") final String accountName,
 			@RequestParam(value = "userKey", required = true) String userKey, Model model, HttpServletRequest request,
@@ -72,6 +74,7 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 		try {
 			response.sendRedirect(loginUrl);
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages (" for userKey : " + userKey + " and accountName : " + accountName)
 			LOG.error("login error", e);
 		}
 
@@ -130,9 +133,11 @@ public class MicrosoftAccountController extends MicrosoftAccountService {
 				session.setAttribute("error", "Unexpected state returned from authority.");
 			}
 
+			//TODO thb by Djer |log4J| Attention le "authCode" est une information senssible
 			LOG.info("authCode : " + code + " - idToken :" + idToken);
 
 			if (session.getAttribute("error") != null) {
+			    //TODO thb by Djer |POO| Attention, cette "error" pourait provenir d'ailleur que ton coden, etdu coup cela peut être un peu confusant de voir une log qui provient de cette classe. Pour éviter cela tu peux loger à chaque fois que tu ajoutes un message dans "error" dans ton code précédent
 				String error = (String) session.getAttribute("error");
 
 				LOG.error(error);

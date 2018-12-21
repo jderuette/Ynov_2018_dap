@@ -49,6 +49,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
+				<!-- TODO thb by Djer |Audit Code| il n'y a pas de fichiers à cette emplacment -->
 					<configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
 				</configuration>
 				<reportSets>
@@ -81,6 +82,7 @@
 		</plugins>
 	</reporting>
 
+<!-- TODO thb by Djer |Maven| Il y a un ordre attendu dans un pom.xml. tes dépendancies devraient etre avant la section build et report -->
 	<dependencies>
 		<dependency>
 			<groupId>net.sourceforge.pmd</groupId>
@@ -160,6 +162,7 @@
 			<version>v1-rev357-1.25.0</version>
 		</dependency>
 
+<!-- TODO thb by Djer |Maven| Plus utile depuis que Google est en mode "serveur web" -->
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
@@ -181,17 +184,21 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
+			<!-- TODO thb by Djer |Maven| La version par defaut de Spring-boot pose probleme aux outils d'analyse de code. utilise la 2.9.1 -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
+			<!-- TODO thb by Djer |Maven| La version par defaut de Spring-boot pose probleme aux outils d'analyse de code. utilise la 2.9.1 -->
 		</dependency>
 
+<!-- TODO thb by Djer |Maven| Tu as déja ajouté cette dépendance plus haut -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- TODO thb by Djer |Maven| Tu n'en a plus besoin depuis que tu utilise MySQL -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

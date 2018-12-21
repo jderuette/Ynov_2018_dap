@@ -22,6 +22,7 @@ import fr.ynov.dap.data.interfaces.OutlookServiceInterface;
 public class EventService extends MicrosoftService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -36,6 +37,7 @@ public class EventService extends MicrosoftService {
 		Event nextEvent = null;
 
 		if (appU == null) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return null;
 		}
@@ -44,11 +46,12 @@ public class EventService extends MicrosoftService {
 
 		for (MicrosoftAccount m : appU.getMicrosoftAccounts()) {
 			Event e = getFirstEventByAccount(m);
+			//TODO thb by Djer |POO| Ton algo est faux, l'event du dernier  microsoft account n'est pas forcément le prochain. Tu DOIS comparer les dates
 			if (e != null) {
 				nextEvent = e;
 			}
 		}
-
+		
 		return nextEvent;
 	}
 
@@ -64,6 +67,7 @@ public class EventService extends MicrosoftService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return events;
 		}
@@ -86,6 +90,7 @@ public class EventService extends MicrosoftService {
 	 * @param account the account
 	 * @return the first event by account
 	 */
+	//TODO thb by Djer |POO| Nom de méthode faux, le "premier à partir de maintenant" c'est le "next". Le "first" serait le tout premier ajouté dans le calendrier de cette utilisateur
 	private Event getFirstEventByAccount(MicrosoftAccount account) {
 		TokenResponse tokens = ensureTokens(account.getToken(), account.getTenantId());
 		OutlookServiceInterface outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken());
@@ -97,8 +102,11 @@ public class EventService extends MicrosoftService {
 
 		try {
 			PagedResult<Event> e = outlookService.getEvents(sort, filter, properties, maxResults).execute().body();
+			//TODO thb by Djer |API Microsoft| Si pas d'évennement à venir tu auras un "ArrayOutOfBoundException"
+			//TODO thb by Djer |POO| Evite les multiples returns dans une même méthode
 			return e.getValue()[0];
 		} catch (IOException e) {
+		    //TODO thb by Djer |Log4J| ne met pas le meessage del'exception dans "ton" message, ajoute l'exeption en deuxième paramètre. Log4J prévcisera le message de l'exception et sa pile.
 			LOG.error("can't catch events", e.getLocalizedMessage());
 			return null;
 		}

@@ -18,6 +18,7 @@ import fr.ynov.dap.utils.ExtendsUtils;
 public class UserController extends ExtendsUtils {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -27,6 +28,7 @@ public class UserController extends ExtendsUtils {
 	 * @param userKey the user key
 	 * @return the string
 	 */
+	//TODO thb by Djer |Spring| Par defaut les méthodes mappées dans un **Rest**Controller renvoie le body. C'est redondant de le préciser
 	@RequestMapping("/add/{userKey}")
 	public @ResponseBody String index(@PathVariable String userKey) {
 
@@ -35,6 +37,7 @@ public class UserController extends ExtendsUtils {
 
 		appUserRepo.save(appU);
 
+		//TODO thb by Djer |JPA| La méthode "save" te renvoie l'entité "appuser" qui à été sauvegardée, tu peux simplement récupérer cette valeur plutot que de re faire une requete
 		return appUserRepo.findByUserKey(userKey).getUserKey();
 	}
 }

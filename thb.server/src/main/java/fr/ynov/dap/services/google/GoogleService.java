@@ -47,17 +47,20 @@ public class GoogleService {
 	 *
 	 * @return the json factory
 	 */
+	//TODO thb by Djer |POO| Ton attribut est protected, ce getter est donc inutile
 	protected JsonFactory getJSON_FACTORY() {
 		return JSON_FACTORY;
 	}
 
 	/** The json factory. */
+	//TODO thb by Djer |POO| Devrait être static final (cela justifirait ausis qu'il soit ecris en majuscule)
 	protected JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
 	/**
 	 * Global instance of the scopes required by this quickstart. If modifying these
 	 * scopes, delete your previously saved tokens/ folder.
 	 */
+	//TODO thb by Djer |POO| si tu l'écris en majuscule doit être static final
 	protected List<String> SCOPES = new ArrayList<String>();
 
 	/**
@@ -97,6 +100,7 @@ public class GoogleService {
 	public GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 		NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 		// Load client secrets.
+		//TODO thb by Djer |Design Patern| Cette méthode ne peut charger un fichier QUE à l'intérieur du jar. Utilise un InputStream à la place
 		InputStream in = GoogleService.class.getResourceAsStream(getConfig().getCredentialsPath());
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 

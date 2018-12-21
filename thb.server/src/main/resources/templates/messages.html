@@ -17,17 +17,17 @@
 </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark shadow">
-      <a class="navbar-brand" th:href="@{/} + ${user}"> <- Back to administration</a>
+      <a class="navbar-brand" th:href="@{/} + ${user}"> <- Back to administration</a><!-- TODO thb by Djer |Thymleaf| Internationalisation-->
     </nav>
 
     <div class="container" style="margin-top:5em">	
-    <p>Mes messages - <b th:text="${currentName}"></b></p>
+    <p>Mes messages - <b th:text="${currentName}"></b></p><!-- TODO thb by Djer |Thymleaf| Internationalisation-->
 	<table class="table">
 		<thead class="thead-dark">
 		<tr>
-			<th scope="col">from</th>
-			<th scope="col">subject</th>
-			<th scope="col">content preview</th>
+			<th scope="col">from</th><!-- TODO thb by Djer |Thymleaf| Internationalisation-->
+			<th scope="col">subject</th><!-- TODO thb by Djer |Thymleaf| Internationalisation-->
+			<th scope="col">content preview</th><!-- TODO thb by Djer |Thymleaf| Internationalisation-->
 		</tr>
 		</thead>
 	    <tr th:each="element : ${messages}">

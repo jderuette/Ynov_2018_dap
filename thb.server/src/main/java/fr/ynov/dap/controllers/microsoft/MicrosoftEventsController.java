@@ -22,6 +22,7 @@ import fr.ynov.dap.utils.ExtendsUtils;
 public class MicrosoftEventsController extends ExtendsUtils {
 
 	/** The event service. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	EventService eventService;
 
@@ -34,6 +35,7 @@ public class MicrosoftEventsController extends ExtendsUtils {
 	 * @param redirectAttributes the redirect attributes
 	 * @return the string
 	 */
+	//TODO thb by Djer |Spring| Si tu n'as pas besoin de request et redirectAttributes, ne les met pas dans la signature de ta méthode
 	@RequestMapping("/events")
 	public String microsoftEvents(@RequestParam(value = "userKey", required = true) String userKey, Model model,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -41,6 +43,7 @@ public class MicrosoftEventsController extends ExtendsUtils {
 		Event events = eventService.getNextEvent(userKey);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
+		//TODO thb by Djer |Thymleaf| Ne formate pas tes messsages dans le controller, passe une isntance d'objet ("events") à la vue et fait le formatage dans la vue
 		model.addAttribute("userKey", "?userKey=" + userKey);
 		model.addAttribute("start", dateFormat.format(events.getStart().getDateTime()));
 		model.addAttribute("subject", events.getSubject());

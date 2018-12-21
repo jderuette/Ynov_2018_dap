@@ -1,6 +1,7 @@
 package fr.ynov.dap;
 
 
+//TODO thb by Djer |Design Patern| externalisation de la configuration ?
 public class Config {
 
 	/**
@@ -9,6 +10,7 @@ public class Config {
 	
 	private String applicationName = "Gmail API Java Quickstart";
 	private String tokensPath = "tokens";
+	//TODO thb by Djer |Design Patern| Il n'y a pas de setter pour cette attributs ! 
 	private String credentialsPath = "/credentials.json";
 	private String auth2CallbackUrl = "/oAuth2Callback";
 
@@ -17,6 +19,7 @@ public class Config {
 	 */
 	private String authority = "https://login.microsoftonline.com";
 	private String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
+	//TODO thb by Djer |Design Patern| Rendre configurable l'emplacement du fichier "auth.propeties" ?
 
 	/*
 	 * Default config constructor

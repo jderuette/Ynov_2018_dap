@@ -1,3 +1,4 @@
+//TODO thb by Djer |POO| Evite de créer des package "technique" c'est en général une mauvaise idée
 package fr.ynov.dap.data.interfaces;
 
 import org.springframework.data.repository.CrudRepository;

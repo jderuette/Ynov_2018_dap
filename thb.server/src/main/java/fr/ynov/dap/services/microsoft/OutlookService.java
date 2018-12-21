@@ -21,6 +21,7 @@ import fr.ynov.dap.data.interfaces.OutlookServiceInterface;
 public class OutlookService extends MicrosoftService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -36,6 +37,7 @@ public class OutlookService extends MicrosoftService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		    //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return nbUnreadEmails;
 		}
@@ -59,6 +61,7 @@ public class OutlookService extends MicrosoftService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		    //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
 			return null;
 		}
@@ -82,6 +85,7 @@ public class OutlookService extends MicrosoftService {
 	 */
 	private Message[] getEmailMessageByAccount(MicrosoftAccount account) {
 		if (account.getToken() == null) {
+		  //TODO thb by Djer |log4J| Une petite log ?
 			// No tokens, user needs to sign in
 			LOG.error("error", "please sign in to continue.");
 			return null;
@@ -96,13 +100,16 @@ public class OutlookService extends MicrosoftService {
 		Integer maxResults = 5;
 
 		PagedResult<Message> messages = null;
+		//TODO thb by Djer |IDE| Ton IDE t'indique que ca n'est pas utilisé. Bug ? A supprimer ? 
 		Integer nbUnreadEmails = 0;
 
 		try {
 			messages = outlookService.getMessages(folder, sort, properties, maxResults).execute().body();
 
+			//TODO thb by Djer |POO| Evite les multiples return dans une même méthode
 			return messages.getValue();
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("error", e);
 		}
 
@@ -117,6 +124,7 @@ public class OutlookService extends MicrosoftService {
 	 */
 	private Integer getEmailsCountByAccount(MicrosoftAccount account) {
 		if (account.getToken() == null) {
+		  //TODO thb by Djer |log4J| Une petite log ?
 			// No tokens, user needs to sign in
 			LOG.error("error", "please sign in to continue.");
 			return 0;
@@ -144,8 +152,10 @@ public class OutlookService extends MicrosoftService {
 			}
 
 			LOG.info(nbUnreadEmails);
+			//TODO thb by Djer |POO| Evite les multiples return dans une même méthode
 			return nbUnreadEmails;
 		} catch (IOException e) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("error", e);
 		}
 

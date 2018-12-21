@@ -27,10 +27,13 @@ public class MicrosoftContactController extends ExtendsUtils {
 	 * @param model   the model
 	 * @return the string
 	 */
+	//TODO thb by Djer |Spring| Si tu n'as pas besoin du model, ne le met pas dans la signature de ta méthode
 	@RequestMapping("/contact")
 	public @ResponseBody String events(@RequestParam(value = "userKey", required = true) String userKey, Model model) {
+	    //TODO thb by Djer |MVC| Tu devrait ajouter les données renvoyé par le service dans le modèle pour qu'ils puissent être utilisé dans la vue
 		LOG.info(service.getContacts(userKey));
 
+		//TODO thb by Djer |MVC| Tu devrais renvoyer vers une vue "contact"
 		return "success";
 	}
 }

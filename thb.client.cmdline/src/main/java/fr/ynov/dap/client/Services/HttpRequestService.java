@@ -17,8 +17,7 @@ import fr.ynov.dap.client.Config;
 public class HttpRequestService {
 	
 	/** The http url. */
-    //TODO thb by Djer Pas très utile en attribut. En varaible dans ta méthode aurait suffit,
-    // et ca t'aurais éviter de faire une "fausse Javadoc"
+    //TODO thb by Djer |POO| (ancien TO-DO) Pas très utile en attribut. En variable dans ta méthode aurait suffit, et ca t'aurais éviter de faire une "fausse Javadoc"
 	private String httpUrl = Config.getINSTANCE().getHTTP_URL();
 	
 	/**
@@ -32,7 +31,7 @@ public class HttpRequestService {
 		HttpURLConnection con =  (HttpURLConnection) open.openConnection();
 		
 		int responseCode = con.getResponseCode();
-		//TODO thb By Djer Ce n'était pas "requis" mais il était tout à fait possible d'utiliser une API de LOG...
+		//TODO thb By Djer |Log4J| (ancien TO-DO) Ce n'était pas "requis" mais il était tout à fait possible d'utiliser une API de LOG...
 		System.out.println("\nSending 'GET' request to URL : " + httpUrl + url);
 		System.out.println("Response Code : " + responseCode);
 		boolean redirect = false;
@@ -48,8 +47,7 @@ public class HttpRequestService {
 		if (redirect) {
 			String newUrl = con.getHeaderField("Location");
 			try {
-			    //FIXME thb by Djer si tu ouvre "le redirect" directement, tu n'aura pas la même session que pour le "add".
-			    // La solution est d'ouvrir directement el "add" dans le navigauteur (pour éviter le "userID est NULL dans la session")
+			    //FIXME thb by Djer |Rest API| (ancien TO-DO) si tu ouvres "le redirect" directement, tu n'aura pas la même session que pour le "add". La solution est d'ouvrir directement le "add" dans le navigauteur (pour éviter le "userID est NULL dans la session")
 				Desktop.getDesktop().browse(new URI(newUrl));
 				System.out.println(new URI(newUrl));
 			} catch (URISyntaxException e) {
@@ -75,7 +73,7 @@ public class HttpRequestService {
 		}
 		in.close();
 		
-		//TODO thb by Djer Renvoyer la réponse et laisser le client décider de l'affichage aurait été plus propre.
+		//TODO thb by Djer |POO| (ancien TO-Do) Renvoyer la réponse et laisser le client décider de l'affichage aurait été plus propre.
 		System.out.println("REPONSE : "+response.toString());
 	}
 }

@@ -49,6 +49,7 @@ public class JSONResponse {
 	public static JSONObject responseString(String field, JSONObject jsonObject) {
 		JSONObject response = new JSONObject();
     	response.put(field, jsonObject);
+    	//TODO thb by Djer |POO| Pour être cohérent avec tes autres méthodes responseString tu devrais appeler "toString" sur response
 		return response;
 	}
 }

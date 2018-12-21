@@ -61,6 +61,7 @@ public class MicrosoftService extends ExtendsUtils {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO thb by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -77,6 +78,7 @@ public class MicrosoftService extends ExtendsUtils {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO thb by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -93,6 +95,7 @@ public class MicrosoftService extends ExtendsUtils {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			    //TODO thb by Djer |log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -118,6 +121,7 @@ public class MicrosoftService extends ExtendsUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	protected void loadConfig() throws IOException {
+	    //TODO thb by Djer |Design Patern| Externalisation de la configuration ?
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = MicrosoftAccountService.class.getClassLoader()
 				.getResourceAsStream(authConfigFile);
@@ -162,6 +166,7 @@ public class MicrosoftService extends ExtendsUtils {
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), "authorization_code",
 					authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
+		  //TODO thb by Djer |log4J| Une petite log ?
 			TokenResponse error = new TokenResponse();
 			error.setError("IOException");
 			error.setErrorDescription(e.getMessage());
@@ -201,6 +206,7 @@ public class MicrosoftService extends ExtendsUtils {
 				return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
 						"refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 			} catch (IOException e) {
+			  //TODO thb by Djer |log4J| Une petite log ?
 				TokenResponse error = new TokenResponse();
 				error.setError("IOException");
 				error.setErrorDescription(e.getMessage());

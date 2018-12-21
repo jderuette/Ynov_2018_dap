@@ -26,12 +26,13 @@ import org.springframework.stereotype.Service;
 public class CalendarService extends GoogleService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
 	/**
 	 * Gets the event.
-	 *
+	 *TODO thb by Djer |Log4J| Je supose qu'il faut lire "user le nom du comtpe Google", et que cette variable est en faite un "accountName"
 	 * @param user the user
 	 * @return the event
 	 * @throws IOException              Signals that an I/O exception has occurred.
@@ -46,6 +47,8 @@ public class CalendarService extends GoogleService {
 		DateTime now = new DateTime(System.currentTimeMillis());
 		Events events = calendarService.events().list("primary").setMaxResults(1).setTimeMin(now)
 				.setOrderBy("startTime").setSingleEvents(true).execute();
+		
+		//TODO thb by Djer |POO| un simple "si events n'est pas vide, récupérer le premier" (qui à l'indice 0) serait plus simple
 
 		Integer lastEventId = events.getItems().size() - 1;
 
@@ -73,6 +76,7 @@ public class CalendarService extends GoogleService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		    //TODO thb by Djer |Log4J| Une petite log ?
 			return null;
 		}
 
@@ -81,13 +85,15 @@ public class CalendarService extends GoogleService {
 		for (GoogleAccount g : appU.getGoogleAccounts()) {
 			try {
 				if (count > 0) {
+				    //TODO thb by Djer |API Google| Attention .getDateTime() est null pour les évènnements qui durent "toute la journée"
 					Long lastDateTimestamp = lastEvent.getStart().getDateTime().getValue();
 					Date lastDate = new Date(lastDateTimestamp);
-
+					
 					Long newDateTimestamp = getEvent(g.getName()).getStart().getDateTime().getValue();
 					Date newDate = new Date(newDateTimestamp);
 
 					if (lastDate.compareTo(newDate) > 0) {
+					  //TODO thb by Djer |POO| Conserve ton getEvent(g.getName()) dans une variable pour éviter de refaire un appel sur l'API
 						lastEvent = getEvent(g.getName());
 					}
 				} else {

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class GmailService extends GoogleService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -61,9 +62,11 @@ public class GmailService extends GoogleService {
 
 		for (GoogleAccount g : appU.getGoogleAccounts()) {
 			try {
+			  //TODO thb by Djer |Log4J| Contextualise tes messages
 				LOG.info(g.getName());
 				nbEmails += getInboxLabels(g.getName()).getMessagesUnread();
 			} catch (IOException | GeneralSecurityException e) {
+			  //TODO thb by Djer |Log4J| Contextualise tes messages. Tu peux regrouper tes deux log en une seul
 				LOG.error(g.getName());
 				LOG.error("Error for couting emails", e);
 			}

@@ -37,6 +37,7 @@ public class MailController extends ExtendsUtils {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@RequestMapping("/{user}")
+	//TODO thb by Djer |Spring| Par defaut les méthodes mappées dans un **Rest**Controller renvoie le body. C'est redondant de le préciser
 	public @ResponseBody String index(@PathVariable String user) throws IOException {
 		Integer nbEmails = 0;
 		nbEmails = googleService.getAllEmails(user);
@@ -50,6 +51,7 @@ public class MailController extends ExtendsUtils {
 	 * @return the emails
 	 */
 	@RequestMapping("/unread")
+	//TODO thb by Djer |Spring| Par defaut les méthodes mappées dans un **Rest**Controller renvoie le body. C'est redondant de le préciser
 	public @ResponseBody String getEmails(@RequestParam(value = "userKey", required = true) String userKey) {
 		Integer nbEmails = 0;
 		nbEmails += googleService.getAllEmails(userKey);

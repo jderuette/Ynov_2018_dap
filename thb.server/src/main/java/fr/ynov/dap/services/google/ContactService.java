@@ -22,6 +22,7 @@ import fr.ynov.dap.data.interfaces.AppUserRepository;
 public class ContactService extends GoogleService {
 
 	/** The app user repo. */
+  //TODO thb by Djer |POO| Précise le modifier sinon le même que celui de la classe
 	@Autowired
 	AppUserRepository appUserRepo;
 
@@ -33,6 +34,7 @@ public class ContactService extends GoogleService {
 	 * @throws GeneralSecurityException the general security exception
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
+	//TODO thb by Djer |Gestion Exception| Attention, tu "étouffe" la IOException, tu peux l'enlevée des "thorws" (ou ne plus l'étouffer et laisser l'appelant la gérer)
 	private ListConnectionsResponse getContactByAccount(GoogleAccount account)
 			throws GeneralSecurityException, IOException {
 		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -41,8 +43,10 @@ public class ContactService extends GoogleService {
 						.setApplicationName(getConfig().getApplicationName()).build();
 
 		try {
+		    //TODO thb by Djer |POO| Evite les multiples return dans une même méthode
 			return peopleService.people().connections().list("people/me").setPersonFields("names").execute();
 		} catch (IOException e) {
+		    //TODO thb by Djer |Log4J| Contextualise tes messages (" for accountName : " + account.getName())
 			LOG.error("error for getting google contacts", e);
 		}
 
@@ -61,7 +65,9 @@ public class ContactService extends GoogleService {
 		AppUser appU = appUserRepo.findByUserKey(user);
 
 		if (appU == null) {
+		  //TODO thb by Djer |Log4J| Contextualise tes messages
 			LOG.error("unknow user");
+			//TODO thb by Djer |POO| Evite les multiples return dans une même méthode
 			return nbUnreadEmails;
 		}
 

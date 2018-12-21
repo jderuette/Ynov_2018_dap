@@ -2,10 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<!-- TODO thb by Djer je me suis permis de changer ton "groupId" qui contenait 
-		un faute. Dans notre cas il est cohérent que le groupId soit le même que 
-		le server -->
 	<groupId>fr.ynov.dap</groupId>
 	<artifactId>thb.client.cmdline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -32,6 +28,9 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<!-- TODO thb by Djer |Command Line| Rendre le jar auto-executable ? -->
+	
+	<!-- TODO thb by Djer |Maven| Il y a un ordre attendu dans un pom.XML. Ta section dependecies devrait être avant ta section build/reporting -->
 
 	<dependencies>
 		<dependency>
