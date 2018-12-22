@@ -25,8 +25,8 @@ public class Client {
 		pseudo = scan.next();
 		while (bool) {
 			
-			System.out.println("Que voulez-vous réaliser ? /n");
-			System.out.println("Tapez 0 pour vous enregistrer, si vous êtes un nouvel utilisateur./n");
+			System.out.println("Que voulez-vous rï¿½aliser ? /n");
+			System.out.println("Tapez 0 pour vous enregistrer, si vous ï¿½tes un nouvel utilisateur./n");
 			System.out.println("Si, et SEULEMENT SI, vous etes deja enregistres : /n");
 			System.out.println("Tapez 1 pour vous ajouter un compte microsoft /n");
 			System.out.println("Tapez 2 pour vous ajouter un compte google /n");
@@ -45,6 +45,7 @@ public class Client {
 				System.out.println("------------------------------------------------ /n");
 				System.out.println("Nommez votre compte : ");
 				accountName = scan.next();
+				//TODO baa by Djer |Rest API| Il manque le protocole, le serveur et le port (http://localhost:8080)
 				Desktop.getDesktop().browse(new URI("/add/googleAccount/"+ pseudo + "/" + accountName));
 				break;
 			case 3:
@@ -63,7 +64,7 @@ public class Client {
 				System.out.println(people);
 				break;
 			default:
-				System.out.println("Valeur incorecte, j'en conclu que vous voulez partir. \n Bonne journée.");
+				System.out.println("Valeur incorecte, j'en conclu que vous voulez partir. \n Bonne journï¿½e.");
 				bool = false;
 				break;
 			}

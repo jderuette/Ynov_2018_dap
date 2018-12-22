@@ -18,6 +18,7 @@ import fr.ynov.dap.service.GooglePeopleService;
  *
  */
 public class GooglePeopleController {
+  //TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
     @Autowired GooglePeopleService peopleService;
     @RequestMapping("/contacts/{gUser}")
     /**

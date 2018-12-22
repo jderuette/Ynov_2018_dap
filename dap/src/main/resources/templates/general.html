@@ -22,34 +22,35 @@
 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 						aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span> <span
+						<span class="sr-only">Toggle navigation</span> <!-- TODO baa by Djer |Thymleaf| internationalisation ? --><span
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">">Java Outlook Tutorial</a>
+					<a class="navbar-brand" href="#">">Java Outlook Tutorial</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="${current == 'index' ? 'active' : '' }">
-							<a href="#">">Home</a>
+							<a href="#">">Home</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 						</li>
 						<!-- <c:if test="${userConnected eq true}"> -->
 							<li class="${current == 'mail' ? 'active' : '' }">
-								<a href="/mail.html">">Mail</a>
+								<a href="/mail.html">">Mail</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 							</li>
 							<li class="${current == 'events' ? 'active' : '' }">
-								<a href="/events.html">">Events</a>
+								<a href="/events.html">">Events</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 							</li>
 							<li class="${current == 'contacts' ? 'active' : '' }">
-								<a href="/contacts.html">">Contacts</a>
+								<a href="/contacts.html">">Contacts</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 							</li>
 						<!-- </c:if> -->
 					</ul>
 					<!-- <c:if test="${userConnected eq true}"> -->
-						<p class="navbar-text navbar-right">Signed in as ${userName}</p>
+					<!-- TODO baa by Djer |Thymleaf| Ecrire "${xxxx}" dans du texte comem cela ne va pas fonctionner avec thymeleaf -->
+						<p class="navbar-text navbar-right">Signed in as ${userName}</p> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 						<ul class="nav navbar-nav navbar-right">
 							<li>
-								<a href="/logout.html">">Logout</a>
+								<a href="/logout.html">">Logout</a> <!-- TODO baa by Djer |Thymleaf| internationalisation ? -->
 							</li>
 						</ul>
 					<!-- </c:if> -->

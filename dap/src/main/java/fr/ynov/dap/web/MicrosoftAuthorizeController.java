@@ -66,10 +66,13 @@ public class MicrosoftAuthorizeController {
 				} catch (IOException e) {
 					session.setAttribute("error", e.getMessage());
 				}
+				//TODO baa by Djer |API Microsoft |Stocke les données (tokenResponse, eventuellement email) dans la BDD, pour pouvoir y acceder ensuite avec juste un "userKey"
 			} else {
+			  //TODO baa by Djer |Log4J| Une petite log ?
 				session.setAttribute("error", "ID token failed validation.");
 			}
 		} else {
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			session.setAttribute("error", "Unexpected state returned from authority.");
 		}
 		return "redirect:/mail";

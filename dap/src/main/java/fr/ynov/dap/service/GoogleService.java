@@ -33,12 +33,15 @@ import fr.ynov.dap.Config;
  */
 public class GoogleService {
 
-    protected static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();    
+    protected static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();   
+    //TODO baa by Djer |POO| Le nom en majusucle indique que cette attribut devrait etre static FINAL
     private static List<String> SCOPES;
+  //TODO baa by Djer |POO| Le nom en majusucle indique que cette attribut devrait etre static FINAL
     protected NetHttpTransport HTTP_TRANSPORT;
     protected GoogleClientSecrets clientSecrets;
     @Autowired
     protected Config maConfig;
+  //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
 
     /**
@@ -75,10 +78,13 @@ public class GoogleService {
      */
     public Credential getCredentials(String userKey) throws IOException, GeneralSecurityException {
 	try {
+	    //TODO baa by Djer |Log4J| Cette log est ptentiellement fasse. A cette ligen de code, tu ne sait pas si cela à fonctionné. Si une exception devait être levée ca sera sur la ligne suivante.
 	    LOG.info("Load Credential pour l'utilisateur " + userKey + "a reussi.");
+	    //TODO baa by Djer |POO| Evite les multiples return dans une même méthode
 	    return getFlow().loadCredential(userKey);
 	}
 	catch (Exception e) {
+	  //TODO baa by Djer |Log4J| N'ajoute pas l'exception dans ton message de cette façon, elle sera au mieux "mal affichée". Utilise le deuxième paramère ("cause") et laisse Log4J présenter correctement cette excetpion dans les logs
 	    LOG.error("Load Credential pour l'utilisateur " + userKey + " a échoué. Erreur : " + e);
 	    return null;
 	}
@@ -91,6 +97,7 @@ public class GoogleService {
      */
     protected GoogleAuthorizationCodeFlow getFlow() throws IOException, GeneralSecurityException {
 	
+	//TODO baa by Djer |Design Patern| Chargempent d'un fichier externe au jar ? (utilise un InputStream)
 	InputStream in = GoogleService.class.getResourceAsStream(maConfig.getCredentialFolder());
 	setClientSecrets(GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in)));
 	// Build flow and trigger user authorization request.
@@ -115,6 +122,7 @@ public class GoogleService {
     /**
      * @return the sCOPES
      */
+    //TODO baa by Djer |POO| Personne n'en a besoin en dehors des classes filles (qui peuvent acceder directement à l'attribut car il est protected). Supprime tous ces getter/setter inutiles
     public static List<String> getSCOPES() {
         return SCOPES;
     }

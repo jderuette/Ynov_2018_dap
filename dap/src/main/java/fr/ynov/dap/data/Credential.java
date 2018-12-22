@@ -5,6 +5,7 @@ package fr.ynov.dap.data;
  * @author abaracas
  *
  */
+//TODO baa by Djer |POO| Tu n'utilsies pas (plus) cette classe, tu peux la supprimer (ou finir d'implementer le code qui devrait l'utiliser)
 public class Credential {
 
     private String userId;

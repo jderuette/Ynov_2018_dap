@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: dap
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: abaracas
+Built-By: djer1
 Implementation-Vendor-Id: fr.ynov.dap
 Class-Path: lib/retrofit-2.0.2.jar lib/okhttp-3.2.0.jar lib/okio-1.6.0
  .jar lib/converter-jackson-2.0.2.jar lib/jackson-databind-2.9.6.jar l
@@ -51,7 +51,7 @@ Class-Path: lib/retrofit-2.0.2.jar lib/okhttp-3.2.0.jar lib/okio-1.6.0
  .23.0.jar lib/google-api-services-oauth2-v2-rev65-1.17.0-rc.jar lib/s
  pring-boot-devtools-2.0.5.RELEASE.jar lib/spring-boot-2.0.5.RELEASE.j
  ar lib/spring-boot-autoconfigure-2.0.5.RELEASE.jar
-Build-Jdk: 1.8.0_181
+Build-Jdk: 1.8.0_191
 Implementation-URL: http://maven.apache.org
 Created-By: Maven Integration for Eclipse
 Main-Class: fr.ynov.dap.dap.Launcher

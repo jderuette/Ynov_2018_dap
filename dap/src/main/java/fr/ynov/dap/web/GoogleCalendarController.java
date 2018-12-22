@@ -17,6 +17,7 @@ import fr.ynov.dap.service.GoogleCalendarService;
  *
  */
 public class GoogleCalendarController {
+  //TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
     @Autowired GoogleCalendarService calendarService;
     
     @RequestMapping("/calendar/nextEvents/{accountName}")
@@ -42,6 +43,7 @@ public class GoogleCalendarController {
      * @throws GeneralSecurityException exception
      */
     public String getNextEvent(Model model, @PathVariable String accountName) throws IOException, GeneralSecurityException {
+	//TODO baa by Djer |POO| Pour respecter le nom de la méthode (et ta javadoc) devrait renvoyer un seul Event
 	String message = calendarService.getNextEvents(accountName, 20);
 	model.addAttribute("message", message);
 	return "eventsGoogle";

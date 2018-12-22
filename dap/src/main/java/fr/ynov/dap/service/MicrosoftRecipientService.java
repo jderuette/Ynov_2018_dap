@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author abaracas
  *
  */
+//TODO baa by Djer |SOA| Cette classe n'est pas un service
 public class MicrosoftRecipientService {
 	@JsonProperty("EmailAddress")
 	private EmailAddressService emailAddress;

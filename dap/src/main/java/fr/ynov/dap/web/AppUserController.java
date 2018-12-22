@@ -20,8 +20,10 @@ import fr.ynov.dap.data.AppUserRepository;
  *
  */
 public class AppUserController {
+  //TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
     @Autowired 
     AppUserRepository repository;
+  //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
     @RequestMapping ("/add/user/{userkey}")
     /**
@@ -36,11 +38,13 @@ public class AppUserController {
 	    repository.save(new AppUser(userkey));
 	    String message = "Le compte applicatif" + userkey + "a été ajouté avec succès.";
 	    LOG.info(message);
+	  //TODO baa by Djer |POO| Evite les multiples return dans une même méthode
 	    return message;
 	}
 	catch (Exception exception){
 	    String message = "Impossible d'ajouter le compte. L'erreur rencontrée est : " + exception;
 	    LOG.error(message);
+	  //TODO baa by Djer |POO| Evite les multiples return dans une même méthode
 	    return message;
 	}
     }    

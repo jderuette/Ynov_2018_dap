@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @param <T> classe
  */
+//TODO baa by Djer |SOA| Cette classe n'est pas un service
 public class MicrosoftPagedResultService<T> {
 	/**
      * @return the nextPageLink

@@ -38,6 +38,7 @@ public class OutlookEventsController {
 		MicrosoftTokenResponseService tokens = (MicrosoftTokenResponseService)session.getAttribute("tokens");
 		if (tokens == null) {
 			// No tokens in session, user needs to sign in
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
 			return "redirect:/index";
 		}
@@ -47,6 +48,7 @@ public class OutlookEventsController {
 			// Token expired
 			// TODO: Use the refresh token to request a new token from the token endpoint
 			// For now, just complain
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			redirectAttributes.addFlashAttribute("error", "The access token has expired. Please logout and re-login.");
 			return "redirect:/index";
 		}
@@ -60,6 +62,7 @@ public class OutlookEventsController {
 		// Only return the properties we care about
 		String properties = "Organizer,Subject,Start,End";
 		// Return at most 10 events
+		//TODO baa by Djer |API Microsoft| Utilise la pagination pour afficher plus d'event
 		Integer maxResults = 10;
 		
 		try {
@@ -68,10 +71,13 @@ public class OutlookEventsController {
 					.execute().body();
 			model.addAttribute("events", events.getValue());
 		} catch (IOException e) {
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			redirectAttributes.addFlashAttribute("error", e.getMessage());
 			return "redirect:/index";
 		}
 		
 		return "events";
 	}
+	
+	//TODO baa by Djer |API Microsoft| LE prochaine event (API Rest) ?
 }

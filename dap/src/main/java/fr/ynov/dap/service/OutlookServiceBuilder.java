@@ -20,6 +20,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  *
  */
 public class OutlookServiceBuilder {
+  //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
     /**
      * Renvoie le bon OutlookService construit.

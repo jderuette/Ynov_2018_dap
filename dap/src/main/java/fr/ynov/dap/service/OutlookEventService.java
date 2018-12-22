@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author abaracas
  *
  */
+//TODO baa by Djer |SOA| Cette classe n'est pas un service
 public class OutlookEventService {
 	@JsonProperty("Id")
 	private String id;

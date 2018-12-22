@@ -23,6 +23,7 @@ import com.google.api.services.gmail.Gmail;
  */
 public class GoogleCalendarService extends GoogleService {
 
+  //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
     /**
      * Constructeur de la classe
@@ -35,6 +36,7 @@ public class GoogleCalendarService extends GoogleService {
    
     /**
      * Récupère les événements à venir, dans la limite de 20, ou uniquement le prochain selon les paramètres.
+     * TODO baa by Djer |JavaDOc| Le nom de ce paramètre n'est plus adapté, et la documentation est fausse !
      * @param userKey user de l'application
      * @param nbEvents defini à 1 ou 20 selon si on veut le ou les prochains events
      * @return la liste des événements
@@ -42,6 +44,8 @@ public class GoogleCalendarService extends GoogleService {
      * @throws GeneralSecurityException exception
      */
     public String getNextEvents(String userKey, Integer nbEvents) throws IOException, GeneralSecurityException {
+	
+	//TODOD baa by Djer |POO| Pourquoi en pas utiliser ta méthode "getService" qui fait exactement les 2 lignes ci-dessous ?
 	final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 	Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(userKey))
 		.setApplicationName(maConfig.getApplicationName()).build();
@@ -61,16 +65,21 @@ public class GoogleCalendarService extends GoogleService {
 		message = "Evenements à venir : <br>";
 	    }	    
 	    for (Event event : items) {
+		//TODO baa by Djer |API Google| getStart().getDateTime() est null pour les évènnements qui durent "toutes la journée", il faut laors utiliser getStart().getDate()
 		DateTime start = event.getStart().getDateTime();
 		DateTime end = event.getEnd().getDateTime();
 		if (start == null) {
 		    start = event.getStart().getDate();
 		}
+		
+		//TODO baa by Djer |API Google| Gestion de "MON" status ?
 		message += event.getSummary() + "<br>"+ "Débute le : " + start + "<br>" + "Se termine le : " + end + "<br><br>";
 	    }
 	}
+	//TODO baa by Djer |Rest API| pas de SysOut sur un serveur
 	System.out.println(message.replace("<br>", "\n"));
 	LOG.info("utilisateur " + userKey + " => " + message);
+	//TODO baa by Djer |MVC| Ne formate pas la réponse dans un service, récupère et renvoie les données. C'est au controlelr (via la Vue) ou au client directement de formater les messages
 	return message;
     }
     

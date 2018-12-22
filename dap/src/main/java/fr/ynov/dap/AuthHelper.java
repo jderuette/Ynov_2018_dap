@@ -42,6 +42,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO baa by Djer |Log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -52,6 +53,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO baa by Djer |Log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -63,6 +65,7 @@ public class AuthHelper {
 			try {
 				loadConfig();
 			} catch (Exception e) {
+			  //TODO baa by Djer |Log4J| Une petite log ?
 				return null;
 			}
 		}
@@ -78,6 +81,7 @@ public class AuthHelper {
 	}
 	
 	private static void loadConfig() throws IOException {
+	  //TODO baa by Djer |Design Patern| Externalisation de la configuration ?
 		String authConfigFile = "auth.properties";
 		InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 		
@@ -144,6 +148,7 @@ public class AuthHelper {
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 					"authorization_code", authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			MicrosoftTokenResponseService error = new MicrosoftTokenResponseService();
 			error.setError("IOException");
 			error.setErrorDescription(e.getMessage());
@@ -186,6 +191,7 @@ public class AuthHelper {
 				return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(), 
 						"refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 			} catch (IOException e) {
+			  //TODO baa by Djer |Log4J| Une petite log ?
 				MicrosoftTokenResponseService error = new MicrosoftTokenResponseService();
 				error.setError("IOException");
 				error.setErrorDescription(e.getMessage());

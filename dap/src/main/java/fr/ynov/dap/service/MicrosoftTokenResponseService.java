@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author abaracas
  *
  */
+//TODO baa by Djer |SOA| Cette classe n'est pas un service
 public class MicrosoftTokenResponseService {
 	@JsonProperty("token_type")
 	private String tokenType;

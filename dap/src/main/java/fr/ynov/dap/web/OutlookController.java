@@ -38,6 +38,7 @@ public class OutlookController {
 		MicrosoftTokenResponseService tokens = (MicrosoftTokenResponseService)session.getAttribute("tokens");
 		if (tokens == null) {
 			// No tokens in session, user needs to sign in
+		  //TODO baa by Djer |Log4J| Une petite log ?
 			redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
 			return "redirect:/index";
 		}
@@ -57,12 +58,14 @@ public class OutlookController {
 		// Only return the properties we care about
 		String properties = "ReceivedDateTime,From,IsRead,Subject,BodyPreview";
 		// Return at most 10 messages
+		//TODO baa by Djer |API Microsoft| Utilise la pagination pour afficher plus de mails
 		Integer maxResults = 10;
 		
 		try {
 			MicrosoftPagedResultService<OutlookMessageService> messages = outlookService.getMessages(
 					folder, sort, properties, maxResults)
 					.execute().body();
+			//TODO baa by Djer |Thymleaf| Le terme "message" est un peu générique. Ta Vue va devenir "peu" lisible
 			model.addAttribute("messages", messages.getValue());
 		} catch (IOException e) {
 			redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -71,4 +74,6 @@ public class OutlookController {
 		
 		return "mail";
 	}
+	
+	//TODO baa by Djer |API Microsoft| Le nombre d'email (API Rest) ?
 }

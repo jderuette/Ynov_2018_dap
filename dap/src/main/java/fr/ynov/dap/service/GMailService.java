@@ -19,6 +19,7 @@ import com.google.api.services.gmail.model.Message;
  *
  */
 public class GMailService extends GoogleService{
+    //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
     /**
      * Constructeur  de la classe
@@ -61,9 +62,11 @@ public class GMailService extends GoogleService{
 	    }
 	}
 	Integer unreadMessageCount = 0;
+	//TODO baa by Djer |POO| Il y a une méthdoe "size" sur les collections, pas besoin de parcourir pour compter
 	for (int i = 0; i < messages.size(); i++) {
 	    unreadMessageCount++;
 	}
+	//TODO baa by Djer |Rest API| pas de SysOut sur un serveur
 	System.out.println(unreadMessageCount.toString());
 	LOG.info("Le compte " + accountName + " a" + unreadMessageCount + " messages non lus.");
 	return unreadMessageCount;
@@ -78,6 +81,7 @@ public class GMailService extends GoogleService{
      */   
     public Integer getAllUnreadMessageCount(String userKey) throws IOException, GeneralSecurityException {
 	;
+	//TODO baa by Djer |API Google| Il FAUT que tu itère sur les compte Google (enregistré en BDD) si tu veux que cela fonctionne. Là tu as exactement la même chose que dans "getUnreadMessageCount" 
 	ListMessagesResponse listMessagesResponse = getService(userKey).users().messages().list("me")
 		.setQ("in:unread").execute();
 	List<Message> messages = new ArrayList<Message>();

@@ -35,10 +35,16 @@ import fr.ynov.dap.data.GoogleAccount;
  * @author abaracas
  *
  */
+//TODO baa by Djer |SOA| Séparation entre service et Controller. A défaut de "séparer" cette classe est un controller et devrait etre dans le package "web" et avoir un nom qui ne prete pas à confusion
+//TODO baa by Djer |IDE| Configure les "save action" de ton IDE pour qu'il format ton code (et organise les import) lors de la sauvegarde
 public class GoogleAccountService extends GoogleService {
+    //TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
 @Autowired AppUserRepository appUserRepository;
+//TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
 @Autowired GoogleAccountRepository googleAccountRepository;
+//TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
 @Autowired MicrosoftAccountRepository microsoftAccountRepository;
+//TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
 private static Logger LOG = LogManager.getLogger();
     /**
      * Constructeur
@@ -79,11 +85,15 @@ private static Logger LOG = LogManager.getLogger();
 
 	    if (LOG.isDebugEnabled()) {
 		if (null != credential && null != credential.getAccessToken()) {
+		    //TODO baa by Djer |Log4J| Attention le token est une information senssible, et bien que c'est indiqué dans le message ce qui est affiché n'est pas "partial". Utilise un substring
 		    LOG.info("Nouvel utilisateur : " + userId + "partial AccessToken : "
 			    + credential.getAccessToken());
 		}
+		
+		//TODO baa by Djer |API Google| Tu devrais sauvegarder le lien appuser -> Google acocunt par ici (il te faudra aussi extraire le userkey ("userid" contient en faite ton accountName))
 	    }
 	} catch (IOException e) {
+	    //TODO baa by Djer |Log4J| N'ajoute pas l'exception dans ton message de cette façon, elle sera au mieux "mal affichée". Utilise le deuxième paramère ("cause") et laisse Log4J présenter correctement cette excetpion dans les logs
 	    LOG.error("Exception lors du chargement du credential du user : " + userId + " Erreur : " + e);
 	    throw new ServletException("Error while trying to conenct Google Account");
 	}
@@ -166,6 +176,7 @@ private static Logger LOG = LogManager.getLogger();
     @RequestMapping("/add/googleAccount/{userKey}/{accountName}")
     public String addGoogleAccount(@PathVariable("userKey") final String userKey,@PathVariable("accountName") final String accountName, final HttpServletRequest request,
 	    final HttpSession session) throws GeneralSecurityException {
+	//TODO baa by Djer |JPA| AppUser est "maitre" de la relation vers GoogleAccount. Il vaut mieux : 1-Extraire l'utilisateur, 2-modifier/ajouter le compte Google dans l'objet extrait, 3- Sauvegarder l'utilisateur (JPA s'occupera de créer/modifier les entitées liées)
 	AppUser user = appUserRepository.findByUserkey(userKey);
 	googleAccountRepository.save(new GoogleAccount(user, accountName));
 	String response = "errorOccurs";
@@ -188,6 +199,7 @@ private static Logger LOG = LogManager.getLogger();
 	} catch (IOException e) {
 	    LOG.error("Erreur lors du chargement du Credential", e);
 	}
+	//TODO baa by Djer |POO| Ce commentaire n'est plus vrai
 	// only when error occurs, else redirected BEFORE
 	return response;
     }

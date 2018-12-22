@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author abaracas
  *
  */
+//TODO baa by Djer |POO| Cette classe est une dao. Elle devrait être dnas le package dao (éventuellement dans un sous package "microsoft")
 public class DateTimeTimeZoneService {
 	@JsonProperty("DateTime")
 	private Date dateTime;

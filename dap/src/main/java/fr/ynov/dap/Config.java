@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
  * @author abaracas
  *
  */
+//TODO baa by Djer |Design Patern| Externalisation de la configuration (pouvoir modifier les paramètre en ligne de commande)
 public class Config {
     private String applicationName;
     private FileInputStream clientSecretFile;
@@ -28,10 +29,16 @@ public class Config {
 // TODO MR DERUETTE : IMPORTANT pour le devoir 3 : Mon pc étant à mon entreprise, l'externalisation du credential entraîne un "accès refusé", je ne peux donc pas pleinement le tester.
 	//Si jamais vous rencontrez un problème, je vous invite à commenter les 8 prochaines lignes, décommenter les 4 qui suivre Config(), et remettre le type de clientSecretFile à String.
 		setApplicationName("Ynov DAP");
-		setCredentialFolder(System.getProperty("user.home") +  "/Documents/credentials"); 
+		//TODO baa by Djer |Design Patern| Tu as un accès refusé car il n'y a pas d'extension et que Java cherche un "dossier" "credentials" (je t'ai modifier en ajoutant le .json (je met aussi dans un sous dossier "dap" directement à la racine du "home" ces fichiers ne sont pas des "documents")
+		//TODO baa by Djer |Design Patern| Utilise "fileseparator" pour etre compatible window/linux
+		setCredentialFolder(System.getProperty("user.home") +  "\\dap\\baa\\credentials.json"); 
 		try {
-		    setClientSecretFile(new FileInputStream(new File(getCredentialFolder()))) ;
+		  //TODO baa by Djer |API Google| Tu as inversé "secretFile" et "FolderDir", mais il s'agit de bien de 2 choses différeentes
+		    //TODO baa by Djer |POO| Dans ton GoogleService, c'est une chaine de texte qui est attedu (et dans ta config il faut mieux laisser deschaine de texte, ca permetra de "facilement" les modifier de l'exterieur)
+		    //setClientSecretFile(new FileInputStream(new File(getCredentialFolder()))) ;
+		    setClientSecretFile(new FileInputStream(new File(System.getProperty("user.home") +  "\\dap\\baa\\tokens"))) ;
 		} catch (FileNotFoundException e) {
+		  //TODO baa by Djer |Log4J| Une petite log ?
 		    e.printStackTrace();
 		}		
 		setUrl("/oAuth2Callback");

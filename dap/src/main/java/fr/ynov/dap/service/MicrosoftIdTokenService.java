@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author abaracas
  *
  */
+//TODO baa by Djer |SOA| Ca n'est pas vraiment un service (plutot un DTO avec quelques méthodes utilitaires)
 public class MicrosoftIdTokenService {
 	@JsonProperty("exp")
 	private long expirationTime;
@@ -52,10 +53,13 @@ public class MicrosoftIdTokenService {
 		try {
 			newToken = mapper.readValue(decodedBytes, MicrosoftIdTokenService.class);
 			if (!newToken.isValid(nonce)) {
+			    //TODO baa by Djer |Log4J| Une petite log ?
 				return null;
 			}
 		} catch (Exception e) {
+		    //TODO baa by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console, utilise plutot le deuxième argument des "log" pour afficher corectement une exception
 			e.printStackTrace();
+			//TODO baa by Djer |log4J| Utilise le deuxième paramètre pour l'exception
 			LOG.error("erreur lors de la génération du token dans microsoftdtokenservice : " + e);
 		} 
 		LOG.info("Token valide");
@@ -74,6 +78,7 @@ public class MicrosoftIdTokenService {
 				now.before(this.getUnixEpochAsDate(this.notBefore))) {
 			// Token is not within it's valid "time"
 		    LOG.info("Token expiré");
+		    //TODO baa by Djer |POO| Evite les multiples return dans une même méthode
 			return false;
 		}
 		
@@ -81,6 +86,7 @@ public class MicrosoftIdTokenService {
 		if (!nonce.equals(this.getNonce())) {
 			// Nonce mismatch
 		    LOG.info("Token expiré");
+		  //TODO baa by Djer |POO| Evite les multiples return dans une même méthode
 			return false;
 		}
 		LOG.info("Token encore valide, le retourner");

@@ -19,6 +19,7 @@ import com.google.api.services.people.v1.model.Person;
  */
 public class GooglePeopleService extends GoogleService {
 
+  //TODO baa by Djer |Log4J| Devrait être final (la (pseudo) référence ne sera pas modifiée)
     private static Logger LOG = LogManager.getLogger();
    /**
      * Constructeur  de la classe
@@ -49,6 +50,8 @@ public class GooglePeopleService extends GoogleService {
      * @throws IOException exception
      * @throws GeneralSecurityException exception
      */
+    //TODO baa by Djer |POO| Tu n'utilise pas la variable "gUser". D'après ta javadoc, c'est celui qui semble le plus correspondre à un "accountName" tu devrais donc l'utiliser à la place du "userKey"
+    //TODO baa by Djer |Spring| TU n'est plus dans un controller, l'anotation @PathVariable n'est plus utile
     public String getContacts(String userKey, @PathVariable final String gUser) throws IOException, GeneralSecurityException {
 	ListConnectionsResponse response = getService(userKey).people().connections()
 		.list("people/me")
@@ -73,6 +76,7 @@ public class GooglePeopleService extends GoogleService {
 	message.replace("%%%", nbrContacts.toString());
 	System.out.println(message.replace("<br>", "\n"));
 	LOG.info(userKey + " a " + message );
+	//TODO baa by Djer |MVC| Ne formate pas les message dans le service, ca n'est pas de sa responsabilité
 	return message;
     }   
 }

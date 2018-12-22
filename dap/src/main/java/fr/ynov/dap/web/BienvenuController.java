@@ -23,6 +23,7 @@ import fr.ynov.dap.service.GMailService;
  *
  */
 public class BienvenuController {
+  //TODO baa by Djer |POO| Si tu ne précise pas de modifier sur l'attribut, alors il aura le même que la classe qui le contient (ici "public"). Il devrait etre private
     @Autowired GMailService gmailService;
     
 	@RequestMapping("/{accountName}")
@@ -55,6 +56,7 @@ public class BienvenuController {
 	    for(String aaKey : credentials.keySet()) {
 	            maMap.put(aaKey, maMap.get(aaKey));	        
 	    }
+	    //TODO baa by Djer |API Microsoft| Credential Microsoft ?
 	    model.addAttribute("data", maMap);
 	    return "credential";
 	}

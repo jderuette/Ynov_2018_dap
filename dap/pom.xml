@@ -57,10 +57,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
+            <!-- TODO baa by Djer |Maven| La version par de faut de Spring boot pose des problemes aux outils d'analyse de code. Utilise la version 2.9.1 -->
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <!-- TODO baa by Djer |Maven| La version par de faut de Spring boot pose des problemes aux outils d'analyse de code. Utilise la version 2.9.1 -->
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -161,6 +163,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
+                            <!-- TODO baa by Djer |Maven| Il n'y a pas de classe main à cette endroit -->
                             <mainClass>fr.ynov.dap.dap.Launcher</mainClass>
                         </manifest>
                     </archive>
@@ -188,6 +191,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
+                        <!-- TODO baa by Djer |Maven| Il n'y a pas de classe main à cette endroit -->
                             <mainClass>fr.ynov.dap.dap.Launcher</mainClass>
                         </manifest>
                         <descriptorRefs>
@@ -222,6 +226,7 @@
                     <skipEmptyReport>false</skipEmptyReport>
                     <minimumTokens>75</minimumTokens>
                     <rulesets>
+                    <!-- TODO baa by Djer |Maven| Il n'y a pas de fichier à cette endroit -->
                         <ruleset>/dap_pmd.xml</ruleset>
                     </rulesets>
                 </configuration>
@@ -243,6 +248,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                <!-- TODO baa by Djer |Maven| Il n'y a pas de fichier à cette endroit -->
                     <configLocation>/CheckStyle.xml</configLocation>
                 </configuration>
                 <reportSets>
