@@ -29,9 +29,12 @@ import fr.ynov.dap.microsoft.contract.OutlookServiceBuilder;
 public class OutlookService {
 	
 	/** The logger. */
+    //TODO brc by Djer |POO| Devrait être écris en Majuscule (car static et final)
+    //TODO brc by Djer |Audit Code| static devrait être avant final (PMD/Checkstyle te préviennent de cette inversion)
 	private final static Logger logger = LogManager.getLogger(OutlookService.class);
 
 	/** The logger message no ms accounts. */
+	//TODO brc by Djer |POO| Ces variable sont un peu étrange. Tu as été "obligé" de les créé car tu as pas mal de code dupliqué. Tu aurais put créer des "méthode" réutilisable pour t'éviter ces "messages de logs dupliqués"
 	private final String LOGGER_MESSAGE_NO_MS_ACCOUNTS = "no microsoft account found for userkey : ";
 	
 	/** The logger message ms accounts missing. */
@@ -114,6 +117,7 @@ public class OutlookService {
         }
         
         Event MsNextEvent = null;
+        //TODO brc by Djer |POO| Attention tu auras un "ArrayOutOfBoundException" si pas d'évènnments à venir
 		if(events.get(0) != null) {
 			MsNextEvent = events.get(0);
 			for(int i=0; i<events.size(); i++) {
@@ -196,6 +200,7 @@ public class OutlookService {
             return null;
         }
         
+      //TODO brc by Djer |API Microsoft| Tu dois appeler "fr.ynov.dap.microsoft.AuthHelper.ensureTokens(TokenResponse, String)" pour "refresh" le token si nécéssaire (et suavegarder les tokens "raffraichi" dans le MicrosoftAccount de l'AppUser)
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
      // Sort by given name in ascending order (A-Z)
@@ -236,6 +241,7 @@ public class OutlookService {
             return null;
         }
         
+      //TODO brc by Djer |API Microsoft| Tu dois appeler "fr.ynov.dap.microsoft.AuthHelper.ensureTokens(TokenResponse, String)" pour "refresh" le token si nécéssaire (et suavegarder les tokens "raffraichi" dans le MicrosoftAccount de l'AppUser)
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         // Sort by given name in ascending order (A-Z)
@@ -276,6 +282,7 @@ public class OutlookService {
             return null;
         }
 
+      //TODO brc by Djer |API Microsoft| Tu dois appeler "fr.ynov.dap.microsoft.AuthHelper.ensureTokens(TokenResponse, String)" pour "refresh" le token si nécéssaire (et suavegarder les tokens "raffraichi" dans le MicrosoftAccount de l'AppUser)
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         String filter = "start/dateTime ge '" + Instant.now().toString() + "'";
@@ -289,7 +296,9 @@ public class OutlookService {
         PagedResult<Event> events = outlookService.getEvents(
                 sort, filter, properties, maxResults)
                 .execute().body();
+        //TODO brc by Djer |log4J| Contextualise tes messages (" for userkey : " + msAcc.getOwner().getUserkey() + " and accountName : " + msAcc.getName())
         logger.info("events : " + events);
+        //TODO brc by Djer |POO| Attention si tu n'as pas d'évènnements à venir tu auras un "ArrayOutOfBoundException" (Vérifie si size() >0)
         return events.getValue()[0];
     }
     
@@ -316,11 +325,13 @@ public class OutlookService {
             return 0;
         }
 
+      //TODO brc by Djer |API Microsoft| Tu dois appeler "fr.ynov.dap.microsoft.AuthHelper.ensureTokens(TokenResponse, String)" pour "refresh" le token si nécéssaire (et suavegarder les tokens "raffraichi" dans le MicrosoftAccount de l'AppUser)
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         OutlookFolder inboxFolder = outlookService.getFolder("inbox").execute().body();
 
         if (inboxFolder == null) {
+            //TODO brc by Djer |Log4J| Contextualise tes messages
         	logger.info("folder inbox not found");
             return 0;
         }
@@ -360,7 +371,8 @@ public class OutlookService {
         String properties = "receivedDateTime,from,isRead,subject,bodyPreview";
         // Return at most 10 messages
         Integer maxResults = 10;
-
+        
+        //TODO brc by Djer |API Microsoft| Tu dois appeler "fr.ynov.dap.microsoft.AuthHelper.ensureTokens(TokenResponse, String)" pour "refresh" le token si nécéssaire (et suavegarder les tokens "raffraichi" dans le MicrosoftAccount de l'AppUser)
         OutlookApiService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken(), email);
 
         PagedResult<Message> messages = outlookService.getMessages(

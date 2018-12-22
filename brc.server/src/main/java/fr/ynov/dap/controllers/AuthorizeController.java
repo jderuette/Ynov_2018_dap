@@ -24,6 +24,7 @@ import fr.ynov.dap.microsoft.models.IdToken;
  * The Class AuthorizeController.
  */
 @Controller
+//TODO brc by Djer |POO| Pour être cohérent avec "Google" ces méthodes devraient être dans le "AccountController"
 public class AuthorizeController {
 		
 	/** The app user repository. */

@@ -50,6 +50,8 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+          //TODO brc by Djer |Log4J| Une petite log ?
+          //TODO brc by Djer |POO| Evite les multiple return dans une même méthode
         return null;
       }
     }
@@ -66,6 +68,8 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO brc by Djer |Log4J| Une petite log ?
+          //TODO brc by Djer |POO| Evite les multiple return dans une même méthode
         return null;
       }
     }
@@ -82,6 +86,8 @@ public class AuthHelper {
       try {
         loadConfig();
       } catch (Exception e) {
+        //TODO brc by Djer |Log4J| Une petite log ?
+          //TODO brc by Djer |POO| Evite les multiple return dans une même méthode
         return null;
       }
     }
@@ -107,6 +113,7 @@ public class AuthHelper {
    * @throws IOException Signals that an I/O exception has occurred.
    */
   private static void loadConfig() throws IOException {
+      //TODO brc by Djer |Design Patern| Externalisation de la configuration ?
     String authConfigFile = "auth.properties";
     InputStream authConfigStream = AuthHelper.class.getClassLoader().getResourceAsStream(authConfigFile);
 
@@ -176,6 +183,7 @@ public class AuthHelper {
 	    return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 	        "authorization_code", authCode, getRedirectUrl()).execute().body();
 	  } catch (IOException e) {
+	    //TODO brc by Djer |Log4J| Une petite log ?
 	    TokenResponse error = new TokenResponse();
 	    error.setError("IOException");
 	    error.setErrorDescription(e.getMessage());
@@ -220,6 +228,7 @@ public class AuthHelper {
 	      return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(), 
 	          "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
 	    } catch (IOException e) {
+	      //TODO brc by Djer |Log4J| Une petite log ?
 	      TokenResponse error = new TokenResponse();
 	      error.setError("IOException");
 	      error.setErrorDescription(e.getMessage());

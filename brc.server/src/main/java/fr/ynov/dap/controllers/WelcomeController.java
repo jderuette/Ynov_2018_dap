@@ -22,10 +22,12 @@ import org.springframework.ui.ModelMap;
 public class WelcomeController {
 
 	/** The gmail service. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	GmailService gmailService;
 	
 	/** The app user repository. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	

@@ -30,14 +30,17 @@ import fr.ynov.dap.models.CalendarResponse;
 public class EventsRestController {
 
 	/** The calendar service. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	CalendarService calendarService;
 	
 	/** The app user repository. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 	
@@ -56,6 +59,7 @@ public class EventsRestController {
 		CalendarResponse response = calendarService.getGoogleNextEventFromAccount(appUser);
 		
 		if(response == null) {
+		    //TODO brc by Djer |Log4J| Une petite log ?
 			response = new CalendarResponse();
 			response.setError("No google account found for userKey : " + userKey);
 		}
@@ -72,6 +76,7 @@ public class EventsRestController {
 	 * @return the next event
 	 * @throws Exception the exception
 	 */
+	//TODO brc by Djer |Rest API| Essaye d'être "cohérent" dans tes URLs entre tes différentes APIs
 	@RequestMapping("/RestNextEvent")
 	public CalendarResponse getNextEvent(HttpServletRequest request, RedirectAttributes redirectAttributes,
 			@RequestParam final String userKey) throws Exception {
@@ -96,6 +101,7 @@ public class EventsRestController {
 				response = googleNextEvent;
 			}
 		}
+		//FIXME brc by Djer |POO| Else ? Si un des 2 est Null, alors le "non null" sera le bon évènnement
 		
 		return response;
 	}

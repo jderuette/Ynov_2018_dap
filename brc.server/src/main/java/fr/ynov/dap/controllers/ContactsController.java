@@ -26,13 +26,16 @@ import fr.ynov.dap.microsoft.service.OutlookService;
  * The Class ContactsController.
  */
 @Controller
+//TODO brc by Djer |Spring| Tu pourrais regrouper avec ton RestController. Met toutes tes URL dans CE Controller. Les méthode "Rest" auront en plus une anotation @ResponseBody, qui dit a Spring que le réponse doit être ajouté au body.
 public class ContactsController {
 	
 	/** The app user repository. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 	

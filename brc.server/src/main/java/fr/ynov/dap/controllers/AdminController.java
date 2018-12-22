@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//TODO brc by Djer |IDE| Configure les "save action" de ton IDE pour qu'il organise les import (et formate ton code) lors de la sauvegarde
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +27,7 @@ import fr.ynov.dap.service.AdminService;
 public class AdminController {
 	
 	/** The admin service. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	AdminService adminService;
 	

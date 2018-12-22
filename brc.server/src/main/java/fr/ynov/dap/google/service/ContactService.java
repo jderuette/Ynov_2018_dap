@@ -25,11 +25,13 @@ import fr.ynov.dap.models.NbContactResponse;
 public class ContactService extends GoogleService{
 	
 	/** The logger. */
+    //TODO brc by Djer |Log4J| Devrait etre final (pas besoin de changer la (pseudo)référence en cours d'éxécution)
 	final static Logger logger = LogManager.getLogger(ContactService.class);
 	
 	/**
 	 * Result contact.
 	 *
+	 *TODO brc by Djer |JavaDoc| "userId" est un "accountName" ?
 	 * @param userId the user id
 	 * @return the contact response
 	 * @throws IOException Signals that an I/O exception has occurred.

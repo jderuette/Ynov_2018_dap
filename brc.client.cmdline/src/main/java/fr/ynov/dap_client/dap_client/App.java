@@ -72,6 +72,7 @@ public class App
 				case "google":
 					sendUrl(new URL("http://localhost:8080/google/calendar?userKey=" + userKey));
 					break;
+					//TODO brc by Djer |API Microsoft| Pourquoi n'y a-t-il pas de type "microsfot" ?
 				
 				case "all":
 					sendUrl(new URL("http://localhost:8080/RestNextEvent?userKey=" + userKey));
@@ -109,6 +110,7 @@ public class App
 	    //print the source code line by line. 
 	    while ((response = br.readLine()) != null)  
 		{ 
+	        //TODO brc by Djer |POO| Il vaudrait mieux renvoyer le texte et laisser l'appelant décider de la manière de l'afficher
 			System.out.println(response); 
 		} 
     }

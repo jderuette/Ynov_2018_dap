@@ -50,6 +50,8 @@ public class GoogleService {
     protected List<String> scopes;
 	
 	/** The Constant logger. */
+    //TODO brc by Djer |POO| Devrait être écris en Majuscule (car static et final)
+    //TODO brc by Djer |Audit Code| static devrait être avant final (PMD/Checkstyle te préviennent de cette inversion)
 	private final static Logger logger = LogManager.getLogger(GoogleService.class);
 
 
@@ -79,6 +81,7 @@ public class GoogleService {
 			flow = getFlow();
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
+		    //TODO brc by Djer |Log4J| "e.printStackTrace()" affiche directement dans la console. Utilise une LOG à la place
 			e.printStackTrace();
 		}
 	    return flow.loadCredential(accountName);

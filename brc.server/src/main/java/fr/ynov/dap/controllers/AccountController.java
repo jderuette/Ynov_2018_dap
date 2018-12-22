@@ -30,18 +30,22 @@ import fr.ynov.dap.microsoft.AuthHelper;
 public class AccountController {
 
 	/** The google account service. */
+    //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	GoogleAccountService googleAccountService;
 	
 	/** The app user repository. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
 	/** The google account repository. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	GoogleAccountRepository googleAccountRepository;
 	
 	/** The logger. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	final static Logger logger = LogManager.getLogger(AccountController.class);
 
 	/**
@@ -59,6 +63,7 @@ public class AccountController {
             final HttpSession session) throws IOException, Exception {
 		
 		final String decodedCode = googleAccountService.extracCode(request);
+		//TODO brc by Djer |POO| Attention dans le "addAccount" tu utilises cfg.getoAuth2CallbackUrl(). Soit tu apssene dur, soit tu rends configurable, mais il faut choisir !
         final String redirectUri = googleAccountService.buildRedirectUri(request, "/oAuth2Callback");
         final String userId = googleAccountService.getUserid(session);
         
@@ -87,10 +92,12 @@ public class AccountController {
 		GoogleAccount account = new GoogleAccount();
 		final String userId = googleAccountService.getUserid(session);
 		
+		//TODO brc by Djer |API Google| Ne fait pas la sauvegarde du mapping ici. l'utilisateur pourrait refuser de partager ces informations. Sauvegrde dans le callBack
 		account.setName(userId);
 		account.setOwner(appUser);
 		
 		appUser.addGoogleAccount(account);
+		//TODO brc by Djer |JPA| AppUser est le "maitre" de la relation vers le GAccount. Il faut mieux modifier le appUser (lui ajouter le "account") puis faire un save de AppUser. JPA s'occupera de créer/modifier les entitées liées
 		googleAccountRepository.save(account);
 		
 		return response;
@@ -120,6 +127,7 @@ public class AccountController {
 		try {
 			response.sendRedirect(loginUrl);
 		} catch (IOException e) {
+		    //TODO brc by Djer |Log4J| ne fait pas de "e.printStackTrace()" cela afifche directemnt dans la console. Fait une log à la place et passe l'excetpion en deuxième paramètre ("cause"). Log4J s'occupera d'afficher correctement les informations de l'exception
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

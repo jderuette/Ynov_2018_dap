@@ -17,6 +17,7 @@ public class Launcher {
      *
      * @return the config
      */
+    //TODO brc by Djer |Spring| Plus utile car ta classe config est annotée avec @Configuration, Spring va automatiquement en faire un singleton qu'il pourra injecter là ou c'est demandé
     @Bean
     public Config loadConfig() {
     	return new Config();

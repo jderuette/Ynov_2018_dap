@@ -26,14 +26,17 @@ import fr.ynov.dap.models.CalendarResponse;
 public class EventsController {
 
 	/** The app user repository. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 
 	/** The calendar service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	CalendarService calendarService;
 
@@ -55,10 +58,13 @@ public class EventsController {
 
 		Event tempMsNextEvent = outlookService.getNextEventsForAccount(currentUser);
 		CalendarResponse msNextEvent = new CalendarResponse();
+		//TODO brc by Djer |POO| TU pourias avoir une méthode "from(Event)" pour l'initialsiation (ou un constructeur spécifique) pour éviter de "copier/coller" le code d'intialisation
 		msNextEvent.setOrganizer(tempMsNextEvent.getOrganizer().getEmailAddress().getName());
 		msNextEvent.setStart(tempMsNextEvent.getStart().getDateTime());
 		msNextEvent.setEnd(tempMsNextEvent.getEnd().getDateTime());
 		msNextEvent.setSubject(tempMsNextEvent.getSubject());
+		
+		//TODO brc by Djer |API Google| Gestion de "MON" status sur l'event ?
 
 		model.addAttribute("userKey", userKey);
 		model.addAttribute("events", msNextEvent);
@@ -83,6 +89,7 @@ public class EventsController {
 
 		AppUser currentUser = appUserRepository.findByUserkey(userKey);
 
+		//TODO brc by Djer |POO| C'est étrange d'avoir un Service qui transforme en "CalendarResponse" et l'autre qui ne le fait pas
 		CalendarResponse googleNextEvent = calendarService.getGoogleNextEventFromAccount(currentUser);
 		
 		Event tempMsNextEvent = outlookService.getNextEventsForAccount(currentUser);
@@ -94,11 +101,14 @@ public class EventsController {
 
 		if (msNextEvent != null && googleNextEvent != null) {
 			if (msNextEvent.getStart().before(googleNextEvent.getStart())) {
+			    //TODO brc by Djer |Thymleaf| Evite de mettre un "s" à la "variable" dans ton Modèle, cela confusant dans ta vue
 				model.addAttribute("events", msNextEvent);
 			} else {
 				model.addAttribute("events", googleNextEvent);
 			}
 		}
+		//FIXME brc by Djer |POO| Else ? Si un des 2 est Null, alors le "non null" sera le bon évènnement
+		
 		model.addAttribute("userKey", userKey);
 		return "event";
 	}

@@ -7,10 +7,13 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>dap_client</name>
+  <name>brc.client</name>
   <url>http://maven.apache.org</url>
 
   <properties>
+  <!-- TODO brc by Djer |Maven| Pour éviter que ton build n'échoue car tu utilise un format de switch invalide en java 1.5 (par Defaut Maven considère que le code est en 1.5) -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 

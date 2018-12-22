@@ -26,6 +26,7 @@ import com.google.api.client.http.GenericUrl;
 @Service
 public class GoogleAccountService extends GoogleService{
 	
+    //TODO brc by Djer |POO| Pas top de les positionner à 0. Permet d'afficher une partie d'une information senssible pour identifier d'éventuel problèmes (ici first=3 et last=9 serait pas mal)
 	/** The Constant SENSIBLE_DATA_LAST_CHAR. */
 	private static final int SENSIBLE_DATA_LAST_CHAR = 0;
 	
@@ -33,6 +34,8 @@ public class GoogleAccountService extends GoogleService{
 	private static final int SENSIBLE_DATA_FIRST_CHAR = 0;
 	
 	/** The logger. */
+	 //TODO brc by Djer |POO| Devrait être écris en Majuscule (car static et final)
+    //TODO brc by Djer |Audit Code| static devrait être avant final (PMD/Checkstyle te préviennent de cette inversion)
 	private final static Logger logger = LogManager.getLogger(GoogleAccountService.class);
 
 	/**
@@ -52,8 +55,10 @@ public class GoogleAccountService extends GoogleService{
 			try {
 				flow = getFlow();
 			} catch (GeneralSecurityException e) {
+			    //TODO brc by Djer |Log4J| Ne log pas juste l'exception. Ajoute ton message (contextualisé) et ajoute la "cause" en deuxième paramètre.
 				logger.error(e);
 			}
+			//TODO brc by Djer |API Google| "decodedCode" est une information  (un peu) senssible évite de l'afficher (en entier) dasn les logs
 			logger.info("decodedCode : " + decodedCode + "for user : " + userId);
 			logger.info("redirectUri : " + redirectUri + "for user : " + userId);
 
@@ -71,6 +76,7 @@ public class GoogleAccountService extends GoogleService{
             }
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
+            //TODO brc by Djer |Log4J| Contextualise tes messages
             logger.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
@@ -85,6 +91,7 @@ public class GoogleAccountService extends GoogleService{
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
+  //TODO brc by Djer |MVC| C'est bien d'avoir "mutulaiser" ce code, mais comme il travail avec des objets "Web" (Request) il serait mieux dans les controller (éventuellement dans un "helper")
     public String getUserid(final HttpSession session) throws ServletException {
         String userId = null;
         if (null != session && null != session.getAttribute("userId")) {
@@ -104,6 +111,7 @@ public class GoogleAccountService extends GoogleService{
      * @return the decoded code
      * @throws ServletException if the code cannot be decoded
      */
+    //TODO brc by Djer |MVC| C'est bien d'avoir "mutulaiser" ce code, mais comme il travail avec des objets "Web" (Request) il serait mieux dans les controller (éventuellement dans un "helper")
     public String extracCode(final HttpServletRequest request) throws ServletException {
         final StringBuffer buf = request.getRequestURL();
         if (null != request.getQueryString()) {
@@ -132,6 +140,7 @@ public class GoogleAccountService extends GoogleService{
      * @param destination the "path" to the resource
      * @return an absolute URI
      */
+  //TODO brc by Djer |MVC| C'est bien d'avoir "mutulaiser" ce code, mais comme il travail avec des objets "Web" (Request) il serait mieux dans les controller (éventuellement dans un "helper")
     public String buildRedirectUri(final HttpServletRequest req, final String destination) {
         final GenericUrl url = new GenericUrl(req.getRequestURL().toString());
         url.setRawPath(destination);
@@ -148,7 +157,7 @@ public class GoogleAccountService extends GoogleService{
      * @return the view to Display (on Error)
      * @throws GeneralSecurityException the general security exception
      */
-    
+  //TODO brc by Djer |MVC| Il faudrait que le controller extrait les informations de la requete et de la session pour éviter qu'un service "metier" dépendande de ces objets
     public String addAccount(final String accountName, final HttpServletRequest request,
             final HttpSession session) throws GeneralSecurityException {
         String response = "errorOccurs";
@@ -169,6 +178,7 @@ public class GoogleAccountService extends GoogleService{
                 response = "redirect:" + authorizationUrl.build();
             }
         } catch (IOException e) {
+            //TODO brc by Djer |Log4J| Contextualise tes messages
             logger.error("Error while loading credential (or Google Flow)", e);
         }
         // only when error occurs, else redirected BEFORE

@@ -23,17 +23,21 @@ import fr.ynov.dap.models.NbContactResponse;
  * The Class ContactRestController.
  */
 @RestController
+//TODO brc by Djer |Rest API| Ton API serait encore plus claire avec des URL du type /contact/nb, contact/google/nb, contact/microsoft/nb ({Module}/{action}, ou {Module}/{porvidier}/{action})
 public class ContactRestController {
 
 	/** The app user repository. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 	
 	/** The contact service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	ContactService contactService;
 	

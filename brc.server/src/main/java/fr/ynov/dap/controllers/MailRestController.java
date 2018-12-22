@@ -28,14 +28,17 @@ public class MailRestController {
 
 
 	/** The app user repository. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 	
 	/** The gmail service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired 
 	GmailService gmailService;
 	
@@ -84,6 +87,7 @@ public class MailRestController {
 	        Integer microsoftNbUnreadMail = outlookService.getNbUnreadEmailsForAccount(currentUser);
 	        response.setNbUnreadMail(googleNbUnreadMail + microsoftNbUnreadMail);
 		}
+		//TODO brc by Djer |log4J| (Else) Une petite log ?
 
         return response;
     }
@@ -105,7 +109,8 @@ public class MailRestController {
 		if(currentUser != null) {
 			Integer nbUnreadMail = gmailService.getNbUnreadMailForAccount(currentUser);
 			response.setNbUnreadMail(nbUnreadMail);
-		}	
+		}
+		//TODO brc by Djer |log4J| (Else) Une petite log ?
 		return response;
 	}
 }

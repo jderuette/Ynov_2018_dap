@@ -22,10 +22,12 @@ import fr.ynov.dap.microsoft.service.OutlookService;
 public class MailController {
 	
 	/** The app user repository. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	AppUserRepostory appUserRepository;
 	
 	/** The outlook service. */
+	//TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	OutlookService outlookService;
 
@@ -46,6 +48,7 @@ public class MailController {
         AppUser currentUser = appUserRepository.findByUserkey(userKey);
         
         model.addAttribute("userKey", userKey);
+        //TODO brc by Djer |Thymleaf| "response" est un peu générique, ta Vue sera moins claires. "mails" serait mieux ?
         model.addAttribute("response", outlookService.getInboxMailForAccount(currentUser));
         
 		return "mail";

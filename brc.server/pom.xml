@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>dap</name>
+  <name>brc.server</name>
   <url>http://maven.apache.org</url>
   
   <properties>
@@ -51,6 +51,7 @@
             <artifactId>google-api-client</artifactId>
             <version>1.25.0</version>
         </dependency>
+        <!-- TODO brc by Djer |Maven| Plus utile depuis que Googel est en mode "serveur Web" -->
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-jetty</artifactId>
@@ -158,6 +159,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
+                            <!-- TODO brc by Djer |Maven| Il n'y a pas de classes à cette emplacement -->
                             <mainClass>com.ynov.dap.Launcher</mainClass>
                         </manifest>
                     </archive>
@@ -201,6 +203,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
+                        <!-- TODO brc by Djer |Maven| Il n'y a pas de classes à cette emplacement -->
                             <mainClass>com.ynov.dap.Launcher</mainClass>
                         </manifest>
                     </archive>
@@ -284,6 +287,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                <!-- TODO brc by Djer |Maven| Il n'y a pas de fichier à cette emplacement -->
                     <configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
                 </configuration>
                 <reportSets>

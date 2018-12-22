@@ -9,20 +9,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/index">DAP</a>
+  <a class="navbar-brand" href="/index">DAP</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/mail?userKey=' + ${userKey}}">Mails</a>
+        <a class="nav-link" th:href="@{'/microsoft/mail?userKey=' + ${userKey}}">Mails</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/contacts?userKey=' + ${userKey}}">Contacts</a>
+        <a class="nav-link" th:href="@{'/microsoft/contacts?userKey=' + ${userKey}}">Contacts</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}" th:text="#{event}"></a>
       </li>  
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}}">Admin</a>
+        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}}">Admin</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>   
     </ul>
   </div>

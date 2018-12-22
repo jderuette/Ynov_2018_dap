@@ -15,6 +15,7 @@ import fr.ynov.dap.google.data.AppUserRepostory;
 public class UserController {
 
 	/** The app user repostory. */
+  //TODO brc by Djer |POO| Il faut préciser le modifier (public/protected/private) sur tes attributs, sinon par defaut c'est celui de la classe (donc public ici)
 	@Autowired
 	public AppUserRepostory appUserRepostory;
 

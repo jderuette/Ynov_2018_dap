@@ -15,35 +15,35 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/mail?userKey=' + ${userKey}}">Mails</a>
+        <a class="nav-link" th:href="@{'/microsoft/mail?userKey=' + ${userKey}}">Mails</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/contacts?userKey=' + ${userKey}}">Contacts</a>
+        <a class="nav-link" th:href="@{'/microsoft/contacts?userKey=' + ${userKey}}">Contacts</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}" th:text="#{event}"></a>
+        <a class="nav-link" th:href="@{'/microsoft/nextEvent?userKey=' + ${userKey}}" th:text="#{event}"></a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>  
       <li class="nav-item">
-        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}}">Admin</a>
+        <a class="nav-link" th:href="@{'/admin?userKey=' + ${userKey}}">Admin</a> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
       </li>   
     </ul>
   </div>
 </nav>
 </head>
 <body>
-	<h1>Admin</h1>
+	<h1>Admin</h1> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
 	<table>
 		<thead>
 			<tr>
 				<th class="col-md-2"><h5 th:text="#{userName}"></h5></th>
-				<th class="col-md-2"><h5>Type</h5></th>	
-				<th class="col-md-2"><h5>Tenant Id</h5></th>	
-				<th class="col-md-6"><h5>Token</h5></th>	
+				<th class="col-md-2"><h5>Type</h5></th>	 <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
+				<th class="col-md-2"><h5>Tenant Id</h5></th> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
+				<th class="col-md-6"><h5>Token</h5></th> <!-- TODO brc by Djer |Thymleaf| Internationalisation ? -->
 			</tr>
 		</thead>
 		<tbody>
 			<div class="row" th:each="credential : ${credentials}">
-				<tr #credential.isEmpty()>
+				<tr #credential.isEmpty()> <!-- TODO brc by Djer |Thymleaf| Met ta condition dans un "th:if=""' si tu veux que cela fonctionne -->
 					<td class="col-md-2" th:text="${credential.name}"></td>
 					<td class="col-md-2" th:text="${credential.type}"></td>
 					<td class="col-md-2" th:text="${credential.tenantId}"></td>

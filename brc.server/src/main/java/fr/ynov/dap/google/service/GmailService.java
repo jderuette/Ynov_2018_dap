@@ -20,9 +20,12 @@ import org.springframework.stereotype.Service;
  * The Class GmailService.
  */
 @Service
+//TODO brc by Djer |POO| Essaye d'être cohérent entre 2 service "simmilaire". Dans ContactService, la méthode utilisant le "accountName" renvoie un entier, et la méthode utilisant le AppUser renvoie une "Response" et ici c'est l'inverse
 public class GmailService extends GoogleService{
 	
 	/** The logger. */
+  //TODO brc by Djer |POO| Devrait être écris en Majuscule (car static et final)
+    //TODO brc by Djer |Audit Code| static devrait être avant final (PMD/Checkstyle te préviennent de cette inversion)
 	private final static Logger logger = LogManager.getLogger(GmailService.class);	
 	
     /**
