@@ -34,18 +34,21 @@ public class MailService {
      * @param userKey .
      * @return Nombre de mail non lu
      */
+    //TODO brf by Djer |POO| Pourquoi du static ? Tu as annoté la classe avec @Service, donc déclare une méthode d'instance, puis utilise IOC pour l'appeler
     public static String NombreDeMail(final RedirectAttributes redirectAttributes, MicrosoftAccountData account,
             Model model, String userKey) {
         TokenResponse tokens = account.getTokenResponse();
         String tenantId = account.getTenantId();
         if (tokens == null) {
             // No tokens in session, user needs to sign in
+            //TODO brf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
         }
 
         tokens = AuthHelper.ensureTokens(tokens, tenantId);
 
+        //TODO brf by Djer |API Microsoft| Permet de filtrer sur les "unread" ?
         String filter = "inbox";
 
         OutlookService outlookService = OutlookServiceBuilder.getOutlookService(tokens.getAccessToken());
@@ -64,9 +67,11 @@ public class MailService {
             PagedResult<Message> unreadMails = outlookService.getTotalUnreadMails(filter)
                     .execute().body();
             model.addAttribute("messages", messages.getValue());
+          //TODO brf by Djer |Log4J| Contextualise tes messages
             LOG.debug("Message non lu : " + unreadMails.getTotalUnreadMails());
             return unreadMails.getTotalUnreadMails();
         } catch (IOException e) {
+          //TODO brf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/";
         }

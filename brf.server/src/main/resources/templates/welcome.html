@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
-<title>Admin</title>
+<title>Admin</title> <!-- TODO brf by Djer |Thymleaf| Internationalisation ? -->
 
 </head>
 <body>
@@ -27,7 +27,7 @@
 				<th th:text="#{expireToken}"></th>
 			</tr>
 			<th:block th:each="map : ${map}">
-				<tr>
+				<tr> <!-- TODO brf by Djer |Thymleaf| Tu aurais put mettre ton iteration directement sur le le tr -->
 					<td th:text="${map.key}"></td>
 					<td th:text="${map.value.accessToken}"></td>
 					<td th:text="${map.value.refreshToken}"></td>

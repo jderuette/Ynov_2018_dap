@@ -77,10 +77,14 @@ public class CalendarService extends GoogleService {
                 response = "Sujet du prochain évenement : " + event.getSummary() + " - Date de début : "
                         + event.getStart();
                 response += " - Date de fin : " + event.getEnd() + " - Etat : " + event.getStatus();
+                
+                //TODO brf by Djer |API Google| Gestion de "MON" status sur l'event ?
             }
         } catch (Exception e) {
+          //TODO brf by Djer |Log4J| Evite d'ajouter le message de l'exception à ton propre message. Passe l'exception en deuxième paramètre et laisse Log4J afficher le message de la "cause" (et la pile)
             LOG.error("Erreur lors de la création de l'evenement calendar : ", e.getMessage());
         }
+        //TOOD brf by Djer |MVC| Renvoie juste les données et laisse l'apellant effectuer le formatage
         return response;
     }
 
@@ -95,6 +99,7 @@ public class CalendarService extends GoogleService {
         String response = null;
 
         AppUser user = appUserRepository.findByName(userKey);
+        //TODO brf by Djer |POO| Vérifie si user n'est pas null (userKey inexistant en BDD)
         List<GoogleAccountData> accounts = user.getAccounts();
         List<Event> listEvent = new ArrayList<>();
         Event event = null;
@@ -109,6 +114,7 @@ public class CalendarService extends GoogleService {
 
         if (listEvent != null) {
             for (int i = 0; i < listEvent.size(); i++) {
+                //TODO brf by Djer |API Google| Attention .getStart().getDateTime() est null pour les évènnements qui durent toute la journée, pour ceux là il faut utiliser .getStart().getDate()
                 dateMs = listEvent.get(i).getStart().getDateTime().getValue();
                 if (firstEvent == null) {
                     firstEvent = listEvent.get(i);
@@ -121,7 +127,7 @@ public class CalendarService extends GoogleService {
         response = "Sujet du prochain évenement : " + firstEvent.getSummary() + " - Date de début : "
                 + firstEvent.getStart();
         response += " - Date de fin : " + event.getEnd() + " - Etat : " + firstEvent.getStatus();
-
+        //TOOD brf by Djer |MVC| Renvoie juste les données et laisse l'apellant effectuer le formatage
         return response;
     }
 
@@ -138,6 +144,7 @@ public class CalendarService extends GoogleService {
         List<Event> items = events.getItems();
         Event event = null;
         if (items != null) {
+            //TODO brf by Djer |POO| La liste peu ne pas etre "null" ET ne contenir aucun élement, tu auras alors un "ArrayoutOfBoundException" lors du .get(0)
             event = items.get(0);
         }
         return event;

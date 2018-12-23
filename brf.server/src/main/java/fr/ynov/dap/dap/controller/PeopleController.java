@@ -42,6 +42,7 @@ public class PeopleController extends GoogleService implements Callback {
     public String getAllContacts(@RequestParam("userKey") final String userKey) throws Exception {
         int nbContact = 0;
         nbContact = peopleservice.getNbContact(userKey);
+      //TODO brf by Djer |Rest API| Renvoie des Données et laisse le client le choix de la présentation
         String response = "Nombre de contacts : " + nbContact;
         return response;
     }

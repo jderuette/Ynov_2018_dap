@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
-<title>Page Eventn</title>
+<title>Page Eventn</title> <!-- TODO brf by Djer |Thymleaf| Internationalisation ? -->
 
 </head>
 <body>
@@ -41,7 +41,7 @@
 		</tr>
 
 		<th:block th:each="events : ${events}">
-			<tr>
+			<tr> <!-- TODO brf by Djer |Thymleaf| Tu aurais put mettre ton iteration directement sur le le tr -->
 				<td th:text="${events.organizer.emailAddress.name}"></td>
 				<td th:text="${events.subject}"></td>
 				<td th:text="${events.start.dateTime}"></td>

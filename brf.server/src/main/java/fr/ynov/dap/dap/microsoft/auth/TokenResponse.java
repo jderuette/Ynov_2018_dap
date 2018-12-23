@@ -19,10 +19,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TokenResponse {
 
     /**
-     * 
+     * TODO brf by Djer |JavaDoc| Nom et description pas très claire. TOKENS_COLUMN_LENGHT serait mieux ?
      */
-    private final static int COLUMN = 10000;
-
+    //FIXME brf by Djer |JPA| NE fonctionne pas avec mon MySQL (row too large). Faut-il une configuration de MySQL spécial (je ne trovue rien dans ta doc technique sur le sujet). Je le passe de 10000 à 3000
+    //private final static int COLUMN = 10000;
+    private final static int COLUMN = 3000;
+    
     /**.
      * Déclaration de l'Id
      */

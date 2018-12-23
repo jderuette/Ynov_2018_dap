@@ -34,11 +34,14 @@ public class ContactService {
      * @param userKey .
      * @return page d'accueil
      */
+    //TODO brf by Djer |POO| Pourquoi du static ? Tu as annoté la classe avec @Service, donc déclare une méthode d'instance, puis utilise IOC pour l'appeler
+    //TODO brf by Djer |MVC| Ton service est "étrange" il renvoie soit un entier, soit une chaine de texte (redirection). Ce service fait trop de travail qui devrait être dans le controller
     public static String nombreDeContact(RedirectAttributes redirectAttributes, MicrosoftAccountData account,
             Model model, String userKey) {
         TokenResponse tokens = account.getTokenResponse();
         String tenantId = account.getTenantId();
         if (tokens == null) {
+          //TODO brf by Djer |Log4J| Une petite log ?
             // No tokens in session, user needs to sign in
             redirectAttributes.addFlashAttribute("error", "Please sign in to continue.");
             return "redirect:/";
@@ -59,9 +62,11 @@ public class ContactService {
             PagedResult<Contact> nbContacts = outlookService.getNbContacts(properties).execute().body();
             model.addAttribute("contacts", contacts.getValue());
 
+          //TODO brf by Djer |Log4J| Contextualise tes messages
             LOG.debug("Nombre de contact microsoft : " + nbContacts.getValue().length);
             return Integer.toString(nbContacts.getValue().length);
         } catch (IOException e) {
+          //TODO brf by Djer |Log4J| Une petite log ?
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/";
         }

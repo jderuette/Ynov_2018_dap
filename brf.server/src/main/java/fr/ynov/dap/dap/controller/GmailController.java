@@ -48,6 +48,7 @@ public class GmailController extends GoogleService implements Callback {
     public String emailUnreads(@RequestParam("userKey") final String userKey) throws Exception {
         int messageUnread = 0;
         messageUnread = gmailservice.getMsgsUnread(userKey);
+      //TODO brf by Djer |log4J| Contextualise tes log et donne un sens aux messages ("Nb unread emails for user  : " + userKey + " : " + messageUnread)
         LOG.debug(messageUnread);
         String response = "Nombre de mails non lus : " + messageUnread;
         return response;
@@ -63,6 +64,7 @@ public class GmailController extends GoogleService implements Callback {
         int messageUnread = 0;
         messageUnread = gmailservice.getMsgsUnreadORM(userKey);
         LOG.debug(messageUnread);
+        //TODO brf by Djer |Rest API| Renvoie des Données et laisse le lcient le choix de la présentation
         String response = "Nombre de mails non lus : " + messageUnread;
         return response;
     }

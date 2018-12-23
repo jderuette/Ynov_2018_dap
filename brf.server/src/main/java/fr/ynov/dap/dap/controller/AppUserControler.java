@@ -34,7 +34,9 @@ public class AppUserControler {
     public void addAppUser(@PathVariable("userKey") final String userKey) throws Exception {
         AppUser utilisateur = new AppUser();
         utilisateur.setName(userKey);
+        //TODO brf by Djer |log4J| Contextualise tes log et donne un sens aux messages ("Creating user : " + utilisateur.getName())
         LOG.debug(utilisateur.getName());
         appUserRepostory.save(utilisateur);
+        //TODO brf by Djer |Rest API| Renvoyer un "OK" ?
     }
 }

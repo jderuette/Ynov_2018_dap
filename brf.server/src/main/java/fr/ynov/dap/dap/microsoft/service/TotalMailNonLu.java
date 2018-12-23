@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+//TODO brf by Djer |POO| Je ne comprend pas cette classe. Elle est utilisée nullpart, tu peux la supprimer
 public class TotalMailNonLu {
 
     /**

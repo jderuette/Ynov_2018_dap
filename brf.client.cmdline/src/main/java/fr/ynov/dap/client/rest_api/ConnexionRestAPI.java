@@ -113,6 +113,7 @@ public abstract class ConnexionRestAPI {
         try {
             Desktop.getDesktop().browse(uri);
         } catch (Exception e) {
+            //TODO brf by Djer |Gestion Exception| Utilises le constructeur qui prend un expceiton en paramètre, ca evite de perdre de l'information 
             throw new IOException(e.getMessage());
         }
     }

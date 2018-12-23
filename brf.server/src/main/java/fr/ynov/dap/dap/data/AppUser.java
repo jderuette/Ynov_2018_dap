@@ -56,6 +56,7 @@ public class AppUser {
      */
     public void addMicrosoftAccount(final MicrosoftAccountData account) {
         account.setOwner(this);
+        //TODO brf by Djer |POO| Essaye d'être cohérent, dans le "addGoogleAccount" tu est passé par le getter pour acceder à l'attribut
         this.microsoftAccountData.add(account);
     }
 

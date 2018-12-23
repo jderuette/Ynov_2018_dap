@@ -46,6 +46,7 @@ public class GmailService extends GoogleService {
      * @throws IOException fonction
      * @throws GeneralSecurityException fonction
      */
+    //TODO brf by Djer |POO| "userKey" est en fait un "accountName"
     private Gmail buildGmailService(final String userKey) throws IOException, GeneralSecurityException {
         Gmail gmailservice = new Gmail.Builder(getHttpTransport(), getJsonFactory(), getCredentials(userKey))
                 .setApplicationName(getConfiguration().getApplicationName())
@@ -58,6 +59,7 @@ public class GmailService extends GoogleService {
      * @return GetServiceGmail : Le nombre de mail non lu
      * @throws Exception fonction
      */
+  //TODO brf by Djer |POO| "userKey" est en fait un "accountName"
     public int getMsgsUnread(final String userKey) throws Exception {
         return this.buildGmailService(userKey).users().labels().get("me", "INBOX").execute().getMessagesUnread();
     }
@@ -76,8 +78,10 @@ public class GmailService extends GoogleService {
         for (GoogleAccountData accountData : accounts) {
             try {
                 nbMessageUnreadForAll += getMsgsUnread(accountData.getAccountName());
+              //TODO brf by Djer |Log4J| Contextualise tes messages
                 LOG.debug("GmailService nbMessageUnreadForAll : " + nbMessageUnreadForAll);
             } catch (Exception e) {
+                //TODO brf by Djer |Log4J| "e.printStackTrace()" affiche directement dnas la console. Utilise une LOG (avec le deuxième apramètre en "cause")
                 e.printStackTrace();
             }
         }

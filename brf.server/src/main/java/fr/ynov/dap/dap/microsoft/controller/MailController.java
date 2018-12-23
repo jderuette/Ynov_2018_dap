@@ -50,6 +50,7 @@ public class MailController {
             model.addAttribute("accounts", appUser.getMicrosoftAccounts());
             for (MicrosoftAccountData account : appUser.getMicrosoftAccounts()) {
                 MailNonLu = MailService.NombreDeMail(redirectAttributes, account, model, userKey);
+              //TODO brf by Djer |Log4J| Message en partie faux, "unreadMails" contient la somme des messages précédents (tu n'a pas encore fait l'ajout)
                 LOG.debug("Nombre de mail non lu : " + MailNonLu + " ,Compte total : " + unreadMails);
                 unreadMails += new Integer(MailNonLu).intValue();
             }
@@ -59,6 +60,7 @@ public class MailController {
             model.addAttribute("unreadMails", unreadMails);
             return "mail";
         }
+        //TODO brf by Djer |Log4J| (else) Une petite log ?
         return "redirect:/";
     }
 }

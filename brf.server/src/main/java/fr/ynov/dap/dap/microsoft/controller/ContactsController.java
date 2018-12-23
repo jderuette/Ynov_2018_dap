@@ -50,6 +50,7 @@ public class ContactsController {
             model.addAttribute("accounts", appUser.getMicrosoftAccounts());
             for (MicrosoftAccountData account : appUser.getMicrosoftAccounts()) {
                 contact = ContactService.nombreDeContact(redirectAttributes, account, model, userKey);
+                //TODO brf by Djer |Log4J| Message en partie faux, "nbContact" contient la somme des contacts précédents (tu n'a pas encore fait l'ajout)
                 LOG.debug("Affichage du nombre de contact : " + contact + " , Nombrze total de contact pour le user "
                         + userKey + " : " + nbContact);
                 nbContact += new Integer(contact).intValue();
@@ -60,6 +61,7 @@ public class ContactsController {
             model.addAttribute("nbContacts", nbContact);
             return "contact";
         }
+      //TODO brf by Djer |Log4J| (else) Une petite log ?
         return "redirect:/";
     }
 }

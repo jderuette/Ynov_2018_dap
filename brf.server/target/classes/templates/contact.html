@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/dap.css}" />
 
-<title>Page contact</title>
+<title>Page contact</title> <!-- TODO brf by Djer |Thymleaf| Internationalisation ? -->
 
 </head>
 <body>
@@ -40,7 +40,7 @@
 			<th th:text="#{mail}"></th>
 		</tr>
 		<th:block th:each="contacts : ${contacts}">
-			<tr>
+			<tr> <!-- TODO brf by Djer |Thymleaf| Tu aurais put mettre ton iteration directement sur le le tr -->
 				<td th:text="${contacts.givenName + ' ' + contacts.surname}"></td>
 				<td th:text="${contacts.companyName}"></td>
 				<th:block th:each="address : ${contacts.emailAddresses}">

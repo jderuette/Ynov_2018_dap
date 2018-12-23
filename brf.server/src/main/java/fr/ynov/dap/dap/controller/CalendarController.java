@@ -18,6 +18,7 @@ import fr.ynov.dap.dap.service.GoogleService;
  *
  */
 @RestController
+//TODO brf by Djer |POO| Pourquoi implementer l'interface de marquage "javax.security.auth.callback" ? (ca n'est utile que si tu implemente d'autres interfaces du package "security")
 public class CalendarController extends GoogleService implements Callback {
 
     /**.

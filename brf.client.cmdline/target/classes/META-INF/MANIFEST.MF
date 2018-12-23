@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: Florian
+Built-By: djer1
 Class-Path: lib/okhttp-3.11.0.jar lib/okio-1.14.0.jar
 Build-Jdk: 1.8.0_191
 Created-By: Maven Integration for Eclipse

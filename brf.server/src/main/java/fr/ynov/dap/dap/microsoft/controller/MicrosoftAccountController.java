@@ -51,8 +51,10 @@ public class MicrosoftAccountController {
         HttpSession session = request.getSession();
         session.setAttribute("expected_state", state);
         session.setAttribute("expected_nonce", nonce);
+        //TODO brf by Djer |Log4J| Contextualise tes messages et donne leur du sens
         LOG.debug(appUserRepository.findByName(userKey));
         if (appUserRepository.findByName(userKey) == null) {
+            //TODO brf by Djer |MVC| Tu est dans un Controller (pas un **Rest**Controller) Spring va chercher unhe vue portant ce nom
             return "L'utilisateur " + userKey + " n'existe pas";
         } else {
             session.setAttribute("accountName", accountName);

@@ -50,6 +50,7 @@ public class PeopleServiceAPI extends GoogleService {
                 getCredentials(userKey))
                         .setApplicationName(getConfiguration().getApplicationName())
                         .build();
+      //TODO brf by Djer |Log4J| Contextualise tes messages
         LOG.debug("PeopleServiceAPI : " + peopleservice);
         return peopleservice;
     }
@@ -61,6 +62,7 @@ public class PeopleServiceAPI extends GoogleService {
      * @throws GeneralSecurityException fonction
      */
     public int getNbContact(final String userKey) throws IOException, GeneralSecurityException {
+        //TODO brf by Djer |API Google| Les "Identifiants" stockés dans le storeCredential pour Google sont des "accountName" PAS des userKey
         return this.getServicePeople(userKey)
                 .people()
                 .connections()

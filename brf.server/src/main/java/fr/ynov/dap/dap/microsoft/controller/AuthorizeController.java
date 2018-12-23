@@ -56,6 +56,7 @@ public class AuthorizeController {
         HttpSession session = request.getSession();
         UUID expectedState = (UUID) session.getAttribute("expected_state");
         UUID expectedNonce = (UUID) session.getAttribute("expected_nonce");
+        //TODO brf by Djer |POO| Si ta session est null ou si "accountName" est null tu auras une exception. Ré-utilise "fr.ynov.dap.dap.controller.GoogleAccount.getUserAccount(HttpSession)"
         final String accountName = (String) session.getAttribute("accountName");
         final String userKey = (String) session.getAttribute("userKey");
         // Make sure that the state query parameter returned matches
@@ -64,6 +65,7 @@ public class AuthorizeController {
             IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
             if (idTokenObj != null) {
                 TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
+                //TODO brf by Djer |Log4J| Attention "tokenResponse" contient des informations senssibles, évite de le logger en entier
                 LOG.debug("Le TokenResponse : " + tokenResponse);
                 session.setAttribute("tokens", tokenResponse);
                 session.setAttribute("userConnected", true);
@@ -75,6 +77,7 @@ public class AuthorizeController {
                     user = outlookService.getCurrentUser().execute().body();
                     session.setAttribute("userEmail", user.getMail());
                 } catch (IOException e) {
+                  //TODO brf by Djer |Log4J| Une petite log ?
                     session.setAttribute("error", e.getMessage());
                 }
                 session.setAttribute("userTenantId", idTokenObj.getTenantId());
@@ -84,6 +87,7 @@ public class AuthorizeController {
                 account.setTokenResponse(tokenResponse);
                 account.setTenantId(idTokenObj.getTenantId());
                 AppUser appuser = appUserRepository.findByName(userKey);
+                //TODO brf by Djer |POO| Utilise la valeur de retour de cette fonction
                 appuser.getAccounts().stream().anyMatch(u -> u.getAccountName() == accountName);
                 appuser.addMicrosoftAccount(account);
                 appUserRepository.save(appuser);
@@ -91,9 +95,11 @@ public class AuthorizeController {
                 model.addAttribute("authCode", code);
                 model.addAttribute("idToken", idToken);
             } else {
+              //TODO brf by Djer |Log4J| Une petite log ?
                 session.setAttribute("error", "ID token failed validation.");
             }
         } else {
+          //TODO brf by Djer |Log4J| Une petite log ?
             session.setAttribute("error", "Unexpected state returned from authority.");
         }
 

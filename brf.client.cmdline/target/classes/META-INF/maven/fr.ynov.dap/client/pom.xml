@@ -145,6 +145,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                <!-- TODO brf by Djer |Audit Code| Il n'y a pas de fichier de règles à cette emplacement -->
                   <configLocation>checkstyle/dap_checkstyle_checks.xml</configLocation>
                 </configuration>
                  <reportSets>
@@ -165,6 +166,7 @@
                     <skipEmptyReport>false</skipEmptyReport>
                     <minimumTokens>75</minimumTokens>
                     <rulesets>
+                    <!-- TODO brf by Djer |Audit Code| Il n'y a pas de fichier de règles à cette emplacement -->
                         <ruleset>/pmd/dap_pmd.xml</ruleset>
                     </rulesets>
                 </configuration>

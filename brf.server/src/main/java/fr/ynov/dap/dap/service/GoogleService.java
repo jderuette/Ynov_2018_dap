@@ -128,8 +128,10 @@ public abstract class GoogleService {
      * @throws IOException fonction
      * @throws GeneralSecurityException fonction
      */
+    //TODO brf by Djer |POO| "userKey" est en faite un "accountName"
     protected Credential getCredentials(final String userKey) throws IOException, GeneralSecurityException {
         GoogleAuthorizationCodeFlow flow = getFlow();
+        //TODO brf by Djer |API Google| Ceci risque de mal fonctionner en mode "serveur Web". Utilise flow.loadCredential(userKey)
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(userKey);
     }
 

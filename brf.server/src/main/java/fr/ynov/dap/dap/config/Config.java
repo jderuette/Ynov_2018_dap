@@ -4,6 +4,7 @@ package fr.ynov.dap.dap.config;
  * @author Florian BRANCHEREAU
  *
  */
+//TODO brf by Djer |Design Patern| Rendre configurable les emplacements des fichiers ?
 public class Config {
 
     /**.

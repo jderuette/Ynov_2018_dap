@@ -70,6 +70,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+                //TODO brf by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -84,6 +85,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO brf by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -98,6 +100,7 @@ public class AuthHelper {
             try {
                 loadConfig();
             } catch (Exception e) {
+              //TODO brf by Djer |Log4J| Une petite log ?
                 return null;
             }
         }
@@ -121,6 +124,7 @@ public class AuthHelper {
      */
     @SuppressWarnings("unused")
     private static void loadConfig() throws IOException {
+        //TODO brf by Djer |IOC| Ne fait pas de NEW ! Cette conf est géré par Spring, injecte-là !
         Config config = new Config();
         String authConfigFile = "auth.properties";
         InputStreamReader authConfigStream = new InputStreamReader(new FileInputStream(config.getAuthProperties()),
@@ -138,6 +142,8 @@ public class AuthHelper {
                 authConfigStream.close();
             }
         } else {
+            //TODO brf by Djer |Audit Code| Traite le message plutot que de le masquer. Tu as du "dead code" ici car tu fait un "new" sur "authConfigStream" il ne pourra JAMAIS être null (il peut cependant pointer vers un fichier inexistant)
+            //TODO brf by Djer |POO| Message pas tout à fait vrai, le fichier n'est pas nécéssairement cherché "in the classpath"
             throw new FileNotFoundException("Property file '" + authConfigFile + "' not found in the classpath.");
         }
     }
@@ -189,6 +195,7 @@ public class AuthHelper {
             return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(),
                     "authorization_code", authCode, getRedirectUrl()).execute().body();
         } catch (IOException e) {
+          //TODO brf by Djer |Log4J| Une petite log ?
             TokenResponse error = new TokenResponse();
             error.setError("IOException");
             error.setErrorDescription(e.getMessage());
@@ -230,7 +237,9 @@ public class AuthHelper {
             try {
                 return tokenService.getAccessTokenFromRefreshToken(tenantId, getAppId(), getAppPassword(),
                         "refresh_token", tokens.getRefreshToken(), getRedirectUrl()).execute().body();
+                //TODO brf by Djer |API Microsoft| Re-sauvegarde les nouveaux token en BDD. Sinon après la première expiration tu devra re faire un appel à chaque fois que l'utilisateur fait une nouvelle requete (ceux en BDD seront forcèment expiré)
             } catch (IOException e) {
+              //TODO brf by Djer |Log4J| Une petite log ?
                 TokenResponse error = new TokenResponse();
                 error.setError("IOException");
                 error.setErrorDescription(e.getMessage());

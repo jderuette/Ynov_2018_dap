@@ -85,6 +85,7 @@ public class GoogleAccount extends GoogleService implements Callback {
             final Credential credential = flow.createAndStoreCredential(
                     response, accountName);
             if (null == credential || null == credential.getAccessToken()) {
+                //TODO brf by Djer |Log4J| Ajoute le "accountName" dans le contexte de la log
                 LOG.warn("Trying to store a NULL AccessToken for user : "
                         + userKey);
             } else {
@@ -98,12 +99,14 @@ public class GoogleAccount extends GoogleService implements Callback {
             account.setAccountName(accountName);
 
             AppUser appuser = appUserRepostory.findByName(userKey);
+            //TODO brf by Djer |POO| Récupère et interprete le résultat renvoyer par cette méthode
             appuser.getAccounts().stream().anyMatch(u -> u.getAccountName() == accountName);
             appuser.addGoogleAccount(account);
             appUserRepostory.save(appuser);
 
             // onSuccess(request, resp, credential);
         } catch (IOException e) {
+            //TOOD brf by Djer |Log4J| Contextualise tes messages
             LOG.error("Exception while trying to store user Credential", e);
             throw new ServletException("Error while trying to conenct Google Account");
         }
@@ -144,6 +147,7 @@ public class GoogleAccount extends GoogleService implements Callback {
 
         if (null == accountName) {
             LOG.error("accountName in Session is NULL in Callback");
+            //TODO brf by Djer |POO| Peite erreur dans le message, c'est "accountName" qui est NULL, pas "userId"
             throw new ServletException("Error when trying to add Google acocunt : userId is NULL is User Session");
         }
         return accountName;
@@ -208,6 +212,7 @@ public class GoogleAccount extends GoogleService implements Callback {
         Credential credential = null;
         try {
             if (appUserRepostory.findByName(userKey) == null) {
+                //TODO brf by Djer |MVC| Attention, tu es dans un Controller (pas un **Rest**Controller) Spring va essayer de chercher une Vue avec ce nom
                 return "L'utilisateur " + userKey + " n'existe pas";
             } else {
 
@@ -216,6 +221,7 @@ public class GoogleAccount extends GoogleService implements Callback {
 
                 if (credential != null && credential.getAccessToken() != null) {
 
+                  //TODO brf by Djer |MVC| Attention, tu es dans un Controller (pas un **Rest**Controller) Spring va essayer de chercher une Vue avec ce nom
                     response = "Le compte existe déjà";
                 } else {
                     // redirect to the authorization flow
@@ -231,8 +237,10 @@ public class GoogleAccount extends GoogleService implements Callback {
         } catch (
 
         IOException e) {
+          //TOOD brf by Djer |Log4J| Contextualise tes messages
             LOG.error("Error while loading credential (or Google Flow)", e);
         }
+        //TODO brf by Djer |POO| Ce commentaire n'est plus vrai
         // only when error occurs, else redirected BEFORE
         return response;
     }
