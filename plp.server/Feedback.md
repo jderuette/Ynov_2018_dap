@@ -2,7 +2,6 @@
 - Ton client ne compile pas ! (une petite erreur)
 - Tu n'as pas adapté ton client avec la version Microsoft
 - Utilise les outils d'Audit de code, cela évite des "ereurs betes"
-- Je n'ai pas trouvé de doc technique
 
 # Remarques
 - Attention à bien préciser la porté de tes attributs, par defaut ils ont la porté de la classe (en général "public")
