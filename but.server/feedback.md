@@ -1,5 +1,4 @@
 # Général
-- Où est la doc qui explique comment utiliser la "configuration externalisée" ? (pour pouvoir testé j'ai commenté une partie de la conf "par défaut").
 - showNextEvent avec un compte Microsoft (qui contient le prochain Rdv) provoque une erreur : `Exception in thread "main" org.json.JSONException: JSONObject["status"] not a string.
         at org.json.JSONObject.getString(JSONObject.java:855)
         at fr.ynov.dap.client.DapAPI.showNextEvent(DapAPI.java:156)
