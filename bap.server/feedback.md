@@ -1,5 +1,4 @@
 # Général
-- Ou est la documentation ? 
 - Tu aurais pu repasser sur ton "ancien" code Google.
 - Attention à tes algos.
 
