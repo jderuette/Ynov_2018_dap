@@ -1,0 +1,4 @@
+
+- Attention ton "formatter" n'est aps bien configuré pour ce projet : doc ici : https://moodle.ynov.com/course/view.php?id=5062#yui_3_17_2_1_1547807746927_81
+- Je t'ai ajouté les "fichier de config" de PMD et de CheckStyle, il faudra cependant que tu configure un peu de ton coté : https://moodle.ynov.com/course/view.php?id=5062#module-5818
+- Ton client ne fait que des "raccourci" vers tes pages web. Ce n'est pas sont objectif "principal". Ton client devrait directement appeler tes routes "API". Ton "interface Web" consomme les même "service" mais produit du "HTML", alors que les routes "API" produisent du "Json" qui pourra être présenter "librement" par le client. Je pense que je te ferais tes remques dans ton "server" pour que tu puisses exposer des services métiers à la fois sur des routes "Web" (avec MVC : @Controller + vue "thymeLeaf") et des routes "API" (en laisssant Spring faire la très grande partie du boulot @RestController).

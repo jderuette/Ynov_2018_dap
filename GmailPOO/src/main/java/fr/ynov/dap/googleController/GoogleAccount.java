@@ -29,59 +29,66 @@ import javassist.NotFoundException;
 
 @Controller
 public class GoogleAccount extends GoogleService {
-@Autowired
-private Data maDataBase;
-private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
-	 public GoogleAccount() throws UnsupportedOperationException, GeneralSecurityException, IOException {
-		super();
-		
-	}
+    @Autowired
+    private Data maDataBase;
+    private static final Logger LOG = LogManager.getLogger(GoogleAccount.class);
 
-	/**
+    public GoogleAccount() throws UnsupportedOperationException, GeneralSecurityException, IOException {
+        super();
+
+    }
+
+    /**
      * Handle the Google response.
      * @param request The HTTP Request
      * @param code    The (encoded) code use by Google (token, expirationDate,...)
      * @param session the HTTP Session
      * @return the view to display
      * @throws ServletException When Google account could not be connected to DaP.
-	 * @throws GeneralSecurityException 
+     * @throws GeneralSecurityException 
      */
-     @RequestMapping("/Callback")
-    public String oAuthCallback(@RequestParam(value="code")  String code, final HttpServletRequest request,
-            final HttpSession session,Model model) throws ServletException, GeneralSecurityException {
-    	
-      final String decodedCode = extracCode(request);
+    @RequestMapping("/Callback")
+    public String oAuthCallback(@RequestParam(value = "code") String code, final HttpServletRequest request,
+            final HttpSession session, Model model) throws ServletException, GeneralSecurityException {
+
+        final String decodedCode = extracCode(request);
 
         final String redirectUri = buildRedirectUri(request, "/Callback");
-         
+
         final String userId = getUserid(session);
         final String userKey = getUserKey(session);
-        model.addAttribute("add","Add Google Account");
-        
+        //TODO bes by Djer |MVC| Ne met pas de "text" dans ton controller, c'est le rôle de la vue (ou du client).
+        model.addAttribute("add", "Add Google Account");
+
         try {
             final GoogleAuthorizationCodeFlow flow = super.getFlow();
             final TokenResponse response = flow.newTokenRequest(decodedCode).setRedirectUri(redirectUri).execute();
-            session.setAttribute("TokenGoogle",response);             
+            session.setAttribute("TokenGoogle", response);
 
-            final com.google.api.client.auth.oauth2.Credential credential = flow.createAndStoreCredential(response, userId);
+            final com.google.api.client.auth.oauth2.Credential credential = flow.createAndStoreCredential(response,
+                    userId);
             maDataBase.ajouterAccountGoogle(userKey, "", userId, response);
-            model.addAttribute("onSuccess",userId+" ajouté avec succes");
+          //TODO bes by Djer |MVC| Un "onSuccess" à "true" serait mieux, et laisser la vue décider du text a afficher
+            model.addAttribute("onSuccess", userId + " ajouté avec succes");
             if (null == credential || null == credential.getAccessToken()) {
                 LOG.warn("Trying to store a NULL AccessToken for user : " + userId);
+              //TODO bes by Djer |MVC| Plutot que d'ajouter un autre attribut dans ton modèle, test dans la vue si "onSuccess" est vrai alors " ajouté avec succes" sinon "Trying to store a NULL AccessToken for user : " + userId"
                 model.addAttribute("NotAdd", "Trying to store a NULL AccessToken for user : " + userId);
             }
 
             if (LOG.isDebugEnabled()) {
                 if (null != credential && null != credential.getAccessToken()) {
-                 //   LOG.debug("New user credential stored with userId : " + userId + "partial AccessToken : "
-                   //         + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
-                        //            SENSIBLE_DATA_LAST_CHAR));
+                    //   LOG.debug("New user credential stored with userId : " + userId + "partial AccessToken : "
+                    //         + credential.getAccessToken().substring(SENSIBLE_DATA_FIRST_CHAR,
+                    //            SENSIBLE_DATA_LAST_CHAR));
                 }
             }
-           
+
         } catch (IOException | NotFoundException e) {
+            //TODO bes by Djer |Log4J| Contextualise tes messages (" for userId : " + userId + " and accountname : " + userKey)
             LOG.error("Exception while trying to store user Credential", e);
-            model.addAttribute("NotAdd", "Exception while trying to store user Credential "+e.getMessage());
+          //TODO bes by Djer |MVC| test "onSucess" dans ta vue plutot que d'avoir un nouvel attribut
+            model.addAttribute("NotAdd", "Exception while trying to store user Credential " + e.getMessage());
             throw new ServletException("Error while trying to conenct Google Account");
         }
 
@@ -94,12 +101,12 @@ private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
      * @return the current User Id in Session
      * @throws ServletException if no User Id in session
      */
-  
+
     private String getUserid(final HttpSession session) throws ServletException {
         String userId = null;
         if (null != session && null != session.getAttribute("userId")) {
             userId = (String) session.getAttribute("userId");
-           
+
         }
 
         if (null == userId) {
@@ -108,18 +115,19 @@ private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
         }
         return userId;
     }
+
     /**
      * retrieve the User Key in Session.
      * @param session the HTTP Session
      * @return the current User Id in Session
      * @throws ServletException if no UserKey in session
      */
-  
+
     private String getUserKey(final HttpSession session) throws ServletException {
         String userKey = null;
         if (null != session && null != session.getAttribute("userKey")) {
             userKey = (String) session.getAttribute("userKey");
-           
+
         }
 
         if (null == userKey) {
@@ -128,7 +136,6 @@ private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
         }
         return userKey;
     }
-   
 
     /**
      * Extract OAuth2 Google code (from URL) and decode it.
@@ -151,7 +158,7 @@ private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
         if (null != responseUrl.getError()) {
             LOG.error("Error when trying to add Google acocunt : " + responseUrl.getError());
             throw new ServletException("Error when trying to add Google acocunt");
-         
+
         }
 
         return decodeCode;
@@ -169,48 +176,49 @@ private static final  Logger LOG = LogManager.getLogger(GoogleAccount.class);
         url.setRawPath(destination);
         return url.build();
     }
-   
-   /**
+
+    /**
     * Add a Google account (user will be prompt to connect and accept required
     * access).
     * @param userId  the user to store Data
     * @param request the HTTP request
     * @param session the HTTP session
     * @return the view to Display (on Error)
- * @throws GeneralSecurityException 
+    * @throws GeneralSecurityException 
     */
-   @RequestMapping("/add/google/account/{accountName}")
-   
-   public String addAccount1(@PathVariable("accountName") final String userId, @RequestParam(name = "userKey") String userKey, final HttpServletRequest request,
-           final HttpSession session, Model model) throws GeneralSecurityException {
-       String response = "errorOccurs";
-       GoogleAuthorizationCodeFlow flow;
-       com.google.api.client.auth.oauth2.Credential credential = null;
-       model.addAttribute("add","Add Google Account");
-       try {
-           flow = super.getFlow(); 
-           credential = flow.loadCredential(userId);
+    @RequestMapping("/add/google/account/{accountName}")
 
-           if (credential != null && credential.getAccessToken() != null) {
-        	  
-           	model.addAttribute("NotAdd", userId + "  Account Already Added ");
-         	
-   			LOG.info(userId + "  AccountAlreadyAdded ");
-        	response = "Info";
-   
-           } else {
-              
-               final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
-               authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfiguration().getMapping()));
-             
-               session.setAttribute("userId", userId);
-               session.setAttribute("userKey", userKey);
-               response = "redirect:" + authorizationUrl.build();
-           }
-       } catch (IOException e) {
-           LOG.error("Error while loading credential (or Google Flow)", e);
-       }
- 
-       return response;
-   }
+    public String addAccount1(@PathVariable("accountName") final String userId,
+            @RequestParam(name = "userKey") String userKey, final HttpServletRequest request, final HttpSession session,
+            Model model) throws GeneralSecurityException {
+        String response = "errorOccurs";
+        GoogleAuthorizationCodeFlow flow;
+        com.google.api.client.auth.oauth2.Credential credential = null;
+        model.addAttribute("add", "Add Google Account");
+        try {
+            flow = super.getFlow();
+            credential = flow.loadCredential(userId);
+
+            if (credential != null && credential.getAccessToken() != null) {
+
+                model.addAttribute("NotAdd", userId + "  Account Already Added ");
+
+                LOG.info(userId + "  AccountAlreadyAdded ");
+                response = "Info";
+
+            } else {
+
+                final AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
+                authorizationUrl.setRedirectUri(buildRedirectUri(request, getConfiguration().getMapping()));
+
+                session.setAttribute("userId", userId);
+                session.setAttribute("userKey", userKey);
+                response = "redirect:" + authorizationUrl.build();
+            }
+        } catch (IOException e) {
+            LOG.error("Error while loading credential (or Google Flow)", e);
+        }
+
+        return response;
+    }
 }

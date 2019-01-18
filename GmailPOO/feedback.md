@@ -17,3 +17,10 @@
 - Vérifie que ton code fonctionne avant une livraison (et vérifie le fréquemment au fur et à mesure de ton développement)
 
 **Note** : j'ai arrêté l'audit de ton code, il faut que tu fasses une première "passe" pour nettoyer sinon je me répète sans ajouter d'aide utile dans mes remarques.
+
+
+# Du 18/01/2019
+- Pense à activer Checkstyle (et à prendre en comtpe les remarques, notament la JavaDoc)
+- Penses à configuré ton formater (et tes "save Actions"). J'ai formatté pour toi les fichiers sur lesquelles je suis passé.
+- Je t'ai supprimé les "TODO" que tu avais traité.
+

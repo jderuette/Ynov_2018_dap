@@ -21,12 +21,13 @@ import fr.ynov.dap.metier.Data;
  */
 @Controller
 public class Admin {
-	@Autowired
-	private Data dataBase;
-	@RequestMapping("/admin")
-	public String admin(Model model) throws IOException, GeneralSecurityException {
-		List<Account> accounts = dataBase.AllAccount();
-		model.addAttribute("Account", accounts);
-		return "admin.html";
-	}
+    @Autowired
+    private Data dataBase;
+
+    @RequestMapping("/admin")
+    public String admin(final Model model) throws IOException, GeneralSecurityException {
+        List<Account> accounts = dataBase.AllAccount();
+        model.addAttribute("Account", accounts);
+        return "admin.html";
+    }
 }

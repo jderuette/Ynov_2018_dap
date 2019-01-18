@@ -29,11 +29,13 @@ import javassist.NotFoundException;
 @Controller
 public class AuthorizeController {
 	@Autowired
+	//TODO bes by Djer |POO| Attention cette attribut est public !! (si tu ne précise pas le "modifier" sur un attribut, i la la même porté que la classe (donc public le plus souvent)
 	Data dataBase;
 
+	//TODO bes by Djer |MVC| Le plus souvent on ne met plsu d'extension eur les "routes". SOuvent on met un ".do". Mettre ".html" est un peu confusant.
 	@RequestMapping(value = "/ajouter.html", method = RequestMethod.POST)
-	public String authorize(@RequestParam("code") String code, @RequestParam("id_token") String idToken,
-			@RequestParam("state") UUID state, HttpServletRequest request, Model model) {
+	public String authorize(@RequestParam("code") final String code, @RequestParam("id_token") final String idToken,
+			@RequestParam("state") final UUID state, final HttpServletRequest request, final Model model) {
 		// Get the expected state value from the session
 
 		HttpSession session = request.getSession();
@@ -75,6 +77,7 @@ public class AuthorizeController {
 				model.addAttribute("error", "ID token failed validation.");
 			}
 		} else {
+		    //TODO bes by Djer |Log4J| Une petite log ? 
 			session.setAttribute("error", "Unexpected state returned from authority.");
 			model.addAttribute("error", "Unexpected state returned from authority.");
 		}
@@ -82,6 +85,8 @@ public class AuthorizeController {
 		return "Info";
 	}
 
+	//TODO bes by Djer |POO| Une méthode ne doit pas commencer par une majuscule. Et contient un general un "verb", par exemple "buildUrl"
+	//TODO bes by Djer |PO| Devrait être "private"
 	public String Url(Model model, HttpServletRequest request) {
 		UUID state = UUID.randomUUID();
 		UUID nonce = UUID.randomUUID();
@@ -114,6 +119,7 @@ public class AuthorizeController {
 					response = "redirect:" + urlOutlook;
 				}
 			} else {
+			    //TODO bes by Djer |MVC| En general il n'estp as utile de "contextualiser" les messages utilisateurs avec leur "ID". Ils voient me message et il savent bien que c'est "pour eux". La contextualisation ets nécéssaire ne revanche dans les logs, qui seront lus par un developpeur et qui aura du coup du mal a savoir pour "qui" est valable tel ou tel message
 				model.addAttribute("error", userKey + " n'existe Pas");
 			}
 		} catch (Exception e) {

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.ynov.dap.web;
 
 import java.io.IOException;
@@ -33,90 +30,94 @@ import fr.ynov.dap.outlookService.OutlookService;
 import javassist.NotFoundException;
 
 /**
- * Controller de tous les evenement google et microsoft
- * 
+ * Controller de tous les evenement google et microsoft.
+ *
  * @author acer
  *
  */
 @Controller
 public class EvenementController {
-	@Autowired
-	private Data dataBase;
-	@Autowired
-	MailService outmailService;
-	@Autowired
-	EventsController eventsController;
-	@Autowired
-	CalendarService calendarService;
+    @Autowired
+    private Data dataBase;
+    @Autowired
+    MailService outmailService;
+    @Autowired
+    EventsController eventsController;
+    @Autowired
+    CalendarService calendarService;
 
-	@RequestMapping("allEvent/{userKey}")
-	public String AllEvents(@PathVariable("userKey") String userKey, final HttpServletRequest request,
-			final HttpSession session, Model model) throws NotFoundException, IOException, GeneralSecurityException {
-		String response = "events";
-		String error = "";
-		List<Account> accounts = dataBase.listAccount(userKey);
-		List<Evenement> evenements = new ArrayList<Evenement>();
-		for (Account account : accounts) {
+    @RequestMapping("allEvent/{userKey}")
+    public String AllEvents(@PathVariable("userKey") final String userKey, final HttpServletRequest request,
+            final HttpSession session, final Model model)
+            throws NotFoundException, IOException, GeneralSecurityException {
+        String response = "events";
+        String error = "";
+        List<Account> accounts = dataBase.listAccount(userKey);
+        List<Evenement> evenements = new ArrayList<Evenement>();
+        for (Account account : accounts) {
 
-			if (account instanceof MicrosoftAccount) {
-				try {
-					OutlookService outlookService = outmailService.ConnexionOutlook(model, request,
-							account.getAccountName());
-					Event[] eventsMicrosoft = eventsController.events(outlookService);
-					for (Event eventMicrosoft : eventsMicrosoft) {
-						Evenement evenement = new Evenement(eventMicrosoft.getOrganizer().getEmailAddress().getName(),
-								eventMicrosoft.getSubject(), eventMicrosoft.getStart().getDateTime(),
-								eventMicrosoft.getEnd().getDateTime());
-						evenements.add(evenement);
-					}
+            if (account instanceof MicrosoftAccount) {
+                try {
+                    OutlookService outlookService = outmailService.ConnexionOutlook(model, request,
+                            account.getAccountName());
+                    Event[] eventsMicrosoft = eventsController.events(outlookService);
+                    for (Event eventMicrosoft : eventsMicrosoft) {
+                        Evenement evenement = new Evenement(eventMicrosoft.getOrganizer().getEmailAddress().getName(),
+                                eventMicrosoft.getSubject(), eventMicrosoft.getStart().getDateTime(),
+                                eventMicrosoft.getEnd().getDateTime());
+                        evenements.add(evenement);
+                    }
 
-				} catch (Exception e) {
-					error += " erreur authentification pour le compte " + account.getAccountName();
-				}
+                } catch (Exception e) {
+                    //TODO bes by Djer |Log4J| Une petite log ?
+                    error += " erreur authentification pour le compte " + account.getAccountName();
+                }
 
-			} else if (account instanceof GoogleAccount) {
-				try {
-					List<com.google.api.services.calendar.model.Event> eventsGoogle = calendarService
-							.allEvent(account.getAccountName());
-					for (com.google.api.services.calendar.model.Event eventGoogle : eventsGoogle) {
-						Date start = new Date();
-						start.setTime(eventGoogle.getStart().getDateTime().getValue());
-						Date end = new Date();
-						end.setTime(eventGoogle.getEnd().getDateTime().getValue());
+            } else if (account instanceof GoogleAccount) {
+                try {
+                    List<com.google.api.services.calendar.model.Event> eventsGoogle = calendarService
+                            .allEvent(account.getAccountName());
+                    for (com.google.api.services.calendar.model.Event eventGoogle : eventsGoogle) {
+                        Date start = new Date();
+                        start.setTime(eventGoogle.getStart().getDateTime().getValue());
+                        Date end = new Date();
+                        end.setTime(eventGoogle.getEnd().getDateTime().getValue());
 
-						Evenement evenement = new Evenement(eventGoogle.getOrganizer().getDisplayName(),
-								eventGoogle.getSummary(), start, end);
-						evenements.add(evenement);
-					}
+                        Evenement evenement = new Evenement(eventGoogle.getOrganizer().getDisplayName(),
+                                eventGoogle.getSummary(), start, end);
+                        evenements.add(evenement);
+                    }
 
-				} catch (Exception e) {
-					error += " erreur authentification pour le compte " + account.getAccountName();
-				}
-			}
+                } catch (Exception e) {
+                    //TODO bes by Djer |Log4J| Une petite log ?
+                    error += " erreur authentification pour le compte " + account.getAccountName();
+                }
+            }
+            //TODO bes by Djer |POO| else ? (type "inconnue", au moins une petite log ?)
+        }
+        model.addAttribute("allevents", TriEvenements(evenements));
+        model.addAttribute("error", error);
+        return response;
 
-		}
-		model.addAttribute("allevents", TriEvenements(evenements));
-		model.addAttribute("error", error);
-		return response;
+    }
 
-	}
+    /**
+     * tri liste des evenement par date BY ASD.
+     *
+     * @param evenements
+     * @return List<Evenement>
+     */
+    //TODO bes by Djer |POO| Le nom de ta méthdoe doit commencer par une minuscule
+    private List<Evenement> TriEvenements(List<Evenement> evenements) {
+        Collections.sort(evenements, new Comparator<Evenement>() {
+            @Override
+            //TODO bes by Djer |POO| Les paramètre de ta méthode doivent commencer par une minusucle
+            public int compare(Evenement E1, Evenement E2) {
+                return E1.getStartDate().compareTo(E2.getStartDate());
+            }
+        });
 
-
-	/**
-	 * tri liste des evenement par date BY ASD
-	 * 
-	 * @param evenements
-	 * @return List<Evenement>
-	 */
-	private List<Evenement> TriEvenements(List<Evenement> evenements) {
-		Collections.sort(evenements, new Comparator<Evenement>() {
-			@Override
-			public int compare(Evenement E1, Evenement E2) {
-				return E1.getStartDate().compareTo(E2.getStartDate());
-			}
-		});
-
-		return evenements;
-	}
+        return evenements;
+    }
 
 }

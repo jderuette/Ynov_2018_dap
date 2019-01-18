@@ -20,7 +20,9 @@ public class MailService {
 	@Autowired
 	Data data;
 
-	public OutlookService ConnexionOutlook(Model model, HttpServletRequest request, String compte)
+	//TODO bes by Djer |SOA| Un service ne devrait pas avoir besoin du "model" ni de la request (se sont des objets sous la responsabilité du "controller")
+	//TODO bes by Djer |POO| Le nom de ta méthode doit commencer par une minuscule
+	public OutlookService ConnexionOutlook(final Model model, final HttpServletRequest request, final String compte)
 			throws NotFoundException {
 		OutlookService conn = null;
 		Account outlook = data.getAccount(compte);
@@ -41,6 +43,9 @@ public class MailService {
 
 	}
 
+	//TODO bes by Djer |SOA| C'est étrange un service (MailService) qui à besoin d'un autre service (OutlookService). En generale on a : controller -> Service -> Dao -> (BDD || Api externe)
+	//TODO bes by Djer |IOC| Injecte se service, ne demande pas à l'appelant de le fournir
+	//TODO bes by Djer |P| Le nom de ta méthode doit commencer par une minuscule
 	public Message[] Listmail(OutlookService outlookService) throws IOException {
 
 		String folder = "inbox";

@@ -16,6 +16,7 @@ import com.google.api.services.gmail.model.Message;
 @Service
 public class GMailService extends GoogleService {
 
+    //TODO bes by Djer |Log4J| Devrait etre staic et final (et ecris en majucule du coup)
 	private Logger log = LogManager.getLogger();
 
 	/**
@@ -28,7 +29,7 @@ public class GMailService extends GoogleService {
 	public GMailService() throws UnsupportedOperationException, GeneralSecurityException, IOException {
 		super();
 
-	}
+    }
 
 	/**
 	 * 
@@ -37,7 +38,8 @@ public class GMailService extends GoogleService {
 	 * @throws IOException
 	 */
 
-	public Gmail getService(String user) throws GeneralSecurityException, IOException {
+	//TODO bes by Djer |POO| Devrait être "private"
+	public Gmail getService(final String user) throws GeneralSecurityException, IOException {
 
 		Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, user))
 				.setApplicationName(configuration.getApplicationName()).build();
@@ -52,7 +54,7 @@ public class GMailService extends GoogleService {
 	 * @throws GeneralSecurityException
 	 */
 
-	public List<Message> getListEmails(String user) throws IOException, GeneralSecurityException {
+	public List<Message> getListEmails(final String user) throws IOException, GeneralSecurityException {
 		log.info("Traitement pour le compte " + user);
 		
 		ListMessagesResponse response = getService(user).users().messages().list("me").setQ("in:unread").execute();
@@ -68,6 +70,7 @@ public class GMailService extends GoogleService {
 				response = getService(user).users().messages().list("me").setQ("in:unread").setPageToken(pageToken)
 						.execute();
 			} else {
+			    //TODO bes by Djer |POO| pas très "logique", fait ta boucle while avec "response.getNextPageToken() != null"
 				break;
 			}
 		}

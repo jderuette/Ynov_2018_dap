@@ -12,20 +12,21 @@ import com.google.api.services.people.v1.model.Person;
 
 @Service
 public class ContactsService extends GoogleService {
-	public ContactsService() throws UnsupportedOperationException, GeneralSecurityException, IOException {
-		super();
+    public ContactsService() throws UnsupportedOperationException, GeneralSecurityException, IOException {
+        super();
 
-	}
+    }
 
-	public List<Person> connections(String userKey) throws IOException, GeneralSecurityException {
-	
-		PeopleService service;
-		service = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, userKey))
-				.setApplicationName(configuration.getApplicationName()).build();
+    public List<Person> connections(String userKey) throws IOException, GeneralSecurityException {
 
-		ListConnectionsResponse response = service.people().connections().list("people/me").setPageSize(1000)
-				.setPersonFields("names,emailAddresses").execute();
-		return response.getConnections();
-	}
+        PeopleService service;
+        service = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, userKey))
+                .setApplicationName(configuration.getApplicationName()).build();
+
+        //TODO bes by Djer |Google API| Tu devrais utilsier la pagination, comme dans fr.ynov.dap.googleService.GMailService.getListEmails(String)
+        ListConnectionsResponse response = service.people().connections().list("people/me").setPageSize(1000)
+                .setPersonFields("names,emailAddresses").execute();
+        return response.getConnections();
+    }
 
 }
